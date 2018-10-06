@@ -115,8 +115,11 @@ const styles = StyleSheet.create({
         height: 450
     },
 
-    introCardImage: {
-        marginBottom: 16
+    introImage: {
+        marginBottom: 4,
+        width:26,
+        height:26,
+        resizeMode:"contain"
     },
 
     introCardInput: {

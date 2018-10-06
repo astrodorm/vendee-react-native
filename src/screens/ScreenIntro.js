@@ -70,13 +70,16 @@ class ScreenIntro extends Component {
                     <View style={styles.introContent}>
 
                         {/* SHOW CONTENTS ON LOAD */}
-                        {this.state.showIntroHeader &&
+                        {
+                            this.state.showIntroHeader &&
                             <Animatable.View ref={this.RefHeaderContents}>
-                                <Image source={require('../../assets/images/vendee-logo24.png')} />
+                                <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
                                 <Text style={styles.introHeader}>We brought it closer to you</Text>
                                 <Text style={styles.introSubtitle}>Now Quicker and Cheaper !</Text>
-                            </Animatable.View>}
-                        {this.state.showIntroButtons &&
+                            </Animatable.View>
+                        }
+                        {
+                            this.state.showIntroButtons &&
                             <Animatable.View ref={this.RefButtonContents}>
                                 {/* <View> */}
                                 <TouchableOpacity onPress={this.animateToPhoneNumberView}>
@@ -98,7 +101,7 @@ class ScreenIntro extends Component {
                                 {/* <Text style={styles.introHeader}> CARDS HERE</Text> */}
                                 <View style={styles.introCards}>
                                     <View>
-                                        <Image style={styles.introCardImage} source={require('../../assets/images/vendee-logo24.png')} />
+                                        <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
                                         <View>
                                             <Text style={styles.introCardHeader}>Hey,</Text>
                                             <Text style={styles.introCardHeader}>you look good.</Text>
