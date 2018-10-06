@@ -4,9 +4,7 @@ import { styles } from '../styles/styles'
 
 class ButtonSecondary extends Component {
 
-
     render() {
-
         let title = "SIGN IN"
 
         return (

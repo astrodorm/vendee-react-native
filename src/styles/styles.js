@@ -11,8 +11,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F5FCFF',
         marginTop: 24,
-        // fontFamily:Fonts.JosefinRegular
-
     },
 
     introContent: {
@@ -23,8 +21,7 @@ const styles = StyleSheet.create({
         paddingRight: 48,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        // backgroundColor:'#ffcc12',
-        height: fullHeight
+        height: fullHeight,
     },
 
     introHeader: {
@@ -47,7 +44,6 @@ const styles = StyleSheet.create({
         color: '#E0F3FF',
         fontFamily: Fonts.JosefinRegular,
         marginTop: 24
-
     },
 
     introBackgroundImage: {
@@ -65,6 +61,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 4
     },
+
     buttonSecondary: {
         color: '#EC2434',
         paddingTop: 8,
@@ -73,13 +70,24 @@ const styles = StyleSheet.create({
         alignItems: "center",
         fontSize: 14,
         fontFamily: Fonts.JosefinBold,
-        textAlign:'center',
-        marginTop:16
+        textAlign: 'center',
+        marginTop: 16
     },
+
     buttonSecondaryLight: {
         color: '#fff',
         fontSize: 16,
         fontFamily: Fonts.JosefinBold
+    },
+
+    introCards: {
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        height: fullHeight,
+        shadowOffset: { width: 10, height: 10, },
+        shadowColor: 'black',
+        shadowOpacity: 1,
+        elevation: 10
     }
 
 });
