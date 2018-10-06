@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         width: fullWidth,
         height: fullHeight,
         backgroundColor: '#011627',
-        opacity: .8
+        opacity: .9
     },
 
     introSubtitle: {
@@ -71,8 +71,10 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
         justifyContent: "center",
         alignItems: "center",
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: Fonts.JosefinBold,
+        textAlign:'center',
+        marginTop:16
     },
     buttonSecondaryLight: {
         color: '#fff',
