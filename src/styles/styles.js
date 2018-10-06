@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: "#6E6E6E",
         fontFamily: Fonts.JosefinThin,
+        borderStyle:"dashed"
     },
 
     introCardButton: {
