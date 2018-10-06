@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: fullHeight,
+        alignItems:"center",      
     },
 
     introHeader: {
@@ -30,6 +31,20 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.JosefinBold,
         fontSize: 44,
         lineHeight: 50
+    },
+
+    introCardHeader: {
+        color: "#011627",
+        fontFamily: Fonts.JosefinBold,
+        fontSize: 36,
+        marginTop: 0
+    },
+
+    introCardSubtitle: {
+        color: "#6E6E6E",
+        fontFamily: Fonts.JosefinRegular,
+        fontSize: 18,
+        marginBottom: 16
     },
 
     introBackgroundOverlay: {
@@ -55,23 +70,24 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontFamily: Fonts.JosefinBold,
-        paddingTop: 8,
-        paddingBottom: 8,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 4
+        paddingTop: 16,
+        paddingBottom: 16,
+        textAlign: "center",
+        borderRadius: 4,
+        width: 300
     },
 
     buttonSecondary: {
-        color: '#EC2434',
+        color: '#fff',
         paddingTop: 8,
         paddingBottom: 8,
         justifyContent: "center",
         alignItems: "center",
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: Fonts.JosefinBold,
         textAlign: 'center',
-        marginTop: 16
+        marginTop: 16,
+        textAlign:"center"
     },
 
     buttonSecondaryLight: {
@@ -82,12 +98,52 @@ const styles = StyleSheet.create({
 
     introCards: {
         backgroundColor: '#fff',
-        borderRadius: 8,
-        height: fullHeight,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderTopLeftRadius: 6,
+        borderTopRightRadius: 6,
         shadowOffset: { width: 10, height: 10, },
         shadowColor: 'black',
         shadowOpacity: 1,
-        elevation: 10
+        elevation: 10,
+        paddingTop: 48,
+        paddingRight: 24,
+        paddingBottom: 24,
+        paddingLeft: 24,
+        width: 320,
+        flexDirection: 'column',
+        height: 450
+    },
+
+    introCardImage: {
+        marginBottom: 16
+    },
+
+    introCardInput: {
+        padding: 10,
+        borderWidth: .5,
+        borderColor: 'grey',
+        borderRadius: 4,
+        fontSize: 24,
+        color: "#6E6E6E",
+        fontFamily: Fonts.JosefinThin,
+    },
+
+    introCardButton: {
+        backgroundColor: "#EC2434",
+        padding: 24,
+        color: "#fff",
+        borderBottomLeftRadius: 6,
+        borderBottomRightRadius: 6,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        fontFamily: Fonts.JosefinBold,
+        textAlign: "center",
+        fontSize: 16
+    },
+
+    introCardInputField: {
+        marginTop: 64
     }
 
 });
