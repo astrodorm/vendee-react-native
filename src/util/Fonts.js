@@ -1,7 +1,8 @@
 const Fonts = {
+  JosefinThin: "JosefinSans-Thin",
   JosefinRegular: "JosefinSans-Regular",
   JosefinBold: "JosefinSans-Bold",
-  JosefinThin: "JosefinSans-Thin"
+  JosefinSemiBold: "JosefinSans-SemiBold"
 }
 
 export { Fonts }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Image, Button, Animated, TextInput, TouchableOpacity } from 'react-native'
-import { styles } from '../styles/styles'
+import { Text, View, SafeAreaView, Image, Button, Animated, TextInput, TouchableOpacity } from 'react-native';
+import { styles } from '../styles/styles';
+import Icon from 'react-native-vector-icons/Feather';
 // import ButtonPrimary from '../components/ButtonPrimary'
 // import ButtonSecondary from '../components/ButtonSecondary'
 import * as Animatable from 'react-native-animatable';
@@ -19,6 +20,10 @@ class ScreenIntro extends Component {
             showIntroCards: false,
             showIntroHeader: true,
             showIntroButtons: true,
+            showIntroPhoneNumber: true,
+            showIntroEmail: false,
+            showIntroSuccess: false,
+            introStage: 1
         }
     }
 
@@ -36,12 +41,63 @@ class ScreenIntro extends Component {
     RefHeaderContents = RefHeaderContents => this.RefHeaderContents = RefHeaderContents;
     RefButtonContents = RefButtonContents => this.RefButtonContents = RefButtonContents;
     RefBackgroundImage = RefBackgroundImage => this.RefBackgroundImage = RefBackgroundImage;
+    RefIntroPhoneNumber = RefIntroPhoneNumber => this.RefIntroPhoneNumber = RefIntroPhoneNumber;
+    RefIntroEmail = RefIntroEmail => this.RefIntroEmail = RefIntroEmail;
+    RefIntroSuccess = RefIntroSuccess => this.RefIntroSuccess = RefIntroSuccess;
+
+
 
 
     animateToPhoneNumberView = () => {
         this.RefHeaderContents.fadeOutUp(400);
         this.RefButtonContents.fadeOutDown(400);
         this.RefBackgroundImage.fadeOut(600).then(endState => { this.setState({ showIntroCards: true, showIntroHeader: false, showIntroButtons: false }); Animated.timing(this.animatedValue, { toValue: 150, duration: 1200 }).start() });
+    }
+
+    animateToEmailView = () => {
+        this.RefIntroPhoneNumber.fadeOut(400).then(endState => {
+            this.setState({ introStage: 2, showIntroPhoneNumber: false, showIntroEmail: true });
+
+            let introStage = this.state.introStage;
+            console.log("animateToEmailView > introStage : " + introStage);
+        });
+    }
+
+    animateBackToPhoneNumberView = () => {
+        this.RefIntroEmail.fadeOut(400).then(endState => {
+            this.setState({ introStage: 1, showIntroEmail: false, showIntroPhoneNumber: true });
+
+            let introStage = this.state.introStage;
+            console.log("animateToEmailView > introStage : " + introStage);
+        });
+    }
+
+    animateToSuccessView = () => {
+        this.RefIntroEmail.fadeOut(400).then(endState => {
+            this.setState({ introStage: 3, showIntroEmail: true, showIntroSuccess: true });
+
+            let introStage = this.state.introStage;
+            console.log("animateToEmailView > introStage : " + introStage);
+        });
+    }
+
+
+    animateIntroButtons = () => {
+
+        let introStage = this.state.introStage;
+        console.log("introStage : " + introStage)
+
+
+        switch (introStage) {
+            case 1:
+                this.animateToEmailView();
+                break;
+            case 2:
+                this.animateToSuccessView();
+                break;
+            default:
+                this.animateToEmailView();
+        }
     }
 
 
@@ -101,19 +157,56 @@ class ScreenIntro extends Component {
                                 {/* <Text style={styles.introHeader}> CARDS HERE</Text> */}
                                 <View style={styles.introCards}>
                                     <View>
-                                        <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
-                                        <View>
-                                            <Text style={styles.introCardHeader}>Hey,</Text>
-                                            <Text style={styles.introCardHeader}>you look good.</Text>
-                                        </View>
-                                        <View style={styles.introCardInputField}>
-                                            <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
-                                            <TextInput style={styles.introCardInput}></TextInput>
-                                        </View>
+
+
+                                        {/* PHONE-NUMBER INTRO */}
+                                        {this.state.showIntroPhoneNumber &&
+                                            <Animatable.View ref={this.RefIntroPhoneNumber}>
+                                                <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
+                                                <View>
+                                                    <Text style={styles.introCardHeader}>Hey,</Text>
+                                                    <Text style={styles.introCardHeader}>you look good.</Text>
+                                                </View>
+                                                <View style={styles.introCardInputField}>
+                                                    <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
+                                                    <TextInput style={styles.introCardInput}></TextInput>
+                                                </View>
+                                            </Animatable.View>}
+
+
+                                        {/* EMAIL INTRO */}
+                                        {this.state.showIntroEmail &&
+                                            <Animatable.View ref={this.RefIntroEmail}>
+                                                <Icon name="arrow-left" size={30} style={styles.icon} onPress={this.animateBackToPhoneNumberView} />
+                                                <View>
+                                                    <Text style={styles.introCardHeader}>Also,</Text>
+                                                    <Text style={styles.introCardHeader}>your email too.</Text>
+                                                </View>
+                                                <View style={styles.introCardInputField}>
+                                                    <Text style={styles.introCardSubtitle}>Enter email address here</Text>
+                                                    <TextInput style={styles.introCardInput}></TextInput>
+                                                </View>
+                                            </Animatable.View>
+                                        }
+
+                                        {/* SUCCESS SIGNED UP */}
+                                        {this.state.showIntroSuccess &&
+                                            <Animatable.View ref={this.RefIntroSuccess}>
+                                                {/* <Icon name="arrow-left" size={30} style={styles.icon} onPress={this.animateBackToPhoneNumberView} /> */}
+                                                <View>
+                                                    <Text style={styles.introCardHeader}>It's all done.</Text>
+                                                    {/* <Text style={styles.introCardHeader}>your email too.</Text> */}
+                                                </View>
+                                                {/* <View style={styles.introCardInputField}>
+                                                    <Text style={styles.introCardSubtitle}>Enter email address here</Text>
+                                                    <TextInput style={styles.introCardInput}></TextInput>
+                                                </View> */}
+                                            </Animatable.View>
+                                        }
                                     </View>
                                 </View>
                                 <View>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={this.animateIntroButtons}>
                                         <Text style={styles.introCardButton}> SURE, THAT'S IT</Text>
                                     </TouchableOpacity>
                                 </View>

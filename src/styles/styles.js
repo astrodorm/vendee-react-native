@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: fullHeight,
-        alignItems:"center",      
+        alignItems: "center",
     },
 
     introHeader: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.JosefinBold,
         textAlign: 'center',
         marginTop: 16,
-        textAlign:"center"
+        textAlign: "center"
     },
 
     buttonSecondaryLight: {
@@ -117,9 +117,9 @@ const styles = StyleSheet.create({
 
     introImage: {
         marginBottom: 4,
-        width:26,
-        height:26,
-        resizeMode:"contain"
+        width: 26,
+        height: 26,
+        resizeMode: "contain"
     },
 
     introCardInput: {
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: "#6E6E6E",
         fontFamily: Fonts.JosefinThin,
-        borderStyle:"dashed"
+        borderStyle: "dashed"
     },
 
     introCardButton: {
@@ -148,6 +148,11 @@ const styles = StyleSheet.create({
 
     introCardInputField: {
         marginTop: 64
+    },
+
+    icon: {
+        color: "#011627",
+        marginBottom:32
     }
 
 });
