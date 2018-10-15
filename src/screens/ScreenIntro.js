@@ -23,7 +23,7 @@ class ScreenIntro extends Component {
             showIntroSuccess: false,
             introStage: 1,
             backgroundColorValue: "rgb(24,43,58)",
-            backgroundColorNextValue: "rgb(255,221,187)",
+            backgroundColorNextValue: "rgb(253,206,159)",
             introButtonText: "SURE THAT'S IT"
 
         }
@@ -55,7 +55,7 @@ class ScreenIntro extends Component {
     }
 
     animateToEmailView = () => {
-        this.setState({ backgroundColorValue: "rgb(255,221,187)", backgroundColorNextValue: "rgb(92,131,144)" });
+        this.setState({ backgroundColorValue: "rgb(253,206,159)", backgroundColorNextValue: "rgb(92,131,144)" });
         this.animatedValue = new Animated.Value(0);
         this.RefIntroPhoneNumber.fadeOut(400).then(endState => {
             this.setState({ introStage: 2, showIntroPhoneNumber: false, showIntroEmail: true });
@@ -78,7 +78,7 @@ class ScreenIntro extends Component {
     // }
 
     animateToSuccessView = () => {
-        this.setState({ backgroundColorValue: "rgb(92,131,144)", backgroundColorNextValue: "rgb(44,19,32)", introButtonText: "LET'S GO SHOPPING" });
+        this.setState({ backgroundColorValue: "rgb(92,131,144)", backgroundColorNextValue: "rgb(52,16,35)", introButtonText: "LET'S GO SHOPPING" });
         this.animatedValue = new Animated.Value(0);
         this.RefIntroEmail.fadeOut(400).then(endState => {
             this.setState({ introStage: 3, showIntroEmail: false, showIntroSuccess: true });
