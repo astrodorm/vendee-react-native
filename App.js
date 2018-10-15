@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation';
 import ScreenIntro from './src/screens/ScreenIntro';
-import ScreenOnboardPhoneNumber from './src/screens/ScreenOnboardPhoneNumber';
+import MainApp from './src/screens/MainApp'
 
 export default class App extends Component {
     render() {
@@ -15,7 +15,7 @@ export default class App extends Component {
 
 const AppStackNavigator = createStackNavigator({
     Intro: ScreenIntro,
-    OnboardPhoneNumber: ScreenOnboardPhoneNumber
+    MainAppScreen: MainApp
 
 })
 

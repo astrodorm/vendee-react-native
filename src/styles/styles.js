@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     introCardSubtitle: {
         color: "#6E6E6E",
         fontFamily: Fonts.JosefinRegular,
-        fontSize: 18,
+        fontSize: 16,
         marginBottom: 16
     },
 
@@ -116,9 +116,17 @@ const styles = StyleSheet.create({
     },
 
     introImage: {
-        marginBottom: 4,
+        marginBottom: 16,
         width: 26,
         height: 26,
+        resizeMode: "contain"
+    },
+
+    introSucessImage: {
+        marginTop: 40,
+        marginBottom: 40,
+        width: 150,
+        height: 150,
         resizeMode: "contain"
     },
 
@@ -129,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         fontSize: 24,
         color: "#6E6E6E",
-        fontFamily: Fonts.JosefinThin,
+        fontFamily: Fonts.JosefinRegular,
         borderStyle: "dashed"
     },
 
@@ -152,7 +160,11 @@ const styles = StyleSheet.create({
 
     icon: {
         color: "#011627",
-        marginBottom:32
+        marginBottom: 32
+    },
+
+    centerView: {
+        alignItems: "center",
     }
 
 });
