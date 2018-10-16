@@ -31,9 +31,9 @@ class ScreenIntro extends Component {
 
 
     //NAVIGATION OPTIONS
-    static navigationOptions = {
-        header: null
-    }
+    // static navigationOptions = {
+    //     header: null
+    // }
 
 
     sayhi = () => {
@@ -92,7 +92,7 @@ class ScreenIntro extends Component {
     }
 
     gotoMainAppScreen = () => {
-       this.props.navigation.push('MainAppScreen');
+        this.props.navigation.push('MainAppScreen');
     }
 
 

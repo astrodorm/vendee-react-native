@@ -165,8 +165,67 @@ const styles = StyleSheet.create({
 
     centerView: {
         alignItems: "center",
-    }
+    },
 
+    navyBlue: {
+        color: "#011627",
+        backgroundColor: "#011627"
+    },
+
+    red: {
+        color: "#EC2434",
+        backgroundColor: "#EC2434"
+    },
+    AppImage: {
+        marginTop: 64,
+        width: 32,
+        height: 32,
+        resizeMode: "contain"
+    },
+
+    AppMain: {
+        backgroundColor: "#F5FCFF",
+        height: fullHeight,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
+    AppSearchBar: {
+        flexDirection: "row",
+        borderRadius: 6,
+        shadowOffset: { width: 5, height: 5 },
+        shadowColor: '#6e6e6e',
+        shadowOpacity: 1,
+        elevation: 5,
+        width: fullWidth * 0.85,
+        backgroundColor: "#fff",
+        justifyContent: "space-between"
+    },
+
+    AppSearchBarIcon: {
+        // width: 68,
+        height: 68,
+        padding: 24,
+    },
+
+    AppSearchBarTextInput: {
+        paddingTop: 24,
+        paddingRight: 0,
+        paddingBottom: 24,
+        paddingLeft: 24,
+        fontFamily: Fonts.JosefinRegular,
+        fontSize: 18,
+        width: 270,
+    },
+
+    SearchFirstView: {
+        flex: 1,
+        alignItems: "center"
+    },
+
+    SearchSecondView: {
+        flex: 1
+    }
 });
 
 export { styles }
