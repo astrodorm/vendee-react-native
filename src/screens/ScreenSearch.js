@@ -11,8 +11,8 @@ class ScreenSearch extends Component {
         super(props);
 
         this.state = {
-            showSearchResultView: false,
-            ShowSearchView: true,
+            showSearchResultView: true,
+            ShowSearchView: false,
         }
     }
 
@@ -23,21 +23,27 @@ class ScreenSearch extends Component {
             <View style={styles.AppMain}>
 
                 {/* SEARCH INITIAL VIEW */}
-                TODO: ADD BOOLEAN TO VIEWS
-                <View>
-                    <View style={styles.SearchFirstView}>
-                        <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
+              
+                {
+                    this.state.ShowSearchView &&
+                    <View>
+                        <View style={styles.SearchFirstView}>
+                            <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
+                        </View>
+                        <View style={styles.SearchSecondView}>
+                            <SearchBar />
+                        </View>
                     </View>
-                    <View style={styles.SearchSecondView}>
-                        <SearchBar />
-                    </View>
-                </View>
+                }
 
                 {/* SEARCH RESULT */}
-                <View>
-                    <SearchResult />
-                </View>
 
+                {
+                    this.state.showSearchResultView &&
+                    <View>
+                        <SearchResult />
+                    </View>
+                }
             </View>
         )
     }

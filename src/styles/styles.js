@@ -225,6 +225,46 @@ const styles = StyleSheet.create({
 
     SearchSecondView: {
         flex: 1
+    },
+
+    AppDeliveryPickerContainer: {
+        borderRadius: 6,
+        shadowOffset: { width: 5, height: 5 },
+        shadowColor: '#6e6e6e',
+        shadowOpacity: 1,
+        elevation: 5,
+        width: fullWidth * 0.85,
+        backgroundColor: "#fff",
+        justifyContent: "space-between",
+        marginTop: 16,
+        marginBottom: 16,
+        flexDirection: "row"
+    },
+
+    DeliveryPickerText: {
+        fontFamily: Fonts.JosefinRegular,
+        fontSize: 14,
+        color: "#6e6e6e",
+        paddingTop: 20,
+        paddingBottom: 14,
+        paddingLeft: 32,
+        paddingRight: 32,
+    },
+
+    ActiveDeliveryPicker: {
+        backgroundColor: "#011627",
+        borderRadius: 6,
+        margin: 6
+    },
+
+    ActiveDeliveryPickerText: {
+        color: "#fff",
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 32,
+        paddingRight: 32,
+        fontFamily: Fonts.JosefinRegular,
+        fontSize: 14,
     }
 });
 
