@@ -247,24 +247,79 @@ const styles = StyleSheet.create({
         color: "#6e6e6e",
         paddingTop: 20,
         paddingBottom: 14,
-        paddingLeft: 32,
-        paddingRight: 32,
+        paddingLeft: 24,
+        paddingRight: 24,
     },
 
     ActiveDeliveryPicker: {
         backgroundColor: "#011627",
         borderRadius: 6,
-        margin: 6
+        margin: 6,
+        flexDirection: "row",
+        alignItems: "center",
+        paddingLeft: 12
+    },
+
+    DeliveryPicker: {
+        alignItems: "center",
     },
 
     ActiveDeliveryPickerText: {
         color: "#fff",
         paddingTop: 14,
         paddingBottom: 14,
-        paddingLeft: 32,
-        paddingRight: 32,
+        paddingLeft: 24,
+        paddingRight: 24,
         fontFamily: Fonts.JosefinRegular,
         fontSize: 14,
+    },
+
+    ActiveDeliveryPickerCheckbox: {
+        width: 10,
+        height: 10,
+        backgroundColor: "#8DCC21",
+        borderRadius: 10
+    },
+
+    AppFilterPickerContainer: {
+        backgroundColor: "#D4DDE2",
+        padding: 10,
+        borderRadius: 4
+    },
+
+    AppDeliveryPickerText: {
+        fontSize: 10,
+        color: "#011627",
+        fontFamily: Fonts.JosefinRegular
+    },
+
+    AppCardTitle: {
+        fontSize: 12,
+        fontFamily: Fonts.JosefinSemiBold,
+        color: "#011627"
+    },
+
+    AppSearchResultHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: fullWidth * 0.85,
+        alignItems: "center"
+    },
+
+    AppSearchResultDisplayContainer: {
+        backgroundColor: "#fff",
+        padding: 16,
+        width: fullWidth * 0.85,
+        borderColor: "#EFEFEF",
+        borderWidth: 1,
+        borderRadius:4
+    },
+
+    ProductItem: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: fullWidth * 0.7,
+        marginBottom: 24
     }
 });
 

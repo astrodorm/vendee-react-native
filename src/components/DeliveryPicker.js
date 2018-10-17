@@ -8,9 +8,10 @@ class DeliveryPicker extends Component {
         return (
             <View style={styles.AppDeliveryPickerContainer}>
                 <View style={styles.ActiveDeliveryPicker}>
+                    <View style={styles.ActiveDeliveryPickerCheckbox}></View>
                     <Text style={styles.ActiveDeliveryPickerText}>Deliver it to me </Text>
                 </View>
-                <View>
+                <View style={styles.DeliveryPicker}>
                     <Text style={styles.DeliveryPickerText}>I will pick it up</Text>
                 </View>
             </View>

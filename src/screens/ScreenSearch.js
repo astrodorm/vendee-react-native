@@ -23,7 +23,7 @@ class ScreenSearch extends Component {
             <View style={styles.AppMain}>
 
                 {/* SEARCH INITIAL VIEW */}
-              
+
                 {
                     this.state.ShowSearchView &&
                     <View>
