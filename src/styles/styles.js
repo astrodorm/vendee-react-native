@@ -308,18 +308,110 @@ const styles = StyleSheet.create({
 
     AppSearchResultDisplayContainer: {
         backgroundColor: "#fff",
-        padding: 16,
+        // padding: 16,
         width: fullWidth * 0.85,
         borderColor: "#EFEFEF",
         borderWidth: 1,
-        borderRadius:4
+        borderRadius: 4
     },
 
     ProductItem: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: fullWidth * 0.7,
-        marginBottom: 24
+        width: fullWidth * 0.85,
+        // marginBottom: 24,
+        padding: 24,
+        alignItems: "center"
+    },
+
+    BottomDrawer: {
+        // zIndex: 1000,
+        position: "absolute",
+        backgroundColor: "#fff",
+        width: fullWidth * 0.92,
+        bottom: 60,
+        flex: 1,
+        padding: 16,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderTopLeftRadius: 6,
+        borderTopRightRadius: 6,
+        shadowOffset: { width: 5, height: 5 },
+        shadowColor: '#6e6e6e',
+        shadowOpacity: 1,
+        elevation: 5,
+        height: 60
+    },
+
+    AccordionFull: {
+        width: fullWidth * 0.9,
+        height: fullHeight * 0.9,
+        backgroundColor: "#ff9900"
+    },
+
+    QuantityMinus: {
+        backgroundColor: "#ec2434",
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 40,
+        paddingRight: 40,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
+    QuantityPlus: {
+        backgroundColor: "#ec2434",
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 40,
+        paddingRight: 40,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
+    QuantityHeaderText: {
+        color: "#6E6E6E",
+        fontFamily: Fonts.JosefinRegular,
+        fontSize: 10
+    },
+
+    QuantityText: {
+        color: "#011627",
+        fontSize: 24,
+        fontFamily: Fonts.JosefinSemiBold
+    },
+
+    QuantityPickerContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "#F5FCFF",
+        borderColor: "#ebebeb",
+        borderWidth: 1
+    },
+
+    QuantitySection: {
+        alignItems: "center",
+        alignContent: "center",
+        justifyContent: "center"
+    },
+
+    ProductDetails: {
+        flexDirection: "column"
+    },
+
+    ProductTitle: {
+        fontSize: 18,
+        fontFamily: Fonts.JosefinRegular
+    },
+
+    ProductPrice: {
+        fontSize: 11,
+        fontFamily: Fonts.JosefinRegular
+    },
+
+    ProductQuantity: {
+        fontSize: 14,
+        fontFamily: Fonts.JosefinRegular
     }
 });
 
