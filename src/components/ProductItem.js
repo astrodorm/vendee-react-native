@@ -11,7 +11,7 @@ class ProductItem extends Component {
                     <Image style={styles.ProductImage} source={require('../../assets/images/nasco-corn-flakes-350g.png')} />
                 </View>
                 <View style={styles.ProductDetails}>
-                    <Text style={styles.ProductTitle}>Product name here</Text>
+                    <Text style={styles.ProductTitle}>Nasco Cornflakes 350g</Text>
                     <Text style={styles.ProductPrice}>NGN 1,200 </Text>
                 </View>
                 <View>

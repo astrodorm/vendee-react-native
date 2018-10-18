@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F5FCFF",
         height: fullHeight,
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
     },
 
     AppSearchBar: {
@@ -303,7 +303,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: fullWidth * 0.85,
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: 48,
+        marginBottom: 8
     },
 
     AppSearchResultDisplayContainer: {
@@ -327,20 +329,20 @@ const styles = StyleSheet.create({
     BottomDrawer: {
         // zIndex: 1000,
         position: "absolute",
-        backgroundColor: "#fff",
+        backgroundColor: "#011627",
         width: fullWidth * 0.92,
-        bottom: 60,
+        bottom: 65,
         flex: 1,
-        padding: 16,
+        // padding: 16,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        borderTopLeftRadius: 6,
-        borderTopRightRadius: 6,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
         shadowOffset: { width: 5, height: 5 },
         shadowColor: '#6e6e6e',
         shadowOpacity: 1,
         elevation: 5,
-        height: 60
+        height: 65
     },
 
     AccordionFull: {
@@ -400,7 +402,7 @@ const styles = StyleSheet.create({
     },
 
     ProductTitle: {
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: Fonts.JosefinRegular
     },
 
@@ -410,8 +412,63 @@ const styles = StyleSheet.create({
     },
 
     ProductQuantity: {
-        fontSize: 14,
+        fontSize: 12,
         fontFamily: Fonts.JosefinRegular
+    },
+
+    AppSearchResultMain: {
+        paddingTop: 48
+    },
+
+    BottomDrawerHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: 16,
+        paddingRight: 24,
+        paddingBottom: 16,
+        paddingLeft: 24
+    },
+
+    BottomDrawerContent: {
+        backgroundColor: "#fff",
+        height:fullHeight,
+        padding:24
+    },
+    // BottomDrawerButton: {
+    //     backgroundColor: "#efefef",
+    //     padding: 4,
+    //     borderRadius: 10
+    // },
+
+    BottomDrawerHeaderText: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        alignContent: "center"
+    },
+
+    BottomDrawerCount: {
+        color: "#011627",
+        backgroundColor: "#DEF5FF",
+        // padding: 2,
+        fontSize: 16,
+        fontFamily: Fonts.JosefinBold,
+        marginLeft: 16,
+        marginRight: 16,
+        borderRadius: 32,
+        width: 28,
+        height: 28,
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center"
+    },
+
+    BottomDrawerTitle: {
+        fontFamily: Fonts.JosefinBold,
+        fontSize: 12,
+        color: "#fff"
+
     }
 });
 
