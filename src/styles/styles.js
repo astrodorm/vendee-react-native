@@ -331,8 +331,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         backgroundColor: "#011627",
         width: fullWidth * 0.92,
-        bottom: 65,
-        flex: 1,
+        bottom: 60,
+        // flex: 1,
         // padding: 16,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
         shadowColor: '#6e6e6e',
         shadowOpacity: 1,
         elevation: 5,
-        height: 65
+        height: 60
     },
 
     AccordionFull: {

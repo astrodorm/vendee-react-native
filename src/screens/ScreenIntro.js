@@ -40,12 +40,12 @@ class ScreenIntro extends Component {
         console.log('sayhi')
     }
 
-    RefHeaderContents = RefHeaderContents => this.RefHeaderContents = RefHeaderContents;
-    RefButtonContents = RefButtonContents => this.RefButtonContents = RefButtonContents;
-    RefBackgroundImage = RefBackgroundImage => this.RefBackgroundImage = RefBackgroundImage;
-    RefIntroPhoneNumber = RefIntroPhoneNumber => this.RefIntroPhoneNumber = RefIntroPhoneNumber;
-    RefIntroEmail = RefIntroEmail => this.RefIntroEmail = RefIntroEmail;
-    RefIntroSuccess = RefIntroSuccess => this.RefIntroSuccess = RefIntroSuccess;
+    handleRefHeaderContents = RefHeaderContents => this.RefHeaderContents = RefHeaderContents;
+    handleRefButtonContents = RefButtonContents => this.RefButtonContents = RefButtonContents;
+    handleRefBackgroundImage = RefBackgroundImage => this.RefBackgroundImage = RefBackgroundImage;
+    handleRefIntroPhoneNumber = RefIntroPhoneNumber => this.RefIntroPhoneNumber = RefIntroPhoneNumber;
+    handleRefIntroEmail = RefIntroEmail => this.RefIntroEmail = RefIntroEmail;
+    handleRefIntroSuccess = RefIntroSuccess => this.RefIntroSuccess = RefIntroSuccess;
 
 
     animateToPhoneNumberView = () => {
@@ -137,7 +137,7 @@ class ScreenIntro extends Component {
             <SafeAreaView>
                 <View>
                     <View>
-                        <Animatable.Image ref={this.RefBackgroundImage} style={styles.introBackgroundImage} source={require('../../assets/images/bg-main.png')} />
+                        <Animatable.Image ref={this.handleRefBackgroundImage} style={styles.introBackgroundImage} source={require('../../assets/images/bg-main.png')} />
                         <Animated.View style={[styles.introBackgroundOverlay, animatedStyle]} />
                     </View>
                     <View style={styles.introContent}>
@@ -145,7 +145,7 @@ class ScreenIntro extends Component {
                         {/* SHOW CONTENTS ON LOAD */}
                         {
                             this.state.showIntroHeader &&
-                            <Animatable.View ref={this.RefHeaderContents}>
+                            <Animatable.View ref={this.handleRefHeaderContents}>
                                 <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
                                 <Text style={styles.introHeader}>We brought it closer to you</Text>
                                 <Text style={styles.introSubtitle}>Now Quicker and Cheaper !</Text>
@@ -153,7 +153,7 @@ class ScreenIntro extends Component {
                         }
                         {
                             this.state.showIntroButtons &&
-                            <Animatable.View ref={this.RefButtonContents}>
+                            <Animatable.View ref={this.handleRefButtonContents}>
                                 <TouchableOpacity onPress={this.animateToPhoneNumberView}>
                                     <Text style={styles.buttonPrimary}> SIGN UP</Text>
                                 </TouchableOpacity>
@@ -174,7 +174,7 @@ class ScreenIntro extends Component {
 
                                         {/* PHONE-NUMBER INTRO */}
                                         {this.state.showIntroPhoneNumber &&
-                                            <Animatable.View ref={this.RefIntroPhoneNumber}>
+                                            <Animatable.View ref={this.handleRefIntroPhoneNumber}>
                                                 <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
                                                 <View>
                                                     <Text style={styles.introCardHeader}>Hey,</Text>
@@ -189,7 +189,7 @@ class ScreenIntro extends Component {
 
                                         {/* EMAIL INTRO */}
                                         {this.state.showIntroEmail &&
-                                            <Animatable.View ref={this.RefIntroEmail}>
+                                            <Animatable.View ref={this.handleRefIntroEmail}>
                                                 <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
                                                 {/* <Icon name="arrow-left" size={30} style={styles.icon} onPress={this.animateBackToPhoneNumberView} /> */}
                                                 <View>
@@ -205,7 +205,7 @@ class ScreenIntro extends Component {
 
                                         {/* SUCCESS SIGNED UP */}
                                         {this.state.showIntroSuccess &&
-                                            <Animatable.View ref={this.RefIntroSuccess}>
+                                            <Animatable.View ref={this.handleRefIntroSuccess}>
                                                 <View style={styles.centerView}>
                                                     <Image style={styles.introSucessImage} source={require('../../assets/images/icon-good.png')} />
                                                 </View>

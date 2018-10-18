@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
@@ -8,7 +8,6 @@ import ProductItem from '../components/ProductItem';
 import Accordion from 'react-native-collapsible/Accordion';
 import ProductQuantityPicker from './ProductQuantityPicker';
 import BottomDrawer from '../components/BottomDrawer';
-import * as Animatable from 'react-native-animatable';
 
 
 const SECTIONS = [
@@ -23,41 +22,10 @@ const SECTIONS = [
 ];
 
 
-Animatable.initializeRegistryWithDefinitions({
-    animateOpenDrawer: {
-        from: {
-            height: 80,
-            bottom: 80,
-        },
-        to: {
-            height: 300,
-            bottom: 300
-        }
-    },
-    animateCloseDrawer: {
-        from: {
-            height: 300,
-            bottom: 300,
-        },
-        to: {
-            height: 80,
-            bottom: 80
-        }
-    }
-});
-
-
 
 
 
 class SearchResult extends Component {
-
-
-    RefBottomDrawer = ref => this.RefBottomDrawer = ref;
-
-    openBottomDrawer = () => {
-        this.RefBottomDrawer.animate('animateOpenDrawer', 600)
-    }
 
 
     state = {
@@ -116,14 +84,10 @@ class SearchResult extends Component {
                         />
                     </View>
                 </View>
-                <Animatable.View ref={this.RefBottomDrawer} style={styles.BottomDrawer}>
-                    {/* <View > */}
-                        <TouchableOpacity onPress={() => this.openBottomDrawer()}>
-                            <BottomDrawer />
-                        </TouchableOpacity>
-                    {/* </View> */}
-                </Animatable.View>
 
+                <View style={styles.BottomDrawer}>
+                    <BottomDrawer />
+                </View>
             </View>
         )
     }
