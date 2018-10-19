@@ -35,8 +35,9 @@ class SearchResult extends Component {
 
         this.state = {
             isVisibleFBtnShoppingList: false,
-            activeSections: []
-
+            activeSections: [],
+            quantities: [0, 0],
+            products: [{ id: 1, name: "product1", quantity: 10 }, { id: 2, name: "product2", quantity: 20 }]
         }
     }
 
@@ -56,17 +57,26 @@ class SearchResult extends Component {
     handleRefFBtnShoppingList = RefFBtnShoppingList => this.RefFBtnShoppingList = RefFBtnShoppingList;
 
     _renderHeader = section => {
+
+        // console.log("_renderHeader")
+
         return (
             <ProductItem />
         );
     };
 
     _renderContent = section => {
+
+        let renderContentCount = 0;
+
+        console.log("_renderContent")
         return (
             // <ProductQuantityPicker animateFBtn={this.animateShoppingListButton} quantity="300"/>
+
             <View style={styles.QuantityPickerContainer}>
                 <ButtonDecrement funcDecrement={this.decrementQuantity} />
-                <ProductQuantityCounter quantity="7" />
+                <ProductQuantityCounter quantity={this.state.quantities[0]} />
+                <ProductQuantityCounter quantity={this.state.products[0].quantity} />
                 <ButtonIncrement funcIncrement={this.incrementQuantity} />
             </View>
 
@@ -88,21 +98,42 @@ class SearchResult extends Component {
         console.log("showFbtnShoppingListButton")
     }
 
-    incrementQuantity = () => {
+    incrementQuantity = (index) => {
         // SHOW SHOPPING LIST FLOATING BUTTON IF NOT VISIBLE
         let isVisibleFBtnShoppingList = this.state.isVisibleFBtnShoppingList;
         isVisibleFBtnShoppingList ? null : this.showFbtnShoppingListButton();
 
+
         //INCREMENT QUANTITY
+        // let quantitiesArray = [...this.state.quantities];
+        // quantitiesArray[0] += 1;
+        // this.setState({ quantities: quantitiesArray });
+
+        //INCREMENT QUANTITY
+        let quantitiesArray = [...this.state.products];
+        quantitiesArray[0].quantity += 1;
+        this.setState({ products: quantitiesArray });
+
+
         console.log("incrementQuantity");
+        // console.log(this.state.quantities);
+
     }
 
-    decrementQuantity = () => {
+    decrementQuantity = (index) => {
         // SHOW SHOPPING LIST FLOATING BUTTON IF NOT VISIBLE
         let isVisibleFBtnShoppingList = this.state.isVisibleFBtnShoppingList;
         isVisibleFBtnShoppingList ? null : this.showFbtnShoppingListButton();
 
         //DECREMENT QUANTITY
+        let quantitiesArray = [...this.state.products];
+        let count = quantitiesArray[0].quantity
+
+        count === 0 ? quantitiesArray[0].quantity = 0 : quantitiesArray[0].quantity -= 1;
+
+        this.setState({ products: quantitiesArray });
+
+
         console.log("decrementQuantity");
     }
 
