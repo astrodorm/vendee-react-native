@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
@@ -11,6 +11,7 @@ import FloatingButtonShoppingList from '../components/FloatingButtonShoppingList
 import ButtonIncrement from '../components/ButtonIncrement';
 import ButtonDecrement from '../components/ButtonDecrement';
 import ProductQuantityCounter from '../components/ProductQuantityCounter';
+import { Button } from 'react-native-vector-icons/AntDesign';
 
 
 const SECTIONS = [
@@ -65,7 +66,7 @@ class SearchResult extends Component {
         );
     };
 
-    _renderContent = section => {
+    _renderContent = ({item}) => {
 
         let renderContentCount = 0;
 
@@ -86,6 +87,20 @@ class SearchResult extends Component {
     _updateSections = activeSections => {
         this.setState({ activeSections });
     };
+
+
+    _renderItem = ({item}) => (
+
+        <Button onPress={()=>this.letUsKnow(item.quantity)}></Button>
+
+        
+      );
+
+
+      letUsKnow = ( id ) =>{
+          console.log("id > " + id );
+      }
+
 
     showFbtnShoppingListButton = () => {
 
@@ -153,7 +168,7 @@ class SearchResult extends Component {
                     </View>
                     <View style={styles.AppSearchResultDisplayContainer}>
                         <Accordion
-                            sections={SECTIONS}
+                            sections={this.state.products}
                             activeSections={this.state.activeSections}
                             // renderSectionTitle={this._renderSectionTitle}
                             renderHeader={this._renderHeader}
@@ -161,6 +176,14 @@ class SearchResult extends Component {
                             onChange={this._updateSections}
                             underlayColor="#efefef"
                         />
+                        <FlatList
+                            data={this.state.products}
+                            extraData={this.state}
+                            keyExtractor={item => item.id}
+                            renderItem={this._renderItem}
+                        />
+
+
                     </View>
                 </View>
 
