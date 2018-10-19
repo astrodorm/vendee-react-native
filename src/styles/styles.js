@@ -5,6 +5,7 @@ import { Dimensions } from "react-native";
 let fullWidth = Dimensions.get('window').width; //full width
 let fullHeight = Dimensions.get('window').height; //full height
 let redTheme = "#F44950";
+let lightRedTheme = "#F7868A"
 let navyBlueTheme1 = "#0D284A";
 let navyBlueTheme2 = "#011627";
 let skyBlueTheme = "#F5FCFF";
@@ -354,7 +355,7 @@ const styles = StyleSheet.create({
 
     },
 
-    FBtnViewContainer: {
+    FBtnShoppingListContainer: {
         position: "absolute",
         elevation: 5,
         height: 80,
@@ -363,7 +364,22 @@ const styles = StyleSheet.create({
         zIndex: 1000,
         alignItems: "center",
         justifyContent: "center",
-        opacity:0
+        opacity: 0,
+        // shadowOffset: { width: 5, height: 5 },
+        // shadowColor: '#6e6e6e',
+        // shadowOpacity: 1,
+    },
+
+    FBtnQuantityPickerContainer: {
+        position: "absolute",
+        elevation: 5,
+        height: 100,
+        width: fullWidth * 0.7,
+        bottom: 100,
+        zIndex: 1000,
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: 1,
         // shadowOffset: { width: 5, height: 5 },
         // shadowColor: '#6e6e6e',
         // shadowOpacity: 1,
@@ -380,25 +396,26 @@ const styles = StyleSheet.create({
     // },
 
     QuantityBtn: {
-        backgroundColor: navyBlueTheme1,
-        paddingTop: 16,
-        paddingBottom: 16,
-        paddingLeft: 40,
-        paddingRight: 40,
+        backgroundColor: lightRedTheme,
+        padding: 8,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        borderRadius:40
     },
 
-    QuantityHeaderText: {
-        color: GrayDarkTheme,
-        fontFamily: Fonts.JosefinRegular,
-        fontSize: 10
-    },
+    // QuantityHeaderText: {
+    //     color: GrayDarkTheme,
+    //     fontFamily: Fonts.JosefinRegular,
+    //     fontSize: 10
+    // },
 
     QuantityText: {
-        color: navyBlueTheme2,
-        fontSize: 24,
-        fontFamily: Fonts.JosefinSemiBold
+        color: "#fff",
+        fontSize: 25,
+        fontFamily: Fonts.JosefinSemiBold,
+        marginTop:0,
+        marginBottom:4,
+        // lineHeight:0
     },
 
     QuantityPickerContainer: {
@@ -406,14 +423,15 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         backgroundColor: skyBlueTheme,
         borderColor: "#ebebeb",
-        borderWidth: 1
+        borderWidth: 1,
+        alignItems:"center"
     },
 
-    QuantitySection: {
-        alignItems: "center",
-        alignContent: "center",
-        justifyContent: "center"
-    },
+    // QuantitySection: {
+    //     alignItems: "center",
+    //     alignContent: "center",
+    //     justifyContent: "center"
+    // },
 
     ProductDetails: {
         flexDirection: "column"
@@ -495,12 +513,25 @@ const styles = StyleSheet.create({
 
     // },
 
-    FBtnContainer: {
+    FBtnShoppingList: {
         backgroundColor: redTheme,
         flexDirection: "row",
         width: fullWidth * 0.6,
         alignItems: "center",
         padding: 16,
+        borderRadius: 100,
+        justifyContent: "space-between",
+        shadowOffset: { width: 5, height: 5 },
+        shadowColor: '#6e6e6e',
+        shadowOpacity: 1,
+    },
+
+    FBtnQuantityPicker: {
+        backgroundColor: redTheme,
+        flexDirection: "row",
+        width: fullWidth * 0.75,
+        alignItems: "center",
+        padding: 10,
         borderRadius: 100,
         justifyContent: "space-between",
         shadowOffset: { width: 5, height: 5 },

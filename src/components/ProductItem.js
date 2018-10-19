@@ -17,6 +17,9 @@ class ProductItem extends Component {
                 <View>
                     <Text style={styles.ProductQuantity}>x3</Text>
                 </View>
+                <View>
+                    <Icon name="pluscircleo" size={22} color="#0D284A">x3</Icon>
+                </View>
             </View>
         )
     }

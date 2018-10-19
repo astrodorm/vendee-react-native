@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList, Button } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
@@ -11,7 +11,10 @@ import FloatingButtonShoppingList from '../components/FloatingButtonShoppingList
 import ButtonIncrement from '../components/ButtonIncrement';
 import ButtonDecrement from '../components/ButtonDecrement';
 import ProductQuantityCounter from '../components/ProductQuantityCounter';
-import { Button } from 'react-native-vector-icons/AntDesign';
+import ButtonAddproduct from '../components/ButtonAddProduct';
+import AvatarProduct from '../components/AvatarProduct';
+import ProductDetails from '../components/ProductDetails';
+import ButtonDone from '../components/ButtonDone';
 
 
 const SECTIONS = [
@@ -36,6 +39,7 @@ class SearchResult extends Component {
 
         this.state = {
             isVisibleFBtnShoppingList: false,
+            isVisibleFBtnQuantityPicker: false,
             activeSections: [],
             quantities: [0, 0],
             products: [{ id: 1, name: "product1", quantity: 10 }, { id: 2, name: "product2", quantity: 20 }]
@@ -56,50 +60,73 @@ class SearchResult extends Component {
 
     //TRANSITION HANDLERS
     handleRefFBtnShoppingList = RefFBtnShoppingList => this.RefFBtnShoppingList = RefFBtnShoppingList;
+    handleRefFBtnQuantityPicker = RefFBtnQuantityPicker => this.RefFBtnQuantityPicker = RefFBtnQuantityPicker;
 
     _renderHeader = section => {
 
         // console.log("_renderHeader")
 
         return (
-            <ProductItem />
-        );
-    };
-
-    _renderContent = ({item}) => {
-
-        let renderContentCount = 0;
-
-        console.log("_renderContent")
-        return (
-            // <ProductQuantityPicker animateFBtn={this.animateShoppingListButton} quantity="300"/>
-
-            <View style={styles.QuantityPickerContainer}>
-                <ButtonDecrement funcDecrement={this.decrementQuantity} />
-                <ProductQuantityCounter quantity={this.state.quantities[0]} />
-                <ProductQuantityCounter quantity={this.state.products[0].quantity} />
-                <ButtonIncrement funcIncrement={this.incrementQuantity} />
+            // <ProductItem />
+            <View style={styles.ProductItem}>
+                <AvatarProduct />
+                <ProductDetails title="Nasco Cornflakes 350g" price="2,345" />
+                <ButtonAddproduct funcAddProduct={this.AddProduct} />
             </View>
-
         );
     };
 
-    _updateSections = activeSections => {
-        this.setState({ activeSections });
-    };
 
 
-    _renderItem = ({item}) => (
+    // _renderContent = ({ item }) => {
 
-        <Button onPress={()=>this.letUsKnow(item.quantity)}></Button>
+    //     let renderContentCount = 0;
 
-        
-      );
+    //     console.log("_renderContent")
+    //     return (
+    //         // <ProductQuantityPicker animateFBtn={this.animateShoppingListButton} quantity="300"/>
+
+    //         <View style={styles.QuantityPickerContainer}>
+    //             <ButtonDecrement funcDecrement={this.decrementQuantity} />
+    //             <ProductQuantityCounter quantity={this.state.quantities[0]} />
+    //             <ProductQuantityCounter quantity={this.state.products[0].quantity} />
+    //             <ButtonIncrement funcIncrement={this.incrementQuantity} />
+    //         </View>
+
+    //     );
+    // };
+
+    // _updateSections = activeSections => {
+    //     this.setState({ activeSections });
+    // };
 
 
-      letUsKnow = ( id ) =>{
-          console.log("id > " + id );
-      }
+    _renderItem = ({ item }) => (
+        <View style={styles.ProductItem}>
+            <AvatarProduct />
+            <ProductDetails title="Nasco Cornflakes 350g" price="2,345" />
+            <ButtonAddproduct funcAddProduct={() => this.AddProduct(item.quantity)} />
+        </View>
+
+    );
+
+    AddProduct = (quantity) => {
+
+        //CHANGE STATE TO true TO REFLECT VISIBILTY
+        this.setState({ isVisibleFBtnQuantityPicker: true });
+
+        //ANIMATE BUTTON
+        this.RefFBtnQuantityPicker.fadeInUp(400);
+
+        console.log("show quantity picker to AddProduct ");
+        console.log("AddProduct > : quantity is " + quantity);
+
+    }
+
+
+    letUsKnow = (id) => {
+        console.log("id > " + id);
+    }
 
 
     showFbtnShoppingListButton = () => {
@@ -118,21 +145,12 @@ class SearchResult extends Component {
         let isVisibleFBtnShoppingList = this.state.isVisibleFBtnShoppingList;
         isVisibleFBtnShoppingList ? null : this.showFbtnShoppingListButton();
 
-
-        //INCREMENT QUANTITY
-        // let quantitiesArray = [...this.state.quantities];
-        // quantitiesArray[0] += 1;
-        // this.setState({ quantities: quantitiesArray });
-
         //INCREMENT QUANTITY
         let quantitiesArray = [...this.state.products];
         quantitiesArray[0].quantity += 1;
         this.setState({ products: quantitiesArray });
 
-
         console.log("incrementQuantity");
-        // console.log(this.state.quantities);
-
     }
 
     decrementQuantity = (index) => {
@@ -147,7 +165,6 @@ class SearchResult extends Component {
         count === 0 ? quantitiesArray[0].quantity = 0 : quantitiesArray[0].quantity -= 1;
 
         this.setState({ products: quantitiesArray });
-
 
         console.log("decrementQuantity");
     }
@@ -167,7 +184,7 @@ class SearchResult extends Component {
                         </View>
                     </View>
                     <View style={styles.AppSearchResultDisplayContainer}>
-                        <Accordion
+                        {/* <Accordion
                             sections={this.state.products}
                             activeSections={this.state.activeSections}
                             // renderSectionTitle={this._renderSectionTitle}
@@ -175,20 +192,27 @@ class SearchResult extends Component {
                             renderContent={this._renderContent}
                             onChange={this._updateSections}
                             underlayColor="#efefef"
-                        />
+                        /> */}
                         <FlatList
                             data={this.state.products}
                             extraData={this.state}
                             keyExtractor={item => item.id}
                             renderItem={this._renderItem}
                         />
-
-
                     </View>
                 </View>
 
-                <Animatable.View style={styles.FBtnViewContainer} ref={this.handleRefFBtnShoppingList}>
+                <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
                     <FloatingButtonShoppingList />
+                </Animatable.View>
+                <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
+                    {/* <FloatingButtonShoppingList /> */}
+                    <View style={styles.FBtnQuantityPicker}>
+                        <ButtonDecrement />
+                        <ProductQuantityCounter quantity="5" />
+                        <ButtonIncrement />
+                        <ButtonDone />
+                    </View>
                 </Animatable.View>
             </View>
         )
