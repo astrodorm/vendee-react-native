@@ -226,12 +226,12 @@ class SearchResult extends Component {
     AcceptQuantity = () => {
 
         this.hideFbtnQuantityPicker();
-        let quantitiesArray = [...this.state.products];
+        let products = [...this.state.products];
        // let index = quantitiesArray.findIndex(x => x.id === id);
-        let selectedProductsArray = quantitiesArray.filter(selectedProduct => selectedProduct.isSelected = true );
-        let selectedProductCount = selectedProductsArray.length
+        const selectedProductsArray = products.filter(product => product.isSelected === true );
+        let selectedProductCountValue = selectedProductsArray.length;
        // shoes.filter(shoe => shoe.color === "black");
-       this.setState({ selectedProductCount: selectedProductCount });
+       this.setState({ selectedProductCount: selectedProductCountValue });
 
 
     }
