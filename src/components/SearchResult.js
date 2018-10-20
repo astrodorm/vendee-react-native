@@ -16,6 +16,7 @@ import AvatarProduct from '../components/AvatarProduct';
 import ProductDetails from '../components/ProductDetails';
 import ButtonDone from '../components/ButtonDone';
 import ShoppingListCounter from '../components/ShoppingListCounter';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 
 // const SECTIONS = [
@@ -46,7 +47,7 @@ class SearchResult extends Component {
             products: [{ id: 1, title: "Nasco Cornflakes 350g", price: "1,234", quantity: 0, isSelected: false }, { id: 2, title: "Kellogs Cornflakes 70g", price: "9,870", quantity: 0, isSelected: false }],
             selectedProductID: 0,
             selectedProductQuantity: 0,
-            selectedProductCount:0
+            selectedProductCount: 0
             // showAddProductButton: true
         }
     }
@@ -227,19 +228,16 @@ class SearchResult extends Component {
 
         this.hideFbtnQuantityPicker();
         let products = [...this.state.products];
-       // let index = quantitiesArray.findIndex(x => x.id === id);
-        const selectedProductsArray = products.filter(product => product.isSelected === true );
+        // let index = quantitiesArray.findIndex(x => x.id === id);
+        const selectedProductsArray = products.filter(product => product.isSelected === true);
         let selectedProductCountValue = selectedProductsArray.length;
-       // shoes.filter(shoe => shoe.color === "black");
-       this.setState({ selectedProductCount: selectedProductCountValue });
-
-
+        // shoes.filter(shoe => shoe.color === "black");
+        this.setState({ selectedProductCount: selectedProductCountValue });
     }
 
     hideFbtnQuantityPicker = () => {
         this.RefFBtnQuantityPicker.fadeOutDown(400).then(endState => {
             this.setState({ isVisibleFBtnQuantityPicker: false });
-
         });
 
         this.showFbtnShoppingListButton()
@@ -301,11 +299,13 @@ class SearchResult extends Component {
                 </View>
 
                 <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
-                {/* TODO ADD {this.state.selectedProductCount} AS PARAM TO TEXT FIELD */}
-                    <FloatingButtonShoppingList />
-                    {/* <View>
-                        <ShoppingListCounter count={this.state.selectedProductCount}/>
-                    </View> */}
+                    {/* TODO ADD {this.state.selectedProductCount} AS PARAM TO TEXT FIELD */}
+                    {/* <FloatingButtonShoppingList /> */}
+                    <View style={styles.FBtnShoppingList}>
+                        <ShoppingListCounter count={this.state.selectedProductCount} />
+                        <Text style={styles.FBtnText}>view shopping list</Text>
+                        <Icon name="arrowsalt" size={20} color={"#0D284A"} />
+                    </View>
 
                 </Animatable.View>
                 <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
