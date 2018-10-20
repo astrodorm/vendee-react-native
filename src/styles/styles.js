@@ -596,7 +596,127 @@ const styles = StyleSheet.create({
 
     FBtnIcon: {
         color: PeachTheme
-    }
+    },
+
+    shoppingListModalContainer: {
+        width: fullWidth,
+        backgroundColor: "#fff",
+        height: 600,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        padding: 24
+    },
+
+    // ShoppingListModalContainer: {
+    //     padding: 48
+    // },
+
+    shoppingListLabel: {
+        fontFamily: Fonts.JosefinBold,
+        fontSize: 24,
+        color: navyBlueTheme1
+    },
+
+    AppContainer: {
+        width: fullWidth
+    },
+
+    MenuPrimaryButton: {
+        backgroundColor: redTheme,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingRight: 24,
+        paddingLeft: 24,
+        borderRadius: 6,
+        flexDirection: "row"
+    },
+
+    MenuDefaultButton: {
+        backgroundColor: "#EFEFEF",
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingRight: 24,
+        paddingLeft: 24,
+        borderRadius: 6,
+        flexDirection: "row"
+    },
+
+    shoppingListOptions: {
+        paddingTop: 16,
+        paddingBottom: 16,
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+
+    MenuPrimaryText: {
+        color: "#fff",
+        fontSize: 12,
+        fontFamily: Fonts.JosefinBold,
+        marginLeft: 8
+    },
+
+    MenuDefaultButtonText: {
+        color: redTheme,
+        fontSize: 11,
+        fontFamily: Fonts.JosefinBold,
+        marginLeft: 8
+    },
+
+    shoppingListDetails: {
+        flexDirection: "row",
+    },
+
+    shoppingListAmountDetails: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingBottom: 8
+    },
+
+    shoppingListDetailsLabel: {
+        fontFamily: Fonts.JosefinRegular,
+        color: GrayDarkTheme,
+        fontSize: 11,
+        marginRight: 16
+    },
+
+    shoppingListDetailsPrice: {
+        fontFamily: Fonts.JosefinRegular,
+        color: GrayDarkTheme,
+        fontSize: 11,
+
+    },
+
+    shoppingListDetailsBoldLabel: {
+        color: navyBlueTheme1,
+        fontSize: 11,
+        fontFamily: Fonts.JosefinBold,
+        marginRight: 16
+    },
+
+    shoppingListDetailsBoldPrice: {
+        color: navyBlueTheme1,
+        fontSize: 11,
+        fontFamily: Fonts.JosefinBold,
+    },
+
+    shoppingListAmountsContainer: {
+        paddingTop: 8,
+        justifyContent: "flex-end",
+        // alignItems: "flex-end",
+        flex: 1
+    },
+
+    ShoppingListCouponContainer: {
+        flex: 1
+    },
+
+    savedAmount: {
+        color: greenTheme,
+        fontSize: 11,
+        fontFamily: Fonts.JosefinBold,
+        textAlign: "right",
+    },
+
 });
 
 export { styles }

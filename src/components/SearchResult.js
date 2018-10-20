@@ -17,7 +17,10 @@ import ProductDetails from '../components/ProductDetails';
 import ButtonDone from '../components/ButtonDone';
 import ShoppingListCounter from '../components/ShoppingListCounter';
 import Icon from 'react-native-vector-icons/AntDesign';
-
+import Modal from 'react-native-modalbox';
+//import Slider from 'react-native-slider';
+import MenuPrimaryButton from '../components/MenuPrimaryButton';
+import MenuDefaultButton from '../components/MenuDefaultButton';
 
 // const SECTIONS = [
 //     {
@@ -267,20 +270,21 @@ class SearchResult extends Component {
 
     render() {
         return (
-            <View style={styles.AppMain}>
-                <View style={styles.AppSearchResultMain}>
-                    <SearchBar />
-                    <DeliveryPicker />
-                    <View style={styles.AppSearchResultHeader}>
-                        <View>
-                            <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
+            <View style={styles.AppContainer}>
+                <View style={styles.AppMain}>
+                    <View style={styles.AppSearchResultMain}>
+                        <SearchBar />
+                        <DeliveryPicker />
+                        <View style={styles.AppSearchResultHeader}>
+                            <View>
+                                <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
+                            </View>
+                            <View>
+                                <FilterPicker />
+                            </View>
                         </View>
-                        <View>
-                            <FilterPicker />
-                        </View>
-                    </View>
-                    <View style={styles.AppSearchResultDisplayContainer}>
-                        {/* <Accordion
+                        <View style={styles.AppSearchResultDisplayContainer}>
+                            {/* <Accordion
                             sections={this.state.products}
                             activeSections={this.state.activeSections}
                             // renderSectionTitle={this._renderSectionTitle}
@@ -289,35 +293,105 @@ class SearchResult extends Component {
                             onChange={this._updateSections}
                             underlayColor="#efefef"
                         /> */}
-                        <FlatList
-                            data={this.state.products}
-                            extraData={this.state}
-                            keyExtractor={item => item.id}
-                            renderItem={this._renderItem}
-                        />
+                            <FlatList
+                                data={this.state.products}
+                                extraData={this.state}
+                                keyExtractor={item => item.id}
+                                renderItem={this._renderItem}
+                            />
+                            {/* <Button title="Basic modal"  style={styles.btn} /> */}
+
+                        </View>
                     </View>
+
+                    <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
+                        {/* TODO ADD {this.state.selectedProductCount} AS PARAM TO TEXT FIELD */}
+                        {/* <FloatingButtonShoppingList /> */}
+                        <TouchableOpacity onPress={() => this.refs.RefModalShoppingList.open()}>
+                            <View style={styles.FBtnShoppingList}>
+                                <ShoppingListCounter count={this.state.selectedProductCount} />
+                                <Text style={styles.FBtnText}>view shopping list</Text>
+                                <Icon name="arrowsalt" size={20} color={"#0D284A"} />
+                            </View>
+                        </TouchableOpacity>
+
+
+                    </Animatable.View>
+
+                    <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
+                        {/* <FloatingButtonShoppingList /> */}
+                        <View style={styles.FBtnQuantityPicker}>
+                            <ButtonDecrement funcDecrement={this.decrementQuantity} />
+                            <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
+                            <ButtonIncrement funcIncrement={this.incrementQuantity} />
+                            <ButtonDone funcDone={this.AcceptQuantity} />
+                        </View>
+                    </Animatable.View>
+
                 </View>
-
-                <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
-                    {/* TODO ADD {this.state.selectedProductCount} AS PARAM TO TEXT FIELD */}
-                    {/* <FloatingButtonShoppingList /> */}
-                    <View style={styles.FBtnShoppingList}>
-                        <ShoppingListCounter count={this.state.selectedProductCount} />
-                        <Text style={styles.FBtnText}>view shopping list</Text>
-                        <Icon name="arrowsalt" size={20} color={"#0D284A"} />
+                <Modal
+                    style={[styles.modal, styles.shoppingListModalContainer]}
+                    position={"bottom"}
+                    ref={"RefModalShoppingList"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                >
+                    <View>
+                        <Icon name="minus" size={48} color={"#efefef"} />
                     </View>
+                    <View style={styles.ShoppingListModalContainer}>
+                        <Text style={styles.shoppingListLabel}>Shopping List</Text>
+                        {/* SHOPPING LIST OPTIONS */}
+                        <View style={styles.shoppingListOptions}>
+                            <MenuPrimaryButton label="MAKE PAYMENT" icon="creditcard" />
+                            <MenuDefaultButton label="SAVE FOR LATER" icon="save" />
+                            {/* <MenuDefaultButton label="COUPONS" icon="tago" /> */}
+                        </View>
+                        {/* COUPON FIELD && COST BREAKDOWN */}
+                        <View style={styles.shoppingListDetails}>
+                            <View style={styles.shoppingListAmountsContainer}>
+                                <View style={styles.shoppingListAmountDetails}>
+                                    <Text style={styles.shoppingListDetailsLabel}>Total</Text>
+                                    <Text style={styles.shoppingListDetailsPrice}>NGN 3,560</Text>
+                                </View>
+                                <View style={styles.shoppingListAmountDetails}>
+                                    <Text style={styles.shoppingListDetailsLabel}>Convenience fee</Text>
+                                    <Text style={styles.shoppingListDetailsPrice}>NGN 72</Text>
+                                </View>
+                                <View style={styles.shoppingListAmountDetails}>
+                                    <Text style={styles.shoppingListDetailsLabel}>Delivery fee</Text>
+                                    <Text style={styles.shoppingListDetailsPrice}>NGN 500</Text>
+                                </View>
+                                <View style={styles.shoppingListAmountDetails}>
+                                    <Text style={styles.shoppingListDetailsBoldLabel}>Grand Total</Text>
+                                    <Text style={styles.shoppingListDetailsBoldPrice}>NGN 4,132</Text>
+                                </View>
+                                <View style={styles.savedAmountContainer}>
+                                    <Text style={styles.savedAmount}>SAVED NGN 370</Text>
+                                </View>
+                            </View>
+                            <View style={styles.ShoppingListCouponContainer}>
+                                {/* <Text>Coupon custom TextInput here</Text>
+                                <Text>Coupon message</Text> */}
 
-                </Animatable.View>
-                <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
-                    {/* <FloatingButtonShoppingList /> */}
-                    <View style={styles.FBtnQuantityPicker}>
-                        <ButtonDecrement funcDecrement={this.decrementQuantity} />
-                        <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
-                        <ButtonIncrement funcIncrement={this.incrementQuantity} />
-                        <ButtonDone funcDone={this.AcceptQuantity} />
+                                {/* USE COUPON BEFORE SELECTING A CARD  */}
+                            </View>
+                        </View>
+                        {/* SELECTED PRODUCT ITEM LIST */}
+                        <View>
+                            <FlatList
+                                data={this.state.products}
+                                extraData={this.state}
+                                keyExtractor={item => item.id}
+                                renderItem={this._renderItem}
+                            />
+                        </View>
                     </View>
-                </Animatable.View>
+                </Modal>
             </View>
+
         )
     }
 }
