@@ -355,6 +355,37 @@ const styles = StyleSheet.create({
 
     },
 
+    AddProductText: {
+        fontSize: 13,
+        fontFamily: Fonts.JosefinBold,
+        color: "#fff",
+        paddingTop: 1,
+        borderRadius: 30,
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        width: 24,
+        height: 24,
+        backgroundColor: "#fff",
+        borderWidth: 2,
+        borderColor: navyBlueTheme1,
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 0,
+        textShadowColor: "#fff"
+    },
+
+    AddProductSelected: {
+        backgroundColor: navyBlueTheme1,
+        borderWidth: 2,
+        borderColor: navyBlueTheme1,
+    },
+
+    AddProductUnselected: {
+        backgroundColor: "#fff",
+        borderWidth: 2,
+        borderColor: navyBlueTheme1,
+    },
+
     FBtnShoppingListContainer: {
         position: "absolute",
         elevation: 5,
@@ -373,13 +404,13 @@ const styles = StyleSheet.create({
     FBtnQuantityPickerContainer: {
         position: "absolute",
         elevation: 5,
-        height: 100,
+        height: 80,
         width: fullWidth * 0.7,
-        bottom: 100,
+        bottom: 80,
         zIndex: 1000,
         alignItems: "center",
         justifyContent: "center",
-        opacity: 1,
+        opacity: 0,
         // shadowOffset: { width: 5, height: 5 },
         // shadowColor: '#6e6e6e',
         // shadowOpacity: 1,
@@ -400,7 +431,7 @@ const styles = StyleSheet.create({
         padding: 8,
         alignItems: "center",
         justifyContent: "center",
-        borderRadius:40
+        borderRadius: 40
     },
 
     // QuantityHeaderText: {
@@ -413,8 +444,8 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 25,
         fontFamily: Fonts.JosefinSemiBold,
-        marginTop:0,
-        marginBottom:4,
+        marginTop: 0,
+        marginBottom: 4,
         // lineHeight:0
     },
 
@@ -424,7 +455,7 @@ const styles = StyleSheet.create({
         backgroundColor: skyBlueTheme,
         borderColor: "#ebebeb",
         borderWidth: 1,
-        alignItems:"center"
+        alignItems: "center"
     },
 
     // QuantitySection: {
@@ -456,39 +487,39 @@ const styles = StyleSheet.create({
         paddingTop: 48
     },
 
-    BottomDrawerHeader: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        paddingTop: 16,
-        paddingRight: 24,
-        paddingBottom: 16,
-        paddingLeft: 24,
-        backgroundColor: navyBlueTheme2,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
+    // BottomDrawerHeader: {
+    //     flexDirection: "row",
+    //     justifyContent: "space-between",
+    //     alignItems: "center",
+    //     paddingTop: 16,
+    //     paddingRight: 24,
+    //     paddingBottom: 16,
+    //     paddingLeft: 24,
+    //     backgroundColor: navyBlueTheme2,
+    //     borderBottomLeftRadius: 0,
+    //     borderBottomRightRadius: 0,
+    //     borderTopLeftRadius: 8,
+    //     borderTopRightRadius: 8,
 
-    },
+    // },
 
-    BottomDrawerContent: {
-        backgroundColor: "#fff",
-        height: fullHeight,
-        padding: 24
-    },
+    // BottomDrawerContent: {
+    //     backgroundColor: "#fff",
+    //     height: fullHeight,
+    //     padding: 24
+    // },
     // BottomDrawerButton: {
     //     backgroundColor: "#efefef",
     //     padding: 4,
     //     borderRadius: 10
     // },
 
-    BottomDrawerHeaderText: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        alignContent: "center"
-    },
+    // BottomDrawerHeaderText: {
+    //     flexDirection: "row",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     alignContent: "center"
+    // },
 
     // BottomDrawerCount: {
     //     color: "#011627",

@@ -7,7 +7,10 @@ const ButtonAddProduct = (props) => {
 
     return (
         <TouchableOpacity onPress={() => props.funcAddProduct()}>
-            <Icon name="pluscircleo" size={22} color={"#0D284A"}/>
+            {/* <Icon name="pluscircleo" size={22} color={"#0D284A"}/> */}
+            <Text>
+                {props.quantity}
+            </Text>
         </TouchableOpacity>
     )
 }
