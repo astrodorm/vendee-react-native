@@ -270,12 +270,14 @@ class SearchResult extends Component {
     deleteShoppingListItem = () => {
 
         let id = this.state.selectedProductID;
-        let quantitiesArray = [...this.state.products];
-        let index = quantitiesArray.findIndex(x => x.id === id);
-        quantitiesArray[index].isSelected = false;
-        quantitiesArray[index].quantity = 0;
+        let products = [...this.state.products];
+        let index = products.findIndex(x => x.id === id);
+        let selectedProductsArray = products.filter(product => product.isSelected === true);
+        let selectedProductCountValue = selectedProductsArray.length - 1;
+        products[index].isSelected = false;
+        products[index].quantity = 0;
 
-        this.setState({ products: quantitiesArray });
+        this.setState({ products: products, selectedProductCount: selectedProductCountValue });
 
         this.hideFbtnShoppingListQuantityPicker();
     }
