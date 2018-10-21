@@ -21,6 +21,7 @@ import Modal from 'react-native-modalbox';
 //import Slider from 'react-native-slider';
 import MenuPrimaryButton from '../components/MenuPrimaryButton';
 import MenuDefaultButton from '../components/MenuDefaultButton';
+import ShippingListDetails from '../components/shoppingListDetails';
 
 // const SECTIONS = [
 //     {
@@ -319,7 +320,6 @@ class SearchResult extends Component {
                     </Animatable.View>
 
                     <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
-                        {/* <FloatingButtonShoppingList /> */}
                         <View style={styles.FBtnQuantityPicker}>
                             <ButtonDecrement funcDecrement={this.decrementQuantity} />
                             <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
@@ -329,6 +329,8 @@ class SearchResult extends Component {
                     </Animatable.View>
 
                 </View>
+
+                {/* SHOPPING LIST MODAL */}
                 <Modal
                     style={[styles.modal, styles.shoppingListModalContainer]}
                     position={"bottom"}
@@ -338,47 +340,21 @@ class SearchResult extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                 >
-                    <View>
-                        <Icon name="minus" size={48} color={"#efefef"} />
+                    <View style={styles.shoppingListHeader}>
+                        <Icon name="minus" size={56} color={"#efefef"} />
                     </View>
                     <View style={styles.ShoppingListModalContainer}>
-                        <Text style={styles.shoppingListLabel}>Shopping List</Text>
+                        <View style={styles.shoppingListDetails}>
+                            <Text style={styles.shoppingListLabel}>Shopping List</Text>
+                        </View>
+                        <ShippingListDetails total="3,550" convenienceFee="75" deliveryFee="500" grandTotal="4,520"/>
+
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
                             <MenuPrimaryButton label="MAKE PAYMENT" icon="creditcard" />
                             <MenuDefaultButton label="SAVE FOR LATER" icon="save" />
-                            {/* <MenuDefaultButton label="COUPONS" icon="tago" /> */}
                         </View>
-                        {/* COUPON FIELD && COST BREAKDOWN */}
-                        <View style={styles.shoppingListDetails}>
-                            <View style={styles.shoppingListAmountsContainer}>
-                                <View style={styles.shoppingListAmountDetails}>
-                                    <Text style={styles.shoppingListDetailsLabel}>Total</Text>
-                                    <Text style={styles.shoppingListDetailsPrice}>NGN 3,560</Text>
-                                </View>
-                                <View style={styles.shoppingListAmountDetails}>
-                                    <Text style={styles.shoppingListDetailsLabel}>Convenience fee</Text>
-                                    <Text style={styles.shoppingListDetailsPrice}>NGN 72</Text>
-                                </View>
-                                <View style={styles.shoppingListAmountDetails}>
-                                    <Text style={styles.shoppingListDetailsLabel}>Delivery fee</Text>
-                                    <Text style={styles.shoppingListDetailsPrice}>NGN 500</Text>
-                                </View>
-                                <View style={styles.shoppingListAmountDetails}>
-                                    <Text style={styles.shoppingListDetailsBoldLabel}>Grand Total</Text>
-                                    <Text style={styles.shoppingListDetailsBoldPrice}>NGN 4,132</Text>
-                                </View>
-                                <View style={styles.savedAmountContainer}>
-                                    <Text style={styles.savedAmount}>SAVED NGN 370</Text>
-                                </View>
-                            </View>
-                            <View style={styles.ShoppingListCouponContainer}>
-                                {/* <Text>Coupon custom TextInput here</Text>
-                                <Text>Coupon message</Text> */}
 
-                                {/* USE COUPON BEFORE SELECTING A CARD  */}
-                            </View>
-                        </View>
                         {/* SELECTED PRODUCT ITEM LIST */}
                         <View>
                             <FlatList
@@ -390,6 +366,14 @@ class SearchResult extends Component {
                         </View>
                     </View>
                 </Modal>
+                {/* <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
+                        <View style={styles.FBtnQuantityPicker}>
+                            <ButtonDecrement funcDecrement={this.decrementQuantity} />
+                            <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
+                            <ButtonIncrement funcIncrement={this.incrementQuantity} />
+                            <ButtonDone funcDone={this.AcceptQuantity} />
+                        </View>
+                    </Animatable.View> */}
             </View>
 
         )

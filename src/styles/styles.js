@@ -416,15 +416,9 @@ const styles = StyleSheet.create({
         // shadowOpacity: 1,
     },
 
-    // QuantityMinus: {
-    //     backgroundColor: navyBlueTheme1,
-    //     paddingTop: 16,
-    //     paddingBottom: 16,
-    //     paddingLeft: 40,
-    //     paddingRight: 40,
-    //     alignItems: "center",
-    //     justifyContent: "center"
-    // },
+    FBtnShoppingListQuantityPickerContainer:{
+
+    },
 
     QuantityBtn: {
         backgroundColor: lightRedTheme,
@@ -604,7 +598,11 @@ const styles = StyleSheet.create({
         height: 600,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
-        padding: 24
+        paddingTop: 0,
+        paddingBottom: 24,
+        paddingLeft: 24,
+        paddingRight: 24
+
     },
 
     // ShoppingListModalContainer: {
@@ -614,7 +612,9 @@ const styles = StyleSheet.create({
     shoppingListLabel: {
         fontFamily: Fonts.JosefinBold,
         fontSize: 24,
-        color: navyBlueTheme1
+        color: navyBlueTheme1,
+        marginBottom:8,
+        marginTop:0
     },
 
     AppContainer: {
@@ -675,35 +675,36 @@ const styles = StyleSheet.create({
     shoppingListDetailsLabel: {
         fontFamily: Fonts.JosefinRegular,
         color: GrayDarkTheme,
-        fontSize: 11,
+        fontSize: 12,
         marginRight: 16
     },
 
     shoppingListDetailsPrice: {
         fontFamily: Fonts.JosefinRegular,
         color: GrayDarkTheme,
-        fontSize: 11,
+        fontSize: 12,
 
     },
 
     shoppingListDetailsBoldLabel: {
         color: navyBlueTheme1,
-        fontSize: 11,
+        fontSize: 12,
         fontFamily: Fonts.JosefinBold,
         marginRight: 16
     },
 
     shoppingListDetailsBoldPrice: {
         color: navyBlueTheme1,
-        fontSize: 11,
+        fontSize: 12,
         fontFamily: Fonts.JosefinBold,
     },
 
     shoppingListAmountsContainer: {
         paddingTop: 8,
         justifyContent: "flex-end",
+        marginBottom:8
         // alignItems: "flex-end",
-        flex: 1
+        // flex: 1
     },
 
     ShoppingListCouponContainer: {
@@ -715,6 +716,11 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontFamily: Fonts.JosefinBold,
         textAlign: "right",
+    },
+
+    shoppingListHeader: {
+        justifyContent: "center",
+        alignItems: "center",
     },
 
 });
