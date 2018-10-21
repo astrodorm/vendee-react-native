@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     },
 
     AppImage: {
-        marginTop: 64,
+        marginTop: 32,
         width: 32,
         height: 32,
         resizeMode: "contain"
@@ -218,8 +218,11 @@ const styles = StyleSheet.create({
 
     AppSearchBarIcon: {
         // width: 68,
-        height: 68,
-        padding: 24,
+        // height: 68,
+        marginTop: 24,
+        marginRight: 24,
+        // paddingRight:24,
+        // paddingBottom:24
     },
 
     AppSearchBarTextInput: {
