@@ -417,11 +417,30 @@ const styles = StyleSheet.create({
     },
 
     FBtnShoppingListQuantityPickerContainer:{
-
+        position: "absolute",
+        elevation: 5,
+        height: 80,
+        width: fullWidth * 0.7,
+        bottom: 80,
+        zIndex: 1000,
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: 0,
+        // shadowOffset: { width: 5, height: 5 },
+        // shadowColor: '#6e6e6e',
+        // shadowOpacity: 1,
     },
 
     QuantityBtn: {
         backgroundColor: lightRedTheme,
+        padding: 8,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 40
+    },
+
+    shoppingListRemoveBtn: {
+        backgroundColor: navyBlueTheme1,
         padding: 8,
         alignItems: "center",
         justifyContent: "center",
@@ -601,7 +620,8 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         paddingBottom: 24,
         paddingLeft: 24,
-        paddingRight: 24
+        paddingRight: 24,
+        alignItems:"center"
 
     },
 
@@ -628,7 +648,8 @@ const styles = StyleSheet.create({
         paddingRight: 24,
         paddingLeft: 24,
         borderRadius: 6,
-        flexDirection: "row"
+        flexDirection: "row",
+        marginRight:16
     },
 
     MenuDefaultButton: {

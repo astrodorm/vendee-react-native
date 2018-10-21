@@ -22,6 +22,7 @@ import Modal from 'react-native-modalbox';
 import MenuPrimaryButton from '../components/MenuPrimaryButton';
 import MenuDefaultButton from '../components/MenuDefaultButton';
 import ShippingListDetails from '../components/shoppingListDetails';
+import ButtonDelete from '../components/ButtonDelete';
 
 // const SECTIONS = [
 //     {
@@ -51,7 +52,8 @@ class SearchResult extends Component {
             products: [{ id: 1, title: "Nasco Cornflakes 350g", price: "1,234", quantity: 0, isSelected: false }, { id: 2, title: "Kellogs Cornflakes 70g", price: "9,870", quantity: 0, isSelected: false }],
             selectedProductID: 0,
             selectedProductQuantity: 0,
-            selectedProductCount: 0
+            selectedProductCount: 0,
+            isVisibleFBtnShoppingListQuantityPicker: false
             // showAddProductButton: true
         }
     }
@@ -71,6 +73,7 @@ class SearchResult extends Component {
     //TRANSITION HANDLERS
     handleRefFBtnShoppingList = RefFBtnShoppingList => this.RefFBtnShoppingList = RefFBtnShoppingList;
     handleRefFBtnQuantityPicker = RefFBtnQuantityPicker => this.RefFBtnQuantityPicker = RefFBtnQuantityPicker;
+    handleRefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker => this.RefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker;
 
     // _renderHeader = section => {
 
@@ -118,22 +121,30 @@ class SearchResult extends Component {
     // };
 
 
-    _renderItem = ({ item }) => (
-
+    _renderProductItem = ({ item }) => (
         <View style={styles.ProductItem}>
             <AvatarProduct />
             <ProductDetails title={item.title} price={item.price} />
-            {/* <View style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
-            <ButtonAddproduct funcAddProduct={() => this.AddProduct(item.id, item.quantity)} quantity={item.quantity} />
-            </View> */}
-
             <TouchableOpacity onPress={() => this.AddProduct(item.id, item.quantity)}>
                 <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
                     {item.quantity}
                 </Text>
             </TouchableOpacity>
         </View>
+    );
 
+
+
+    _renderShoppingListItem = ({ item }) => (
+        <View style={styles.ProductItem}>
+            <AvatarProduct />
+            <ProductDetails title={item.title} price={item.price} />
+            <TouchableOpacity onPress={() => this.EditShoppingListProduct(item.id, item.quantity)}>
+                <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
+                    {item.quantity}
+                </Text>
+            </TouchableOpacity>
+        </View>
     );
 
     AddProduct = (id, quantity) => {
@@ -142,16 +153,33 @@ class SearchResult extends Component {
         let isVisibleFBtnQuantityPicker = this.state.isVisibleFBtnQuantityPicker;
         isVisibleFBtnQuantityPicker ? this.animateQuantityPicker() : this.showFbtnQuantityPicker();
 
+        //UPDATE STATE WITH SELECTED quantity AND id 
+        this.setState({ selectedProductID: id, selectedProductQuantity: quantity });
+
+    }
+
+    EditShoppingListProduct = (id, quantity) => {
+
+        //CHECK IF QUANTITY PICKER IS VISIBLE
+        let isVisibleFBtnShoppingListQuantityPicker = this.state.isVisibleFBtnShoppingListQuantityPicker;
+        isVisibleFBtnShoppingListQuantityPicker ? this.animateShoppingListQuantityPicker() : this.showFbtnShoppingListQuantityPicker();
 
         //UPDATE STATE WITH SELECTED quantity AND id 
         this.setState({ selectedProductID: id, selectedProductQuantity: quantity });
 
+    }
 
+    animateShoppingListQuantityPicker = () => {
+        //SET OPACITY TO 1 FOR VISIBILTY 
+        this.RefFBtnShoppingListQuantityPicker.transitionTo({ opacity: 1 });
 
-        console.log("show quantity picker to AddProduct ");
-        console.log("AddProduct > : quantity is " + quantity);
-        console.log("AddProduct > : id is " + id);
+        //ANIMATE BUTTON
+        this.RefFBtnShoppingListQuantityPicker.pulse(400);
+    }
 
+    showFbtnShoppingListQuantityPicker = () => {
+        //ANIMATE BUTTON
+        this.RefFBtnShoppingListQuantityPicker.fadeInUp(400).then(endState => this.setState({ isVisibleFBtnShoppingListQuantityPicker: true }));
 
     }
 
@@ -231,12 +259,34 @@ class SearchResult extends Component {
     AcceptQuantity = () => {
 
         this.hideFbtnQuantityPicker();
+
         let products = [...this.state.products];
-        // let index = quantitiesArray.findIndex(x => x.id === id);
         const selectedProductsArray = products.filter(product => product.isSelected === true);
         let selectedProductCountValue = selectedProductsArray.length;
-        // shoes.filter(shoe => shoe.color === "black");
+
         this.setState({ selectedProductCount: selectedProductCountValue });
+    }
+
+    deleteShoppingListItem = () => {
+
+        let id = this.state.selectedProductID;
+        let quantitiesArray = [...this.state.products];
+        let index = quantitiesArray.findIndex(x => x.id === id);
+        quantitiesArray[index].isSelected = false;
+        quantitiesArray[index].quantity = 0;
+
+        this.setState({ products: quantitiesArray });
+
+        this.hideFbtnShoppingListQuantityPicker();
+    }
+
+    hideFbtnShoppingListQuantityPicker = () => {
+        this.RefFBtnShoppingListQuantityPicker.fadeOutDown(400).then(endState => {
+            this.setState({ isVisibleFBtnShoppingListQuantityPicker: false });
+        });
+
+        // this.showFbtnShoppingListButton()
+        this.RefFBtnShoppingListQuantityPicker.transitionTo({ opacity: 0 })
     }
 
     hideFbtnQuantityPicker = () => {
@@ -262,9 +312,12 @@ class SearchResult extends Component {
 
         // //ANIMATE BUTTON
         // this.RefFBtnShoppingList.fadeInUp(400);
+    }
 
-
-
+    getShoppingListItems = () => {
+        let products = [...this.state.products];
+        const selectedProductsArray = products.filter(product => product.isSelected === true);
+        return selectedProductsArray;
     }
 
 
@@ -298,7 +351,7 @@ class SearchResult extends Component {
                                 data={this.state.products}
                                 extraData={this.state}
                                 keyExtractor={item => item.id}
-                                renderItem={this._renderItem}
+                                renderItem={this._renderProductItem}
                             />
                             {/* <Button title="Basic modal"  style={styles.btn} /> */}
 
@@ -339,6 +392,7 @@ class SearchResult extends Component {
                     swipeToClose={false}
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
+                    onClosingState={this.hideFbtnShoppingListQuantityPicker}
                 >
                     <View style={styles.shoppingListHeader}>
                         <Icon name="minus" size={56} color={"#efefef"} />
@@ -347,7 +401,7 @@ class SearchResult extends Component {
                         <View style={styles.shoppingListDetails}>
                             <Text style={styles.shoppingListLabel}>Shopping List</Text>
                         </View>
-                        <ShippingListDetails total="3,550" convenienceFee="75" deliveryFee="500" grandTotal="4,520"/>
+                        <ShippingListDetails total="3,550" convenienceFee="75" deliveryFee="500" grandTotal="4,520" />
 
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
@@ -358,22 +412,22 @@ class SearchResult extends Component {
                         {/* SELECTED PRODUCT ITEM LIST */}
                         <View>
                             <FlatList
-                                data={this.state.products}
+                                data={this.getShoppingListItems()}
                                 extraData={this.state}
                                 keyExtractor={item => item.id}
-                                renderItem={this._renderItem}
+                                renderItem={this._renderShoppingListItem}
                             />
                         </View>
                     </View>
-                </Modal>
-                {/* <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
+                    <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnShoppingListQuantityPicker}>
                         <View style={styles.FBtnQuantityPicker}>
                             <ButtonDecrement funcDecrement={this.decrementQuantity} />
                             <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
                             <ButtonIncrement funcIncrement={this.incrementQuantity} />
-                            <ButtonDone funcDone={this.AcceptQuantity} />
+                            <ButtonDelete funcDelete={this.deleteShoppingListItem} />
                         </View>
-                    </Animatable.View> */}
+                    </Animatable.View>
+                </Modal>
             </View>
 
         )
