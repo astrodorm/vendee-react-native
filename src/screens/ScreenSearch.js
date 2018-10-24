@@ -11,8 +11,8 @@ class ScreenSearch extends Component {
         super(props);
 
         this.state = {
-            showSearchResultView: false,
-            ShowSearchView: true,
+            showSearchResultView: true,
+            ShowSearchView: false,
         }
     }
 

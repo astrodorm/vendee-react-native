@@ -17,9 +17,16 @@ class SearchBar extends Component {
     }
 
     fetchSearchResult = () => {
-
         let isLoadingState = true;
-        this.setState({isLoading: isLoadingState});
+        this.setState({ isLoading: isLoadingState });
+        this.fakeFetchingURL();
+    }
+
+    fakeFetchingURL = () => {
+        setTimeout(this.showSearchResult(), 3000);
+    }
+
+    showSearchResult = () =>{
 
     }
 
@@ -29,13 +36,13 @@ class SearchBar extends Component {
                 <TextInput style={styles.AppSearchBarTextInput} placeholder="What would you buy today ?"></TextInput>
                 <TouchableOpacity onPress={() => this.fetchSearchResult()}>
 
-            { !this.state.isLoading &&
-                    <Icon style={styles.AppSearchBarIcon} name="right" size={24} color="#f44950" />
-            }
+                    {!this.state.isLoading &&
+                        <Icon style={styles.AppSearchBarIcon} name="right" size={24} color="#f44950" />
+                    }
 
-            { this.state.isLoading &&
-                    <Progress.CircleSnail style={styles.AppSearchBarIcon} color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
-            }
+                    {this.state.isLoading &&
+                        <Progress.CircleSnail style={styles.AppSearchBarIcon} color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
+                    }
                 </TouchableOpacity>
             </View>
         )

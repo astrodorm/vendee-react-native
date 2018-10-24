@@ -23,6 +23,7 @@ import MenuPrimaryButton from '../components/MenuPrimaryButton';
 import MenuDefaultButton from '../components/MenuDefaultButton';
 import ShippingListDetails from '../components/shoppingListDetails';
 import ButtonDelete from '../components/ButtonDelete';
+import CounterComponent from '../components/CounterComponent'
 
 // const SECTIONS = [
 //     {
@@ -331,6 +332,7 @@ class SearchResult extends Component {
                     <View style={styles.AppSearchResultMain}>
                         <SearchBar />
                         <DeliveryPicker />
+                        <CounterComponent/>
                         <View style={styles.AppSearchResultHeader}>
                             <View>
                                 <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
