@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { Text, View, Button } from 'react-native';
 import { styles } from '../styles/styles';
 import { connect } from 'react-redux';
-import { incrementQuantity, decrementQuantity } from '../actions/actions'
+import { itemIncrementAction, decrementItem } from '../actions/actions'
 
 
 class CounterComponent extends Component {
 
     increment = () => {
-        this.props.dispatch(incrementQuantity())
+        this.props.dispatch(itemIncrementAction())
         console.log("increment called")
     }
 
 
     decrement = () => {
-        this.props.dispatch(decrementQuantity())
+        this.props.dispatch(decrementItem())
     }
 
 
@@ -22,7 +22,7 @@ class CounterComponent extends Component {
         return (
             <View>
                 <Button onPress={this.increment} title="UP"></Button>
-                <Text style={styles.introCardSubtitle}> {this.props.count} </Text>
+                <Text style={styles.introCardSubtitle}> {this.props.selectProductID} </Text>
                 <Button onPress={this.decrement} title="DOWN"></Button>
             </View>
         )
@@ -31,7 +31,8 @@ class CounterComponent extends Component {
 
 
 const mapStateToProps = state => ({
-    count: state.products.count
+    count: state.products.count,
+    selectProductID : state.products.selectProductID
 })
 
 export default connect(mapStateToProps)(CounterComponent);

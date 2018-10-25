@@ -374,7 +374,10 @@ const styles = StyleSheet.create({
         borderColor: navyBlueTheme1,
         textShadowOffset: { width: 0, height: 0 },
         textShadowRadius: 0,
-        textShadowColor: "#fff"
+        textShadowColor: "#fff",
+
+        //REMOVE FOR TOGGLING SELECTED AND UNSELECTED CLASS
+        backgroundColor: greenTheme,
     },
 
     AddProductSelected: {

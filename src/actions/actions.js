@@ -1,24 +1,54 @@
 //
 // ACTIONS
 //
-export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY';
-export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
+export const ITEM_INCREMENT = 'ITEM_INCREMENT';
+export const ITEM_DECEREMENT = 'ITEM_DECEREMENT';
+export const ITEM_ADD = 'ITEM_ADD';
+export const ITEM_REMOVE = 'ITEM_REMOVE';
+export const ITEM_SELECT = 'ITEM_SELECT';
+export const LIST_ITEM_INCREMENT = 'LIST_ITEM_INCREMENT';
+
 
 
 
 //
 //ACTION CREATORS
 //
-export const incrementQuantity = () => (
+export const itemIncrementAction = () => (
     {
-        type: INCREMENT_QUANTITY
+        type: ITEM_INCREMENT,        
     }
 );
 
 
-export const decrementQuantity = () => (
+export const decrementItem = () => (
     {
-        type: DECREMENT_QUANTITY
+        type: ITEM_DECEREMENT  
     }
 );
 
+
+export const addItemAction = (id) => (
+    {
+        type: ITEM_ADD,
+        id
+    }
+);
+
+
+export const itemSelectAction = (id, quantity) => (
+    {
+        type: ITEM_SELECT,
+        id,
+        quantity
+    }
+);
+
+
+export const incrementListItemAction = (index, quantity) => (
+    {
+        type: LIST_ITEM_INCREMENT,
+        index,
+        quantity
+    }
+);

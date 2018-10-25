@@ -23,7 +23,13 @@ import MenuPrimaryButton from '../components/MenuPrimaryButton';
 import MenuDefaultButton from '../components/MenuDefaultButton';
 import ShippingListDetails from '../components/shoppingListDetails';
 import ButtonDelete from '../components/ButtonDelete';
-import CounterComponent from '../components/CounterComponent'
+import CounterComponent from '../components/CounterComponent';
+import { connect } from 'react-redux';
+import ProductOptions from '../components/ProductOptions';
+import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction } from '../actions/actions'
+
+
+
 
 // const SECTIONS = [
 //     {
@@ -45,18 +51,27 @@ class SearchResult extends Component {
     constructor(props) {
         super(props);
 
+
         this.state = {
             isVisibleFBtnShoppingList: false,
             isVisibleFBtnQuantityPicker: false,
             activeSections: [],
             quantities: [0, 0],
-            products: [{ id: 1, title: "Nasco Cornflakes 350g", price: "1,234", quantity: 0, isSelected: false }, { id: 2, title: "Kellogs Cornflakes 70g", price: "9,870", quantity: 0, isSelected: false }],
-            selectedProductID: 0,
+            //  products: [{ id: 1, title: "Nasco Cornflakes 350g", price: "1,234", quantity: 0, isSelected: false }, { id: 2, title: "Kellogs Cornflakes 70g", price: "9,870", quantity: 0, isSelected: false }],
+            products: [],
+            selectProductID: 0,
             selectedProductQuantity: 0,
             selectedProductCount: 0,
             isVisibleFBtnShoppingListQuantityPicker: false
             // showAddProductButton: true
         }
+    }
+
+
+    componentDidMount() {
+        const prouductsData = this.props.products;
+        // (this.props.navigation.state.params.activityId);
+        this.setState({ products: prouductsData })
     }
 
     // state = {
@@ -87,7 +102,7 @@ class SearchResult extends Component {
     //             <ProductDetails title="Nasco Cornflakes 350g" price="2,345" />
     //             {
     //                 this.state.showAddProductButton &&
-    //                 <ButtonAddproduct funcAddProduct={this.AddProduct} />
+    //                 <ButtonAddproduct funcAddProduct={this.onSelectItem} />
     //             }
     //             {
     //                 !this.state.showAddProductButton &&
@@ -123,15 +138,19 @@ class SearchResult extends Component {
 
 
     _renderProductItem = ({ item }) => (
-        <View style={styles.ProductItem}>
-            <AvatarProduct />
-            <ProductDetails title={item.title} price={item.price} />
-            <TouchableOpacity onPress={() => this.AddProduct(item.id, item.quantity)}>
-                <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
-                    {item.quantity}
-                </Text>
-            </TouchableOpacity>
-        </View>
+        // <View style={styles.ProductItem}>
+        //     <AvatarProduct />
+        //     <ProductDetails title={item.title} price={item.price} />
+        //     <TouchableOpacity onPress={() => this.onSelectItem(item.id, item.quantity)}>
+        //         <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
+        //             {item.quantity}
+        //         </Text>
+        //     </TouchableOpacity>
+        // </View>
+
+        //../../assets/images/nasco-corn-flakes-350g.png
+
+        <ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
     );
 
 
@@ -148,15 +167,52 @@ class SearchResult extends Component {
         </View>
     );
 
-    AddProduct = (id, quantity) => {
+    onSelectItem = (id) => {
+
+        let quantity = this.getListByID(id).quantity;
+
+        console.log("id >" + id);
+        console.log("quantity >" + quantity);
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
         let isVisibleFBtnQuantityPicker = this.state.isVisibleFBtnQuantityPicker;
         isVisibleFBtnQuantityPicker ? this.animateQuantityPicker() : this.showFbtnQuantityPicker();
 
-        //UPDATE STATE WITH SELECTED quantity AND id 
-        this.setState({ selectedProductID: id, selectedProductQuantity: quantity });
+        // this.animateQuantityPicker();
 
+        this.props.dispatch(itemSelectAction(id, quantity));
+
+        //UPDATE STATE WITH SELECTED quantity AND id 
+        this.setState({ selectProductID: id });
+
+        // this.setState({ products : this.props.products})
+
+    }
+
+    getListByID = (id) => {
+
+        let listArray = [...this.props.lists];
+        let index = listArray.findIndex(x => x.id === id);
+        let list = listArray[index];
+
+        //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS INDEX IS NOT FOUND IN LIST ARRAY
+        let initialValue = { quantity: 0 }
+        list === undefined ? value = initialValue : value = list
+
+        return value;
+
+    }
+
+    getIsAddedByID = (id) =>{
+        let listArray = [...this.props.lists];
+        let index = listArray.findIndex(x => x.id === id);
+        let list = listArray[index];
+
+        //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS INDEX IS NOT FOUND IN LIST ARRAY
+        //let initialValue = { quantity: 0 }
+        list === undefined ? value = false : value = true
+
+        return value;
     }
 
     EditShoppingListProduct = (id, quantity) => {
@@ -166,7 +222,7 @@ class SearchResult extends Component {
         isVisibleFBtnShoppingListQuantityPicker ? this.animateShoppingListQuantityPicker() : this.showFbtnShoppingListQuantityPicker();
 
         //UPDATE STATE WITH SELECTED quantity AND id 
-        this.setState({ selectedProductID: id, selectedProductQuantity: quantity });
+        this.setState({ selectProductID: id, selectedProductQuantity: quantity });
 
     }
 
@@ -217,20 +273,43 @@ class SearchResult extends Component {
         // let isVisibleFBtnShoppingList = this.state.isVisibleFBtnShoppingList;
         // isVisibleFBtnShoppingList ? null : this.showFbtnShoppingListButton();
 
+        let id = this.props.selectProductID;
 
+        this.props.dispatch(itemIncrementAction());
+
+        this.getListByID(id).quantity === 0 ? this.addItem(id) : this.incrementListItem(id)
 
         //INCREMENT QUANTITY
-        let id = this.state.selectedProductID;
-        let quantitiesArray = [...this.state.products];
-        let index = quantitiesArray.findIndex(x => x.id === id);
+        // let id = this.state.selectProductID;
+        // let quantitiesArray = [...this.state.products];
+        // let listArray = [...props.lists];
+        // let index = listArray.findIndex(x => x.id === id);
 
-        quantitiesArray[index].quantity += 1;
-        quantitiesArray[index].isSelected = true;
-        this.setState({ products: quantitiesArray, selectedProductQuantity: quantitiesArray[index].quantity });
+        // listArray[index].quantity += 1;
+        //quantitiesArray[index].isSelected = true;
+        // this.setState({ products: quantitiesArray, selectedProductQuantity: quantitiesArray[index].quantity });
 
-        console.log("incrementQuantity");
-        console.log("incrementQuantity > index : " + index);
+        // this.props.dispatch(itemIncrementAction())
 
+        console.log("incrementQuantity id > " + id);
+        //console.log("incrementQuantity > index : " + index);
+
+    }
+
+    addItem = (id) => {
+        console.log("addItem id > " + id)
+
+        this.props.dispatch(addItemAction(id));
+    }
+
+    incrementListItem = (id) => {
+
+        let listArray = [...this.props.lists];
+        let index = listArray.findIndex(x => x.id === id);
+        let quantity = listArray[index].quantity + 1;
+        console.log("incrementListItem index > " + index, "incrementListItem quantity > " + quantity);
+
+        this.props.dispatch(incrementListItemAction(index, quantity))
     }
 
     decrementQuantity = () => {
@@ -243,7 +322,7 @@ class SearchResult extends Component {
 
         //DECREMENT QUANTITY
         //let quantity = this.state.selectedProductQuantity;
-        let id = this.state.selectedProductID;
+        let id = this.state.selectProductID;
         let quantitiesArray = [...this.state.products];
         let index = quantitiesArray.findIndex(x => x.id === id);
         let count = quantitiesArray[index].quantity;
@@ -270,7 +349,7 @@ class SearchResult extends Component {
 
     deleteShoppingListItem = () => {
 
-        let id = this.state.selectedProductID;
+        let id = this.state.selectProductID;
         let products = [...this.state.products];
         let index = products.findIndex(x => x.id === id);
         let selectedProductsArray = products.filter(product => product.isSelected === true);
@@ -332,7 +411,7 @@ class SearchResult extends Component {
                     <View style={styles.AppSearchResultMain}>
                         <SearchBar />
                         <DeliveryPicker />
-                        <CounterComponent/>
+                        {/* <CounterComponent /> */}
                         <View style={styles.AppSearchResultHeader}>
                             <View>
                                 <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
@@ -352,8 +431,8 @@ class SearchResult extends Component {
                             underlayColor="#efefef"
                         /> */}
                             <FlatList
-                                data={this.state.products}
-                                extraData={this.state}
+                                data={this.props.products}
+                                extraData={this.props}
                                 keyExtractor={item => item.id}
                                 renderItem={this._renderProductItem}
                             />
@@ -377,12 +456,13 @@ class SearchResult extends Component {
                     </Animatable.View>
 
                     <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
-                        <View style={styles.FBtnQuantityPicker}>
+                        {/* <View style={styles.FBtnQuantityPicker}>
                             <ButtonDecrement funcDecrement={this.decrementQuantity} />
-                            <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
+                            <ProductQuantityCounter quantity={this.getListByID(this.state.selectProductID).quantity} />
                             <ButtonIncrement funcIncrement={this.incrementQuantity} />
                             <ButtonDone funcDone={this.AcceptQuantity} />
-                        </View>
+                        </View> */}
+                        <ProductOptions onDecrement={this.decrementQuantity} quantity={this.props.selectProductQuantity} onIncrement={this.incrementQuantity} onDone={this.AcceptQuantity} />
                     </Animatable.View>
 
                 </View>
@@ -438,4 +518,14 @@ class SearchResult extends Component {
     }
 }
 
-export default SearchResult;
+//export default SearchResult;
+
+const mapStateToProps = state => ({
+    products: state.products.products,
+    lists: state.lists.lists,
+    selectProductID: state.products.selectProductID,
+    selectProductQuantity: state.products.selectProductQuantity,
+    count: state.products.count
+})
+
+export default connect(mapStateToProps)(SearchResult);

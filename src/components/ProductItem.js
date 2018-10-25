@@ -1,29 +1,61 @@
-import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
-import { styles } from '../styles/styles';
+// import React, { Component } from 'react';
+// import { Text, View, Image } from 'react-native';
+// import { styles } from '../styles/styles';
 
-class ProductItem extends Component {
+// class ProductItem extends Component {
 
-    render() {
-        return (
-            <View style={styles.ProductItem}>
-                <View>
-                    <Image style={styles.ProductImage} source={require('../../assets/images/nasco-corn-flakes-350g.png')} />
-                </View>
-                <View style={styles.ProductDetails}>
-                    <Text style={styles.ProductTitle}>Nasco Cornflakes 350g</Text>
-                    <Text style={styles.ProductPrice}>NGN 1,200 </Text>
-                </View>
-                <View>
-                    <Text style={styles.ProductQuantity}>x3</Text>
-                </View>
-                <View>
-                    <Icon name="pluscircleo" size={22} color="#0D284A">x3</Icon>
-                </View>
+
+
+//     AddProduct = (id, quantity) => {
+//         console.log("productItem :  id > " + id + "quanitity > " + quantity)
+//     }
+
+//     render() {
+//         return (
+//             <View style={styles.ProductItem}>
+//                 <Image style={styles.ProductImage} source={props.thumbnail} />
+//                 <View style={styles.ProductDetails}>
+//                     <Text style={styles.ProductTitle}>{props.title}</Text>
+//                     <Text style={styles.ProductPrice}> NGN {props.price}  </Text>
+//                 </View>
+//                 <TouchableOpacity onPress={() => this.AddProduct(item.id, item.quantity)}>
+//                     <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
+//                         {item.quantity}
+//                     </Text>
+//                 </TouchableOpacity>
+//             </View>
+//         )
+//     }
+
+// }
+
+// export default ProductItem;
+
+
+
+import React from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { styles } from '../styles/styles'
+
+const ProductItem = (props) => {
+
+    return (
+        <View style={styles.ProductItem}>
+            <Image style={styles.ProductImage} source={{ uri: props.thumbnail }} style={{ width: 50, height: 50 }} />
+            <View style={styles.ProductDetails}>
+                <Text style={styles.ProductTitle}>{props.title}</Text>
+                <Text style={styles.ProductPrice}> NGN {props.price}  </Text>
             </View>
-        )
-    }
-
+            <TouchableOpacity onPress={() => props.onSelectItem()}>
+                {/* <Text style={[styles.AddProductText]}>
+                    {props.quantity}
+                </Text> */}
+                <Text style={[styles.AddProductText, props.isAdded ? styles.AddProductSelected : styles.AddProductUnselected]}>
+                    {props.quantity}
+                </Text>
+            </TouchableOpacity>
+        </View>
+    )
 }
 
 export default ProductItem;
