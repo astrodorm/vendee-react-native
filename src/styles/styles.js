@@ -10,6 +10,8 @@ let navyBlueTheme1 = "#0D284A";
 let navyBlueTheme2 = "#011627";
 let skyBlueTheme = "#F5FCFF";
 let GrayDarkTheme = "#6E6E6E";
+let GrayDarkThemeBtnBg = "#EFEFEF";
+let GrayDarkThemeBtnBorder = "#D9D9D9";
 let PeachTheme = "#FFDDBB";
 let greenTheme = "#8DCC21";
 let lightGrayTheme = "#D4DDE2";
@@ -377,7 +379,7 @@ const styles = StyleSheet.create({
         textShadowColor: "#fff",
 
         //REMOVE FOR TOGGLING SELECTED AND UNSELECTED CLASS
-       // backgroundColor: greenTheme,
+        // backgroundColor: greenTheme,
     },
 
     AddProductSelected: {
@@ -422,7 +424,7 @@ const styles = StyleSheet.create({
         // shadowOpacity: 1,
     },
 
-    FBtnShoppingListQuantityPickerContainer:{
+    FBtnShoppingListQuantityPickerContainer: {
         position: "absolute",
         elevation: 5,
         height: 80,
@@ -627,9 +629,9 @@ const styles = StyleSheet.create({
         paddingBottom: 24,
         paddingLeft: 24,
         paddingRight: 24,
-        alignItems:"center"
-
+        alignItems: "center"
     },
+
 
     // ShoppingListModalContainer: {
     //     padding: 48
@@ -639,8 +641,8 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.JosefinBold,
         fontSize: 24,
         color: navyBlueTheme1,
-        marginBottom:8,
-        marginTop:0
+        marginBottom: 8,
+        marginTop: 0
     },
 
     AppContainer: {
@@ -655,7 +657,7 @@ const styles = StyleSheet.create({
         paddingLeft: 24,
         borderRadius: 6,
         flexDirection: "row",
-        marginRight:16
+        marginRight: 16
     },
 
     MenuDefaultButton: {
@@ -729,7 +731,7 @@ const styles = StyleSheet.create({
     shoppingListAmountsContainer: {
         paddingTop: 8,
         justifyContent: "flex-end",
-        marginBottom:8
+        marginBottom: 8
         // alignItems: "flex-end",
         // flex: 1
     },
@@ -750,6 +752,56 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
+    modalDeliveryMethod: {
+        width: fullWidth * 0.9,
+        backgroundColor: "#fff",
+        zIndex: 1000,
+        height: 300,
+        paddingTop: 32,
+        paddingBottom: 16,
+        paddingLeft: 32,
+        paddingRight: 32,
+        borderRadius: 16
+    },
+
+    modalDeliveryMethodHeader: {
+        color: navyBlueTheme1,
+        fontFamily: Fonts.JosefinSemiBold,
+        fontSize: 22,
+        marginBottom: 32
+
+    },
+
+    ButtonSecondaryAccent: {
+        backgroundColor: GrayDarkThemeBtnBg,
+       // borderColor: GrayDarkThemeBtnBorder,
+        borderWidth: 0,
+        borderRadius: 6,
+        flexDirection: "row",
+        paddingTop: 16,
+        paddingRight: 16,
+        paddingBottom: 16,
+        paddingLeft: 24,
+        marginBottom: 16,
+    },
+
+    ButtonSecondaryAccentActive: {
+        backgroundColor: navyBlueTheme1,
+    },
+
+    ButtonSecondaryAccentActiveText: {
+        color: greenTheme,
+    },
+
+    ButtonSecondaryAccentIcon: {
+        marginRight: 24
+    },
+
+    ButtonSecondaryAccentText: {
+        color: navyBlueTheme1,
+        fontFamily: Fonts.JosefinSemiBold,
+        fontSize: 14
+    }
 });
 
 export { styles }

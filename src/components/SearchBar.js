@@ -1,52 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import * as Progress from 'react-native-progress';
 
 
-class SearchBar extends Component {
+const SearchBar = (props) => {
 
-    constructor(props) {
-        super(props);
+    return (
+        <View style={styles.AppSearchBar}>
+        <TextInput style={styles.AppSearchBarTextInput} placeholder="What would you buy today ?"></TextInput>
+        <TouchableOpacity onPress={() => props.onFetchProduct()}>
 
-        this.state = {
-            isLoading: false,
+            {!props.isLoadingSearchBar &&
+                <Icon style={styles.AppSearchBarIcon} name="right" size={24} color="#f44950" />
+            }
 
-        }
-    }
-
-    fetchSearchResult = () => {
-        let isLoadingState = true;
-        this.setState({ isLoading: isLoadingState });
-        this.fakeFetchingURL();
-    }
-
-    fakeFetchingURL = () => {
-        setTimeout(this.showSearchResult(), 3000);
-    }
-
-    showSearchResult = () =>{
-
-    }
-
-    render() {
-        return (
-            <View style={styles.AppSearchBar}>
-                <TextInput style={styles.AppSearchBarTextInput} placeholder="What would you buy today ?"></TextInput>
-                <TouchableOpacity onPress={() => this.fetchSearchResult()}>
-
-                    {!this.state.isLoading &&
-                        <Icon style={styles.AppSearchBarIcon} name="right" size={24} color="#f44950" />
-                    }
-
-                    {this.state.isLoading &&
-                        <Progress.CircleSnail style={styles.AppSearchBarIcon} color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
-                    }
-                </TouchableOpacity>
-            </View>
-        )
-    }
+            {props.isLoadingSearchBar &&
+                <Progress.CircleSnail style={styles.AppSearchBarIcon} color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
+            }
+        </TouchableOpacity>
+    </View>
+    )
 }
 
 export default SearchBar;

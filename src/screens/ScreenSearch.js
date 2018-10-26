@@ -3,6 +3,11 @@ import { Text, View, Image, TextInput } from 'react-native';
 import { styles } from '../styles/styles';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
+import { connect } from 'react-redux';
+import { fetchProductAction, endfetchProductAction } from '../actions/actions';
+import Modal from 'react-native-modalbox';
+import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
+
 
 
 class ScreenSearch extends Component {
@@ -11,42 +16,106 @@ class ScreenSearch extends Component {
         super(props);
 
         this.state = {
-            showSearchResultView: true,
-            ShowSearchView: false,
+            showSearchResultView: false,
+            showSearchBarView: true,
         }
     }
+
+
+
+
+    openDialogDeliveryMethod = () => {
+        this.refs.RefModalDeliveryMethod.open();
+
+        console.log("openDialogDeliveryMethod >" + this.props.isLoadingSearchBar)
+    }
+
+
+    getProducts = () => {
+
+        this.props.dispatch(fetchProductAction("cornflakes"));
+        this.fakeApiRequestDelay();
+
+    }
+
+    fakeApiRequestDelay = () => {
+        setTimeout(this.showSearchResult, 3000);
+    }
+
+    showSearchResult = () => {
+
+        //DISPATCH AN ACTION TO END FETCHING PRODUCT REQUEST
+        //NORMALLY THIS WOULD BASED ON THE RESPONSE FROM THE REQUEST
+        this.props.dispatch(endfetchProductAction());
+
+        //SHOW MODAL FOR DELIVERY METHOD 
+        this.refs.RefModalDeliveryMethod.open()
+
+    }
+
 
 
     render() {
 
         return (
-            <View style={styles.AppMain}>
+            <View style={styles.AppContainer}>
+                <View style={styles.AppMain}>
 
-                {/* SEARCH INITIAL VIEW */}
+                    {/* SEARCH BAR VIEW */}
 
-                {
-                    this.state.ShowSearchView &&
-                    <View>
-                        <View style={styles.SearchFirstView}>
-                            <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
+                    {
+                        this.state.showSearchBarView &&
+                        <View>
+                            <View style={styles.SearchFirstView}>
+                                <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
+                            </View>
+                            <View style={styles.SearchSecondView}>
+                                <SearchBar isLoadingSearchBar={this.props.isLoadingSearchBar} onFetchProduct={this.getProducts} />
+                            </View>
                         </View>
-                        <View style={styles.SearchSecondView}>
-                            <SearchBar />
+                    }
+
+                    {/* SEARCH RESULT VIEW */}
+
+                    {
+                        this.state.showSearchResultView &&
+                        <View>
+                            <SearchResult />
                         </View>
-                    </View>
-                }
-
-                {/* SEARCH RESULT */}
-
-                {
-                    this.state.showSearchResultView &&
+                    }
+                </View>
+                <Modal
+                    style={[styles.modal, styles.modalDeliveryMethod]}
+                    position={"center"}
+                    ref={"RefModalDeliveryMethod"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                // onClosingState={this.hideFbtnShoppingListQuantityPicker}
+                >
                     <View>
-                        <SearchResult />
+                        <Text style={styles.modalDeliveryMethodHeader}>
+                            How would you like your "{this.props.searchText}" delivered ?
+                        </Text>
+                        <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery}/>
+                        <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup}/>
                     </View>
-                }
+                </Modal>
             </View>
         )
     }
 }
 
-export default ScreenSearch;
+//export default ScreenSearch;
+
+const mapStateToProps = state => ({
+
+    isLoadingSearchBar: state.products.isLoadingSearchBar,
+    searchText: state.products.searchText,
+    isDelivery: state.delivery.isDelivery,
+    isPickup : state.delivery.isPickup
+
+})
+
+export default connect(mapStateToProps)(ScreenSearch);

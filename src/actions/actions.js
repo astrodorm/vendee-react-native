@@ -8,9 +8,9 @@ export const ITEM_REMOVE = 'ITEM_REMOVE';
 export const ITEM_SELECT = 'ITEM_SELECT';
 export const LIST_ITEM_INCREMENT = 'LIST_ITEM_INCREMENT';
 export const LIST_ITEM_DECREMENT = 'LIST_ITEM_DECREMENT';
-
-
-
+export const FETCH_PRODUCT = 'FETCH_PRODUCT';
+export const END_FETCH_PRODUCT = 'END_FETCH_PRODUCT';
+export const DELIVERY_METHOD = 'DELIVERY_METHOD';
 
 
 //
@@ -18,14 +18,14 @@ export const LIST_ITEM_DECREMENT = 'LIST_ITEM_DECREMENT';
 //
 export const itemIncrementAction = () => (
     {
-        type: ITEM_INCREMENT,        
+        type: ITEM_INCREMENT,
     }
 );
 
 
 export const itemDecrementAction = () => (
     {
-        type: ITEM_DECEREMENT  
+        type: ITEM_DECEREMENT
     }
 );
 
@@ -71,3 +71,31 @@ export const decrementListItemAction = (index, quantity) => (
         quantity
     }
 );
+
+
+export const fetchProductAction = (text) => (
+    {
+        type: FETCH_PRODUCT,
+        text
+    }
+);
+
+export const endfetchProductAction = () => (
+    {
+        type: END_FETCH_PRODUCT
+    }
+);
+
+export const selectDeliveryMethod = (isDelivery, isPickup) => (
+    {
+        type: DELIVERY_METHOD,
+        isDelivery,
+        isPickup
+    }
+);
+
+// export const endfetchProductAction = () =>
+//     Promise.resolve({
+//         type: END_FETCH_PRODUCT,
+
+//     });
