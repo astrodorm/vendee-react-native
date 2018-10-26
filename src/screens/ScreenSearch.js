@@ -4,7 +4,7 @@ import { styles } from '../styles/styles';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
 import { connect } from 'react-redux';
-import { fetchProductAction, endfetchProductAction } from '../actions/actions';
+import { fetchProductAction, endfetchProductAction, selectDeliveryMethod } from '../actions/actions';
 import Modal from 'react-native-modalbox';
 import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
 
@@ -39,18 +39,39 @@ class ScreenSearch extends Component {
     }
 
     fakeApiRequestDelay = () => {
-        setTimeout(this.showSearchResult, 3000);
+        setTimeout(this.showModalDeliveryMethod, 3000);
     }
 
     showSearchResult = () => {
+        this.setState({ showSearchResultView: true, showSearchBarView: false });
+        this.closeModalDeliveryMethod()
+    }
+
+    closeModalDeliveryMethod = () => {
+        //SHOW MODAL FOR DELIVERY METHOD 
+        this.refs.RefModalDeliveryMethod.close();
+    }
+
+
+    showModalDeliveryMethod = () => {
+        //SHOW MODAL FOR DELIVERY METHOD 
+        this.refs.RefModalDeliveryMethod.open();
 
         //DISPATCH AN ACTION TO END FETCHING PRODUCT REQUEST
+        //THIS IS BASICALLY TO STOP THE SEARCH BAR PRELOADER
         //NORMALLY THIS WOULD BASED ON THE RESPONSE FROM THE REQUEST
         this.props.dispatch(endfetchProductAction());
+    }
 
-        //SHOW MODAL FOR DELIVERY METHOD 
-        this.refs.RefModalDeliveryMethod.open()
+    selectDelivery = () => {
+        this.props.dispatch(selectDeliveryMethod(true, false));
+        this.showSearchResult();
 
+    }
+
+    selectPickup = () => {
+        this.props.dispatch(selectDeliveryMethod(false, true));
+        this.showSearchResult();
     }
 
 
@@ -98,8 +119,8 @@ class ScreenSearch extends Component {
                         <Text style={styles.modalDeliveryMethodHeader}>
                             How would you like your "{this.props.searchText}" delivered ?
                         </Text>
-                        <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery}/>
-                        <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup}/>
+                        <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery} onSelected={this.selectDelivery} />
+                        <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup} onSelected={this.selectPickup} />
                     </View>
                 </Modal>
             </View>
@@ -114,7 +135,7 @@ const mapStateToProps = state => ({
     isLoadingSearchBar: state.products.isLoadingSearchBar,
     searchText: state.products.searchText,
     isDelivery: state.delivery.isDelivery,
-    isPickup : state.delivery.isPickup
+    isPickup: state.delivery.isPickup
 
 })
 
