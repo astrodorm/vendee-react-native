@@ -26,8 +26,8 @@ import ButtonDelete from '../components/ButtonDelete';
 import CounterComponent from '../components/CounterComponent';
 import { connect } from 'react-redux';
 import ProductOptions from '../components/ProductOptions';
-import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction } from '../actions/actions'
-
+import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction } from '../actions/actions';
+import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn'
 
 
 
@@ -179,6 +179,13 @@ class SearchResult extends Component {
         return value;
     }
 
+    getShoppingListLength = () => {
+        let listArray = [...this.props.lists];
+        let length = listArray.length;
+
+        return length
+    }
+
     EditShoppingListProduct = (id, quantity) => {
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
@@ -300,7 +307,7 @@ class SearchResult extends Component {
     }
 
     removeListItem = (id) => {
-        console.log("removeListItem > " + id);
+        // console.log("removeListItem > " + id);
         let listArray = [...this.props.lists];
         let index = listArray.findIndex(x => x.id === id);
 
@@ -400,13 +407,14 @@ class SearchResult extends Component {
                     </View>
 
                     <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
-                        <TouchableOpacity onPress={() => this.refs.RefModalShoppingList.open()}>
+                        {/* <TouchableOpacity onPress={() => this.refs.RefModalShoppingList.open()}>
                             <View style={styles.FBtnShoppingList}>
-                                <ShoppingListCounter count={this.state.selectedProductCount} />
+                                <ShoppingListCounter count={this.getShoppingListLength()} />
                                 <Text style={styles.FBtnText}>view shopping list</Text>
                                 <Icon name="arrowsalt" size={20} color={"#0D284A"} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <ShoppingListFloatingBtn count={this.getShoppingListLength()} onPress={() => this.refs.RefModalShoppingList.open()} />
                     </Animatable.View>
 
                     <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
