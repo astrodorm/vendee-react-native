@@ -26,7 +26,7 @@ import ButtonDelete from '../components/ButtonDelete';
 import CounterComponent from '../components/CounterComponent';
 import { connect } from 'react-redux';
 import ProductOptions from '../components/ProductOptions';
-import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction } from '../actions/actions'
+import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction } from '../actions/actions'
 
 
 
@@ -203,13 +203,11 @@ class SearchResult extends Component {
 
     }
 
-    getIsAddedByID = (id) =>{
+    getIsAddedByID = (id) => {
+
         let listArray = [...this.props.lists];
         let index = listArray.findIndex(x => x.id === id);
         let list = listArray[index];
-
-        //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS INDEX IS NOT FOUND IN LIST ARRAY
-        //let initialValue = { quantity: 0 }
         list === undefined ? value = false : value = true
 
         return value;
@@ -317,23 +315,85 @@ class SearchResult extends Component {
         // let isVisibleFBtnShoppingList = this.state.isVisibleFBtnShoppingList;
         // isVisibleFBtnShoppingList ? null : this.showFbtnShoppingListButton();
 
+        let id = this.props.selectProductID;
+        // this.removeListItem(id);
+        //  this.sayMyName()
 
+        // this.getListByID(id).quantity === 0 ? this.addItem(id) : this.incrementListItem(id)
+
+
+        // let quantity = this.props.selectProductQuantity;
+
+        //  quantity === 0 ? null : this.props.dispatch(itemDecrementAction());
+
+        //CHECK FOR LIST QUANTITY IS EQUAL TO ONE BECAUSE THAT IS BEFORE IT IS 
+        //DECREMENTED TO ZERO AND THEN REMOVE THAT ARRAY OBJECTFROM LIST
+
+        if (this.getListByID(id).quantity === 1) {
+
+            this.removeListItem(id);
+            this.props.dispatch(itemDecrementAction());
+            this.decrementListItem(id);
+            console.log("decrementQuantity > " + id);
+        }
+
+        if (this.getListByID(id).quantity > 1) {
+
+            this.props.dispatch(itemDecrementAction());
+            this.decrementListItem(id);
+            console.log("decrementQuantity > " + id);
+
+        }
+
+
+
+        //this.props.dispatch(itemDecrementAction());
+        //this.props.dispatch(decrementListItemAction());
+
+        // this.decrementListItem(id)
+
+
+
+        // this.getListByID(id).quantity === 0 ? this.removeListItem(id) : this.props.dispatch(itemDecrementAction());
 
 
         //DECREMENT QUANTITY
         //let quantity = this.state.selectedProductQuantity;
-        let id = this.state.selectProductID;
-        let quantitiesArray = [...this.state.products];
-        let index = quantitiesArray.findIndex(x => x.id === id);
-        let count = quantitiesArray[index].quantity;
+        // let id = this.state.selectProductID;
+        // let quantitiesArray = [...this.state.products];
+        // let index = quantitiesArray.findIndex(x => x.id === id);
+        // let count = quantitiesArray[index].quantity;
 
-        count <= 1 ? quantitiesArray[index].isSelected = false : null;
+        // count <= 1 ? quantitiesArray[index].isSelected = false : null;
 
-        count === 0 ? quantitiesArray[index].quantity = 0 : quantitiesArray[index].quantity -= 1;
+        // count === 0 ? quantitiesArray[index].quantity = 0 : quantitiesArray[index].quantity -= 1;
 
-        this.setState({ products: quantitiesArray, selectedProductQuantity: quantitiesArray[index].quantity });
+        //this.setState({ products: quantitiesArray, selectedProductQuantity: quantitiesArray[index].quantity });
 
-        console.log("decrementQuantity");
+
+    }
+
+    sayMyName = () => {
+        console.log("sayMyName")
+    }
+
+    decrementListItem = (id) => {
+
+        let listArray = [...this.props.lists];
+        let index = listArray.findIndex(x => x.id === id);
+        let quantity = listArray[index].quantity - 1;
+
+        this.props.dispatch(decrementListItemAction(index, quantity))
+
+    }
+
+    removeListItem = (id) => {
+        console.log("removeListItem > " + id);
+        let listArray = [...this.props.lists];
+        let index = listArray.findIndex(x => x.id === id);
+        //let quantity = listArray[index].quantity - 1;
+
+        this.props.dispatch(removeItemAction(index))
     }
 
     AcceptQuantity = () => {

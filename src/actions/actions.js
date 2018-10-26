@@ -7,6 +7,8 @@ export const ITEM_ADD = 'ITEM_ADD';
 export const ITEM_REMOVE = 'ITEM_REMOVE';
 export const ITEM_SELECT = 'ITEM_SELECT';
 export const LIST_ITEM_INCREMENT = 'LIST_ITEM_INCREMENT';
+export const LIST_ITEM_DECREMENT = 'LIST_ITEM_DECREMENT';
+
 
 
 
@@ -21,7 +23,7 @@ export const itemIncrementAction = () => (
 );
 
 
-export const decrementItem = () => (
+export const itemDecrementAction = () => (
     {
         type: ITEM_DECEREMENT  
     }
@@ -32,6 +34,14 @@ export const addItemAction = (id) => (
     {
         type: ITEM_ADD,
         id
+    }
+);
+
+
+export const removeItemAction = (index) => (
+    {
+        type: ITEM_REMOVE,
+        index
     }
 );
 
@@ -48,6 +58,15 @@ export const itemSelectAction = (id, quantity) => (
 export const incrementListItemAction = (index, quantity) => (
     {
         type: LIST_ITEM_INCREMENT,
+        index,
+        quantity
+    }
+);
+
+
+export const decrementListItemAction = (index, quantity) => (
+    {
+        type: LIST_ITEM_DECREMENT,
         index,
         quantity
     }

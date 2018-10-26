@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
         textShadowColor: "#fff",
 
         //REMOVE FOR TOGGLING SELECTED AND UNSELECTED CLASS
-        backgroundColor: greenTheme,
+       // backgroundColor: greenTheme,
     },
 
     AddProductSelected: {

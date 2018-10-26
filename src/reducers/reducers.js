@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ITEM_INCREMENT, ITEM_DECEREMENT, ITEM_ADD, ITEM_SELECT, LIST_ITEM_INCREMENT } from '../actions/actions';
+import { ITEM_INCREMENT, ITEM_DECEREMENT, ITEM_ADD, ITEM_SELECT, LIST_ITEM_INCREMENT, LIST_ITEM_DECREMENT, ITEM_REMOVE } from '../actions/actions';
 
 const initialState = {
     count: 149,
@@ -22,9 +22,10 @@ function products(state = initialState, action) {
             });
 
         case ITEM_DECEREMENT:
-            return {
-                count: state.count - 1
-            };
+            return Object.assign({}, state, {
+                selectProductQuantity: state.selectProductQuantity - 1
+                //count: state.count + 1
+            });
         case ITEM_SELECT:
             return Object.assign({}, state, {
                 selectProductID: action.id,
@@ -43,9 +44,20 @@ function lists(state = initialState, action) {
                     ...state.lists,
                     {
                         id: action.id,
-                        quantity: 1
+                        quantity: 1,
                     }
                 ]
+            });
+        case ITEM_REMOVE:
+            return Object.assign({}, state, {
+                lists: [
+                    ...state.lists.slice(0, action.index),
+                    ...state.lists.slice(action.index + 1)
+                ]
+                // items: [
+                //     ...state.items.slice(0, action.payload),
+                //     ...state.items.slice(action.payload + 1)
+                // ],
             });
         case LIST_ITEM_INCREMENT:
             return Object.assign({}, state, {
@@ -57,7 +69,18 @@ function lists(state = initialState, action) {
                     }
                     return list
                 })
-            })
+            });
+        case LIST_ITEM_DECREMENT:
+            return Object.assign({}, state, {
+                lists: state.lists.map((list, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, list, {
+                            quantity: action.quantity
+                        })
+                    }
+                    return list
+                })
+            });
 
         default:
             return state;
