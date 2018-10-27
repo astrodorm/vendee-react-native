@@ -377,7 +377,7 @@ class SearchResult extends Component {
                 <View style={styles.AppMain}>
                     <View style={styles.AppSearchResultMain}>
                         <SearchBar />
-                        <DeliveryPicker />
+                        <DeliveryPicker isDelivery={this.props.isDelivery} isPickup={this.props.isPickup} />
                         {/* <CounterComponent /> */}
                         <View style={styles.AppSearchResultHeader}>
                             <View>
@@ -481,7 +481,9 @@ const mapStateToProps = state => ({
     lists: state.lists.lists,
     selectProductID: state.products.selectProductID,
     selectProductQuantity: state.products.selectProductQuantity,
-    count: state.products.count
+    count: state.products.count,
+    isDelivery: state.delivery.isDelivery,
+    isPickup: state.delivery.isPickup
 })
 
 export default connect(mapStateToProps)(SearchResult);

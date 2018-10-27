@@ -3,7 +3,7 @@ import { ITEM_INCREMENT, ITEM_DECEREMENT, ITEM_ADD, ITEM_SELECT, LIST_ITEM_INCRE
 
 const initialState = {
     count: 149,
-    products: [{ id: 1, thumbnail: "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg", title: "Nasco Cornflakes 50g", price: "1,234" }, { id: 2, thumbnail: "http://images.kglobalservices.com/www.kelloggs.com.au/en_au/product/product_449/prod_img-198128_corn-flakes-4.png", title: "Kellogs Cornflakes 70g", price: "9,870" }],
+    products: [{ id: 1, thumbnail: "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg", title: "Nasco Cornflakes 50g", price: 1234 }, { id: 2, thumbnail: "http://images.kglobalservices.com/www.kelloggs.com.au/en_au/product/product_449/prod_img-198128_corn-flakes-4.png", title: "Kellogs Cornflakes 70g", price: 9870 }],
     lists: [{ id: 1, quantity: 5 }],
     selectProductID: 0,
     selectProductQuantity: 0,

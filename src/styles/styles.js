@@ -23,20 +23,6 @@ const styles = StyleSheet.create({
         marginTop: 24,
     },
 
-    // redTheme: {
-    //     color: redTheme,
-    //     backgroundColor: redTheme
-    // },
-
-    // navyBlueTheme1: {
-    //     color: navyBlueTheme1,
-    //     backgroundColor: navyBlueTheme1
-    // },
-
-    // navyBlueTheme2: {
-    //     color: navyBlueTheme2,
-    //     backgroundColor: navyBlueTheme2
-    // },
 
     introContent: {
         position: 'absolute',
@@ -219,12 +205,10 @@ const styles = StyleSheet.create({
     },
 
     AppSearchBarIcon: {
-        // width: 68,
-        // height: 68,
+
         marginTop: 24,
         marginRight: 24,
-        // paddingRight:24,
-        // paddingBottom:24
+
     },
 
     AppSearchBarTextInput: {
@@ -264,43 +248,39 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.JosefinRegular,
         fontSize: 12,
         color: GrayDarkTheme,
-        paddingTop: 20,
-        paddingBottom: 10,
-        paddingLeft: 0,
-        paddingRight: 48,
-        // alignItems: "center",
-        // textAlign: "center",
-        // justifyContent: "center"
     },
 
     ActiveDeliveryPicker: {
         backgroundColor: navyBlueTheme1,
         borderRadius: 6,
-        margin: 8,
-        flexDirection: "row",
-        alignItems: "center",
-        paddingLeft: 12
     },
 
     DeliveryPicker: {
         alignItems: "center",
+        flexDirection: "row",
+        paddingTop: 12,
+        paddingBottom: 12,
+        paddingLeft: 16,
+        paddingRight: 24,
+        margin: 8,
+        borderRadius: 6,
     },
 
     ActiveDeliveryPickerText: {
         color: "#fff",
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 24,
-        paddingRight: 24,
-        fontFamily: Fonts.JosefinRegular,
-        fontSize: 14,
+
+    },
+
+    DeliveryPickerCheckbox: {
+        width: 10,
+        height: 10,
+        backgroundColor: lightGrayTheme,
+        borderRadius: 10,
+        marginRight: 16
     },
 
     ActiveDeliveryPickerCheckbox: {
-        width: 10,
-        height: 10,
         backgroundColor: greenTheme,
-        borderRadius: 10
     },
 
     AppFilterPickerContainer: {
@@ -332,7 +312,6 @@ const styles = StyleSheet.create({
 
     AppSearchResultDisplayContainer: {
         backgroundColor: "#fff",
-        // padding: 16,
         width: fullWidth * 0.85,
         borderColor: "#EFEFEF",
         borderWidth: 1,
@@ -343,20 +322,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         width: fullWidth * 0.85,
-        // marginBottom: 24,
         padding: 24,
         alignItems: "center"
     },
 
     BottomDrawer: {
-        // zIndex: 1000,
-        // position: "absolute",
-        // backgroundColor: "#011627",
-
-        // flex: 1,
-        // padding: 16,
-
-
 
     },
 
@@ -378,8 +348,6 @@ const styles = StyleSheet.create({
         textShadowRadius: 0,
         textShadowColor: "#fff",
 
-        //REMOVE FOR TOGGLING SELECTED AND UNSELECTED CLASS
-        // backgroundColor: greenTheme,
     },
 
     AddProductSelected: {
@@ -404,9 +372,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         opacity: 0,
-        // shadowOffset: { width: 5, height: 5 },
-        // shadowColor: '#6e6e6e',
-        // shadowOpacity: 1,
+
     },
 
     FBtnQuantityPickerContainer: {
@@ -419,9 +385,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         opacity: 0,
-        // shadowOffset: { width: 5, height: 5 },
-        // shadowColor: '#6e6e6e',
-        // shadowOpacity: 1,
+
     },
 
     FBtnShoppingListQuantityPickerContainer: {
@@ -434,9 +398,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         opacity: 0,
-        // shadowOffset: { width: 5, height: 5 },
-        // shadowColor: '#6e6e6e',
-        // shadowOpacity: 1,
+
     },
 
     QuantityBtn: {
@@ -455,19 +417,12 @@ const styles = StyleSheet.create({
         borderRadius: 40
     },
 
-    // QuantityHeaderText: {
-    //     color: GrayDarkTheme,
-    //     fontFamily: Fonts.JosefinRegular,
-    //     fontSize: 10
-    // },
-
     QuantityText: {
         color: "#fff",
         fontSize: 25,
         fontFamily: Fonts.JosefinSemiBold,
         marginTop: 0,
         marginBottom: 4,
-        // lineHeight:0
     },
 
     QuantityPickerContainer: {
@@ -479,11 +434,6 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
-    // QuantitySection: {
-    //     alignItems: "center",
-    //     alignContent: "center",
-    //     justifyContent: "center"
-    // },
 
     ProductDetails: {
         flexDirection: "column"
@@ -496,7 +446,8 @@ const styles = StyleSheet.create({
 
     ProductPrice: {
         fontSize: 11,
-        fontFamily: Fonts.JosefinRegular
+        fontFamily: Fonts.JosefinRegular,
+        letterSpacing:1
     },
 
     ProductQuantity: {
@@ -508,62 +459,6 @@ const styles = StyleSheet.create({
         paddingTop: 48
     },
 
-    // BottomDrawerHeader: {
-    //     flexDirection: "row",
-    //     justifyContent: "space-between",
-    //     alignItems: "center",
-    //     paddingTop: 16,
-    //     paddingRight: 24,
-    //     paddingBottom: 16,
-    //     paddingLeft: 24,
-    //     backgroundColor: navyBlueTheme2,
-    //     borderBottomLeftRadius: 0,
-    //     borderBottomRightRadius: 0,
-    //     borderTopLeftRadius: 8,
-    //     borderTopRightRadius: 8,
-
-    // },
-
-    // BottomDrawerContent: {
-    //     backgroundColor: "#fff",
-    //     height: fullHeight,
-    //     padding: 24
-    // },
-    // BottomDrawerButton: {
-    //     backgroundColor: "#efefef",
-    //     padding: 4,
-    //     borderRadius: 10
-    // },
-
-    // BottomDrawerHeaderText: {
-    //     flexDirection: "row",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    //     alignContent: "center"
-    // },
-
-    // BottomDrawerCount: {
-    //     color: "#011627",
-    //     backgroundColor: "#DEF5FF",
-    //     // padding: 2,
-    //     fontSize: 16,
-    //     fontFamily: Fonts.JosefinBold,
-    //     marginLeft: 16,
-    //     marginRight: 16,
-    //     borderRadius: 32,
-    //     width: 28,
-    //     height: 28,
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     textAlign: "center"
-    // },
-
-    // BottomDrawerTitle: {
-    //     fontFamily: Fonts.JosefinBold,
-    //     fontSize: 12,
-    //     color: "#fff"
-
-    // },
 
     FBtnShoppingList: {
         backgroundColor: redTheme,
@@ -596,11 +491,8 @@ const styles = StyleSheet.create({
     FBtnCount: {
         color: navyBlueTheme2,
         backgroundColor: PeachTheme,
-        // padding: 2,
         fontSize: 16,
         fontFamily: Fonts.JosefinBold,
-        // marginLeft: 16,
-        // marginRight: 16,
         borderRadius: 32,
         width: 28,
         height: 28,
@@ -631,11 +523,6 @@ const styles = StyleSheet.create({
         paddingRight: 24,
         alignItems: "center"
     },
-
-
-    // ShoppingListModalContainer: {
-    //     padding: 48
-    // },
 
     shoppingListLabel: {
         fontFamily: Fonts.JosefinBold,
@@ -732,8 +619,7 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         justifyContent: "flex-end",
         marginBottom: 8
-        // alignItems: "flex-end",
-        // flex: 1
+
     },
 
     ShoppingListCouponContainer: {
@@ -774,7 +660,6 @@ const styles = StyleSheet.create({
 
     ButtonSecondaryAccent: {
         backgroundColor: GrayDarkThemeBtnBg,
-       // borderColor: GrayDarkThemeBtnBorder,
         borderWidth: 0,
         borderRadius: 6,
         flexDirection: "row",
