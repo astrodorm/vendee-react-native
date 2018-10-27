@@ -4,7 +4,7 @@ import { styles } from '../styles/styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
-const ProductOptions = (props) => {
+const ShoppingListOptions = (props) => {
 
     return (
         <View style={styles.FBtnQuantityPicker}>
@@ -21,13 +21,13 @@ const ProductOptions = (props) => {
                     <Icon name="plus" size={22} color="#fff" />
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.onDone()}>
-                <View style={styles.QuantityBtn}>
-                    <Icon name="check" size={22} color="#fff" />
+            <TouchableOpacity onPress={() => props.onDelete()}>
+                <View style={styles.shoppingListRemoveBtn}>
+                    <Icon name="delete" size={22} color="#fff" />
                 </View>
             </TouchableOpacity>
         </View>
     )
 }
 
-export default ProductOptions;
+export default ShoppingListOptions;

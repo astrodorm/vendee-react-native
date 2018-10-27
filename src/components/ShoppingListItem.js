@@ -5,7 +5,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 
-class ProductItem extends Component {
+class ShoppingListItem extends Component {
 
     constructor(props) {
         super(props)
@@ -36,4 +36,4 @@ class ProductItem extends Component {
 
 }
 
-export default ProductItem;
+export default ShoppingListItem;

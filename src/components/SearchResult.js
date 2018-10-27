@@ -27,7 +27,9 @@ import CounterComponent from '../components/CounterComponent';
 import { connect } from 'react-redux';
 import ProductOptions from '../components/ProductOptions';
 import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction } from '../actions/actions';
-import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn'
+import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn';
+import ShoppingListItem from '../components/ShoppingListItem';
+import ShoppingListOptions from '../components/ShoppingListOptions';
 
 
 
@@ -119,29 +121,31 @@ class SearchResult extends Component {
 
     _renderProductItem = ({ item }) => (
 
+        // USE getListByID() TO GET CURRENT QUANTITY OF PRODUCT ITEM SINCE EVERY
+        //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
         <ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
     );
 
 
 
     _renderShoppingListItem = ({ item }) => (
-        <View style={styles.ProductItem}>
-            <AvatarProduct />
-            <ProductDetails title={item.title} price={item.price} />
-            <TouchableOpacity onPress={() => this.EditShoppingListProduct(item.id, item.quantity)}>
-                <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
-                    {item.quantity}
-                </Text>
-            </TouchableOpacity>
-        </View>
+        // <View style={styles.ProductItem}>
+        //     <AvatarProduct />
+        //     <ProductDetails title={item.title} price={item.price} />
+        //     <TouchableOpacity onPress={() => this.EditShoppingListProduct(item.id, item.quantity)}>
+        //         <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
+        //             {item.quantity}
+        //         </Text>
+        //     </TouchableOpacity>
+        // </View>
+        <ShoppingListItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
+
+        // <ShoppingListItem/>
     );
 
     onSelectItem = (id) => {
 
         let quantity = this.getListByID(id).quantity;
-
-        // console.log("id >" + id);
-        // console.log("quantity >" + quantity);
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
         let isVisibleFBtnQuantityPicker = this.state.isVisibleFBtnQuantityPicker;
@@ -153,6 +157,21 @@ class SearchResult extends Component {
         //UPDATE STATE WITH SELECTED quantity AND id 
         this.setState({ selectProductID: id });
 
+    }
+
+    onSelectShoppingListItem = (id, quantity) => {
+        console.log("onSelectShoppingListItem id > " + id);
+        console.log("onSelectShoppingListItem quantity > " + quantity);
+
+        //CHECK IF QUANTITY PICKER IS VISIBLE
+        let isVisibleFBtnShoppingListQuantityPicker = this.state.isVisibleFBtnShoppingListQuantityPicker;
+        isVisibleFBtnShoppingListQuantityPicker ? this.animateShoppingListQuantityPicker() : this.showFbtnShoppingListQuantityPicker();
+
+        //DISPATCH ACTION FOR ITEM SELECTED
+        this.props.dispatch(itemSelectAction(id, quantity));
+
+        //UPDATE STATE WITH SELECTED quantity AND id 
+        this.setState({ selectProductID: id });
     }
 
     getListByID = (id) => {
@@ -371,15 +390,15 @@ class SearchResult extends Component {
         listArray.forEach(function (item) {
             let productIndex = productArray.findIndex(x => x.id === item.id);
             product = productArray[productIndex];
-          //  console.log("listArray for each productIndex > " + productIndex);
+            //  console.log("listArray for each productIndex > " + productIndex);
             product.quantity = item.quantity;
             selectedItems.push(product);
             //console.dir(product)
 
         });
 
-       // console.log(products)
-       return selectedItems
+        // console.log(products)
+        return selectedItems
 
     }
 
@@ -474,12 +493,15 @@ class SearchResult extends Component {
                         </View>
                     </View>
                     <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnShoppingListQuantityPicker}>
-                        <View style={styles.FBtnQuantityPicker}>
+                        {/* <View style={styles.FBtnQuantityPicker}>
                             <ButtonDecrement funcDecrement={this.decrementQuantity} />
-                            <ProductQuantityCounter quantity={this.state.selectedProductQuantity} />
+                            <ProductQuantityCounter quantity={this.props.selectProductQuantity} />
                             <ButtonIncrement funcIncrement={this.incrementQuantity} />
                             <ButtonDelete funcDelete={this.deleteShoppingListItem} />
-                        </View>
+                        </View> */}
+
+                        <ShoppingListOptions onDecrement={this.decrementQuantity} quantity={this.props.selectProductQuantity} onIncrement={this.incrementQuantity} onDelete={this.deleteShoppingListItem} />
+
                     </Animatable.View>
                 </Modal>
             </View>
