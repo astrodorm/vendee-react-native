@@ -72,7 +72,6 @@ class SearchResult extends Component {
 
     componentDidMount() {
         const prouductsData = this.props.products;
-        // (this.props.navigation.state.params.activityId);
         this.setState({ products: prouductsData })
     }
 
@@ -129,18 +128,9 @@ class SearchResult extends Component {
 
 
     _renderShoppingListItem = ({ item }) => (
-        // <View style={styles.ProductItem}>
-        //     <AvatarProduct />
-        //     <ProductDetails title={item.title} price={item.price} />
-        //     <TouchableOpacity onPress={() => this.EditShoppingListProduct(item.id, item.quantity)}>
-        //         <Text style={[styles.AddProductText, item.isSelected ? styles.AddProductSelected : styles.AddProductUnselected]}>
-        //             {item.quantity}
-        //         </Text>
-        //     </TouchableOpacity>
-        // </View>
+
         <ShoppingListItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
 
-        // <ShoppingListItem/>
     );
 
     onSelectItem = (id) => {
@@ -160,8 +150,8 @@ class SearchResult extends Component {
     }
 
     onSelectShoppingListItem = (id, quantity) => {
-        console.log("onSelectShoppingListItem id > " + id);
-        console.log("onSelectShoppingListItem quantity > " + quantity);
+        // console.log("onSelectShoppingListItem id > " + id);
+        // console.log("onSelectShoppingListItem quantity > " + quantity);
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
         let isVisibleFBtnShoppingListQuantityPicker = this.state.isVisibleFBtnShoppingListQuantityPicker;
@@ -341,17 +331,7 @@ class SearchResult extends Component {
 
     deleteShoppingListItem = () => {
 
-        // let id = this.state.selectProductID;
-        // let products = [...this.state.products];
-        // let index = products.findIndex(x => x.id === id);
-        // let selectedProductsArray = products.filter(product => product.isSelected === true);
-        // let selectedProductCountValue = selectedProductsArray.length - 1;
-        // products[index].isSelected = false;
-        // products[index].quantity = 0;
-
         let id = this.props.selectProductID;
-
-        // this.setState({ products: products, selectedProductCount: selectedProductCountValue });
         let listArray = [...this.props.lists];
         let index = listArray.findIndex(x => x.id === id);
 
@@ -365,7 +345,6 @@ class SearchResult extends Component {
             this.setState({ isVisibleFBtnShoppingListQuantityPicker: false });
         });
 
-        // this.showFbtnShoppingListButton()
         this.RefFBtnShoppingListQuantityPicker.transitionTo({ opacity: 0 })
     }
 
@@ -446,13 +425,6 @@ class SearchResult extends Component {
                     </View>
 
                     <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
-                        {/* <TouchableOpacity onPress={() => this.refs.RefModalShoppingList.open()}>
-                            <View style={styles.FBtnShoppingList}>
-                                <ShoppingListCounter count={this.getShoppingListLength()} />
-                                <Text style={styles.FBtnText}>view shopping list</Text>
-                                <Icon name="arrowsalt" size={20} color={"#0D284A"} />
-                            </View>
-                        </TouchableOpacity> */}
                         <ShoppingListFloatingBtn count={this.getShoppingListLength()} onPress={() => this.refs.RefModalShoppingList.open()} />
                     </Animatable.View>
 
@@ -499,15 +471,7 @@ class SearchResult extends Component {
                         </View>
                     </View>
                     <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnShoppingListQuantityPicker}>
-                        {/* <View style={styles.FBtnQuantityPicker}>
-                            <ButtonDecrement funcDecrement={this.decrementQuantity} />
-                            <ProductQuantityCounter quantity={this.props.selectProductQuantity} />
-                            <ButtonIncrement funcIncrement={this.incrementQuantity} />
-                            <ButtonDelete funcDelete={this.deleteShoppingListItem} />
-                        </View> */}
-
                         <ShoppingListOptions onDecrement={this.decrementQuantity} quantity={this.props.selectProductQuantity} onIncrement={this.incrementQuantity} onDelete={this.deleteShoppingListItem} />
-
                     </Animatable.View>
                 </Modal>
             </View>
