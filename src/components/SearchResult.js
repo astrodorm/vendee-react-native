@@ -364,9 +364,23 @@ class SearchResult extends Component {
     }
 
     getShoppingListItems = () => {
-        let products = [...this.state.products];
-        const selectedProductsArray = products.filter(product => product.isSelected === true);
-        return selectedProductsArray;
+        let listArray = [...this.props.lists];
+        let productArray = [...this.props.products];
+        let selectedItems = [];
+
+        listArray.forEach(function (item) {
+            let productIndex = productArray.findIndex(x => x.id === item.id);
+            product = productArray[productIndex];
+          //  console.log("listArray for each productIndex > " + productIndex);
+            product.quantity = item.quantity;
+            selectedItems.push(product);
+            //console.dir(product)
+
+        });
+
+       // console.log(products)
+       return selectedItems
+
     }
 
 
