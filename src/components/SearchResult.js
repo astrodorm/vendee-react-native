@@ -301,7 +301,7 @@ class SearchResult extends Component {
             this.props.dispatch(itemDecrementAction());
             this.decrementListItem(id);
             // console.log("decrementQuantity > " + id);
-
+            //this.hideFbtnShoppingListQuantityPicker()
         }
 
         if (this.getListByID(id).quantity > 1) {
@@ -341,15 +341,21 @@ class SearchResult extends Component {
 
     deleteShoppingListItem = () => {
 
-        let id = this.state.selectProductID;
-        let products = [...this.state.products];
-        let index = products.findIndex(x => x.id === id);
-        let selectedProductsArray = products.filter(product => product.isSelected === true);
-        let selectedProductCountValue = selectedProductsArray.length - 1;
-        products[index].isSelected = false;
-        products[index].quantity = 0;
+        // let id = this.state.selectProductID;
+        // let products = [...this.state.products];
+        // let index = products.findIndex(x => x.id === id);
+        // let selectedProductsArray = products.filter(product => product.isSelected === true);
+        // let selectedProductCountValue = selectedProductsArray.length - 1;
+        // products[index].isSelected = false;
+        // products[index].quantity = 0;
 
-        this.setState({ products: products, selectedProductCount: selectedProductCountValue });
+        let id = this.props.selectProductID;
+
+        // this.setState({ products: products, selectedProductCount: selectedProductCountValue });
+        let listArray = [...this.props.lists];
+        let index = listArray.findIndex(x => x.id === id);
+
+        this.props.dispatch(removeItemAction(index))
 
         this.hideFbtnShoppingListQuantityPicker();
     }
