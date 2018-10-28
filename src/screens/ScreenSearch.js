@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput } from 'react-native';
+import { Text, View, Image, Button } from 'react-native';
 import { styles } from '../styles/styles';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
@@ -74,6 +74,11 @@ class ScreenSearch extends Component {
         this.showSearchResult();
     }
 
+    gotoCheckout = () =>{
+        this.props.navigation.navigate("Checkout");
+        console.log("ScreenSearch : gotoCheckout")
+    }
+
 
 
     render() {
@@ -92,6 +97,7 @@ class ScreenSearch extends Component {
                             </View>
                             <View style={styles.SearchSecondView}>
                                 <SearchBar isLoadingSearchBar={this.props.isLoadingSearchBar} onFetchProduct={this.getProducts} />
+                                {/* <Button title="ScreenSearch gotoCheckout" onPress={() => this.gotoCheckout()}/> */}
                             </View>
                         </View>
                     }

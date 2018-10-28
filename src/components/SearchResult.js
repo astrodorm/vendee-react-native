@@ -33,6 +33,7 @@ import ShoppingListOptions from '../components/ShoppingListOptions';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
+import CheckoutButton from '../components/CheckoutButton';
 
 
 
@@ -469,8 +470,17 @@ class SearchResult extends Component {
 
     }
 
-    closeShoppingList = () =>{
+    closeShoppingList = () => {
         this.refs.RefModalShoppingList.close()
+    }
+
+    gotoCheckoutScreen = () => {
+        // this.props.navigation.navigate("Category");
+        // this.props.navigation.push('Checkout');
+        this.props.navigation.navigate("Checkout");
+
+        console.log("ScreenResult : gotoCheckoutScreen")
+
     }
 
 
@@ -543,9 +553,10 @@ class SearchResult extends Component {
 
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
-                            <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList}/>
-                            <ButtonPrimaryAccent title="CHECKOUT" icon="creditcard" isActive={true} onSelected={this.gotoCheckoutScreen}/>
-
+                            <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList} />
+                            {/* <ButtonPrimaryAccent title="CHECKOUT" icon="creditcard" isActive={true} onSelected={this.gotoCheckoutScreen} /> */}
+                            {/* <Button title="second love" onPress={() => this.props.navigation.navigate('Checkout')} /> */}
+                            <CheckoutButton />
                             {/* <ButtonPrimaryAccent title="MAKE PAYMENT" icon="creditcard" isActive={false} /> */}
 
                             {/* <ButtonPrimaryAccent label="MAKE PAYMENT" icon="creditcard"/>

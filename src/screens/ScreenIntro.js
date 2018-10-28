@@ -93,6 +93,7 @@ class ScreenIntro extends Component {
 
     gotoMainAppScreen = () => {
         this.props.navigation.push('MainAppScreen');
+        //this.props.navigation.push('Checkout');
     }
 
 
