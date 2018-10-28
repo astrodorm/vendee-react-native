@@ -599,6 +599,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.JosefinRegular,
         color: GrayDarkTheme,
         fontSize: 12,
+        letterSpacing: 1
 
     },
 
@@ -670,6 +671,22 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
 
+    ButtonPrimaryAccent: {
+        backgroundColor: GrayDarkThemeBtnBg,
+        borderWidth: 0,
+        borderRadius: 6,
+        flexDirection: "row",
+        paddingTop: 16,
+        paddingRight: 16,
+        paddingBottom: 16,
+        paddingLeft: 24,
+        marginBottom: 16,
+    },
+
+    ButtonPrimaryAccentActive: {
+        backgroundColor: redTheme,
+    },
+
     ButtonSecondaryAccentActive: {
         backgroundColor: navyBlueTheme1,
     },
@@ -678,12 +695,23 @@ const styles = StyleSheet.create({
         color: greenTheme,
     },
 
+    ButtonPrimaryAccentActiveText: {
+        color: "#fff",
+        fontFamily: Fonts.JosefinSemiBold
+    },
+
     ButtonSecondaryAccentIcon: {
         marginRight: 24
     },
 
     ButtonSecondaryAccentText: {
         color: navyBlueTheme1,
+        fontFamily: Fonts.JosefinSemiBold,
+        fontSize: 14
+    },
+
+    ButtonPrimaryAccentText: {
+        color: redTheme,
         fontFamily: Fonts.JosefinSemiBold,
         fontSize: 14
     }

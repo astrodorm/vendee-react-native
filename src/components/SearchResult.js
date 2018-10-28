@@ -30,6 +30,9 @@ import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItem
 import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn';
 import ShoppingListItem from '../components/ShoppingListItem';
 import ShoppingListOptions from '../components/ShoppingListOptions';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 
 
 
@@ -375,7 +378,6 @@ class SearchResult extends Component {
         listArray.forEach(function (item) {
             let productIndex = productArray.findIndex(x => x.id === item.id);
             product = productArray[productIndex];
-            //  console.log("listArray for each productIndex > " + productIndex);
             product.quantity = item.quantity;
             selectedItems.push(product);
             //console.dir(product)
@@ -386,6 +388,91 @@ class SearchResult extends Component {
         return selectedItems
 
     }
+
+
+    getTotal = () => {
+        let listArray = [...this.props.lists];
+        let productArray = [...this.props.products];
+
+        let total = 0;
+
+        listArray.forEach(function (item) {
+            let productIndex = productArray.findIndex(x => x.id === item.id);
+            product = productArray[productIndex];
+            multipliedValue = parseInt(product.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+            //selectedItems.push(product);
+        })
+        // console.log(total)
+
+
+        let formattedTotal = this.formatAmount(total);
+
+        return formattedTotal;
+
+    }
+
+    formatAmount = (amount) => {
+        let formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(amount)
+
+        return formattedTotal
+    }
+
+    getGrandTotal = () => {
+
+        let convenienceFee = 0;
+        let deliveryFee = 500;
+        let listArray = [...this.props.lists];
+        let productArray = [...this.props.products];
+
+        let total = 0;
+        let grandTotal = 0;
+
+        listArray.forEach(function (item) {
+            let productIndex = productArray.findIndex(x => x.id === item.id);
+            product = productArray[productIndex];
+            multipliedValue = parseInt(product.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+            //selectedItems.push(product);
+            convenienceFee += (5 / 100) * total;
+            grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+        })
+
+        let formattedGrandTotal = this.formatAmount(grandTotal);
+
+        return formattedGrandTotal;
+    }
+
+    getConvenienceFee = () => {
+
+        let convenienceFee = 0;
+        // let deliveryFee = 500;
+        let listArray = [...this.props.lists];
+        let productArray = [...this.props.products];
+
+        let total = 0;
+        //let grandTotal = 0;
+
+        listArray.forEach(function (item) {
+            let productIndex = productArray.findIndex(x => x.id === item.id);
+            product = productArray[productIndex];
+            multipliedValue = parseInt(product.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+            //selectedItems.push(product);
+            convenienceFee += (5 / 100) * total;
+            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+        })
+
+        let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
+
+        return formattedConvenienceFee;
+
+    }
+
+    closeShoppingList = () =>{
+        this.refs.RefModalShoppingList.close()
+    }
+
 
 
 
@@ -452,12 +539,19 @@ class SearchResult extends Component {
                         <View style={styles.shoppingListDetails}>
                             <Text style={styles.shoppingListLabel}>Shopping List</Text>
                         </View>
-                        <ShippingListDetails total="3,550" convenienceFee="75" deliveryFee="500" grandTotal="4,520" />
+                        <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee="500" grandTotal={this.getGrandTotal()} />
 
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
+                            <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList}/>
+                            <ButtonPrimaryAccent title="CHECKOUT" icon="creditcard" isActive={true} onSelected={this.gotoCheckoutScreen}/>
+
+                            {/* <ButtonPrimaryAccent title="MAKE PAYMENT" icon="creditcard" isActive={false} /> */}
+
+                            {/* <ButtonPrimaryAccent label="MAKE PAYMENT" icon="creditcard"/>
+
                             <MenuPrimaryButton label="MAKE PAYMENT" icon="creditcard" />
-                            <MenuDefaultButton label="SAVE FOR LATER" icon="save" />
+                            <MenuDefaultButton label="SAVE FOR LATER" icon="save" /> */}
                         </View>
 
                         {/* SELECTED PRODUCT ITEM LIST */}

@@ -9,11 +9,11 @@ const shoppingListDetails = (props) => {
         <View style={styles.shoppingListAmountsContainer}>
         <View style={styles.shoppingListAmountDetails}>
             <Text style={styles.shoppingListDetailsLabel}>Total</Text>
-            <Text style={styles.shoppingListDetailsPrice}>NGN {props.total}</Text>
+            <Text style={styles.shoppingListDetailsPrice}>{props.total}</Text>
         </View>
         <View style={styles.shoppingListAmountDetails}>
             <Text style={styles.shoppingListDetailsLabel}>Convenience fee</Text>
-            <Text style={styles.shoppingListDetailsPrice}>NGN {props.convenienceFee}</Text>
+            <Text style={styles.shoppingListDetailsPrice}> {props.convenienceFee}</Text>
         </View>
         <View style={styles.shoppingListAmountDetails}>
             <Text style={styles.shoppingListDetailsLabel}>Delivery fee</Text>
@@ -21,7 +21,7 @@ const shoppingListDetails = (props) => {
         </View>
         <View style={styles.shoppingListAmountDetails}>
             <Text style={styles.shoppingListDetailsBoldLabel}>Grand Total</Text>
-            <Text style={styles.shoppingListDetailsBoldPrice}>NGN {props.grandTotal}</Text>
+            <Text style={styles.shoppingListDetailsBoldPrice}> {props.grandTotal}</Text>
         </View>
     </View>
     )
