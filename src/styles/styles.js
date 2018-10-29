@@ -326,6 +326,15 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
+    CardShoppingProductItem: {
+        flexDirection: "row",
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 8,
+        paddingRight: 8
+
+    },
+
     BottomDrawer: {
 
     },
@@ -439,6 +448,10 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
 
+    CardShoppingProductDetails: {
+        marginLeft: 16
+    },
+
     ProductTitle: {
         fontSize: 16,
         fontFamily: Fonts.JosefinRegular
@@ -447,7 +460,7 @@ const styles = StyleSheet.create({
     ProductPrice: {
         fontSize: 11,
         fontFamily: Fonts.JosefinRegular,
-        letterSpacing:1
+        letterSpacing: 1
     },
 
     ProductQuantity: {
@@ -714,6 +727,103 @@ const styles = StyleSheet.create({
         color: redTheme,
         fontFamily: Fonts.JosefinSemiBold,
         fontSize: 14
+    },
+
+    AppCard: {
+        backgroundColor: "#fff",
+        marginTop: 24,
+        padding: 24,
+        width: fullWidth * 0.9,
+        borderColor: "#EFEFEF",
+        borderWidth: .5,
+        borderRadius: 10
+    },
+
+    AppCardHeader: {
+        fontFamily: Fonts.JosefinSemiBold,
+        fontSize: 32,
+        color: navyBlueTheme1,
+        marginBottom: 32
+    },
+
+    AccordionHeader: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingLeft: 8,
+        paddingRight: 8,
+    },
+
+    AccordionHeaderTitle: {
+        fontSize: 18,
+        fontFamily: Fonts.JosefinSemiBold,
+    },
+
+    AccordionHeaderSubtitle: {
+        fontSize: 12,
+        fontFamily: Fonts.JosefinRegular,
+        color: GrayDarkTheme
+    },
+
+    PlaceOrderBtnContainer: {
+        position: "absolute",
+        padding: 24,
+        backgroundColor: "#efefef",
+        width: fullWidth * 0.9,
+        bottom: 0
+    },
+
+    CardShoppingListHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 16,
+        alignItems: "center"
+    },
+
+    CardShoppingListContainer: {
+        width: fullWidth * 0.9,
+        marginTop: 24,
+        marginBottom: 24,
+        // marginLeft: 48,
+        // marginRight: 48
+    },
+
+    CardShoppingListTitle: {
+        color: navyBlueTheme1,
+        fontSize: 24,
+        fontFamily: Fonts.JosefinSemiBold
+    },
+
+    CardShoppingListTime: {
+        color: GrayDarkTheme,
+        fontSize: 12,
+        fontFamily: Fonts.JosefinRegular
+    },
+
+    CardShoppingListStatus: {
+        fontFamily: Fonts.JosefinBold,
+        fontSize: 10,
+        backgroundColor: PeachTheme,
+        borderRadius: 4,
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 8,
+        paddingRight: 8,
+        color: navyBlueTheme1
+    },
+
+    CardShoppingListProductContainer: {
+        backgroundColor: "#fff",
+        padding: 16,
+        borderColor: "#efefef",
+        borderRadius: 10,
+        borderWidth: 1
+    },
+
+    CardShoppingProductImage: {
+        marginRight: 32
     }
 });
 

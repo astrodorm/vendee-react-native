@@ -22,8 +22,6 @@ class ScreenSearch extends Component {
     }
 
 
-
-
     openDialogDeliveryMethod = () => {
         this.refs.RefModalDeliveryMethod.open();
 

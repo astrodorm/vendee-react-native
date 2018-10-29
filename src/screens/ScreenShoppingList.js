@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { styles } from '../styles/styles';
+import CardShoppingList from '../components/CardShoppingList';
+
 
 class ScreenShoppingList extends Component {
 
+    constructor(props) {
+        super(props)
 
-    //NAVIGATION OPTIONS
-    // static navigationOptions = {
-    //     header: null
-    // }
+        this.state = {
+            showCheckoutMessage: true,
+            showPlaceOrderComponent: false
+        }
+    }
+
+
+
+    placeOrder = () => {
+        console.log("placeOrder")
+    }
 
 
     render() {
         return (
-            <View>
-                <Text>
-                    This is the ScreenShoppingList view
-                </Text>
+            <View style={styles.AppContainer}>
+                <View style={styles.AppMain}>
+                    <CardShoppingList />
+                    <CardShoppingList />
+                </View>
             </View>
         )
     }

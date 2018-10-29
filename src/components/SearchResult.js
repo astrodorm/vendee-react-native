@@ -554,15 +554,7 @@ class SearchResult extends Component {
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
                             <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList} />
-                            {/* <ButtonPrimaryAccent title="CHECKOUT" icon="creditcard" isActive={true} onSelected={this.gotoCheckoutScreen} /> */}
-                            {/* <Button title="second love" onPress={() => this.props.navigation.navigate('Checkout')} /> */}
                             <CheckoutButton />
-                            {/* <ButtonPrimaryAccent title="MAKE PAYMENT" icon="creditcard" isActive={false} /> */}
-
-                            {/* <ButtonPrimaryAccent label="MAKE PAYMENT" icon="creditcard"/>
-
-                            <MenuPrimaryButton label="MAKE PAYMENT" icon="creditcard" />
-                            <MenuDefaultButton label="SAVE FOR LATER" icon="save" /> */}
                         </View>
 
                         {/* SELECTED PRODUCT ITEM LIST */}
