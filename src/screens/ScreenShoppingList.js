@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../styles/styles';
 import CardShoppingList from '../components/CardShoppingList';
+
 
 
 class ScreenShoppingList extends Component {
@@ -24,12 +25,23 @@ class ScreenShoppingList extends Component {
 
     render() {
         return (
+
             <View style={styles.AppContainer}>
-                <View style={styles.AppMain}>
-                    <CardShoppingList />
-                    <CardShoppingList />
-                </View>
+                <ScrollView>
+                    <View style={styles.AppMain}>
+                        <Text>Shopping List</Text>
+
+                        <View>
+                            <CardShoppingList />
+                            <CardShoppingList />
+                        </View>
+
+
+                    </View>
+                </ScrollView>
             </View>
+
+
         )
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../styles/styles';
 import Accordion from 'react-native-collapsible/Accordion';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -40,21 +40,25 @@ const SECTIONS = [
 
 class ScreenCheckout extends Component {
 
+
     constructor(props) {
         super(props)
 
         this.state = {
-            showCheckoutMessage: true,
-            showPlaceOrderComponent: false
+            showCheckoutMessage: false,
+            showPlaceOrderComponent: true,
+            activeSections: []
         }
     }
 
 
-
-
-    AccordionState = {
-        activeSections: []
-    };
+    // _renderSectionTitle = section => {
+    //     return (
+    //         <View style={styles.content}>
+    //             <Text>{section.content}</Text>
+    //         </View>
+    //     );
+    // };
 
     _renderHeader = section => {
         return (
@@ -82,50 +86,46 @@ class ScreenCheckout extends Component {
         this.setState({ activeSections });
     };
 
-
-    placeOrder = () => {
-        console.log("placeOrder")
-    }
-
-
     render() {
         return (
             <View style={styles.AppContainer}>
-                <View style={styles.AppMain}>
-                    {
-                        this.state.showPlaceOrderComponent &&
-                        <View>
-                            <View style={styles.AppCard}>
-                                <View>
-                                    <Text style={styles.AppCardHeader}>Checkout</Text>
-                                    <View>
-                                        <Accordion
-                                            sections={SECTIONS}
-                                            activeSections={this.AccordionState.activeSections}
-                                            // renderSectionTitle={this._renderSectionTitle}
-                                            renderHeader={this._renderHeader}
-                                            renderContent={this._renderContent}
-                                            onChange={this._updateSections}
-                                        />
+                {/* <ScrollView> */}
+                    <View style={styles.AppMain}>
+                        {
+                            this.state.showPlaceOrderComponent &&
+                            <ScrollView>
+                                <View style={styles.AppCardContainer}>
+                                    <View style={styles.AppCard}>
+                                        <Text style={styles.AppCardHeader}>Checkout</Text>
+                                        <View style={styles.AppCardContent}>
+                                            <View>
+                                                <Accordion
+                                                    sections={SECTIONS}
+                                                    activeSections={this.state.activeSections}
+                                                    renderHeader={this._renderHeader}
+                                                    renderContent={this._renderContent}
+                                                    onChange={this._updateSections}
+                                                    underlayColor={"#efefef"}
+                                                />
+                                            </View>
+                                            <Text>SHOPPING LIST DETAILS</Text>
+                                            <ShoppingListDetails total="TOTAL HERE" convenienceFee="c fee here" deliveryFee="d fee here" grandTotal="gtotal here" />
+                                            <ButtonPrimaryAccent title="PLACE ORDER" icon="arrowright" isActive={true} onSelected={this.placeOrder} />
+                                        </View>
                                     </View>
-                                    <Text>SHOPPING LIST DETAILS</Text>
-                                    <ShoppingListDetails total="TOTAL HERE" convenienceFee="c fee here" deliveryFee="d fee here" grandTotal="gtotal here" />
                                 </View>
+                            </ScrollView>
+                        }
+                        {
+                            this.state.showCheckoutMessage &&
+                            <View>
+                                <CheckoutMessage />
                             </View>
-                            <View style={styles.PlaceOrderBtnContainer}>
-                                <ButtonPrimaryAccent title="PLACE ORDER" icon="arrowright" isActive={true} onSelected={this.placeOrder} />
-                            </View>
-                        </View>
-                    }
-                    {
-                        this.state.showCheckoutMessage &&
-                        <View>
-                            <CheckoutMessage />
-                        </View>
-                    }
-                </View>
+                        }
+                    </View>
+                {/* </ScrollView> */}
             </View>
-        )
+        );
     }
 }
 

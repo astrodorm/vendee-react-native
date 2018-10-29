@@ -39,21 +39,21 @@ const styles = StyleSheet.create({
     introHeader: {
         color: skyBlueTheme,
         marginTop: 24,
-        fontFamily: Fonts.JosefinBold,
-        fontSize: 44,
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 42,
         lineHeight: 50
     },
 
     introCardHeader: {
         color: navyBlueTheme2,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSBold,
         fontSize: 36,
         marginTop: 0
     },
 
     introCardSubtitle: {
         color: GrayDarkTheme,
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         fontSize: 16,
         marginBottom: 16
     },
@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
     },
 
     introSubtitle: {
-        fontSize: 18,
+        fontSize: 16,
         color: skyBlueTheme,
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         marginTop: 24
     },
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         backgroundColor: redTheme,
         color: "#fff",
         fontSize: 16,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         paddingTop: 16,
         paddingBottom: 16,
         textAlign: "center",
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         fontSize: 12,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         textAlign: 'center',
         marginTop: 16,
         textAlign: "center"
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     buttonSecondaryLight: {
         color: '#fff',
         fontSize: 16,
-        fontFamily: Fonts.JosefinBold
+        fontFamily: Fonts.MPLUSMedium
     },
 
     introCards: {
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         fontSize: 24,
         color: GrayDarkTheme,
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         borderStyle: "dashed"
     },
 
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 6,
         borderTopLeftRadius: 0,
         borderTopRightRadius: 0,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         textAlign: "center",
         fontSize: 16
     },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         paddingRight: 0,
         paddingBottom: 24,
         paddingLeft: 24,
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         fontSize: 18,
         width: 270,
     },
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     },
 
     DeliveryPickerText: {
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         fontSize: 12,
         color: GrayDarkTheme,
     },
@@ -292,12 +292,12 @@ const styles = StyleSheet.create({
     AppDeliveryPickerText: {
         fontSize: 10,
         color: navyBlueTheme2,
-        fontFamily: Fonts.JosefinRegular
+        fontFamily: Fonts.MPLUSRegular
     },
 
     AppCardTitle: {
         fontSize: 12,
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
         color: navyBlueTheme2
     },
 
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
 
     AddProductText: {
         fontSize: 13,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         color: "#fff",
         paddingTop: 1,
         borderRadius: 30,
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     QuantityText: {
         color: "#fff",
         fontSize: 25,
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
         marginTop: 0,
         marginBottom: 4,
     },
@@ -454,18 +454,18 @@ const styles = StyleSheet.create({
 
     ProductTitle: {
         fontSize: 16,
-        fontFamily: Fonts.JosefinRegular
+        fontFamily: Fonts.MPLUSRegular
     },
 
     ProductPrice: {
         fontSize: 11,
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         letterSpacing: 1
     },
 
     ProductQuantity: {
         fontSize: 12,
-        fontFamily: Fonts.JosefinRegular
+        fontFamily: Fonts.MPLUSRegular
     },
 
     AppSearchResultMain: {
@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
         color: navyBlueTheme2,
         backgroundColor: PeachTheme,
         fontSize: 16,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         borderRadius: 32,
         width: 28,
         height: 28,
@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
     FBtnText: {
         fontSize: 16,
         color: navyBlueTheme1,
-        fontFamily: Fonts.JosefinSemiBold
+        fontFamily: Fonts.MPLUSMedium
     },
 
     FBtnIcon: {
@@ -538,7 +538,7 @@ const styles = StyleSheet.create({
     },
 
     shoppingListLabel: {
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         fontSize: 24,
         color: navyBlueTheme1,
         marginBottom: 8,
@@ -580,14 +580,14 @@ const styles = StyleSheet.create({
     MenuPrimaryText: {
         color: "#fff",
         fontSize: 12,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         marginLeft: 8
     },
 
     MenuDefaultButtonText: {
         color: redTheme,
         fontSize: 11,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         marginLeft: 8
     },
 
@@ -602,14 +602,14 @@ const styles = StyleSheet.create({
     },
 
     shoppingListDetailsLabel: {
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         color: GrayDarkTheme,
         fontSize: 12,
         marginRight: 16
     },
 
     shoppingListDetailsPrice: {
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         color: GrayDarkTheme,
         fontSize: 12,
         letterSpacing: 1
@@ -619,14 +619,14 @@ const styles = StyleSheet.create({
     shoppingListDetailsBoldLabel: {
         color: navyBlueTheme1,
         fontSize: 12,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         marginRight: 16
     },
 
     shoppingListDetailsBoldPrice: {
         color: navyBlueTheme1,
         fontSize: 12,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
     },
 
     shoppingListAmountsContainer: {
@@ -643,7 +643,7 @@ const styles = StyleSheet.create({
     savedAmount: {
         color: greenTheme,
         fontSize: 11,
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         textAlign: "right",
     },
 
@@ -666,7 +666,7 @@ const styles = StyleSheet.create({
 
     modalDeliveryMethodHeader: {
         color: navyBlueTheme1,
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
         fontSize: 22,
         marginBottom: 32
 
@@ -710,7 +710,7 @@ const styles = StyleSheet.create({
 
     ButtonPrimaryAccentActiveText: {
         color: "#fff",
-        fontFamily: Fonts.JosefinSemiBold
+        fontFamily: Fonts.MPLUSMedium
     },
 
     ButtonSecondaryAccentIcon: {
@@ -719,28 +719,30 @@ const styles = StyleSheet.create({
 
     ButtonSecondaryAccentText: {
         color: navyBlueTheme1,
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
         fontSize: 14
     },
 
     ButtonPrimaryAccentText: {
         color: redTheme,
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
         fontSize: 14
     },
 
     AppCard: {
         backgroundColor: "#fff",
         marginTop: 24,
+        // marginBottom:124,
         padding: 24,
         width: fullWidth * 0.9,
         borderColor: "#EFEFEF",
         borderWidth: .5,
-        borderRadius: 10
+        borderRadius: 10,
+        //  height:fullHeight * 1.5
     },
 
     AppCardHeader: {
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
         fontSize: 32,
         color: navyBlueTheme1,
         marginBottom: 32
@@ -758,12 +760,12 @@ const styles = StyleSheet.create({
 
     AccordionHeaderTitle: {
         fontSize: 18,
-        fontFamily: Fonts.JosefinSemiBold,
+        fontFamily: Fonts.MPLUSMedium,
     },
 
     AccordionHeaderSubtitle: {
         fontSize: 12,
-        fontFamily: Fonts.JosefinRegular,
+        fontFamily: Fonts.MPLUSRegular,
         color: GrayDarkTheme
     },
 
@@ -793,17 +795,17 @@ const styles = StyleSheet.create({
     CardShoppingListTitle: {
         color: navyBlueTheme1,
         fontSize: 24,
-        fontFamily: Fonts.JosefinSemiBold
+        fontFamily: Fonts.MPLUSMedium
     },
 
     CardShoppingListTime: {
         color: GrayDarkTheme,
         fontSize: 12,
-        fontFamily: Fonts.JosefinRegular
+        fontFamily: Fonts.MPLUSRegular
     },
 
     CardShoppingListStatus: {
-        fontFamily: Fonts.JosefinBold,
+        fontFamily: Fonts.MPLUSMedium,
         fontSize: 10,
         backgroundColor: PeachTheme,
         borderRadius: 4,
@@ -824,6 +826,13 @@ const styles = StyleSheet.create({
 
     CardShoppingProductImage: {
         marginRight: 32
+    },
+    // AppCardContent: {
+    //     height:fullHeight
+    // }
+
+    AppCardContainer:{
+        height:fullHeight * 1.5
     }
 });
 
