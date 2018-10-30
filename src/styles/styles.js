@@ -945,6 +945,15 @@ const styles = StyleSheet.create({
 
     navigationButton: {
         marginBottom: 24
+    },
+
+    LoginScreen:{
+        backgroundColor:navyBlueTheme1,
+        height:fullHeight,
+        flexDirection:"column",
+        justifyContent:"space-around",
+        width:fullWidth,
+        padding:48
     }
 
 });

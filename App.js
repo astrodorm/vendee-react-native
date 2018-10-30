@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import rootReducer from './src/reducers/reducers';
 import ScreenCheckout from './src/screens/ScreenCheckout';
 import ScreenCheckoutMessage from './src/screens/ScreenCheckoutMessage';
+import ScreenLogin from './src/screens/ScreenLogin';
 
 
 const store = createStore(rootReducer,
@@ -38,6 +39,9 @@ const AppStackNavigator = createStackNavigator({
     },
     CheckoutMessage: {
         screen: ScreenCheckoutMessage
+    },
+    Login: {
+        screen: ScreenLogin
     }
 },
     {

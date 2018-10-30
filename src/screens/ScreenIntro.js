@@ -33,6 +33,10 @@ class ScreenIntro extends Component {
         console.log('sayhi')
     }
 
+    gotoSignScreen = () =>{
+        this.props.navigation.push("Login")
+    }
+
     handleRefHeaderContents = RefHeaderContents => this.RefHeaderContents = RefHeaderContents;
     handleRefButtonContents = RefButtonContents => this.RefButtonContents = RefButtonContents;
     handleRefBackgroundImage = RefBackgroundImage => this.RefBackgroundImage = RefBackgroundImage;
@@ -54,7 +58,7 @@ class ScreenIntro extends Component {
             this.setState({ introStage: 2, showIntroPhoneNumber: false, showIntroEmail: true });
 
             let introStage = this.state.introStage;
-            console.log("animateToEmailView > introStage : " + introStage);
+           // console.log("animateToEmailView > introStage : " + introStage);
 
             Animated.timing(this.animatedValue, { toValue: 255, duration: 800 }).start()
         });
@@ -68,7 +72,7 @@ class ScreenIntro extends Component {
             this.setState({ introStage: 3, showIntroEmail: false, showIntroSuccess: true });
 
             let introStage = this.state.introStage;
-            console.log("animateToEmailView > introStage : " + introStage);
+           // console.log("animateToEmailView > introStage : " + introStage);
 
             Animated.timing(this.animatedValue, { toValue: 255, duration: 800 }).start()
 
@@ -140,7 +144,7 @@ class ScreenIntro extends Component {
                                 <TouchableOpacity onPress={this.animateToPhoneNumberView}>
                                     <Text style={styles.buttonPrimary}> SIGN UP</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={this.animateToPhoneNumberView}>
+                                <TouchableOpacity onPress={this.gotoSignScreen}>
                                     <Text style={styles.buttonSecondary}> SIGN IN </Text>
                                 </TouchableOpacity>
                             </Animatable.View>
