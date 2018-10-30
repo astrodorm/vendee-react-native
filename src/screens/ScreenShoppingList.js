@@ -29,14 +29,10 @@ class ScreenShoppingList extends Component {
             <View style={styles.AppContainer}>
                 <ScrollView>
                     <View style={styles.AppMain}>
-                        <Text>Shopping List</Text>
-
                         <View>
                             <CardShoppingList />
                             <CardShoppingList />
                         </View>
-
-
                     </View>
                 </ScrollView>
             </View>

@@ -20,15 +20,15 @@ export default createBottomTabNavigator({
             )
         }
     },
-    Category: {
-        screen: ScreenCategory,
-        navigationOptions: {
-            tabBarLabel: '',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name="appstore-o" size={22} color={tintColor} />
-            )
-        }
-    },
+    // Category: {
+    //     screen: ScreenCategory,
+    //     navigationOptions: {
+    //         tabBarLabel: '',
+    //         tabBarIcon: ({ tintColor }) => (
+    //             <Icon name="appstore-o" size={22} color={tintColor} />
+    //         )
+    //     }
+    // },
     ShoppingList: {
         screen: ScreenShoppingList,
         navigationOptions: {

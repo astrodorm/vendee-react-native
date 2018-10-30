@@ -543,7 +543,7 @@ class SearchResult extends Component {
                     onClosingState={this.hideFbtnShoppingListQuantityPicker}
                 >
                     <View style={styles.shoppingListHeader}>
-                        <Icon name="minus" size={56} color={"#efefef"} />
+                        {/* <Icon name="minus" size={56} color={"#efefef"} /> */}
                     </View>
                     <View style={styles.ShoppingListModalContainer}>
                         <View style={styles.shoppingListDetails}>

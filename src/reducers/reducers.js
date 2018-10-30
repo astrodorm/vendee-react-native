@@ -10,7 +10,8 @@ const initialState = {
     searchText: "",
     isLoadingSearchBar: false,
     isDelivery: true,
-    isPickup: false
+    isPickup: false,
+    isOrderSuccessful : false
     //isVisibleFBtnShoppingList: false,
 }
 

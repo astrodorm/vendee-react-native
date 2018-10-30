@@ -15,6 +15,7 @@ let GrayDarkThemeBtnBorder = "#D9D9D9";
 let PeachTheme = "#FFDDBB";
 let greenTheme = "#8DCC21";
 let lightGrayTheme = "#D4DDE2";
+let brightBlue = "#1779C7";
 
 const styles = StyleSheet.create({
     container: {
@@ -143,13 +144,13 @@ const styles = StyleSheet.create({
 
     introCardInput: {
         padding: 10,
-        borderWidth: .5,
+        borderWidth: 1,
         borderColor: 'grey',
-        borderRadius: 4,
+        borderRadius: 6,
         fontSize: 24,
         color: GrayDarkTheme,
         fontFamily: Fonts.MPLUSRegular,
-        borderStyle: "dashed"
+        // borderStyle: "dashed"
     },
 
     introCardButton: {
@@ -527,9 +528,9 @@ const styles = StyleSheet.create({
     shoppingListModalContainer: {
         width: fullWidth,
         backgroundColor: "#fff",
-        height: 600,
-        borderTopRightRadius: 20,
-        borderTopLeftRadius: 20,
+        height: fullHeight,
+        // borderTopRightRadius: 20,
+        // borderTopLeftRadius: 20,
         paddingTop: 0,
         paddingBottom: 24,
         paddingLeft: 24,
@@ -538,11 +539,11 @@ const styles = StyleSheet.create({
     },
 
     shoppingListLabel: {
-        fontFamily: Fonts.MPLUSMedium,
+        fontFamily: Fonts.MPLUSBold,
         fontSize: 24,
         color: navyBlueTheme1,
-        marginBottom: 8,
-        marginTop: 0
+        marginBottom: 16,
+        marginTop: 16
     },
 
     AppContainer: {
@@ -694,6 +695,8 @@ const styles = StyleSheet.create({
         paddingBottom: 16,
         paddingLeft: 24,
         marginBottom: 16,
+        alignItems: "center",
+        justifyContent: "center",
     },
 
     ButtonPrimaryAccentActive: {
@@ -715,6 +718,14 @@ const styles = StyleSheet.create({
 
     ButtonSecondaryAccentIcon: {
         marginRight: 24
+    },
+
+    ButtonPrimaryAccentIcon: {
+        marginRight: 24
+    },
+
+    ButtonIconPrimaryAccentIcon: {
+        marginRight: 0
     },
 
     ButtonSecondaryAccentText: {
@@ -748,12 +759,20 @@ const styles = StyleSheet.create({
         marginBottom: 32
     },
 
+    ShoppingListHeader: {
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 24,
+        color: navyBlueTheme1,
+        marginBottom: 24,
+        marginTop: 24
+    },
+
     AccordionHeader: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingTop: 16,
-        paddingBottom: 16,
+        paddingTop: 24,
+        paddingBottom: 24,
         paddingLeft: 8,
         paddingRight: 8,
     },
@@ -761,6 +780,13 @@ const styles = StyleSheet.create({
     AccordionHeaderTitle: {
         fontSize: 18,
         fontFamily: Fonts.MPLUSMedium,
+    },
+
+    AccordionContent: {
+        fontSize: 16,
+        fontFamily: Fonts.MPLUSRegular,
+        width: 200,
+        marginRight: 16
     },
 
     AccordionHeaderSubtitle: {
@@ -794,7 +820,7 @@ const styles = StyleSheet.create({
 
     CardShoppingListTitle: {
         color: navyBlueTheme1,
-        fontSize: 24,
+        fontSize: 20,
         fontFamily: Fonts.MPLUSMedium
     },
 
@@ -831,9 +857,96 @@ const styles = StyleSheet.create({
     //     height:fullHeight
     // }
 
-    AppCardContainer:{
-        height:fullHeight * 1.5
+    AppCardContainer: {
+        height: fullHeight * 1.5
+    },
+
+    ActionInput: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'grey',
+        borderRadius: 6,
+        fontSize: 24,
+        color: GrayDarkTheme,
+        fontFamily: Fonts.MPLUSRegular,
+        flex: 2
+    },
+
+    ActionInputContainer: {
+        flexDirection: "row",
+        marginBottom: 16
+    },
+
+    ButtonIconPrimaryAccent: {
+        backgroundColor: GrayDarkThemeBtnBg,
+        borderWidth: 0,
+        borderRadius: 6,
+        padding: 8,
+        alignItems: "center",
+        justifyContent: "center",
+        marginLeft: 16,
+
+    },
+
+    cardIcon: {
+        // marginBottom: 8,
+        width: 26,
+        // height: 26,
+        resizeMode: "contain"
+    },
+
+    CardContainer: {
+        marginBottom: 16,
+        borderColor: brightBlue,
+        borderRadius: 6,
+        borderWidth: 4,
+        padding: 16,
+        width: 144,
+        marginRight: 16
+    },
+
+    cardOwner: {
+        fontFamily: Fonts.MPLUSBold,
+        color: GrayDarkTheme,
+        fontSize: 12,
+        letterSpacing: 1
+    },
+
+    cardNumber: {
+        fontFamily: Fonts.MPLUSBold,
+        color: navyBlueTheme1,
+        fontSize: 12,
+        letterSpacing: 1
+    },
+
+    cards: {
+        flexDirection: "row",
+        flexWrap: "wrap"
+    },
+
+    AppCardSubtitle: {
+        color: navyBlueTheme1,
+        fontSize: 12,
+        fontFamily: Fonts.MPLUSBold,
+        letterSpacing: 1,
+        marginTop: 32
+    },
+
+    AppCheckOutMessage: {
+        justifyContent: "center",
+        // alignItems: "center",
+        height: fullHeight,
+        // marginTop:64
+    },
+
+    headerStyle: {
+        color: navyBlueTheme1
+    },
+
+    navigationButton: {
+        marginBottom: 24
     }
+
 });
 
 export { styles }

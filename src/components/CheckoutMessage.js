@@ -10,6 +10,10 @@ class CheckoutMessage extends Component {
         console.log("placeOrder")
     }
 
+    gotoShoppingList = () => {
+        this.props.navigation.push('MainAppScreen');
+    }
+
 
     render() {
         return (
@@ -24,7 +28,7 @@ class CheckoutMessage extends Component {
                     </View>
                 </View>
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.gotoShoppingList}>
                         <Text style={styles.introCardButton}> VIEW ORDER DETAILS </Text>
                     </TouchableOpacity>
                 </View>
