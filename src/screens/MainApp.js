@@ -3,11 +3,7 @@ import { createBottomTabNavigator } from 'react-navigation';
 import ScreenSearch from './ScreenSearch';
 import ScreenShoppingList from './ScreenShoppingList';
 import ScreenProfile from './ScreenProfile';
-import ScreenCategory from './ScreenCategory';
-// import Icon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/AntDesign';
-
-import { styles } from '../styles/styles'
 
 
 export default createBottomTabNavigator({
@@ -20,15 +16,7 @@ export default createBottomTabNavigator({
             )
         }
     },
-    // Category: {
-    //     screen: ScreenCategory,
-    //     navigationOptions: {
-    //         tabBarLabel: '',
-    //         tabBarIcon: ({ tintColor }) => (
-    //             <Icon name="appstore-o" size={22} color={tintColor} />
-    //         )
-    //     }
-    // },
+
     ShoppingList: {
         screen: ScreenShoppingList,
         navigationOptions: {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { styles } from '../styles/styles'
 
 const AvatarProduct = (props) => {

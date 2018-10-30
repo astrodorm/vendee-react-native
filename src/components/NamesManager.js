@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, TextInput } from 'react-native';
+import { View, Text } from 'react-native';
 import { styles } from '../styles/styles';
-import Icon from 'react-native-vector-icons/AntDesign';
 import ButtonIconPrimaryAccent from '../components/ButtonIconPrimaryAccent';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 

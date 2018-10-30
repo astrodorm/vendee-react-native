@@ -37,21 +37,6 @@ import CheckoutButton from '../components/CheckoutButton';
 
 
 
-// const SECTIONS = [
-//     {
-//         title: 'HEADER 111111',
-//         content: 'Quantiy header 11111 ipsum...'
-//     },
-//     {
-//         title: 'HEADER 22222',
-//         content: 'Quantity header 22222 ipsum...'
-//     }
-// ];
-
-
-
-
-
 class SearchResult extends Component {
 
     constructor(props) {
@@ -63,13 +48,11 @@ class SearchResult extends Component {
             isVisibleFBtnQuantityPicker: false,
             activeSections: [],
             quantities: [0, 0],
-            //  products: [{ id: 1, title: "Nasco Cornflakes 350g", price: "1,234", quantity: 0, isSelected: false }, { id: 2, title: "Kellogs Cornflakes 70g", price: "9,870", quantity: 0, isSelected: false }],
             products: [],
             selectProductID: 0,
             selectedProductQuantity: 0,
             selectedProductCount: 0,
             isVisibleFBtnShoppingListQuantityPicker: false
-            // showAddProductButton: true
         }
     }
 
@@ -79,47 +62,11 @@ class SearchResult extends Component {
         this.setState({ products: prouductsData })
     }
 
-    // state = {
-    //     activeSections: []
-    // };
-
-    // _renderSectionTitle = section => {
-    //     return (
-    //         <View style={styles.content}>
-    //             <Text>{section.content}</Text>
-    //         </View>
-    //     );
-    // };
 
     //TRANSITION HANDLERS
     handleRefFBtnShoppingList = RefFBtnShoppingList => this.RefFBtnShoppingList = RefFBtnShoppingList;
     handleRefFBtnQuantityPicker = RefFBtnQuantityPicker => this.RefFBtnQuantityPicker = RefFBtnQuantityPicker;
     handleRefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker => this.RefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker;
-
-    // _renderHeader = section => {
-
-    //     // console.log("_renderHeader")
-
-    //     return (
-    //         // <ProductItem />
-    //     );
-    // };
-
-
-
-    // _renderContent = ({ item }) => {
-
-    //     let renderContentCount = 0;
-
-    //     console.log("_renderContent")
-    //     return (
-    //         // <ProductQuantityPicker animateFBtn={this.animateShoppingListButton} quantity="300"/>
-    //     );
-    // };
-
-    // _updateSections = activeSections => {
-    //     this.setState({ activeSections });
-    // };
 
 
     _renderProductItem = ({ item }) => (
@@ -154,8 +101,6 @@ class SearchResult extends Component {
     }
 
     onSelectShoppingListItem = (id, quantity) => {
-        // console.log("onSelectShoppingListItem id > " + id);
-        // console.log("onSelectShoppingListItem quantity > " + quantity);
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
         let isVisibleFBtnShoppingListQuantityPicker = this.state.isVisibleFBtnShoppingListQuantityPicker;
@@ -245,7 +190,6 @@ class SearchResult extends Component {
         //ANIMATE BUTTON
         this.RefFBtnShoppingList.fadeInUp(400);
 
-        // console.log("showFbtnShoppingListButton")
     }
 
     incrementQuantity = () => {
@@ -259,13 +203,9 @@ class SearchResult extends Component {
         // DEFAULT QUANTITY AS 1 OR INCREMENT THE selectProductQuantity VALUE
         this.getListByID(id).quantity === 0 ? this.addItem(id) : this.incrementListItem(id)
 
-        //console.log("incrementQuantity id > " + id);
-        //console.log("incrementQuantity > index : " + index);
-
     }
 
     addItem = (id) => {
-        // console.log("addItem id > " + id)
 
         //DISPATCH ACTION TO ADD A NEW ITEM WITH DEFAULT QUANTITY VALUE AS 1
         this.props.dispatch(addItemAction(id));
@@ -276,7 +216,6 @@ class SearchResult extends Component {
         let listArray = [...this.props.lists];
         let index = listArray.findIndex(x => x.id === id);
         let quantity = listArray[index].quantity + 1;
-        //console.log("incrementListItem index > " + index, "incrementListItem quantity > " + quantity);
 
         //DISPATCH ACTION TO INCREMENT THE VALUE OF THE QUANTITY AN ITEM IN THE LIST ARRAY
         this.props.dispatch(incrementListItemAction(index, quantity))
@@ -294,15 +233,13 @@ class SearchResult extends Component {
             this.removeListItem(id);
             this.props.dispatch(itemDecrementAction());
             this.decrementListItem(id);
-            // console.log("decrementQuantity > " + id);
-            //this.hideFbtnShoppingListQuantityPicker()
+
         }
 
         if (this.getListByID(id).quantity > 1) {
 
             this.props.dispatch(itemDecrementAction());
             this.decrementListItem(id);
-            // console.log("decrementQuantity > " + id);
 
         }
 
@@ -320,7 +257,6 @@ class SearchResult extends Component {
     }
 
     removeListItem = (id) => {
-        // console.log("removeListItem > " + id);
         let listArray = [...this.props.lists];
         let index = listArray.findIndex(x => x.id === id);
 
@@ -381,11 +317,9 @@ class SearchResult extends Component {
             product = productArray[productIndex];
             product.quantity = item.quantity;
             selectedItems.push(product);
-            //console.dir(product)
 
         });
 
-        // console.log(products)
         return selectedItems
 
     }
@@ -402,10 +336,7 @@ class SearchResult extends Component {
             product = productArray[productIndex];
             multipliedValue = parseInt(product.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            //selectedItems.push(product);
         })
-        // console.log(total)
-
 
         let formattedTotal = this.formatAmount(total);
 
@@ -434,7 +365,6 @@ class SearchResult extends Component {
             product = productArray[productIndex];
             multipliedValue = parseInt(product.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            //selectedItems.push(product);
             convenienceFee += (5 / 100) * total;
             grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
         })
@@ -447,21 +377,17 @@ class SearchResult extends Component {
     getConvenienceFee = () => {
 
         let convenienceFee = 0;
-        // let deliveryFee = 500;
         let listArray = [...this.props.lists];
         let productArray = [...this.props.products];
 
         let total = 0;
-        //let grandTotal = 0;
 
         listArray.forEach(function (item) {
             let productIndex = productArray.findIndex(x => x.id === item.id);
             product = productArray[productIndex];
             multipliedValue = parseInt(product.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            //selectedItems.push(product);
             convenienceFee += (5 / 100) * total;
-            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
         })
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
@@ -475,8 +401,7 @@ class SearchResult extends Component {
     }
 
     gotoCheckoutScreen = () => {
-        // this.props.navigation.navigate("Category");
-        // this.props.navigation.push('Checkout');
+
         this.props.navigation.navigate("Checkout");
 
         console.log("ScreenResult : gotoCheckoutScreen")
@@ -503,15 +428,6 @@ class SearchResult extends Component {
                             </View>
                         </View>
                         <View style={styles.AppSearchResultDisplayContainer}>
-                            {/* <Accordion
-                            sections={this.state.products}
-                            activeSections={this.state.activeSections}
-                            // renderSectionTitle={this._renderSectionTitle}
-                            renderHeader={this._renderHeader}
-                            renderContent={this._renderContent}
-                            onChange={this._updateSections}
-                            underlayColor="#efefef"
-                        /> */}
                             <FlatList
                                 data={this.props.products}
                                 extraData={this.props}
@@ -543,7 +459,6 @@ class SearchResult extends Component {
                     onClosingState={this.hideFbtnShoppingListQuantityPicker}
                 >
                     <View style={styles.shoppingListHeader}>
-                        {/* <Icon name="minus" size={56} color={"#efefef"} /> */}
                     </View>
                     <View style={styles.ShoppingListModalContainer}>
                         <View style={styles.shoppingListDetails}>
@@ -577,7 +492,6 @@ class SearchResult extends Component {
     }
 }
 
-//export default SearchResult;
 
 const mapStateToProps = state => ({
     products: state.products.products,

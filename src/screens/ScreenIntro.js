@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Image, Button, Animated, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
-// import Icon from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
 
@@ -28,12 +27,6 @@ class ScreenIntro extends Component {
 
         }
     }
-
-
-    //NAVIGATION OPTIONS
-    // static navigationOptions = {
-    //     header: null
-    // }
 
 
     sayhi = () => {
@@ -67,15 +60,6 @@ class ScreenIntro extends Component {
         });
     }
 
-    // FAILS TO RETURN TO EMAIL VIEW AFTER GOING BACK
-    // animateBackToPhoneNumberView = () => {
-    //     this.RefIntroEmail.fadeOut(400).then(endState => {
-    //         this.setState({ introStage: 1, showIntroEmail: false, showIntroPhoneNumber: true });
-
-    //         let introStage = this.state.introStage;
-    //         console.log("animateToEmailView > introStage : " + introStage);
-    //     });
-    // }
 
     animateToSuccessView = () => {
         this.setState({ backgroundColorValue: "rgb(92,131,144)", backgroundColorNextValue: "rgb(52,16,35)", introButtonText: "LET'S GO SHOPPING" });
@@ -93,7 +77,6 @@ class ScreenIntro extends Component {
 
     gotoMainAppScreen = () => {
         this.props.navigation.push('MainAppScreen');
-        //this.props.navigation.push('Checkout');
     }
 
 
@@ -119,7 +102,6 @@ class ScreenIntro extends Component {
     }
 
 
-    //DEAFULT RENDER
     render() {
 
 
@@ -168,7 +150,6 @@ class ScreenIntro extends Component {
                         {
                             this.state.showIntroCards &&
                             <Animatable.View >
-                                {/* <Text style={styles.introHeader}> CARDS HERE</Text> */}
                                 <View style={styles.introCards}>
                                     <View>
 

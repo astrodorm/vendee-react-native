@@ -1,7 +1,5 @@
 import React from 'react';
-import { View, TextInput, Text } from 'react-native';
-import { styles } from '../styles/styles';
-import Icon from 'react-native-vector-icons/AntDesign';
+import { View, TextInput } from 'react-native';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 
 const CouponManager = (props) => {

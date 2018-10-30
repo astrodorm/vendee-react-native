@@ -11,12 +11,9 @@ const initialState = {
     isLoadingSearchBar: false,
     isDelivery: true,
     isPickup: false,
-    isOrderSuccessful : false
-    //isVisibleFBtnShoppingList: false,
+    isOrderSuccessful: false
 }
 
-
-//../../assets/images/nasco-corn-flakes-350g.png
 
 function products(state = initialState, action) {
     switch (action.type) {
@@ -82,10 +79,6 @@ function lists(state = initialState, action) {
                     ...state.lists.slice(0, action.index),
                     ...state.lists.slice(action.index + 1)
                 ]
-                // items: [
-                //     ...state.items.slice(0, action.payload),
-                //     ...state.items.slice(action.payload + 1)
-                // ],
             });
         case LIST_ITEM_INCREMENT:
             return Object.assign({}, state, {

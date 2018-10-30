@@ -72,7 +72,7 @@ class ScreenSearch extends Component {
         this.showSearchResult();
     }
 
-    gotoCheckout = () =>{
+    gotoCheckout = () => {
         this.props.navigation.navigate("Checkout");
         console.log("ScreenSearch : gotoCheckout")
     }
@@ -95,7 +95,6 @@ class ScreenSearch extends Component {
                             </View>
                             <View style={styles.SearchSecondView}>
                                 <SearchBar isLoadingSearchBar={this.props.isLoadingSearchBar} onFetchProduct={this.getProducts} />
-                                {/* <Button title="ScreenSearch gotoCheckout" onPress={() => this.gotoCheckout()}/> */}
                             </View>
                         </View>
                     }
@@ -117,7 +116,6 @@ class ScreenSearch extends Component {
                     swipeToClose={false}
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
-                // onClosingState={this.hideFbtnShoppingListQuantityPicker}
                 >
                     <View>
                         <Text style={styles.modalDeliveryMethodHeader}>
@@ -132,7 +130,6 @@ class ScreenSearch extends Component {
     }
 }
 
-//export default ScreenSearch;
 
 const mapStateToProps = state => ({
 

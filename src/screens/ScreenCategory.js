@@ -3,13 +3,6 @@ import { Text, View } from 'react-native';
 
 class ScreenCategory extends Component {
 
-
-    //NAVIGATION OPTIONS
-    // static navigationOptions = {
-    //     header: null
-    // }
-
-
     render() {
         return (
             <View>

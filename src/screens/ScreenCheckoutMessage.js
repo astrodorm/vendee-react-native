@@ -18,7 +18,6 @@ class ScreenCheckout extends Component {
     render() {
         return (
             <View style={styles.AppContainer}>
-                {/* <ScrollView> */}
                 <View style={styles.AppMain}>
                     <View style={styles.AppCheckOutMessage}>
                         <View style={styles.introCards}>

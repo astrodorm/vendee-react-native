@@ -8,7 +8,6 @@ class FilterPicker extends Component {
         return (
             <View style={styles.AppFilterPickerContainer}>
                 <Text style={styles.AppDeliveryPickerText}> SORT BY </Text>
-                {/* ADD DROPDOWN IMAGE ICON HERE */}
             </View>
         )
     }

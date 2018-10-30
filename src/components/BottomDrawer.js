@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import Icon, { Button } from 'react-native-vector-icons/AntDesign';
 import * as Animatable from 'react-native-animatable';
@@ -54,14 +53,12 @@ class BottomDrawer extends Component {
     }
 
     openBottomDrawer = () => {
-        // this.RefBottomDrawer.animate('animateOpenDrawer', 400);
         this.RefBottomDrawer.slideOutUp(400);
         this.setState({ isCloseBottomDrawer: false });
         console.log("openBottomDrawer")
     }
 
     closeBottomDrawer = () => {
-        //this.RefBottomDrawer.animate('animateCloseDrawer', 400);
         this.RefBottomDrawer.slideOutUp(400);
         this.setState({ isCloseBottomDrawer: true });
         console.log("closeBottomDrawer")
@@ -72,27 +69,25 @@ class BottomDrawer extends Component {
 
         return (
             <Animatable.View ref={this.handleRefBottomDrawer}>
-                {/* <TouchableOpacity onPress={() => this.animateBottomDrawer()}> */}
-                    <View style={styles.BottomDrawerHeader}>
-                        <View style={styles.BottomDrawerHeaderText}>
-                            <Text style={styles.BottomDrawerTitle}>SHOPPING LIST</Text>
-                            <Text style={styles.BottomDrawerCount}>5</Text>
-                        </View>
-
-                        <Icon name="upcircleo" size={22} color="#fff" onPress={() => this.animateBottomDrawer()}/>
-                       { this.state.isCloseBottomDrawer && 
-                       <Button title='button here' onPress={() => this.animateBottomDrawer()}/>
-                    } 
-
+                <View style={styles.BottomDrawerHeader}>
+                    <View style={styles.BottomDrawerHeaderText}>
+                        <Text style={styles.BottomDrawerTitle}>SHOPPING LIST</Text>
+                        <Text style={styles.BottomDrawerCount}>5</Text>
                     </View>
-                {/* </TouchableOpacity> */}
+
+                    <Icon name="upcircleo" size={22} color="#fff" onPress={() => this.animateBottomDrawer()} />
+                    {this.state.isCloseBottomDrawer &&
+                        <Button title='button here' onPress={() => this.animateBottomDrawer()} />
+                    }
+
+                </View>
                 <View style={styles.BottomDrawerContent}>
                     <Text>
                         Shopping List Here
                     </Text>
-                    { !this.state.isCloseBottomDrawer && 
-                       <Button title='button here' onPress={() => this.animateBottomDrawer()}/>
-                    } 
+                    {!this.state.isCloseBottomDrawer &&
+                        <Button title='button here' onPress={() => this.animateBottomDrawer()} />
+                    }
                 </View>
             </Animatable.View>
 

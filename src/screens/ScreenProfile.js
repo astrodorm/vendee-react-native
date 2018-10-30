@@ -75,11 +75,10 @@ class ScreenProfile extends Component {
                     <ScrollView>
                         <View style={styles.AppCardContainer}>
                             <View style={styles.AppCard}>
-                                {/* <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.goBack()} /> */}
                                 <Text style={styles.AppCardHeader}>User Profile</Text>
                                 <View>
                                     <AccordionHeader title="Names" subtitle="Michael Oshogbunu" onSelected={() => { this.toggleView("name") }} />
-                                    <Collapsible collapsed={this.state.isVisibleAddress}>
+                                    <Collapsible collapsed={this.state.isVisibleName}>
                                         <NamesManager isCheckboxVisible={false} />
                                     </Collapsible>
                                 </View>
