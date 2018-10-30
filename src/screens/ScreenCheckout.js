@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { styles } from '../styles/styles';
-import Accordion from 'react-native-collapsible/Accordion';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ShoppingListDetails from '../components/shoppingListDetails';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
-import CheckoutMessage from '../components/CheckoutMessage';
 import AccordionHeader from '../components/AccordionHeader';
 import AddressManager from '../components/AddressManager';
 import TelephoneManager from '../components/TelephoneManager';
