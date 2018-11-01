@@ -1,3 +1,7 @@
+import axios from 'axios'
+
+
+
 //
 // ACTIONS
 //
@@ -11,6 +15,11 @@ export const LIST_ITEM_DECREMENT = 'LIST_ITEM_DECREMENT';
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
 export const END_FETCH_PRODUCT = 'END_FETCH_PRODUCT';
 export const DELIVERY_METHOD = 'DELIVERY_METHOD';
+export const CREATE_USER_STARTED = 'CREATE_USER_STARTED';
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_FAILED = 'CREATE_USER_FAILED';
+
+const BASE_URL = "https://api.yourvendee.com/api";
 
 
 //
@@ -94,8 +103,54 @@ export const selectDeliveryMethod = (isDelivery, isPickup) => (
     }
 );
 
-// export const endfetchProductAction = () =>
-//     Promise.resolve({
-//         type: END_FETCH_PRODUCT,
+// export const signUpUser = () =>{
 
-//     });
+// }
+
+export const createUserStartedAction = () => (
+    {
+        type: CREATE_USER_STARTED
+    }
+);
+
+export const createUserSuccessAction = (data) => (
+    {
+        type: CREATE_USER_SUCCESS,
+        payload: {
+            ...data
+        }
+    }
+);
+
+export const createUserFailedAction = (error) => (
+    {
+        type: CREATE_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+
+export const createUserAction = (firstname, lastname, phoneNumber, email, oauth) => {
+    return dispatch => {
+        dispatch(createUserStartedAction());
+
+        axios
+            .post(`${BASE_URL}/customers`, {
+                firstname,
+                lastname,
+                phoneNumber,
+                email,
+                oauth
+            })
+            .then(res => {
+                dispatch(createUserSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(createUserFailedAction(err.response.data));
+            });
+    };
+};
+
+

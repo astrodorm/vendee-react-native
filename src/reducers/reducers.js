@@ -1,8 +1,22 @@
 import { combineReducers } from 'redux';
-import { ITEM_INCREMENT, ITEM_DECEREMENT, ITEM_ADD, ITEM_SELECT, LIST_ITEM_INCREMENT, LIST_ITEM_DECREMENT, ITEM_REMOVE, FETCH_PRODUCT, END_FETCH_PRODUCT, DELIVERY_METHOD } from '../actions/actions';
+import {
+    ITEM_INCREMENT,
+    ITEM_DECEREMENT,
+    ITEM_ADD,
+    ITEM_SELECT,
+    LIST_ITEM_INCREMENT,
+    LIST_ITEM_DECREMENT,
+    ITEM_REMOVE,
+    FETCH_PRODUCT,
+    END_FETCH_PRODUCT,
+    DELIVERY_METHOD,
+    CREATE_USER_STARTED,
+    CREATE_USER_SUCCESS,
+    CREATE_USER_FAILED
+} from '../actions/actions';
 
 const initialState = {
-    count: 149,
+    // count: 149,
     products: [{ id: 1, thumbnail: "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg", title: "Nasco Cornflakes 50g", price: 1234 }, { id: 2, thumbnail: "http://images.kglobalservices.com/www.kelloggs.com.au/en_au/product/product_449/prod_img-198128_corn-flakes-4.png", title: "Kellogs Cornflakes 70g", price: 9870 }],
     lists: [{ id: 1, quantity: 5 }],
     selectProductID: 0,
@@ -11,7 +25,16 @@ const initialState = {
     isLoadingSearchBar: false,
     isDelivery: true,
     isPickup: false,
-    isOrderSuccessful: false
+    isOrderSuccessful: false,
+    isCreatingUser: false,
+    user: [],
+    error: null,
+    isCreateUserError: false,
+    isCreateUserSuccess : false,
+    responseStatus: 0,
+    responseMessage : ""
+
+
 }
 
 
@@ -38,6 +61,35 @@ function products(state = initialState, action) {
         case END_FETCH_PRODUCT:
             return Object.assign({}, state, {
                 isLoadingSearchBar: false
+            });
+        default:
+            return state;
+    }
+}
+
+
+function users(state = initialState, action) {
+    switch (action.type) {
+        case CREATE_USER_STARTED:
+            return Object.assign({}, state, {
+                isCreatingUser: true,
+                isCreateUserError: false
+            });
+        case CREATE_USER_SUCCESS:
+            return Object.assign({}, state, {
+                isCreatingUser: false,
+                error: null,
+                isCreateUserError : false,
+                isCreateUserSuccess : true,
+                user: [...state.user, action.payload]
+            });
+        case CREATE_USER_FAILED:
+            return Object.assign({}, state, {
+                isCreatingUser: false,
+                isCreateUserError : true,
+                isCreateUserSuccess : false,
+                responseStatus: action.payload.error.status,
+                responseMessage : action.payload.error.message
             });
         default:
             return state;
@@ -112,7 +164,8 @@ function lists(state = initialState, action) {
 const rootReducer = combineReducers({
     products,
     lists,
-    delivery
+    delivery,
+    users
 })
 
 export default rootReducer

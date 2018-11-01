@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Button } from 'react-native';
 import { styles } from '../styles/styles';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
 import { connect } from 'react-redux';
-import { fetchProductAction, endfetchProductAction, selectDeliveryMethod } from '../actions/actions';
+import { fetchProductAction, endfetchProductAction, selectDeliveryMethod, createUser } from '../actions/actions';
 import Modal from 'react-native-modalbox';
 import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
 
@@ -72,6 +72,20 @@ class ScreenSearch extends Component {
         this.showSearchResult();
     }
 
+
+    fakeSignUpUser = () => {
+        let firstname = "GENERIC";
+        let lastname = "GENERIC";
+        let email = "mike2serg@gmail.com";
+        let oauth = "GENERIC";
+        let phoneNumber = "07068181804";
+
+        this.props.dispatch(createUser(firstname, lastname, phoneNumber, email, oauth))
+
+        console.log("firstname, lastname, email, oauth", firstname, lastname, email, oauth)
+    }
+
+
     gotoCheckout = () => {
         this.props.navigation.navigate("Checkout");
         console.log("ScreenSearch : gotoCheckout")
@@ -95,6 +109,7 @@ class ScreenSearch extends Component {
                             </View>
                             <View style={styles.SearchSecondView}>
                                 <SearchBar isLoadingSearchBar={this.props.isLoadingSearchBar} onFetchProduct={this.getProducts} />
+                                <Button title="Create User (todo) Vons-1" onPress={this.fakeSignUpUser} />
                             </View>
                         </View>
                     }
@@ -109,7 +124,7 @@ class ScreenSearch extends Component {
                     }
                 </View>
                 <Modal
-                    style={[styles.modal, styles.modalDeliveryMethod]}
+                    style={[styles.modalDeliveryMethod]}
                     position={"center"}
                     ref={"RefModalDeliveryMethod"}
                     backdrop={true}

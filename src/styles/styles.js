@@ -206,7 +206,6 @@ const styles = StyleSheet.create({
     },
 
     AppSearchBarIcon: {
-
         marginTop: 24,
         marginRight: 24,
 
@@ -665,7 +664,28 @@ const styles = StyleSheet.create({
         borderRadius: 16
     },
 
+
+    modal: {
+        width: fullWidth * 0.9,
+        backgroundColor: "#fff",
+        // zIndex: 1000,
+        height: 300,
+        paddingTop: 32,
+        paddingBottom: 16,
+        paddingLeft: 32,
+        paddingRight: 32,
+        borderRadius: 16,
+        // elevation:100
+    },
+
     modalDeliveryMethodHeader: {
+        color: navyBlueTheme1,
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 22,
+        marginBottom: 32
+    },
+
+    modalHeader: {
         color: navyBlueTheme1,
         fontFamily: Fonts.MPLUSMedium,
         fontSize: 22,
@@ -947,14 +967,35 @@ const styles = StyleSheet.create({
         marginBottom: 24
     },
 
-    LoginScreen:{
-        backgroundColor:navyBlueTheme1,
-        height:fullHeight,
-        flexDirection:"column",
-        justifyContent:"space-around",
-        width:fullWidth,
-        padding:48
+    LoginScreen: {
+        backgroundColor: navyBlueTheme1,
+        height: fullHeight,
+        flexDirection: "column",
+        justifyContent: "space-around",
+        width: fullWidth,
+        padding: 48
+    },
+
+    InlineError: {
+        backgroundColor: "#FFF0F1",
+        padding:16
+    },
+
+    InlineErrorText: {
+        color: redTheme,
+        fontSize:12,
+        fontFamily:Fonts.MPLUSMedium
+    },
+
+    inlinePreloader:{
+        // width:48,
+        height:48,
+        justifyContent:"center",
+        alignItems:"center",
+        margin:16
     }
+
+
 
 });
 

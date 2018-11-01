@@ -2,12 +2,27 @@ import React, { Component } from 'react';
 import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import * as Animatable from 'react-native-animatable';
+import { connect } from 'react-redux';
+import Modal from 'react-native-modalbox';
+import { createUserAction } from '../actions/actions';
+import InlineError from '../components/InlineError';
+import * as Progress from 'react-native-progress';
 
 
 class ScreenIntro extends Component {
 
     componentWillMount() {
         this.animatedValue = new Animated.Value(0);
+    }
+
+    componentWillReceiveProps() {
+        // this.setState({isCreateUserError : true})
+
+        // this.props.error === null ? this.setState({ showIntroSuccess: true }) : this.showErrorModal(props.error);
+        //console.log(this.props.error.message)
+        // console.log(this.props.error);
+        // console.log("this.props.isCreatingUser");
+        console.log(this.props.responseMessage);
     }
 
     constructor(props) {
@@ -23,7 +38,12 @@ class ScreenIntro extends Component {
             introStage: 1,
             backgroundColorValue: "rgb(24,43,58)",
             backgroundColorNextValue: "rgb(253,206,159)",
-            introButtonText: "SURE THAT'S IT"
+            introButtonText: "SURE THAT'S IT",
+            telephone: 0,
+            email: null,
+            showTelephoneError: false,
+            showEmailError: false,
+            showSignUpError: false
 
         }
     }
@@ -33,7 +53,7 @@ class ScreenIntro extends Component {
         console.log('sayhi')
     }
 
-    gotoSignScreen = () =>{
+    gotoSignScreen = () => {
         this.props.navigation.push("Login")
     }
 
@@ -58,7 +78,7 @@ class ScreenIntro extends Component {
             this.setState({ introStage: 2, showIntroPhoneNumber: false, showIntroEmail: true });
 
             let introStage = this.state.introStage;
-           // console.log("animateToEmailView > introStage : " + introStage);
+            // console.log("animateToEmailView > introStage : " + introStage);
 
             Animated.timing(this.animatedValue, { toValue: 255, duration: 800 }).start()
         });
@@ -72,7 +92,7 @@ class ScreenIntro extends Component {
             this.setState({ introStage: 3, showIntroEmail: false, showIntroSuccess: true });
 
             let introStage = this.state.introStage;
-           // console.log("animateToEmailView > introStage : " + introStage);
+            // console.log("animateToEmailView > introStage : " + introStage);
 
             Animated.timing(this.animatedValue, { toValue: 255, duration: 800 }).start()
 
@@ -92,10 +112,12 @@ class ScreenIntro extends Component {
 
         switch (introStage) {
             case 1:
-                this.animateToEmailView();
+                // this.animateToEmailView();
+                this.validateTelephone();
                 break;
             case 2:
-                this.animateToSuccessView();
+                // this.animateToSuccessView();
+                this.validateEmail()
                 break;
             case 3:
                 this.gotoMainAppScreen();
@@ -105,6 +127,60 @@ class ScreenIntro extends Component {
         }
     }
 
+    handleTelephone = (text) => {
+        console.log(text)
+        this.setState({ telephone: text, showTelephoneError: false })
+    }
+
+
+    handleEmail = (text) => {
+        console.log(text)
+        this.setState({ email: text, showEmailError: false })
+    }
+
+    validateTelephone = () => {
+        let telephone = this.state.telephone;
+        let telephoneLength = String(telephone).replace('.', '').length;
+
+        console.log(telephoneLength)
+
+        telephoneLength < 11 ? this.setState({ showTelephoneError: true }) : this.animateToEmailView();
+    }
+
+
+    validateEmail = () => {
+        //const isEmail = (email = null) => {
+
+        let email = this.state.email;
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        let isValidEmail = regex.test(email);
+        isValidEmail === true ? this.SignUpUser() : this.setState({ showEmailError: true })
+        // }
+    }
+
+
+    SignUpUser = () => {
+        let firstname = "GENERIC";
+        let lastname = "GENERIC";
+        let email = this.state.email
+        let oauth = "GENERIC";
+        let phoneNumber = this.state.telephone
+
+        this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email, oauth))
+
+        console.log("firstname, lastname, phoneNumber, email, oauth", firstname, lastname, phoneNumber, email, oauth)
+    }
+
+
+    // showErrorModal = (message) => {
+    //     //SET ERROR MESSAGE
+    //     this.setState({ error: message });
+
+    //     //SHOW MODAL FOR ERROR MESSAGES
+    //     this.refs.RefIntroModal.open();
+
+    // }
 
     render() {
 
@@ -121,8 +197,9 @@ class ScreenIntro extends Component {
         }
 
         return (
-            <SafeAreaView>
-                <View>
+            // <SafeAreaView>
+            <View style={styles.AppContainer}>
+                <View style={styles.AppMain}>
                     <View>
                         <Animatable.Image ref={this.handleRefBackgroundImage} style={styles.introBackgroundImage} source={require('../../assets/images/bg-main.png')} />
                         <Animated.View style={[styles.introBackgroundOverlay, animatedStyle]} />
@@ -168,8 +245,11 @@ class ScreenIntro extends Component {
                                                 </View>
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
-                                                    <TextInput style={styles.introCardInput}></TextInput>
+                                                    <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput}></TextInput>
                                                 </View>
+                                                {this.state.showTelephoneError &&
+                                                    <InlineError message="* Invalid Phone Number" />
+                                                }
                                             </Animatable.View>}
 
 
@@ -184,8 +264,21 @@ class ScreenIntro extends Component {
                                                 </View>
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Enter email address here</Text>
-                                                    <TextInput style={styles.introCardInput}></TextInput>
+                                                    <TextInput onChangeText={this.handleEmail} style={styles.introCardInput}></TextInput>
                                                 </View>
+                                                {this.state.showEmailError &&
+                                                    <InlineError message="* Invalid Email Address" />
+                                                }
+                                                {
+                                                    this.props.isCreatingUser &&
+                                                    <View style={styles.inlinePreloader}>
+                                                        <Progress.CircleSnail color={['#f44950']} duration={400} size={32} />
+                                                    </View>
+                                                }
+                                                {this.props.isCreateUserError &&
+                                                    <InlineError message={this.props.responseMessage} />
+                                                }
+
                                             </Animatable.View>
                                         }
 
@@ -211,10 +304,44 @@ class ScreenIntro extends Component {
                         }
                     </View>
                 </View>
-            </SafeAreaView>
+                {/* <View> */}
+                <Modal
+                    style={[styles.modal]}
+                    position={"center"}
+                    ref={"RefIntroModal"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                >
+                    <View>
+                        <Text style={styles.modalHeader}> Oops !! </Text>
+                        {/* <Text>{this.state.error}</Text> */}
+                    </View>
+                </Modal>
+                {/* </View> */}
+            </View>
+            // </SafeAreaView>
         )
     }
 
 }
 
-export default ScreenIntro;
+//export default ScreenIntro;
+
+
+const mapStateToProps = state => ({
+
+    // isLoadingSearchBar: state.products.isLoadingSearchBar,
+    // searchText: state.products.searchText,
+    // isDelivery: state.delivery.isDelivery,
+    // isPickup: state.delivery.isPickup,
+    responseMessage: state.users.responseMessage,
+    user: state.users.user,
+    isCreateUserError: state.users.isCreateUserError,
+    isCreateUserSuccess: state.users.isCreateUserSuccess,
+    isCreatingUser: state.users.isCreatingUser
+
+})
+
+export default connect(mapStateToProps)(ScreenIntro);
