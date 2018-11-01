@@ -15,14 +15,11 @@ class ScreenIntro extends Component {
         this.animatedValue = new Animated.Value(0);
     }
 
-    componentWillReceiveProps() {
-        // this.setState({isCreateUserError : true})
+    componentWillReceiveProps(nextProps) {
 
-        // this.props.error === null ? this.setState({ showIntroSuccess: true }) : this.showErrorModal(props.error);
-        //console.log(this.props.error.message)
-        // console.log(this.props.error);
-        // console.log("this.props.isCreatingUser");
-        console.log(this.props.responseMessage);
+        console.log("this.props.isCreateUserSuccess");
+        console.log(nextProps.isCreateUserSuccess);
+        nextProps.isCreateUserSuccess === true ? this.animateToSuccessView() : null;
     }
 
     constructor(props) {
