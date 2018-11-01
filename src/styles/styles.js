@@ -978,21 +978,32 @@ const styles = StyleSheet.create({
 
     InlineError: {
         backgroundColor: "#FFF0F1",
-        padding:16
+        padding: 16
     },
 
     InlineErrorText: {
         color: redTheme,
-        fontSize:12,
-        fontFamily:Fonts.MPLUSMedium
+        fontSize: 12,
+        fontFamily: Fonts.MPLUSMedium
     },
 
-    inlinePreloader:{
+    inlinePreloader: {
         // width:48,
-        height:48,
-        justifyContent:"center",
-        alignItems:"center",
-        margin:16
+        height: 48,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 16
+    },
+
+    loginInput: {
+        borderWidth: .5,
+        borderColor: "#fff",
+        borderStyle: "dashed",
+        padding: 16,
+        fontSize: 18,
+        fontFamily: Fonts.MPLUSRegular,
+        color: "#fff",
+        borderRadius:6
     }
 
 
