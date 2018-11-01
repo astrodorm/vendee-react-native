@@ -18,6 +18,9 @@ export const DELIVERY_METHOD = 'DELIVERY_METHOD';
 export const CREATE_USER_STARTED = 'CREATE_USER_STARTED';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
 export const CREATE_USER_FAILED = 'CREATE_USER_FAILED';
+export const LOGIN_USER_STARTED = 'LOGIN_USER_STARTED';
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED';
 
 const BASE_URL = "https://api.yourvendee.com/api";
 
@@ -113,6 +116,12 @@ export const createUserStartedAction = () => (
     }
 );
 
+export const loginStartedAction = () => (
+    {
+        type: LOGIN_USER_STARTED
+    }
+);
+
 export const createUserSuccessAction = (data) => (
     {
         type: CREATE_USER_SUCCESS,
@@ -122,9 +131,29 @@ export const createUserSuccessAction = (data) => (
     }
 );
 
+
+export const loginSuccessAction = (data) => (
+    {
+        type: LOGIN_USER_SUCCESS,
+        payload: {
+            ...data
+        }
+    }
+);
+
 export const createUserFailedAction = (error) => (
     {
         type: CREATE_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+
+export const loginFailedAction = (error) => (
+    {
+        type: LOGIN_USER_FAILED,
         payload: {
             error
         }
@@ -149,6 +178,25 @@ export const createUserAction = (firstname, lastname, phoneNumber, email, oauth)
             })
             .catch(err => {
                 dispatch(createUserFailedAction(err.response.data));
+            });
+    };
+};
+
+
+export const loginAction = (email, oauth) => {
+    return dispatch => {
+        dispatch(loginStartedAction());
+
+        axios
+            .post(`${BASE_URL}/customers/login`, {
+                email,
+                oauth
+            })
+            .then(res => {
+                dispatch(loginSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(loginFailedAction(err.response.data));
             });
     };
 };

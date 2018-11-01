@@ -12,7 +12,10 @@ import {
     DELIVERY_METHOD,
     CREATE_USER_STARTED,
     CREATE_USER_SUCCESS,
-    CREATE_USER_FAILED
+    CREATE_USER_FAILED,
+    LOGIN_USER_STARTED,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_FAILED
 } from '../actions/actions';
 
 const initialState = {
@@ -30,9 +33,12 @@ const initialState = {
     user: [],
     error: null,
     isCreateUserError: false,
-    isCreateUserSuccess : false,
+    isCreateUserSuccess: false,
+    isLoginUserError: false,
+    isLoginUserSuccess: false,
+    isSigningInUser: false,
     responseStatus: 0,
-    responseMessage : ""
+    responseMessage: ""
 
 
 }
@@ -75,21 +81,43 @@ function users(state = initialState, action) {
                 isCreatingUser: true,
                 isCreateUserError: false
             });
+        case LOGIN_USER_STARTED:
+            return Object.assign({}, state, {
+                isSigningInUser: true,
+                isLoginUserError: false
+            });
         case CREATE_USER_SUCCESS:
             return Object.assign({}, state, {
                 isCreatingUser: false,
                 error: null,
-                isCreateUserError : false,
-                isCreateUserSuccess : true,
+                isCreateUserError: false,
+                isCreateUserSuccess: true,
+                user: [...state.user, action.payload]
+            });
+
+        case LOGIN_USER_SUCCESS:
+            return Object.assign({}, state, {
+                isSigningInUser: false,
+                error: null,
+                isLoginUserError: false,
+                isLoginUserSuccess: true,
                 user: [...state.user, action.payload]
             });
         case CREATE_USER_FAILED:
             return Object.assign({}, state, {
                 isCreatingUser: false,
-                isCreateUserError : true,
-                isCreateUserSuccess : false,
+                isCreateUserError: true,
+                isCreateUserSuccess: false,
                 responseStatus: action.payload.error.status,
-                responseMessage : action.payload.error.message
+                responseMessage: action.payload.error.message
+            });
+        case LOGIN_USER_FAILED:
+            return Object.assign({}, state, {
+                isSigningInUser: false,
+                isLoginUserError: true,
+                isLoginUserSuccess: false,
+                responseStatus: action.payload.error.status,
+                responseMessage: action.payload.error.message
             });
         default:
             return state;

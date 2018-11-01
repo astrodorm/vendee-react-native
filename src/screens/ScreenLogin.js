@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, Image, TextInput } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
-import InlineError from '../components/InlineError'
-
+import InlineError from '../components/InlineError';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions/actions';
+import * as Progress from 'react-native-progress';
 
 
 class ScreenProfile extends Component {
@@ -18,6 +20,17 @@ class ScreenProfile extends Component {
             password: ""
 
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        console.log("this.props.isLoginUserSuccess");
+        console.log(nextProps.isLoginUserSuccess);
+        nextProps.isLoginUserSuccess === true ? this.navigateToMainApp() : null;
+    }
+
+    navigateToMainApp = () => {
+        this.props.navigation.push('MainAppScreen');
     }
 
     handleEmail = (text) => {
@@ -55,7 +68,13 @@ class ScreenProfile extends Component {
     }
 
     loginUser = () => {
-        console.log("logging in user > ", this.state.email)
+        console.log("logging in user > ", this.state.email);
+
+
+        let email = this.state.email;
+        let oauth = this.state.password;
+        this.props.dispatch(loginAction(email, oauth))
+        // this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email, oauth))
 
 
     }
@@ -83,6 +102,12 @@ class ScreenProfile extends Component {
                                 <InlineError message="* Invalid Password" />
                             }
                         </View>
+                        {
+                            this.props.isSigningInUser &&
+                            <View style={styles.inlinePreloader}>
+                                <Progress.CircleSnail color={['#f44950']} duration={400} size={24} />
+                            </View>
+                        }
                         <ButtonPrimaryAccent title="SIGN IN" icon="login" isActive={true} onSelected={this.validateParams} />
                     </View>
                 </View>
@@ -91,4 +116,16 @@ class ScreenProfile extends Component {
     }
 }
 
-export default ScreenProfile;
+//export default ScreenProfile;
+
+const mapStateToProps = state => ({
+
+    responseMessage: state.users.responseMessage,
+    user: state.users.user,
+    isLoginUserError: state.users.isLoginUserError,
+    isLoginUserSuccess: state.users.isLoginUserSuccess,
+    isSigningInUser: state.users.isSigningInUser
+
+})
+
+export default connect(mapStateToProps)(ScreenProfile);

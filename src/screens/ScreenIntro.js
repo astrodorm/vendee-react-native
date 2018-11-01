@@ -329,10 +329,6 @@ class ScreenIntro extends Component {
 
 const mapStateToProps = state => ({
 
-    // isLoadingSearchBar: state.products.isLoadingSearchBar,
-    // searchText: state.products.searchText,
-    // isDelivery: state.delivery.isDelivery,
-    // isPickup: state.delivery.isPickup,
     responseMessage: state.users.responseMessage,
     user: state.users.user,
     isCreateUserError: state.users.isCreateUserError,
