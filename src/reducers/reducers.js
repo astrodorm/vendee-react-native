@@ -193,11 +193,19 @@ function lists(state = initialState, action) {
         //         }
         //     ]
         // });
+        // case ITEM_REMOVE:
+        //     return Object.assign({}, state, {
+        //         lists: [
+        //             ...state.lists.slice(0, action.index),
+        //             ...state.lists.slice(action.index + 1)
+        //         ]
+        //     });
+
         case ITEM_REMOVE:
             return Object.assign({}, state, {
-                lists: [
-                    ...state.lists.slice(0, action.index),
-                    ...state.lists.slice(action.index + 1)
+                newlists: [
+                    ...state.newlists.slice(0, action.index),
+                    ...state.newlists.slice(action.index + 1)
                 ]
             });
         // case LIST_ITEM_INCREMENT:
@@ -211,7 +219,7 @@ function lists(state = initialState, action) {
         //             return list
         //         })
         //     });
-            case LIST_ITEM_INCREMENT:
+        case LIST_ITEM_INCREMENT:
             return Object.assign({}, state, {
                 newlists: state.newlists.map((newlist, index) => {
                     if (index === action.index) {
@@ -222,15 +230,26 @@ function lists(state = initialState, action) {
                     return newlist
                 })
             });
+        // case LIST_ITEM_DECREMENT:
+        //     return Object.assign({}, state, {
+        //         lists: state.lists.map((list, index) => {
+        //             if (index === action.index) {
+        //                 return Object.assign({}, list, {
+        //                     quantity: action.quantity
+        //                 })
+        //             }
+        //             return list
+        //         })
+        //     });
         case LIST_ITEM_DECREMENT:
             return Object.assign({}, state, {
-                lists: state.lists.map((list, index) => {
+                newlists: state.newlists.map((newlist, index) => {
                     if (index === action.index) {
-                        return Object.assign({}, list, {
+                        return Object.assign({}, newlist, {
                             quantity: action.quantity
                         })
                     }
-                    return list
+                    return newlist
                 })
             });
 

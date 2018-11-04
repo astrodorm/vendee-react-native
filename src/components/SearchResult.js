@@ -125,8 +125,8 @@ class SearchResult extends Component {
         let index = listArray.findIndex(x => x.id === id);
         let list = listArray[index];
 
-        console.log("getListByID");
-        console.log(list);
+        // console.log("getListByID");
+        // console.log(list);
 
         //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS UID IS NOT FOUND IN LIST ARRAY
         let initialValue = { quantity: 0 }
@@ -276,7 +276,7 @@ class SearchResult extends Component {
 
     decrementListItem = (id) => {
 
-        let listArray = [...this.props.lists];
+        let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let quantity = listArray[index].quantity - 1;
 
@@ -285,7 +285,7 @@ class SearchResult extends Component {
     }
 
     removeListItem = (id) => {
-        let listArray = [...this.props.lists];
+        let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
 
         this.props.dispatch(removeItemAction(index))
