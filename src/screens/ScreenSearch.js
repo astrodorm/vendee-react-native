@@ -12,6 +12,15 @@ import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
 
 class ScreenSearch extends Component {
 
+
+    componentWillReceiveProps(nextProps) {
+
+        console.log("nextProps.isFirstSearch");
+        console.log(nextProps.isFirstSearch);
+
+        this.props.isFirstSearch === true ? this.openDialogDeliveryMethod() : null;
+    }
+
     constructor(props) {
         super(props);
 
@@ -25,16 +34,16 @@ class ScreenSearch extends Component {
     openDialogDeliveryMethod = () => {
         this.refs.RefModalDeliveryMethod.open();
 
-        console.log("openDialogDeliveryMethod >" + this.props.isLoadingSearchBar)
+        // console.log("openDialogDeliveryMethod >" + this.props.isLoadingSearchBar)
     }
 
 
-    getProducts = () => {
+    // getProducts = () => {
 
-        this.props.dispatch(fetchProductAction("cornflakes"));
-        this.fakeApiRequestDelay();
+    //     this.props.dispatch(fetchProductAction("cornflakes"));
+    //     this.fakeApiRequestDelay();
 
-    }
+    // }
 
     fakeApiRequestDelay = () => {
         setTimeout(this.showModalDeliveryMethod, 3000);
@@ -73,17 +82,17 @@ class ScreenSearch extends Component {
     }
 
 
-    fakeSignUpUser = () => {
-        let firstname = "GENERIC";
-        let lastname = "GENERIC";
-        let email = "mike2serg@gmail.com";
-        let oauth = "GENERIC";
-        let phoneNumber = "07068181804";
+    // fakeSignUpUser = () => {
+    //     let firstname = "GENERIC";
+    //     let lastname = "GENERIC";
+    //     let email = "mike2serg@gmail.com";
+    //     let oauth = "GENERIC";
+    //     let phoneNumber = "07068181804";
 
-        this.props.dispatch(createUser(firstname, lastname, phoneNumber, email, oauth))
+    //     this.props.dispatch(createUser(firstname, lastname, phoneNumber, email, oauth))
 
-        console.log("firstname, lastname, email, oauth", firstname, lastname, email, oauth)
-    }
+    //     console.log("firstname, lastname, email, oauth", firstname, lastname, email, oauth)
+    // }
 
 
     gotoCheckout = () => {
@@ -108,8 +117,8 @@ class ScreenSearch extends Component {
                                 <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
                             </View>
                             <View style={styles.SearchSecondView}>
-                                <SearchBar isLoadingSearchBar={this.props.isLoadingSearchBar} onFetchProduct={this.getProducts} />
-                                <Button title="Create User (todo) Vons-1" onPress={this.fakeSignUpUser} />
+                                <SearchBar />
+                                {/* <Button title="Create User (todo) Vons-1" onPress={this.fakeSignUpUser} /> */}
                             </View>
                         </View>
                     }
@@ -131,6 +140,7 @@ class ScreenSearch extends Component {
                     swipeToClose={false}
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
+                    backdropPressToClose={false}
                 >
                     <View>
                         <Text style={styles.modalDeliveryMethodHeader}>
@@ -148,10 +158,11 @@ class ScreenSearch extends Component {
 
 const mapStateToProps = state => ({
 
-    isLoadingSearchBar: state.products.isLoadingSearchBar,
+    //isLoadingSearchBar: state.products.isLoadingSearchBar,
     searchText: state.products.searchText,
     isDelivery: state.delivery.isDelivery,
-    isPickup: state.delivery.isPickup
+    isPickup: state.delivery.isPickup,
+    isFirstSearch: state.products.isFirstSearch
 
 })
 

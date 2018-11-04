@@ -21,6 +21,9 @@ export const CREATE_USER_FAILED = 'CREATE_USER_FAILED';
 export const LOGIN_USER_STARTED = 'LOGIN_USER_STARTED';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED';
+export const FETCH_PRODUCT_STARTED = 'FETCH_PRODUCT_STARTED';
+export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
+export const FETCH_PRODUCT_FAILED = 'FETCH_PRODUCT_FAILED';
 
 const BASE_URL = "https://api.yourvendee.com/api";
 
@@ -85,13 +88,6 @@ export const decrementListItemAction = (index, quantity) => (
 );
 
 
-export const fetchProductAction = (text) => (
-    {
-        type: FETCH_PRODUCT,
-        text
-    }
-);
-
 export const endfetchProductAction = () => (
     {
         type: END_FETCH_PRODUCT
@@ -122,6 +118,13 @@ export const loginStartedAction = () => (
     }
 );
 
+export const fetchStartedAction = (query) => (
+    {
+        type: FETCH_PRODUCT_STARTED,
+        query
+    }
+);
+
 export const createUserSuccessAction = (data) => (
     {
         type: CREATE_USER_SUCCESS,
@@ -141,6 +144,25 @@ export const loginSuccessAction = (data) => (
     }
 );
 
+
+export const fetchSuccessAction = (data) => (
+    {
+        type: FETCH_PRODUCT_SUCCESS,
+        payload: {
+           // ...data,
+            ...data.data
+        }
+    }
+);
+
+
+// export const fetchSuccessAction = (data) => (
+//     {
+//         type: FETCH_PRODUCT_SUCCESS,
+//         data
+//     }
+// );
+
 export const createUserFailedAction = (error) => (
     {
         type: CREATE_USER_FAILED,
@@ -154,6 +176,15 @@ export const createUserFailedAction = (error) => (
 export const loginFailedAction = (error) => (
     {
         type: LOGIN_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+export const fetchFailedAction = (error) => (
+    {
+        type: FETCH_PRODUCT_FAILED,
         payload: {
             error
         }
@@ -200,5 +231,33 @@ export const loginAction = (email, oauth) => {
             });
     };
 };
+
+
+export const fetchProductAction = (query) => {
+    return dispatch => {
+        dispatch(fetchStartedAction(query));
+
+        axios.get(`${BASE_URL}/products/search`, {
+            params: {
+                q: query
+            }
+        })
+            .then(res => {
+                dispatch(fetchSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(fetchFailedAction(err.response.data));
+            });
+
+    };
+};
+
+
+// export const fetchProductAction = (text) => (
+//     {
+//         type: FETCH_PRODUCT,
+//         text
+//     }
+// );
 
 

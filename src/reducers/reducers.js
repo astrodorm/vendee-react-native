@@ -15,13 +15,18 @@ import {
     CREATE_USER_FAILED,
     LOGIN_USER_STARTED,
     LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAILED
+    LOGIN_USER_FAILED,
+    FETCH_PRODUCT_STARTED,
+    FETCH_PRODUCT_SUCCESS,
+    FETCH_PRODUCT_FAILED
 } from '../actions/actions';
 
 const initialState = {
     // count: 149,
     products: [{ id: 1, thumbnail: "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg", title: "Nasco Cornflakes 50g", price: 1234 }, { id: 2, thumbnail: "http://images.kglobalservices.com/www.kelloggs.com.au/en_au/product/product_449/prod_img-198128_corn-flakes-4.png", title: "Kellogs Cornflakes 70g", price: 9870 }],
     lists: [{ id: 1, quantity: 5 }],
+    newproducts: [],
+    newlist: [],
     selectProductID: 0,
     selectProductQuantity: 0,
     searchText: "",
@@ -38,7 +43,8 @@ const initialState = {
     isLoginUserSuccess: false,
     isSigningInUser: false,
     responseStatus: 0,
-    responseMessage: ""
+    responseMessage: "",
+    isFirstSearch: true
 
 
 }
@@ -67,6 +73,26 @@ function products(state = initialState, action) {
         case END_FETCH_PRODUCT:
             return Object.assign({}, state, {
                 isLoadingSearchBar: false
+            });
+        case FETCH_PRODUCT_STARTED:
+            return Object.assign({}, state, {
+                searchText: action.query,
+                isLoadingSearchBar: true,
+                isFirstSearch: false
+            });
+        case FETCH_PRODUCT_SUCCESS:
+            return Object.assign({}, state, {
+                isLoadingSearchBar: false,
+                //newproducts: [...state.newproducts, action.payload],
+                newproducts: [Object.assign({}, action.payload)]
+
+
+            });
+        case FETCH_PRODUCT_FAILED:
+            return Object.assign({}, state, {
+                isLoadingSearchBar: false,
+                responseStatus: action.payload.error.status,
+                responseMessage: action.payload.error.message
             });
         default:
             return state;
