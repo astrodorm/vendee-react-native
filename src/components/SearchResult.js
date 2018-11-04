@@ -19,9 +19,19 @@ import 'intl/locale-data/jsonp/en';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
 
+const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload"
 
 
 class SearchResult extends Component {
+
+    componentWillReceiveProps(nextProps) {
+
+        console.log("nextProps.newproducts");
+        console.log(nextProps.newproducts);
+        // console.log("this.props.newproducts")
+        // console.log(this.props.newproducts)
+        // this.props.isFirstSearch === true ? this.openDialogDeliveryMethod() : null;
+    }
 
     constructor(props) {
         super(props);
@@ -44,6 +54,9 @@ class SearchResult extends Component {
     componentDidMount() {
         const prouductsData = this.props.products;
         this.setState({ products: prouductsData })
+
+        console.log("this.props.newproducts")
+        console.log(this.props.newproducts)
     }
 
 
@@ -57,7 +70,9 @@ class SearchResult extends Component {
 
         // USE getListByID() TO GET CURRENT QUANTITY OF PRODUCT ITEM SINCE EVERY
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
-        <ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
+        // <ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
+
+        <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} />
     );
 
 
@@ -413,9 +428,9 @@ class SearchResult extends Component {
                         </View>
                         <View style={styles.AppSearchResultDisplayContainer}>
                             <FlatList
-                                data={this.props.products}
+                                data={this.props.newproducts}
                                 extraData={this.props}
-                                keyExtractor={item => item.id}
+                                keyExtractor={item => item._id}
                                 renderItem={this._renderProductItem}
                             />
                         </View>
@@ -479,6 +494,7 @@ class SearchResult extends Component {
 
 const mapStateToProps = state => ({
     products: state.products.products,
+    newproducts: state.products.newproducts,
     lists: state.lists.lists,
     selectProductID: state.products.selectProductID,
     selectProductQuantity: state.products.selectProductQuantity,

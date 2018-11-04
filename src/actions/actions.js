@@ -148,10 +148,11 @@ export const loginSuccessAction = (data) => (
 export const fetchSuccessAction = (data) => (
     {
         type: FETCH_PRODUCT_SUCCESS,
-        payload: {
-           // ...data,
-            ...data.data
-        }
+        // payload: {
+        //    // ...data,
+        //     ...data.data
+        // }
+        data
     }
 );
 
@@ -243,7 +244,7 @@ export const fetchProductAction = (query) => {
             }
         })
             .then(res => {
-                dispatch(fetchSuccessAction(res.data));
+                dispatch(fetchSuccessAction(res.data.data));
             })
             .catch(err => {
                 dispatch(fetchFailedAction(err.response.data));

@@ -83,9 +83,7 @@ function products(state = initialState, action) {
         case FETCH_PRODUCT_SUCCESS:
             return Object.assign({}, state, {
                 isLoadingSearchBar: false,
-                //newproducts: [...state.newproducts, action.payload],
-                newproducts: [Object.assign({}, action.payload)]
-
+                newproducts: [...action.data],
 
             });
         case FETCH_PRODUCT_FAILED:

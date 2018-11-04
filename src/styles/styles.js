@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
         shadowColor: GrayDarkTheme,
         shadowOpacity: 1,
         elevation: 5,
-        width: fullWidth * 0.85,
+        width: fullWidth * 0.9,
         backgroundColor: "#fff",
         justifyContent: "space-between"
     },
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
         shadowColor: GrayDarkTheme,
         shadowOpacity: 1,
         elevation: 5,
-        width: fullWidth * 0.85,
+        width: fullWidth * 0.9,
         backgroundColor: "#fff",
         justifyContent: "space-between",
         marginTop: 16,
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
 
     AppSearchResultDisplayContainer: {
         backgroundColor: "#fff",
-        width: fullWidth * 0.85,
+        width: fullWidth * 0.9,
         borderColor: "#EFEFEF",
         borderWidth: 1,
         borderRadius: 4
@@ -445,7 +445,13 @@ const styles = StyleSheet.create({
 
 
     ProductDetails: {
-        flexDirection: "column"
+        flexDirection: "column",
+        marginLeft: 16,
+        marginRight: 16
+    },
+
+    ProductImage: {
+        // marginRight: 16
     },
 
     CardShoppingProductDetails: {
@@ -469,7 +475,7 @@ const styles = StyleSheet.create({
     },
 
     AppSearchResultMain: {
-        paddingTop: 48
+        paddingTop: 24
     },
 
 
@@ -1003,7 +1009,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: Fonts.MPLUSRegular,
         color: "#fff",
-        borderRadius:6
+        borderRadius: 6
     }
 
 

@@ -5,6 +5,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 
 
+
 class ProductItem extends Component {
 
     constructor(props) {
