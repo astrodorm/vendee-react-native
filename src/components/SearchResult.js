@@ -79,7 +79,7 @@ class SearchResult extends Component {
 
     _renderShoppingListItem = ({ item }) => (
 
-        <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
+        <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
 
     );
 
@@ -260,7 +260,7 @@ class SearchResult extends Component {
 
             this.removeListItem(id);
             this.props.dispatch(itemDecrementAction());
-            this.decrementListItem(id);
+           // this.decrementListItem(id);
 
         }
 
@@ -504,8 +504,8 @@ class SearchResult extends Component {
                         {/* SELECTED PRODUCT ITEM LIST */}
                         <View>
                             <FlatList
-                                data={this.getShoppingListItems()}
-                                extraData={this.state}
+                                data={this.props.newlists}
+                                extraData={this.props}
                                 keyExtractor={item => item.id}
                                 renderItem={this._renderShoppingListItem}
                             />
