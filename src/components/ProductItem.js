@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import 'intl';
@@ -24,9 +24,10 @@ class ProductItem extends Component {
                 <View style={styles.ProductDetails}>
                     <Text style={styles.ProductTitle}>{this.props.title}</Text>
                     <Text style={styles.ProductPrice}> {this.formatPrice(this.props.price)} </Text>
-                    
+
                 </View>
-                <TouchableOpacity onPress={() => this.props.onSelectItem()}>
+                <TouchableOpacity style={styles.AddProductTextContainer} onPress={() => this.props.onSelectItem()}>
+                    {/* isAdded IS USED TO DETERMINE WHAT BACKGROUND COLOR TO DISPLAY FOR INDIVIDUAL PRODUCT ITEM COUNTER */}
                     <Text style={[styles.AddProductText, this.props.isAdded ? styles.AddProductSelected : styles.AddProductUnselected]}>
                         {this.props.quantity}
                     </Text>

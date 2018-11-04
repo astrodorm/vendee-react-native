@@ -45,10 +45,13 @@ export const itemDecrementAction = () => (
 );
 
 
-export const addItemAction = (id) => (
+export const addItemAction = (id, thumbnail, title, price) => (
     {
         type: ITEM_ADD,
-        id
+        id,
+        thumbnail,
+        title,
+        price
     }
 );
 

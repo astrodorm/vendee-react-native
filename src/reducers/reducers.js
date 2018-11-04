@@ -26,7 +26,7 @@ const initialState = {
     products: [{ id: 1, thumbnail: "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg", title: "Nasco Cornflakes 50g", price: 1234 }, { id: 2, thumbnail: "http://images.kglobalservices.com/www.kelloggs.com.au/en_au/product/product_449/prod_img-198128_corn-flakes-4.png", title: "Kellogs Cornflakes 70g", price: 9870 }],
     lists: [{ id: 1, quantity: 5 }],
     newproducts: [],
-    newlist: [],
+    newlists: [],
     selectProductID: 0,
     selectProductQuantity: 0,
     searchText: "",
@@ -169,14 +169,30 @@ function lists(state = initialState, action) {
     switch (action.type) {
         case ITEM_ADD:
             return Object.assign({}, state, {
-                lists: [
-                    ...state.lists,
+                newlists: [
+                    ...state.newlists,
                     {
                         id: action.id,
+                        thumbnail: action.thumbnail,
+                        title: action.title,
+                        price: action.price,
                         quantity: 1,
                     }
                 ]
             });
+        // case ITEM_ADD:
+        // return Object.assign({}, state, {
+        //     lists: [
+        //         ...state.lists,
+        //         {
+        //             id: action.id,
+        //             thumbnail: action.thumbnail,
+        //             title: action.title,
+        //             // price: action.price,
+        //             quantity: 1,
+        //         }
+        //     ]
+        // });
         case ITEM_REMOVE:
             return Object.assign({}, state, {
                 lists: [
@@ -184,15 +200,26 @@ function lists(state = initialState, action) {
                     ...state.lists.slice(action.index + 1)
                 ]
             });
-        case LIST_ITEM_INCREMENT:
+        // case LIST_ITEM_INCREMENT:
+        //     return Object.assign({}, state, {
+        //         lists: state.lists.map((list, index) => {
+        //             if (index === action.index) {
+        //                 return Object.assign({}, list, {
+        //                     quantity: action.quantity
+        //                 })
+        //             }
+        //             return list
+        //         })
+        //     });
+            case LIST_ITEM_INCREMENT:
             return Object.assign({}, state, {
-                lists: state.lists.map((list, index) => {
+                newlists: state.newlists.map((newlist, index) => {
                     if (index === action.index) {
-                        return Object.assign({}, list, {
+                        return Object.assign({}, newlist, {
                             quantity: action.quantity
                         })
                     }
-                    return list
+                    return newlist
                 })
             });
         case LIST_ITEM_DECREMENT:

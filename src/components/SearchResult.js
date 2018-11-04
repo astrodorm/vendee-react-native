@@ -26,8 +26,8 @@ class SearchResult extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        console.log("nextProps.newproducts");
-        console.log(nextProps.newproducts);
+        // console.log("nextProps.newproducts");
+        // console.log(nextProps.newproducts);
         // console.log("this.props.newproducts")
         // console.log(this.props.newproducts)
         // this.props.isFirstSearch === true ? this.openDialogDeliveryMethod() : null;
@@ -70,9 +70,9 @@ class SearchResult extends Component {
 
         // USE getListByID() TO GET CURRENT QUANTITY OF PRODUCT ITEM SINCE EVERY
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
-        // <ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
+        //<ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
 
-        <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} />
+        <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
     );
 
 
@@ -86,6 +86,9 @@ class SearchResult extends Component {
     onSelectItem = (id) => {
 
         let quantity = this.getListByID(id).quantity;
+        //let quantity = 5;
+
+
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
         let isVisibleFBtnQuantityPicker = this.state.isVisibleFBtnQuantityPicker;
@@ -114,11 +117,18 @@ class SearchResult extends Component {
 
     getListByID = (id) => {
 
-        let listArray = [...this.props.lists];
+        // let listArray = [...this.props.lists];
+        // let index = listArray.findIndex(x => x.id === id);
+        // let list = listArray[index];
+
+        let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let list = listArray[index];
 
-        //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS INDEX IS NOT FOUND IN LIST ARRAY
+        console.log("getListByID");
+        console.log(list);
+
+        //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS UID IS NOT FOUND IN LIST ARRAY
         let initialValue = { quantity: 0 }
         list === undefined ? value = initialValue : value = list
 
@@ -128,7 +138,7 @@ class SearchResult extends Component {
 
     getIsAddedByID = (id) => {
 
-        let listArray = [...this.props.lists];
+        let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let list = listArray[index];
         list === undefined ? value = false : value = true
@@ -198,6 +208,7 @@ class SearchResult extends Component {
         // DISPATCH ACTION TO INCREMENT selectProductQuantity VALUE
         this.props.dispatch(itemIncrementAction());
 
+
         // GET THE QUANTITY OF THE LIST ITEM, IF ZERO, THEN ADD NEW ITEM WITH
         // DEFAULT QUANTITY AS 1 OR INCREMENT THE selectProductQuantity VALUE
         this.getListByID(id).quantity === 0 ? this.addItem(id) : this.incrementListItem(id)
@@ -206,15 +217,33 @@ class SearchResult extends Component {
 
     addItem = (id) => {
 
+        let newproductsArray = [...this.props.newproducts];
+        let index = newproductsArray.findIndex(x => x._id === id);
+        let thumbnail = newproductsArray[index].thumbnail;
+        let title = newproductsArray[index].productName;
+        let price = newproductsArray[index].price;
+
+
         //DISPATCH ACTION TO ADD A NEW ITEM WITH DEFAULT QUANTITY VALUE AS 1
-        this.props.dispatch(addItemAction(id));
+        this.props.dispatch(addItemAction(id, thumbnail, title, price));
     }
 
     incrementListItem = (id) => {
 
-        let listArray = [...this.props.lists];
+        // let listArray = [...this.props.lists];
+        // let index = listArray.findIndex(x => x.id === id);
+        // let quantity = listArray[index].quantity + 1;
+
+        let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let quantity = listArray[index].quantity + 1;
+
+        console.log("listArray")
+        console.log(listArray)
+        console.log("index")
+        console.log(index)
+        console.log("quantity")
+        console.log(quantity)
 
         //DISPATCH ACTION TO INCREMENT THE VALUE OF THE QUANTITY AN ITEM IN THE LIST ARRAY
         this.props.dispatch(incrementListItemAction(index, quantity))
@@ -496,6 +525,7 @@ const mapStateToProps = state => ({
     products: state.products.products,
     newproducts: state.products.newproducts,
     lists: state.lists.lists,
+    newlists: state.lists.newlists,
     selectProductID: state.products.selectProductID,
     selectProductQuantity: state.products.selectProductQuantity,
     count: state.products.count,

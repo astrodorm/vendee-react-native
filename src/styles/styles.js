@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     ProductItem: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: fullWidth * 0.85,
+        width: fullWidth * 0.9,
         padding: 24,
         alignItems: "center"
     },
@@ -447,11 +447,17 @@ const styles = StyleSheet.create({
     ProductDetails: {
         flexDirection: "column",
         marginLeft: 16,
-        marginRight: 16
+        marginRight: 16,
+        flex: 6
+    },
+
+    AddProductTextContainer: {
+        flex: 1
     },
 
     ProductImage: {
         // marginRight: 16
+        flex: 1
     },
 
     CardShoppingProductDetails: {
