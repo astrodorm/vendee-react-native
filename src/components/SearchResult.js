@@ -300,7 +300,7 @@ class SearchResult extends Component {
     deleteShoppingListItem = () => {
 
         let id = this.props.selectProductID;
-        let listArray = [...this.props.lists];
+        let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
 
         this.props.dispatch(removeItemAction(index))
