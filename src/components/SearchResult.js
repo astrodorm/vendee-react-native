@@ -79,7 +79,7 @@ class SearchResult extends Component {
 
     _renderShoppingListItem = ({ item }) => (
 
-        <ShoppingListItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
+        <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
 
     );
 
@@ -147,7 +147,7 @@ class SearchResult extends Component {
     }
 
     getShoppingListLength = () => {
-        let listArray = [...this.props.lists];
+        let listArray = [...this.props.newlists];
         let length = listArray.length;
 
         return length
@@ -238,12 +238,12 @@ class SearchResult extends Component {
         let index = listArray.findIndex(x => x.id === id);
         let quantity = listArray[index].quantity + 1;
 
-        console.log("listArray")
-        console.log(listArray)
-        console.log("index")
-        console.log(index)
-        console.log("quantity")
-        console.log(quantity)
+        // console.log("listArray")
+        // console.log(listArray)
+        // console.log("index")
+        // console.log(index)
+        // console.log("quantity")
+        // console.log(quantity)
 
         //DISPATCH ACTION TO INCREMENT THE VALUE OF THE QUANTITY AN ITEM IN THE LIST ARRAY
         this.props.dispatch(incrementListItemAction(index, quantity))
@@ -336,19 +336,20 @@ class SearchResult extends Component {
     }
 
     getShoppingListItems = () => {
-        let listArray = [...this.props.lists];
-        let productArray = [...this.props.products];
-        let selectedItems = [];
+        let listArray = [...this.props.newlists];
+        // let productArray = [...this.props.products];
+        // let selectedItems = [];
 
-        listArray.forEach(function (item) {
-            let productIndex = productArray.findIndex(x => x.id === item.id);
-            product = productArray[productIndex];
-            product.quantity = item.quantity;
-            selectedItems.push(product);
+        // listArray.forEach(function (item) {
+        //     let productIndex = productArray.findIndex(x => x.id === item.id);
+        //     product = productArray[productIndex];
+        //     product.quantity = item.quantity;
+        //     selectedItems.push(product);
 
-        });
+        // });
 
-        return selectedItems
+        // return selectedItems
+        return listArray;
 
     }
 
