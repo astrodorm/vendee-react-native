@@ -260,7 +260,7 @@ class SearchResult extends Component {
 
             this.removeListItem(id);
             this.props.dispatch(itemDecrementAction());
-           // this.decrementListItem(id);
+            // this.decrementListItem(id);
 
         }
 
@@ -355,15 +355,14 @@ class SearchResult extends Component {
 
 
     getTotal = () => {
-        let listArray = [...this.props.lists];
-        let productArray = [...this.props.products];
-
+        let listArray = [...this.props.newlists];
+        //let productArray = [...this.props.products];
         let total = 0;
 
         listArray.forEach(function (item) {
-            let productIndex = productArray.findIndex(x => x.id === item.id);
-            product = productArray[productIndex];
-            multipliedValue = parseInt(product.price) * parseInt(item.quantity);
+            // let productIndex = productArray.findIndex(x => x.id === item.id);
+            // product = productArray[productIndex];
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
         })
 
@@ -383,20 +382,23 @@ class SearchResult extends Component {
 
         let convenienceFee = 0;
         let deliveryFee = 500;
-        let listArray = [...this.props.lists];
-        let productArray = [...this.props.products];
+        let listArray = [...this.props.newlists];
+        //let productArray = [...this.props.products];
 
         let total = 0;
         let grandTotal = 0;
 
         listArray.forEach(function (item) {
-            let productIndex = productArray.findIndex(x => x.id === item.id);
-            product = productArray[productIndex];
-            multipliedValue = parseInt(product.price) * parseInt(item.quantity);
+            // let productIndex = productArray.findIndex(x => x.id === item.id);
+            // product = productArray[productIndex];
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            convenienceFee += (5 / 100) * total;
-            grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+            // convenienceFee += (5 / 100) * total;
+            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
         })
+
+        convenienceFee = (5 / 100) * total;
+        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
 
@@ -406,18 +408,22 @@ class SearchResult extends Component {
     getConvenienceFee = () => {
 
         let convenienceFee = 0;
-        let listArray = [...this.props.lists];
-        let productArray = [...this.props.products];
+        let listArray = [...this.props.newlists];
+        // let productArray = [...this.props.products];
 
         let total = 0;
 
         listArray.forEach(function (item) {
-            let productIndex = productArray.findIndex(x => x.id === item.id);
-            product = productArray[productIndex];
-            multipliedValue = parseInt(product.price) * parseInt(item.quantity);
+            // let productIndex = productArray.findIndex(x => x.id === item.id);
+            // product = productArray[productIndex];
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            convenienceFee += (5 / 100) * total;
+            // convenienceFee += (5 / 100) * total;
+
         })
+
+        convenienceFee = (5 / 100) * total;
+
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
