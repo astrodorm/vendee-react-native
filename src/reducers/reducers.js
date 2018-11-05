@@ -18,7 +18,10 @@ import {
     LOGIN_USER_FAILED,
     FETCH_PRODUCT_STARTED,
     FETCH_PRODUCT_SUCCESS,
-    FETCH_PRODUCT_FAILED
+    FETCH_PRODUCT_FAILED,
+    LIST_TOTAL,
+    LIST_CONVENIENCE_FEE,
+    LIST_GRAND_TOTAL
 } from '../actions/actions';
 
 const initialState = {
@@ -44,9 +47,10 @@ const initialState = {
     isSigningInUser: false,
     responseStatus: 0,
     responseMessage: "",
-    isFirstSearch: true
-
-
+    isFirstSearch: true,
+    listTotal: "",
+    convenienceFee: "",
+    grandTotal: ""
 }
 
 
@@ -179,6 +183,18 @@ function lists(state = initialState, action) {
                         quantity: 1,
                     }
                 ]
+            });
+        case LIST_TOTAL:
+            return Object.assign({}, state, {
+                listTotal: action.total,
+            });
+        case LIST_CONVENIENCE_FEE:
+            return Object.assign({}, state, {
+                convenienceFee: action.convenienceFee,
+            });
+        case LIST_GRAND_TOTAL:
+            return Object.assign({}, state, {
+                grandTotal: action.grandTotal,
             });
         // case ITEM_ADD:
         // return Object.assign({}, state, {

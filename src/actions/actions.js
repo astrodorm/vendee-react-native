@@ -24,6 +24,11 @@ export const LOGIN_USER_FAILED = 'LOGIN_USER_FAILED';
 export const FETCH_PRODUCT_STARTED = 'FETCH_PRODUCT_STARTED';
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_FAILED = 'FETCH_PRODUCT_FAILED';
+export const LIST_TOTAL = 'LIST_TOTAL';
+export const LIST_CONVENIENCE_FEE = 'LIST_CONVENIENCE_FEE';
+export const LIST_GRAND_TOTAL = 'LIST_GRAND_TOTAL';
+
+
 
 const BASE_URL = "https://api.yourvendee.com/api";
 
@@ -125,6 +130,27 @@ export const fetchStartedAction = (query) => (
     {
         type: FETCH_PRODUCT_STARTED,
         query
+    }
+);
+
+export const updateTotalAction = (total) => (
+    {
+        type: LIST_TOTAL,
+        total
+    }
+);
+
+export const updateConvenienceFeeAction = (convenienceFee) => (
+    {
+        type: LIST_CONVENIENCE_FEE,
+        convenienceFee
+    }
+);
+
+export const updateGrandTotalAction = (grandTotal) => (
+    {
+        type: LIST_GRAND_TOTAL,
+        grandTotal
     }
 );
 

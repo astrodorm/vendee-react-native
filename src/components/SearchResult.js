@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Button } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
@@ -10,7 +10,7 @@ import Modal from 'react-native-modalbox';
 import ShippingListDetails from '../components/shoppingListDetails';
 import { connect } from 'react-redux';
 import ProductOptions from '../components/ProductOptions';
-import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction } from '../actions/actions';
+import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction, updateTotalAction, updateConvenienceFeeAction, updateGrandTotalAction } from '../actions/actions';
 import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn';
 import ShoppingListItem from '../components/ShoppingListItem';
 import ShoppingListOptions from '../components/ShoppingListOptions';
@@ -368,6 +368,9 @@ class SearchResult extends Component {
 
         let formattedTotal = this.formatAmount(total);
 
+        // this.props.dispatch(updateTotalAction(formattedTotal))
+
+
         return formattedTotal;
 
     }
@@ -402,6 +405,8 @@ class SearchResult extends Component {
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
 
+        // this.props.dispatch(updateGrandTotalAction(formattedGrandTotal))
+
         return formattedGrandTotal;
     }
 
@@ -427,6 +432,9 @@ class SearchResult extends Component {
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
+        // this.props.dispatch(updateConvenienceFeeAction(formattedConvenienceFee))
+
+
         return formattedConvenienceFee;
 
     }
@@ -440,6 +448,23 @@ class SearchResult extends Component {
         this.props.navigation.navigate("Checkout");
 
         console.log("ScreenResult : gotoCheckoutScreen")
+
+    }
+
+    setShoppingListValue = () => {
+        console.log("setting shopping list values");
+
+
+        //DISPATCH TOTAL FEE TO REDUX STORE
+        this.props.dispatch(updateTotalAction(this.getTotal()));
+
+        //DISPATCH CONVENIENCE FEE TO REDUX STORE
+        this.props.dispatch(updateConvenienceFeeAction(this.getConvenienceFee()))
+
+        //DISPATCH GRAND TOTAL FEE TO REDUX STORE
+        this.props.dispatch(updateGrandTotalAction(this.getGrandTotal()))
+
+
 
     }
 
@@ -504,7 +529,10 @@ class SearchResult extends Component {
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
                             <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList} />
-                            <CheckoutButton />
+                            {/* <TouchableOpacity onPress={() => this.setShoppingListValue()}> */}
+                                <CheckoutButton />
+                            {/* </TouchableOpacity> */}
+                            {/* <Button title="CHECKOUT" onPress={() => this.setShoppingListValue()} /> */}
                         </View>
 
                         {/* SELECTED PRODUCT ITEM LIST */}
@@ -537,7 +565,10 @@ const mapStateToProps = state => ({
     selectProductQuantity: state.products.selectProductQuantity,
     count: state.products.count,
     isDelivery: state.delivery.isDelivery,
-    isPickup: state.delivery.isPickup
+    isPickup: state.delivery.isPickup,
+    listTotal: state.lists.listTotal,
+    convenienceFee: state.lists.convenienceFee,
+    grandTotal: state.lists.grandTotal
 })
 
 export default connect(mapStateToProps)(SearchResult);

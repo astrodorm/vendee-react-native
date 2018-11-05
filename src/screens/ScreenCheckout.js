@@ -11,6 +11,10 @@ import TelephoneManager from '../components/TelephoneManager';
 import PasswordManger from '../components/PasswordManager';
 import CardManager from '../components/CardManager';
 import CouponManger from '../components/CouponManger';
+import { connect } from 'react-redux';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+
 
 
 class ScreenCheckout extends Component {
@@ -28,6 +32,94 @@ class ScreenCheckout extends Component {
             isVisibleCard: true,
             isVisibleCoupon: true
         }
+    }
+
+    getTotal = () => {
+        let listArray = [...this.props.newlists];
+        //let productArray = [...this.props.products];
+        let total = 0;
+
+        listArray.forEach(function (item) {
+            // let productIndex = productArray.findIndex(x => x.id === item.id);
+            // product = productArray[productIndex];
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+        })
+
+        let formattedTotal = this.formatAmount(total);
+
+        // this.props.dispatch(updateTotalAction(formattedTotal))
+
+
+        return formattedTotal;
+
+    }
+
+
+
+    getGrandTotal = () => {
+
+        let convenienceFee = 0;
+        let deliveryFee = 500;
+        let listArray = [...this.props.newlists];
+        //let productArray = [...this.props.products];
+
+        let total = 0;
+        let grandTotal = 0;
+
+        listArray.forEach(function (item) {
+            // let productIndex = productArray.findIndex(x => x.id === item.id);
+            // product = productArray[productIndex];
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+            // convenienceFee += (5 / 100) * total;
+            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+        })
+
+        convenienceFee = (5 / 100) * total;
+        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+
+        let formattedGrandTotal = this.formatAmount(grandTotal);
+
+        // this.props.dispatch(updateGrandTotalAction(formattedGrandTotal))
+
+        return formattedGrandTotal;
+    }
+
+
+    getConvenienceFee = () => {
+
+        let convenienceFee = 0;
+        let listArray = [...this.props.newlists];
+        // let productArray = [...this.props.products];
+
+        let total = 0;
+
+        listArray.forEach(function (item) {
+            // let productIndex = productArray.findIndex(x => x.id === item.id);
+            // product = productArray[productIndex];
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+            // convenienceFee += (5 / 100) * total;
+
+        })
+
+        convenienceFee = (5 / 100) * total;
+
+
+        let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
+
+        // this.props.dispatch(updateConvenienceFeeAction(formattedConvenienceFee))
+
+
+        return formattedConvenienceFee;
+
+    }
+
+    formatAmount = (amount) => {
+        let formattedTotal = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(amount)
+
+        return formattedTotal
     }
 
 
@@ -105,7 +197,7 @@ class ScreenCheckout extends Component {
                                 </View>
                                 <View>
                                     <Text style={styles.AppCardSubtitle}>SHOPPING LIST DETAILS</Text>
-                                    <ShoppingListDetails total="NGN 3,500.00" convenienceFee="NGN 75.00" deliveryFee="500.00" grandTotal="NGN 22,000.00" />
+                                    <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee="500.00" grandTotal={this.getGrandTotal()} />
                                     <ButtonPrimaryAccent title="PLACE ORDER" icon="arrowright" isActive={true} onSelected={this.placeOrder} />
                                 </View>
                             </View>
@@ -117,4 +209,22 @@ class ScreenCheckout extends Component {
     }
 }
 
-export default ScreenCheckout;
+//export default ScreenCheckout;
+
+
+const mapStateToProps = state => ({
+    // products: state.products.products,
+    // newproducts: state.products.newproducts,
+    // lists: state.lists.lists,
+    newlists: state.lists.newlists,
+    // selectProductID: state.products.selectProductID,
+    // selectProductQuantity: state.products.selectProductQuantity,
+    // count: state.products.count,
+    // isDelivery: state.delivery.isDelivery,
+    // isPickup: state.delivery.isPickup,
+    // listTotal: state.lists.listTotal,
+    // convenienceFee: state.lists.convenienceFee,
+    // grandTotal: state.lists.grandTotal
+})
+
+export default connect(mapStateToProps)(ScreenCheckout);
