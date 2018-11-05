@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Button } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -14,10 +14,25 @@ import CouponManger from '../components/CouponManger';
 import { connect } from 'react-redux';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import Modal from 'react-native-modalbox';
+
 
 
 
 class ScreenCheckout extends Component {
+
+
+    componentWillReceiveProps(nextProps) {
+
+        // console.log("nextProps.newproducts");
+        // console.log(nextProps.newproducts);
+        // console.log("this.props.newproducts")
+        // console.log(this.props.newproducts)
+         this.props.isVisibleAddAddressManager === true ? this.openDialog() : null;
+    }
+
+
+
 
     constructor(props) {
         super(props)
@@ -155,6 +170,14 @@ class ScreenCheckout extends Component {
         this.props.navigation.goBack()
     }
 
+    openDialog = () => {
+        this.refs.RefModalCheckoutDetails.open()
+    }
+
+    closeDialog = () => {
+        this.refs.RefModalCheckoutDetails.close()
+    }
+
 
     render() {
         return (
@@ -168,31 +191,32 @@ class ScreenCheckout extends Component {
                                 <View>
                                     <AccordionHeader title="Address" subtitle="20 Chidi Okpala Close, Fidiso Estate" onSelected={() => { this.toggleView("address") }} />
                                     <Collapsible collapsed={this.state.isVisibleAddress}>
-                                        <AddressManager />
+                                        <AddressManager isCheckboxVisible={true} />
                                     </Collapsible>
+                                    <Button title="open dialog" onPress={() => this.openDialog()} />
                                 </View>
                                 <View>
                                     <AccordionHeader title="Phone Number" subtitle="0706 818 1804" onSelected={() => { this.toggleView("phonenumber") }} />
                                     <Collapsible collapsed={this.state.isVisiblePhoneNumber}>
-                                        <TelephoneManager />
+                                        <TelephoneManager isCheckboxVisible={true} />
                                     </Collapsible>
                                 </View>
                                 <View>
                                     <AccordionHeader title="Change Password" subtitle="********" onSelected={() => { this.toggleView("password") }} />
                                     <Collapsible collapsed={this.state.isVisiblePassword}>
-                                        <PasswordManger />
+                                        <PasswordManger isCheckboxVisible={true} />
                                     </Collapsible>
                                 </View>
                                 <View>
                                     <AccordionHeader title="Select Card" subtitle="**** 4678" onSelected={() => { this.toggleView("card") }} />
                                     <Collapsible collapsed={this.state.isVisibleCard}>
-                                        <CardManager />
+                                        <CardManager isCheckboxVisible={true} />
                                     </Collapsible>
                                 </View>
                                 <View>
                                     <AccordionHeader title="Use Coupon" subtitle="MYFIRSTORDER applied" onSelected={() => { this.toggleView("coupon") }} />
                                     <Collapsible collapsed={this.state.isVisibleCoupon}>
-                                        <CouponManger />
+                                        <CouponManger isCheckboxVisible={true} />
                                     </Collapsible>
                                 </View>
                                 <View>
@@ -204,6 +228,18 @@ class ScreenCheckout extends Component {
                         </View>
                     </ScrollView>
                 </View>
+                <Modal
+                    style={[styles.modalDeliveryMethod]}
+                    position={"center"}
+                    ref={"RefModalCheckoutDetails"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={true}
+                >
+                    <Text>Checkout Dialog Here !!</Text>
+                </Modal>
             </View>
         );
     }
@@ -213,18 +249,11 @@ class ScreenCheckout extends Component {
 
 
 const mapStateToProps = state => ({
-    // products: state.products.products,
-    // newproducts: state.products.newproducts,
-    // lists: state.lists.lists,
+
     newlists: state.lists.newlists,
-    // selectProductID: state.products.selectProductID,
-    // selectProductQuantity: state.products.selectProductQuantity,
-    // count: state.products.count,
-    // isDelivery: state.delivery.isDelivery,
-    // isPickup: state.delivery.isPickup,
-    // listTotal: state.lists.listTotal,
-    // convenienceFee: state.lists.convenienceFee,
-    // grandTotal: state.lists.grandTotal
+    isVisibleAddAddressManager: state.users.isVisibleAddAddressManager,
+
+
 })
 
 export default connect(mapStateToProps)(ScreenCheckout);

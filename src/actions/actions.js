@@ -27,6 +27,7 @@ export const FETCH_PRODUCT_FAILED = 'FETCH_PRODUCT_FAILED';
 export const LIST_TOTAL = 'LIST_TOTAL';
 export const LIST_CONVENIENCE_FEE = 'LIST_CONVENIENCE_FEE';
 export const LIST_GRAND_TOTAL = 'LIST_GRAND_TOTAL';
+export const TOGGLE_ADD_MODAL_ADDRESS_MANAGER = 'TOGGLE_ADD_MODAL_ADDRESS_MANAGER';
 
 
 
@@ -151,6 +152,13 @@ export const updateGrandTotalAction = (grandTotal) => (
     {
         type: LIST_GRAND_TOTAL,
         grandTotal
+    }
+);
+
+export const toggleAddModalAddressManager = (visibility) => (
+    {
+        type: TOGGLE_ADD_MODAL_ADDRESS_MANAGER,
+        visibility
     }
 );
 

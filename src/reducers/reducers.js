@@ -21,7 +21,8 @@ import {
     FETCH_PRODUCT_FAILED,
     LIST_TOTAL,
     LIST_CONVENIENCE_FEE,
-    LIST_GRAND_TOTAL
+    LIST_GRAND_TOTAL,
+    TOGGLE_ADD_MODAL_ADDRESS_MANAGER
 } from '../actions/actions';
 
 const initialState = {
@@ -50,7 +51,8 @@ const initialState = {
     isFirstSearch: true,
     listTotal: "",
     convenienceFee: "",
-    grandTotal: ""
+    grandTotal: "",
+    isVisibleAddAddressManager: false
 }
 
 
@@ -113,6 +115,10 @@ function users(state = initialState, action) {
             return Object.assign({}, state, {
                 isSigningInUser: true,
                 isLoginUserError: false
+            });
+        case TOGGLE_ADD_MODAL_ADDRESS_MANAGER:
+            return Object.assign({}, state, {
+                isVisibleAddAddressManager: action.visibility
             });
         case CREATE_USER_SUCCESS:
             return Object.assign({}, state, {
