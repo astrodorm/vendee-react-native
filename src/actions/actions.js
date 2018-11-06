@@ -28,6 +28,8 @@ export const LIST_TOTAL = 'LIST_TOTAL';
 export const LIST_CONVENIENCE_FEE = 'LIST_CONVENIENCE_FEE';
 export const LIST_GRAND_TOTAL = 'LIST_GRAND_TOTAL';
 export const TOGGLE_ADD_MODAL_ADDRESS_MANAGER = 'TOGGLE_ADD_MODAL_ADDRESS_MANAGER';
+export const TOGGLE_ADD_MODAL_TELEPHONE_MANAGER = 'TOGGLE_ADD_MODAL_TELEPHONE_MANAGER';
+export const TOGGLE_ADD_MODAL_CARD_MANAGER = 'TOGGLE_ADD_MODAL_CARD_MANAGER';
 
 
 
@@ -158,6 +160,27 @@ export const updateGrandTotalAction = (grandTotal) => (
 export const toggleAddModalAddressManager = (visibility) => (
     {
         type: TOGGLE_ADD_MODAL_ADDRESS_MANAGER,
+        visibility
+    }
+);
+
+export const toggleAddModalTelephoneManager = (visibility) => (
+    {
+        type: TOGGLE_ADD_MODAL_TELEPHONE_MANAGER,
+        visibility
+    }
+);
+
+export const toggleUpdateModalPasswordManager = (visibility) => (
+    {
+        type: TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER,
+        visibility
+    }
+);
+
+export const toggleAddModalCardManager = (visibility) => (
+    {
+        type: TOGGLE_ADD_MODAL_CARD_MANAGER,
         visibility
     }
 );

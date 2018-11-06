@@ -1,27 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Image, Text } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from './ButtonPrimaryAccent';
+import { connect } from 'react-redux';
+import { toggleAddModalCardManager } from '../actions/actions';
 
-const CardManager = (props) => {
 
-    return (
-        <View>
-            <View style={styles.cards}>
-                <View style={styles.CardContainer}>
-                    <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} />
-                    <Text style={styles.cardNumber}>... 6643</Text>
-                    <Text style={styles.cardOwner}>TIMMY MICKY</Text>
+
+class CardManager extends Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {}
+
+    }
+
+    addCard = () => {
+
+        console.log("addCard");
+        this.props.dispatch(toggleAddModalCardManager(true));
+
+    }
+
+
+    render() {
+        return (
+            <View>
+                <View style={styles.cards}>
+                    <View style={styles.CardContainer}>
+                        <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} />
+                        <Text style={styles.cardNumber}>... 6643</Text>
+                        <Text style={styles.cardOwner}>TIMMY MICKY</Text>
+                    </View>
+                    <View style={styles.CardContainer}>
+                        <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} />
+                        <Text style={styles.cardNumber}>... 6643</Text>
+                        <Text style={styles.cardOwner}>TIMMY MICKY</Text>
+                    </View>
                 </View>
-                <View style={styles.CardContainer}>
-                    <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} />
-                    <Text style={styles.cardNumber}>... 6643</Text>
-                    <Text style={styles.cardOwner}>TIMMY MICKY</Text>
-                </View>
+                <ButtonPrimaryAccent title="ADD CARD" icon="form" isActive={false} onSelected={this.addCard} />
             </View>
-            <ButtonPrimaryAccent title="ADD CARD" icon="form" isActive={false} onSelected={this.AddAdress} />
-        </View>
-    )
+        )
+    }
+
 }
 
-export default CardManager;
+
+const mapStateToProps = state => ({
+
+})
+
+export default connect(mapStateToProps)(CardManager);

@@ -22,7 +22,9 @@ import {
     LIST_TOTAL,
     LIST_CONVENIENCE_FEE,
     LIST_GRAND_TOTAL,
-    TOGGLE_ADD_MODAL_ADDRESS_MANAGER
+    TOGGLE_ADD_MODAL_ADDRESS_MANAGER,
+    TOGGLE_ADD_MODAL_TELEPHONE_MANAGER,
+    TOGGLE_ADD_MODAL_CARD_MANAGER
 } from '../actions/actions';
 
 const initialState = {
@@ -52,7 +54,9 @@ const initialState = {
     listTotal: "",
     convenienceFee: "",
     grandTotal: "",
-    isVisibleAddAddressManager: false
+    isVisibleAddAddressManager: false,
+    isVisibleAddTelephoneManager: false,
+    isVisibleAddCardManager : false
 }
 
 
@@ -119,6 +123,14 @@ function users(state = initialState, action) {
         case TOGGLE_ADD_MODAL_ADDRESS_MANAGER:
             return Object.assign({}, state, {
                 isVisibleAddAddressManager: action.visibility
+            });
+        case TOGGLE_ADD_MODAL_TELEPHONE_MANAGER:
+            return Object.assign({}, state, {
+                isVisibleAddTelephoneManager: action.visibility
+            });
+        case TOGGLE_ADD_MODAL_CARD_MANAGER:
+            return Object.assign({}, state, {
+                isVisibleAddCardManager: action.visibility
             });
         case CREATE_USER_SUCCESS:
             return Object.assign({}, state, {

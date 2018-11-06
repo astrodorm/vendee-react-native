@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button } from 'react-native';
+import { Text, View, ScrollView, Button, TextInput } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Modal from 'react-native-modalbox';
+import { toggleAddModalAddressManager, toggleAddModalTelephoneManager, toggleAddModalCardManager } from '../actions/actions';
 
 
 
@@ -28,7 +29,14 @@ class ScreenCheckout extends Component {
         // console.log(nextProps.newproducts);
         // console.log("this.props.newproducts")
         // console.log(this.props.newproducts)
-         this.props.isVisibleAddAddressManager === true ? this.openDialog() : null;
+        console.log(nextProps.isVisibleAddAddressManager)
+        nextProps.isVisibleAddAddressManager === true ? this.openAddDialog() : null;
+        console.log(nextProps.isVisibleAddTelephoneManager)
+        nextProps.isVisibleAddTelephoneManager === true ? this.openAddDialog() : null;
+        console.log(nextProps.isVisibleAddCardManager)
+        nextProps.isVisibleAddCardManager === true ? this.openAddDialog() : null;
+
+        //this.showAddDialog()
     }
 
 
@@ -45,9 +53,12 @@ class ScreenCheckout extends Component {
             isVisiblePhoneNumber: true,
             isVisiblePassword: true,
             isVisibleCard: true,
-            isVisibleCoupon: true
+            isVisibleCoupon: true,
+            modalAddButtonTitle: ""
         }
     }
+
+
 
     getTotal = () => {
         let listArray = [...this.props.newlists];
@@ -170,12 +181,19 @@ class ScreenCheckout extends Component {
         this.props.navigation.goBack()
     }
 
-    openDialog = () => {
+    openAddDialog = () => {
         this.refs.RefModalCheckoutDetails.open()
     }
 
-    closeDialog = () => {
+    closeAddDialog = () => {
         this.refs.RefModalCheckoutDetails.close()
+    }
+
+    setManagersVisibility = () => {
+        console.log("setManagerVisibility")
+        this.props.dispatch(toggleAddModalAddressManager(false));
+        this.props.dispatch(toggleAddModalTelephoneManager(false));
+        this.props.dispatch(toggleAddModalCardManager(false));
     }
 
 
@@ -193,7 +211,7 @@ class ScreenCheckout extends Component {
                                     <Collapsible collapsed={this.state.isVisibleAddress}>
                                         <AddressManager isCheckboxVisible={true} />
                                     </Collapsible>
-                                    <Button title="open dialog" onPress={() => this.openDialog()} />
+                                    {/* <Button title="open dialog" onPress={() => this.openAddDialog()} /> */}
                                 </View>
                                 <View>
                                     <AccordionHeader title="Phone Number" subtitle="0706 818 1804" onSelected={() => { this.toggleView("phonenumber") }} />
@@ -213,12 +231,12 @@ class ScreenCheckout extends Component {
                                         <CardManager isCheckboxVisible={true} />
                                     </Collapsible>
                                 </View>
-                                <View>
+                                {/* <View>
                                     <AccordionHeader title="Use Coupon" subtitle="MYFIRSTORDER applied" onSelected={() => { this.toggleView("coupon") }} />
                                     <Collapsible collapsed={this.state.isVisibleCoupon}>
                                         <CouponManger isCheckboxVisible={true} />
                                     </Collapsible>
-                                </View>
+                                </View> */}
                                 <View>
                                     <Text style={styles.AppCardSubtitle}>SHOPPING LIST DETAILS</Text>
                                     <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee="500.00" grandTotal={this.getGrandTotal()} />
@@ -229,7 +247,7 @@ class ScreenCheckout extends Component {
                     </ScrollView>
                 </View>
                 <Modal
-                    style={[styles.modalDeliveryMethod]}
+                    style={[styles.modalCheckout]}
                     position={"center"}
                     ref={"RefModalCheckoutDetails"}
                     backdrop={true}
@@ -237,8 +255,49 @@ class ScreenCheckout extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={true}
+                    onClosed={this.setManagersVisibility}
                 >
-                    <Text>Checkout Dialog Here !!</Text>
+                    {
+                        this.props.isVisibleAddAddressManager &&
+                        <View style={styles.modalCheckoutContent}>
+                            <View>
+                                <TextInput style={styles.textInput} placeholder="Enter Address" />
+                                <Text>To make delivery quicker, be as descriptive as possible</Text>
+                            </View>
+
+                            <View style={styles.buttonGroup}>
+                                <ButtonPrimaryAccent title="ADD ADDRESS" isActive={true} onSelected={this.placeOrder} />
+                                <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closeAddDialog} />
+                            </View>
+                        </View>
+                    }
+                    {
+                        this.props.isVisibleAddTelephoneManager &&
+                        <View>
+                            <View>
+                                <TextInput style={styles.textInput} placeholder="Enter Phone Number" />
+                            </View>
+                            <View style={styles.buttonGroup}>
+                                <ButtonPrimaryAccent title="ADD PHONE" isActive={true} onSelected={this.placeOrder} />
+                                <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closeAddDialog} />
+                            </View>
+                        </View>
+                    }
+                    {
+                        this.props.isVisibleAddCardManager &&
+                        <View>
+                            <View>
+                                <TextInput style={styles.textInput} placeholder="Card Number" />
+                                <TextInput style={styles.textInput} placeholder="Exp. Month" />
+                                <TextInput style={styles.textInput} placeholder="Exp. Year" />
+                                <TextInput style={styles.textInput} placeholder="CVC Code" />
+                            </View>
+                            <View style={styles.buttonGroup}>
+                                <ButtonPrimaryAccent title="ADD CARD" isActive={true} onSelected={this.placeOrder} />
+                                <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closeAddDialog} />
+                            </View>
+                        </View>
+                    }
                 </Modal>
             </View>
         );
@@ -252,6 +311,8 @@ const mapStateToProps = state => ({
 
     newlists: state.lists.newlists,
     isVisibleAddAddressManager: state.users.isVisibleAddAddressManager,
+    isVisibleAddTelephoneManager: state.users.isVisibleAddTelephoneManager,
+    isVisibleAddCardManager: state.users.isVisibleAddCardManager
 
 
 })

@@ -153,6 +153,18 @@ const styles = StyleSheet.create({
         // borderStyle: "dashed"
     },
 
+    textInput: {
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'grey',
+        borderRadius: 4,
+        fontSize: 18,
+        color: GrayDarkTheme,
+        fontFamily: Fonts.MPLUSRegular,
+        marginBottom: 8
+        // borderStyle: "dashed"
+    },
+
     introCardButton: {
         backgroundColor: redTheme,
         padding: 24,
@@ -676,6 +688,25 @@ const styles = StyleSheet.create({
         borderRadius: 16
     },
 
+    modalCheckout: {
+        width: fullWidth * 0.9,
+        backgroundColor: "#fff",
+        zIndex: 1000,
+        height: 400,
+        paddingTop: 32,
+        paddingBottom: 16,
+        paddingLeft: 32,
+        paddingRight: 32,
+        borderRadius: 16,
+        justifyContent: "center",
+        //alignItems: "center"
+    },
+
+    modalCheckoutContent: {
+        flexDirection: "column",
+        justifyContent: "space-between"
+    },
+
 
     modal: {
         width: fullWidth * 0.9,
@@ -1016,6 +1047,12 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.MPLUSRegular,
         color: "#fff",
         borderRadius: 6
+    },
+
+    buttonGroup: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginTop: 24
     }
 
 

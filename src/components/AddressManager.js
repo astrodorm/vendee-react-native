@@ -11,46 +11,20 @@ import { toggleAddModalAddressManager } from '../actions/actions';
 
 class AddressManager extends Component {
 
-    // componentWillReceiveProps(nextProps) {
-
-    //     console.log("this.props.responseMessage");
-    //     console.log(nextProps.responseMessage);
-
-    //    // nextProps.isCreateUserSuccess === true ? this.animateToSuccessView() : null;
-    // }
-
     constructor(props) {
         super(props)
 
-
-        this.state = {
-            searchText: "",
-            // isLoadingSearchBar : false
-
-        }
-
-
+        this.state = {}
 
     }
 
     addAddress = () => {
-        // this.toggleIcon();
-
-        // let query = this.state.searchText;
-        // this.props.dispatch(fetchProductAction(query));
 
         console.log("addAddress");
+        this.props.dispatch(toggleAddModalAddressManager(true));
 
     }
 
-    handleSearchInput = (text) => {
-        this.setState({ searchText: text });
-        console.log(text);
-    }
-
-    toggleIcon = () => {
-        // this.setState({ isLoadingSearchBar: !this.state.isLoadingSearchBar })
-    }
 
     render() {
         return (
@@ -64,24 +38,15 @@ class AddressManager extends Component {
                     }
                 </View>
                 <ButtonPrimaryAccent title="ADD ADDRESS" icon="form" isActive={false} onSelected={this.addAddress} />
-                <Button title="add address" onPress={this.addAddress} />
+                {/* <Button title="add address" onPress={this.addAddress} /> */}
             </View>
         )
     }
 
 }
 
-//export default AddressManager;
-
 
 const mapStateToProps = state => ({
-
-    isLoadingSearchBar: state.products.isLoadingSearchBar,
-    responseMessage: state.users.responseMessage,
-
-    // searchText: state.products.searchText,
-    // isDelivery: state.delivery.isDelivery,
-    // isPickup: state.delivery.isPickup
 
 })
 
