@@ -30,14 +30,14 @@ class TelephoneManager extends Component {
         return (
             <View>
                 <View style={styles.ActionInputContainer}>
-                    <Text style={styles.AccordionContent}>0706 818 1804</Text>
-                    <ButtonIconPrimaryAccent icon="edit" isActive={false} />
-                    {
+                    <Text style={styles.AccordionContent}>{this.props.phoneNumber}</Text>
+                    {/* <ButtonIconPrimaryAccent icon="edit" isActive={false} /> */}
+                    {/* {
                         this.props.isCheckboxVisible &&
                         <ButtonIconPrimaryAccent icon="check" isActive={true} />
-                    }
+                    } */}
                 </View>
-                <ButtonPrimaryAccent title="ADD TELEPHONE" icon="form" isActive={false} onSelected={this.addTelephone} />
+                <ButtonPrimaryAccent title="UPDATE PHONE" icon="form" isActive={false} onSelected={this.addTelephone} />
             </View>
         )
     }

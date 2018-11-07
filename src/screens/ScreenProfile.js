@@ -73,7 +73,7 @@ class ScreenProfile extends Component {
                                 <View>
                                     <AccordionHeader title="Names" subtitle="Michael Oshogbunu" onSelected={() => { this.toggleView("name") }} />
                                     <Collapsible collapsed={this.state.isVisibleName}>
-                                        <NamesManager isCheckboxVisible={false} />
+                                        <NamesManager />
                                     </Collapsible>
                                 </View>
                                 <View>
@@ -85,7 +85,7 @@ class ScreenProfile extends Component {
                                 <View>
                                     <AccordionHeader title="Address" subtitle="20 Chidi Okpala Close, Fidiso Estate" onSelected={() => { this.toggleView("password") }} />
                                     <Collapsible collapsed={this.state.isVisibleAddress}>
-                                        <AddressManager isCheckboxVisible={false} />
+                                        <AddressManager/>
                                     </Collapsible>
                                 </View>
                                 <View>

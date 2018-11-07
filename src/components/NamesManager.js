@@ -17,7 +17,7 @@ const NamesManager = (props) => {
                     <ButtonIconPrimaryAccent icon="check" isActive={true} />
                 }
             </View>
-            <ButtonPrimaryAccent title="ADD ADDRESS" icon="form" isActive={false} onSelected={this.AddAdress} />
+            <ButtonPrimaryAccent title="UPDATE NAMES" icon="form" isActive={false} onSelected={this.AddAdress} />
         </View>
     )
 }

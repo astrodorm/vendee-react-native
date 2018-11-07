@@ -30,14 +30,14 @@ class AddressManager extends Component {
         return (
             <View>
                 <View style={styles.ActionInputContainer}>
-                    <Text style={styles.AccordionContent}>20 Chidi Okpala Close, Fidiso Estate</Text>
-                    <ButtonIconPrimaryAccent icon="edit" isActive={false} />
-                    {
+                    <Text style={styles.AccordionContent}>{this.props.address}</Text>
+                    {/* <ButtonIconPrimaryAccent icon="edit" isActive={false} /> */}
+                    {/* {
                         this.props.isCheckboxVisible &&
                         <ButtonIconPrimaryAccent icon="check" isActive={true} />
-                    }
+                    } */}
                 </View>
-                <ButtonPrimaryAccent title="ADD ADDRESS" icon="form" isActive={false} onSelected={this.addAddress} />
+                <ButtonPrimaryAccent title="UPDATE ADDRESS" icon="form" isActive={false} onSelected={this.addAddress} />
                 {/* <Button title="add address" onPress={this.addAddress} /> */}
             </View>
         )

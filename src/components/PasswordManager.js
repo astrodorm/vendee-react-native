@@ -6,7 +6,7 @@ const PasswordManager = (props) => {
 
     return (
         <View>
-            <ButtonPrimaryAccent title="CHANGE PASSWORD" icon="form" isActive={false} onSelected={this.AddAdress} />
+            <ButtonPrimaryAccent title="UPDATE PASSWORD" icon="form" isActive={false} onSelected={this.AddAdress} />
         </View>
     )
 }

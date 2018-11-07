@@ -848,7 +848,7 @@ const styles = StyleSheet.create({
     AccordionContent: {
         fontSize: 16,
         fontFamily: Fonts.MPLUSRegular,
-        width: 200,
+       // width: 200,
         marginRight: 16
     },
 
@@ -954,8 +954,9 @@ const styles = StyleSheet.create({
     cardIcon: {
         // marginBottom: 8,
         width: 26,
+        marginBottom:16
         // height: 26,
-        resizeMode: "contain"
+        //resizeMode: "contain"
     },
 
     CardContainer: {
