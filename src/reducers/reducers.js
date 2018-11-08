@@ -31,7 +31,13 @@ import {
     CHARGE_USER_SUCCESS,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_STARTED,
-    UPDATE_USER_FAILED
+    UPDATE_USER_FAILED,
+    CHARGE_USER_PIN_STARTED,
+    CHARGE_USER_PIN_SUCCESS,
+    CHARGE_USER_PIN_FAILED,
+    CHARGE_USER_OTP_STARTED,
+    CHARGE_USER_OTP_SUCCESS,
+    CHARGE_USER_OTP_FAILED
 } from '../actions/actions';
 
 const initialState = {
@@ -69,6 +75,9 @@ const initialState = {
     isVisibleAddPasswordManager: false,
     isChargingUser: false,
     isChargingUserError: false,
+    isChargingPinUser: false,
+    isChargingUserPinError: false,
+    isChargingUserPinSuccess: false,
     chargeResponse: [],
     isUpdatingUser: false,
     isUpdatingUserError: false,
@@ -140,6 +149,16 @@ function users(state = initialState, action) {
                 isChargingUser: true,
                 isChargingUserError: false,
             });
+        case CHARGE_USER_OTP_STARTED:
+            return Object.assign({}, state, {
+                isChargingUser: true,
+                isChargingUserError: false,
+            });
+        case CHARGE_USER_PIN_STARTED:
+            return Object.assign({}, state, {
+                isChargingPinUser: true,
+                isChargingUserPinError: false,
+            });
         case UPDATE_USER_STARTED:
             return Object.assign({}, state, {
                 isUpdatingUser: true,
@@ -150,9 +169,29 @@ function users(state = initialState, action) {
                 isChargingUser: false,
                 chargeResponse: action.data,
             });
+        case CHARGE_USER_PIN_SUCCESS:
+            return Object.assign({}, state, {
+                isChargingPinUser: false,
+                chargeResponse: action.data,
+            });
+        case CHARGE_USER_OTP_SUCCESS:
+            return Object.assign({}, state, {
+                isChargingPinUser: false,
+                chargeResponse: action.data,
+            });
         case CHARGE_USER_FAILED:
             return Object.assign({}, state, {
                 isChargingUser: false,
+                chargeResponse: action.payload,
+            });
+        case CHARGE_USER_PIN_FAILED:
+            return Object.assign({}, state, {
+                isChargingPinUser: false,
+                chargeResponse: action.payload,
+            });
+        case CHARGE_USER_OTP_FAILED:
+            return Object.assign({}, state, {
+                isChargingPinUser: false,
                 chargeResponse: action.payload,
             });
         case TOGGLE_ADD_MODAL_ADDRESS_MANAGER:

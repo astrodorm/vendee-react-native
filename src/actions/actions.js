@@ -36,7 +36,13 @@ export const CHARGE_USER_SUCCESS = 'CHARGE_USER_SUCCESS';
 export const CHARGE_USER_FAILED = 'CHARGE_USER_FAILED';
 export const UPDATE_USER_STARTED = 'UPDATE_USER_STARTED';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED'
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
+export const CHARGE_USER_PIN_STARTED = 'CHARGE_USER_PIN_STARTED';
+export const CHARGE_USER_PIN_SUCCESS = 'CHARGE_USER_PIN_SUCCESS';
+export const CHARGE_USER_PIN_FAILED = 'CHARGE_USER_PIN_FAILED';
+export const CHARGE_USER_OTP_STARTED = 'CHARGE_USER_OTP_STARTED';
+export const CHARGE_USER_OTP_SUCCESS = 'CHARGE_USER_OTP_SUCCESS';
+export const CHARGE_USER_OTP_FAILED = 'CHARGE_USER_OTP_FAILED';
 
 
 
@@ -151,6 +157,20 @@ export const chargeUserStartedAction = () => (
     }
 );
 
+export const chargeUserPinStartedAction = () => (
+    {
+        type: CHARGE_USER_PIN_STARTED,
+
+    }
+);
+
+export const chargeUserOtpStartedAction = () => (
+    {
+        type: CHARGE_USER_OTP_STARTED,
+
+    }
+);
+
 
 export const updateUserStartedAction = () => (
     {
@@ -257,6 +277,21 @@ export const chargeUserSuccessAction = (data) => (
     }
 );
 
+export const chargeUserPinSuccessAction = (data) => (
+    {
+        type: CHARGE_USER_PIN_SUCCESS,
+
+        data
+    }
+);
+
+export const chargeUserOtpSuccessAction = (data) => (
+    {
+        type: CHARGE_USER_OTP_SUCCESS,
+        data
+    }
+);
+
 export const updateUserSuccessAction = (data) => (
     {
         type: UPDATE_USER_SUCCESS,
@@ -308,6 +343,26 @@ export const fetchFailedAction = (error) => (
 export const chargeUserFailedAction = (error) => (
     {
         type: CHARGE_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+
+export const chargeUserPinFailedAction = (error) => (
+    {
+        type: CHARGE_USER_PIN_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+
+export const chargeUserOtpFailedAction = (error) => (
+    {
+        type: CHARGE_USER_OTP_FAILED,
         payload: {
             error
         }
@@ -407,10 +462,67 @@ export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, e
                 config
             )
             .then(res => {
-                dispatch(chargeUserSuccessAction(res.data.data));
+                dispatch(chargeUserSuccessAction(res.data));
             })
             .catch(err => {
                 dispatch(chargeUserFailedAction(err.response.data));
+            });
+    };
+};
+
+
+
+export const chargeUserPinAction = (userToken, reference, pin) => {
+    return dispatch => {
+        dispatch(chargeUserPinStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/cards/charge/pin`, {
+                reference,
+                pin,
+
+            },
+                config
+            )
+            .then(res => {
+                dispatch(chargeUserPinSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(chargeUserPinFailedAction(err.response.data));
+            });
+    };
+};
+
+
+export const chargeUserOtpAction = (userToken, reference, otp) => {
+    return dispatch => {
+        dispatch(chargeUserOtpStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/cards/charge/otp`, {
+                reference,
+                otp,
+
+            },
+                config
+            )
+            .then(res => {
+                dispatch(chargeUserOtpSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(chargeUserOtpFailedAction(err.response.data));
             });
     };
 };

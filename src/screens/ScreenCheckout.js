@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Modal from 'react-native-modalbox';
-import { toggleAddModalAddressManager, toggleAddModalTelephoneManager, toggleAddModalCardManager, toggleUpdateModalPasswordManager, updateUserAction, chargeUserAction } from '../actions/actions';
+import { toggleAddModalAddressManager, toggleAddModalTelephoneManager, toggleAddModalCardManager, toggleUpdateModalPasswordManager, updateUserAction, chargeUserAction, chargeUserPinAction, chargeUserOtpAction } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
 
@@ -47,6 +47,20 @@ class ScreenCheckout extends Component {
         nextProps.isVisibleAddPasswordManager === true ? this.openAddDialog() : null;
 
         nextProps.isUpdatingUser === true ? this.showPreloader() : this.hidePreloader();
+
+        //SAVE CHARGE RESPONSE TO STATE
+        //this.setState({chargeResponse : nextProps.chargeResponse})
+
+        //CHECK FOR SUCCESS 200
+        // nextProps.chargeResponse.status === 200 ? this.showCheckoutMessage() : null; 
+
+        //CHECK FOR WHEN PIN IS REQUIRED
+        nextProps.chargeResponse.status === 201 ? this.showPinModal() : null;
+
+
+        //CHECK FOR WHEN OTP IS REQUIRED
+        nextProps.chargeResponse.status === 202 ? this.showOtpModal() : null;
+
 
 
 
@@ -100,11 +114,14 @@ class ScreenCheckout extends Component {
             cardMonth: "",
             cardYear: "",
             cardCVV: "",
+            cardPin: "",
             errorMessage: "",
             expiryMonth: "",
             expiryYear: "",
             password: "GENERIC",
-            userToken : ""
+            userToken: "",
+            chargeResponse: [],
+            otp: ""
 
         }
     }
@@ -276,6 +293,16 @@ class ScreenCheckout extends Component {
         this.refs.RefModalCheckoutDetails.close()
     }
 
+    closePinDialog = () => {
+        this.refs.RefModalPin.close()
+    }
+
+    closeOtpDialog = () => {
+        this.refs.RefModalOtp.close()
+    }
+
+
+
     setManagersVisibility = () => {
         console.log("setManagerVisibility")
         this.props.dispatch(toggleAddModalAddressManager(false));
@@ -299,6 +326,18 @@ class ScreenCheckout extends Component {
     handlePhone = (text) => {
 
         this.setState({ phoneNumber: text })
+
+    }
+
+    handlePIN = (text) => {
+
+        this.setState({ cardPin: text })
+
+    }
+
+    handleOTP = (text) => {
+
+        this.setState({ otp: text })
 
     }
 
@@ -540,6 +579,21 @@ class ScreenCheckout extends Component {
     }
 
 
+
+    showPinModal = () => {
+
+        //SHOW PIN MODAL
+        this.refs.RefModalPin.open()
+    }
+
+
+    showOtpModal = () => {
+
+        //SHOW PIN MODAL
+        this.refs.RefModalOtp.open()
+    }
+
+
     updateUserProfile = () => {
         console.log("updateUserProfile")
 
@@ -569,6 +623,40 @@ class ScreenCheckout extends Component {
         this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year))
 
     }
+
+    chargeUserPin = () => {
+
+        let reference = this.props.chargeResponse.data.reference
+        let pin = this.state.cardPin;
+        let userToken = this.state.userToken;
+
+        console.log("reference");
+        console.log(reference);
+        console.log("pin");
+        console.log(pin);
+
+        this.props.dispatch(chargeUserPinAction(userToken, reference, pin))
+
+        this.closePinDialog()
+
+    }
+
+    chargeUserOtp = () => {
+        let reference = this.props.chargeResponse.data.reference
+        let otp = this.state.otp;
+        let userToken = this.state.userToken;
+
+        console.log("reference");
+        console.log(reference);
+        console.log("otp");
+        console.log(otp);
+
+        this.props.dispatch(chargeUserOtpAction(userToken, reference, otp));
+
+        this.closeOtpDialog();
+
+    }
+
 
     showPreloader = () => {
         this.refs.RefModalPreloader.open()
@@ -726,6 +814,50 @@ class ScreenCheckout extends Component {
                     <Progress.CircleSnail color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
 
                 </Modal>
+                <Modal
+                    style={[styles.modalCheckout]}
+                    position={"center"}
+                    ref={"RefModalPin"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={false}
+                // onClosed={this.setManagersVisibility}
+                >
+                    <View>
+                        <View>
+                            <Text>Enter your card PIN to complete your transaction</Text>
+                            <TextInput style={styles.textInput} placeholder="Enter PIN" onChangeText={this.handlePIN} />
+                        </View>
+                        <View style={styles.buttonGroup}>
+                            <ButtonPrimaryAccent title="PROCEED" isActive={true} onSelected={this.chargeUserPin} />
+                            <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closePinDialog} />
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    style={[styles.modalCheckout]}
+                    position={"center"}
+                    ref={"RefModalOtp"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={false}
+                // onClosed={this.setManagersVisibility}
+                >
+                    <View>
+                        <View>
+                            <Text>Enter OTP </Text>
+                            <TextInput style={styles.textInput} placeholder="Enter OTP" onChangeText={this.handleOTP} />
+                        </View>
+                        <View style={styles.buttonGroup}>
+                            <ButtonPrimaryAccent title="PROCEED" isActive={true} onSelected={this.chargeUserOtp} />
+                            <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closeOtpDialog} />
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -741,9 +873,8 @@ const mapStateToProps = state => ({
     isVisibleAddTelephoneManager: state.users.isVisibleAddTelephoneManager,
     isVisibleAddCardManager: state.users.isVisibleAddCardManager,
     isVisibleAddPasswordManager: state.users.isVisibleAddPasswordManager,
-    isUpdatingUser: state.users.isUpdatingUser
-
-
+    isUpdatingUser: state.users.isUpdatingUser,
+    chargeResponse: state.users.chargeResponse
 })
 
 export default connect(mapStateToProps)(ScreenCheckout);
