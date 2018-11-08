@@ -37,7 +37,17 @@ import {
     CHARGE_USER_PIN_FAILED,
     CHARGE_USER_OTP_STARTED,
     CHARGE_USER_OTP_SUCCESS,
-    CHARGE_USER_OTP_FAILED
+    CHARGE_USER_OTP_FAILED,
+    ADD_TO_CART_STARTED,
+    ADD_TO_CART_FAILED,
+    ADD_TO_CART_SUCCESS,
+    NEW_ADD_TO_CART_STARTED,
+    NEW_ADD_TO_CART_FAILED,
+    NEW_ADD_TO_CART_SUCCESS,
+    CREATE_ORDER_STARTED,
+    CREATE_ORDER_FAILED,
+    CREATE_ORDER_SUCCESS,
+    SHOW_MODAL_PIN
 } from '../actions/actions';
 
 const initialState = {
@@ -79,9 +89,17 @@ const initialState = {
     isChargingUserPinError: false,
     isChargingUserPinSuccess: false,
     chargeResponse: [],
+    addToCartResponse: [],
     isUpdatingUser: false,
     isUpdatingUserError: false,
     isUpdatingUserSuccess: false,
+    isAddingToCart: false,
+    isAddToCartError: false,
+    isCreatingOrder: false,
+    isCreateOrderError: false,
+    createOrderResponse: [],
+    showModalpin: false,
+    orderCount : 0
 }
 
 
@@ -298,6 +316,46 @@ function lists(state = initialState, action) {
         case LIST_TOTAL:
             return Object.assign({}, state, {
                 listTotal: action.total,
+            });
+        case ADD_TO_CART_STARTED:
+            return Object.assign({}, state, {
+                isAddingToCart: true,
+                isAddToCartError: false,
+                orderCount : state.orderCount + 1
+            });
+        case CREATE_ORDER_STARTED:
+            return Object.assign({}, state, {
+                isCreatingOrder: true,
+                isCreateOrderError: false
+            });
+        case SHOW_MODAL_PIN:
+            return Object.assign({}, state, {
+                showModalpin: action.visibility,
+               // isCreateOrderError: false
+            });
+        case NEW_ADD_TO_CART_SUCCESS:
+            return Object.assign({}, state, {
+                isAddingToCart: false,
+                addToCartResponse: action.data,
+            });
+        case CREATE_ORDER_SUCCESS:
+            return Object.assign({}, state, {
+                isCreatingOrder: false,
+                createOrderResponse: action.data,
+            });
+        case NEW_ADD_TO_CART_FAILED:
+            return Object.assign({}, state, {
+                isAddingToCart: false,
+                isAddToCartError: true,
+                isAddToCartSuccess: false,
+                addToCartResponse: action.data,
+            });
+        case CREATE_ORDER_FAILED:
+            return Object.assign({}, state, {
+                isCreatingOrder: false,
+                isCreateOrderError: true,
+                isCreateOrderSuccess: true,
+                createOrderResponse: action.data,
             });
         case LIST_CONVENIENCE_FEE:
             return Object.assign({}, state, {

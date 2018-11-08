@@ -43,7 +43,16 @@ export const CHARGE_USER_PIN_FAILED = 'CHARGE_USER_PIN_FAILED';
 export const CHARGE_USER_OTP_STARTED = 'CHARGE_USER_OTP_STARTED';
 export const CHARGE_USER_OTP_SUCCESS = 'CHARGE_USER_OTP_SUCCESS';
 export const CHARGE_USER_OTP_FAILED = 'CHARGE_USER_OTP_FAILED';
-
+export const ADD_TO_CART_STARTED = 'ADD_TO_CART_STARTED';
+export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
+export const ADD_TO_CART_FAILED = 'ADD_TO_CART_FAILED';
+export const NEW_ADD_TO_CART_STARTED = 'NEW_ADD_TO_CART_STARTED';
+export const NEW_ADD_TO_CART_SUCCESS = 'NEW_ADD_TO_CART_SUCCESS';
+export const NEW_ADD_TO_CART_FAILED = 'NEW_ADD_TO_CART_FAILED';
+export const CREATE_ORDER_STARTED = 'CREATE_ORDER_STARTED';
+export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
+export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
+export const SHOW_MODAL_PIN = 'SHOW_MODAL_PIN'
 
 
 
@@ -150,6 +159,14 @@ export const fetchStartedAction = (query) => (
     }
 );
 
+
+export const createOrderStartedAction = () => (
+    {
+        type: CREATE_ORDER_STARTED
+
+    }
+);
+
 export const chargeUserStartedAction = () => (
     {
         type: CHARGE_USER_STARTED,
@@ -168,6 +185,14 @@ export const chargeUserOtpStartedAction = () => (
     {
         type: CHARGE_USER_OTP_STARTED,
 
+    }
+);
+
+
+export const addToCartStartedAction = () => (
+    {
+        type: ADD_TO_CART_STARTED,
+       // lengthOfOrder
     }
 );
 
@@ -260,10 +285,16 @@ export const loginSuccessAction = (data) => (
 export const fetchSuccessAction = (data) => (
     {
         type: FETCH_PRODUCT_SUCCESS,
-        // payload: {
-        //    // ...data,
-        //     ...data.data
-        // }
+
+        data
+    }
+);
+
+
+export const createOrderSuccessAction = (data) => (
+    {
+        type: CREATE_ORDER_SUCCESS,
+
         data
     }
 );
@@ -285,10 +316,28 @@ export const chargeUserPinSuccessAction = (data) => (
     }
 );
 
+
 export const chargeUserOtpSuccessAction = (data) => (
     {
         type: CHARGE_USER_OTP_SUCCESS,
+
         data
+    }
+);
+
+
+
+export const newAddToCartSuccessAction = (data) => (
+    {
+        type: NEW_ADD_TO_CART_SUCCESS,
+        data
+    }
+);
+
+export const showModalPin = (visibility) => (
+    {
+        type: SHOW_MODAL_PIN,
+        visibility
     }
 );
 
@@ -340,6 +389,16 @@ export const fetchFailedAction = (error) => (
 );
 
 
+export const createOrderFailedAction = (error) => (
+    {
+        type: CREATE_ORDER_FAILED,
+        // payload: {
+        error
+        // }
+    }
+);
+
+
 export const chargeUserFailedAction = (error) => (
     {
         type: CHARGE_USER_FAILED,
@@ -368,6 +427,18 @@ export const chargeUserOtpFailedAction = (error) => (
         }
     }
 );
+
+
+
+export const newAddToCartFailedAction = (error) => (
+    {
+        type: NEW_ADD_TO_CART_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
 
 export const updateUserFailedAction = (error) => (
     {
@@ -464,6 +535,12 @@ export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, e
             .then(res => {
                 dispatch(chargeUserSuccessAction(res.data));
             })
+            // .then(()=>{
+            //     dispatch(getState().chargeResponse.status === 200 ?
+            //     withdrawMoney(42) :
+            //     apologize('Me', 'The Sandwich Shop')
+            //   )
+            // })
             .catch(err => {
                 dispatch(chargeUserFailedAction(err.response.data));
             });
@@ -526,6 +603,117 @@ export const chargeUserOtpAction = (userToken, reference, otp) => {
             });
     };
 };
+
+
+
+export const newAddToCartAction = (userToken, productID, quantity) => {
+    return dispatch => {
+        dispatch(addToCartStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/carts/add`, {
+                productID,
+                quantity,
+
+            },
+                config
+            )
+            .then(res => {
+                dispatch(newAddToCartSuccessAction(res));
+            })
+            .catch(err => {
+                dispatch(newAddToCartFailedAction(err.response.data));
+            });
+    };
+};
+
+
+
+export const addToCartAction = (userToken, productID, quantity) => {
+    return dispatch => {
+        dispatch(addToCartStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/carts/add`, {
+                productID,
+                quantity,
+
+            },
+                config
+            )
+            .then(res => {
+                dispatch(addToCartSuccessAction(res));
+                // dispatch(createOrderAction(userToken));
+            })
+            .catch(err => {
+                dispatch(addToCartFailedAction(err));
+            });
+    };
+};
+
+
+export const createOrderAction = (userToken) => {
+    return dispatch => {
+        dispatch(createOrderStartedAction());
+
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+
+        axios.get(`${BASE_URL}/orders/create`, {
+            params: {
+
+            }
+        },
+            config
+        )
+            .then(res => {
+                dispatch(createOrderSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(createOrderFailedAction(err));
+            });
+
+    };
+};
+
+
+// export const addToCartAndCreateOrderAction(userToken, productID, quantity) {
+//     return (dispatch) => {
+//         dispatch(addToCartAction(userToken, productID, quantity))
+//         //.then((userToken) => {
+//             dispatch(createOrderAction(userToken));
+//        // });
+//     };
+// }
+
+
+export const addToCartAndCreateOrderAction = (userToken, productID, quantity) => {
+    return (dispatch) => {
+        dispatch(addToCartAction(userToken, productID, quantity));
+        //.then((userToken) => {
+        dispatch(createOrderAction(userToken));
+        // });
+    };
+}
+
+
 
 
 export const updateUserAction = (address, password) => {

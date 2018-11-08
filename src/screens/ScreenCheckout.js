@@ -15,7 +15,20 @@ import { connect } from 'react-redux';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Modal from 'react-native-modalbox';
-import { toggleAddModalAddressManager, toggleAddModalTelephoneManager, toggleAddModalCardManager, toggleUpdateModalPasswordManager, updateUserAction, chargeUserAction, chargeUserPinAction, chargeUserOtpAction } from '../actions/actions';
+import {
+    toggleAddModalAddressManager,
+    toggleAddModalTelephoneManager,
+    toggleAddModalCardManager,
+    toggleUpdateModalPasswordManager,
+    updateUserAction,
+    chargeUserAction,
+    chargeUserPinAction,
+    chargeUserOtpAction,
+    addToCartAction,
+    addToCartAndCreateOrderAction,
+    createOrderAction,
+    newAddToCartAction
+} from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
 
@@ -48,11 +61,17 @@ class ScreenCheckout extends Component {
 
         nextProps.isUpdatingUser === true ? this.showPreloader() : this.hidePreloader();
 
+        // CHECK IF TO SHOW MODAL PIN
+        // nextProps.showModalPin === true ? this.showPinModal() : console.log("Not showing pin")
+
+        //    console.log("nextProps.showModalPin");
+        //    console.log(nextProps.showModalPin);
+
         //SAVE CHARGE RESPONSE TO STATE
         //this.setState({chargeResponse : nextProps.chargeResponse})
 
         //CHECK FOR SUCCESS 200
-        // nextProps.chargeResponse.status === 200 ? this.showCheckoutMessage() : null; 
+        nextProps.chargeResponse.status === 200 ? this.prepareCart(nextProps.orderCount) : null;
 
         //CHECK FOR WHEN PIN IS REQUIRED
         nextProps.chargeResponse.status === 201 ? this.showPinModal() : null;
@@ -62,10 +81,9 @@ class ScreenCheckout extends Component {
         nextProps.chargeResponse.status === 202 ? this.showOtpModal() : null;
 
 
-
-
-        //this.showAddDialog()
     }
+
+
 
 
     componentDidMount() {
@@ -121,7 +139,9 @@ class ScreenCheckout extends Component {
             password: "GENERIC",
             userToken: "",
             chargeResponse: [],
-            otp: ""
+            otp: "",
+            lengthOfOrder: 0,
+            cartIndex : 0
 
         }
     }
@@ -277,8 +297,53 @@ class ScreenCheckout extends Component {
         }
     }
 
-    addToCart = () => {
-        this.props.navigation.push('CheckoutMessage');
+    prepareCart = (orderCount) => {
+
+        let listArray = [this.props.newlists];
+        let userToken = this.state.userToken;
+        let totalLengthOfOrder = 3
+        //let orderList = totalLengthOfOrder - 1;
+       // this.setState({ cartIndex: this.state.cartIndex + 1 })
+        this.setState({ lengthOfOrder: totalLengthOfOrder })
+
+
+        console.log("orderCount");
+        console.log(orderCount);
+
+
+        console.log("lengthOfOrder");
+        console.log(this.state.lengthOfOrder);
+
+
+        let productID = listArray[0].id;
+        let quantity = listArray[0].quantity;
+        //this.addToCart(userToken, productID, quantity)
+
+
+
+        orderCount  === 0 ? this.addToCart(userToken, productID, quantity) : null;
+        orderCount  < totalLengthOfOrder ? this.addToCart(userToken, productID, quantity) : console.log("DONE ADDING")
+
+
+
+    }
+
+
+    addToCart = (userToken, productID, quantity) => {
+
+        console.log("addToCart")
+
+
+        this.props.dispatch(newAddToCartAction(userToken, productID, quantity))
+
+
+
+
+
+    }
+
+    createOrder = () => {
+        console.log("createdOrder")
     }
 
     goBack = () => {
@@ -874,7 +939,11 @@ const mapStateToProps = state => ({
     isVisibleAddCardManager: state.users.isVisibleAddCardManager,
     isVisibleAddPasswordManager: state.users.isVisibleAddPasswordManager,
     isUpdatingUser: state.users.isUpdatingUser,
-    chargeResponse: state.users.chargeResponse
+    chargeResponse: state.users.chargeResponse,
+    addToCartResponse: state.lists.addToCartResponse,
+    showModalPin: state.lists.showModalPin,
+    orderCount: state.lists.orderCount
+
 })
 
 export default connect(mapStateToProps)(ScreenCheckout);
