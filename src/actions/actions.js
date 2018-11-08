@@ -513,15 +513,48 @@ export const fetchProductAction = (query) => {
 
 
 
-export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => {
-    return dispatch => {
+// export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => {
+//     return dispatch => {
+//         dispatch(chargeUserStartedAction());
+
+//         let config = {
+//             headers: {
+//                 'Authorization': 'Bearer ' + userToken
+//             }
+//         }
+
+//         axios
+//             .post(`${BASE_URL}/cards/charge`, {
+//                 amount,
+//                 number,
+//                 cvv,
+//                 expiry_month,
+//                 expiry_year
+//             },
+//                 config
+//             )
+//             .then(res => {
+//                 dispatch(chargeUserSuccessAction(res.data));
+//             })
+
+//             .catch(err => {
+//                 dispatch(chargeUserFailedAction(err.response.data));
+//             });
+//     };
+// };
+
+
+export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => (dispatch) =>
+    new Promise(function (resolve, reject) {
         dispatch(chargeUserStartedAction());
+
 
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
+
 
         axios
             .post(`${BASE_URL}/cards/charge`, {
@@ -535,30 +568,90 @@ export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, e
             )
             .then(res => {
                 dispatch(chargeUserSuccessAction(res.data));
+                resolve(res);
             })
-            // .then(()=>{
-            //     dispatch(getState().chargeResponse.status === 200 ?
-            //     withdrawMoney(42) :
-            //     apologize('Me', 'The Sandwich Shop')
-            //   )
-            // })
             .catch(err => {
                 dispatch(chargeUserFailedAction(err.response.data));
+                reject(error);
             });
-    };
-};
+
+    });
 
 
+/////
+//ORIGINAL
+///
 
-export const chargeUserPinAction = (userToken, reference, pin) => {
-    return dispatch => {
+// export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => {
+//     return dispatch => {
+//         dispatch(chargeUserStartedAction());
+
+//         let config = {
+//             headers: {
+//                 'Authorization': 'Bearer ' + userToken
+//             }
+//         }
+
+//         axios
+//             .post(`${BASE_URL}/cards/charge`, {
+//                 amount,
+//                 number,
+//                 cvv,
+//                 expiry_month,
+//                 expiry_year
+//             },
+//                 config
+//             )
+//             .then(res => {
+//                 dispatch(chargeUserSuccessAction(res.data));
+//             })
+
+//             .catch(err => {
+//                 dispatch(chargeUserFailedAction(err.response.data));
+//             });
+//     };
+// };
+
+
+// export const chargeUserPinAction = (userToken, reference, pin) => {
+//     return dispatch => {
+//         dispatch(chargeUserPinStartedAction());
+
+//         let config = {
+//             headers: {
+//                 'Authorization': 'Bearer ' + userToken
+//             }
+//         }
+
+//         axios
+//             .post(`${BASE_URL}/cards/charge/pin`, {
+//                 reference,
+//                 pin,
+
+//             },
+//                 config
+//             )
+//             .then(res => {
+//                 dispatch(chargeUserPinSuccessAction(res.data));
+//             })
+//             .catch(err => {
+//                 dispatch(chargeUserPinFailedAction(err.response.data));
+//             });
+//     };
+// };
+
+
+export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
+    new Promise(function (resolve, reject) {
         dispatch(chargeUserPinStartedAction());
+
 
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
+
 
         axios
             .post(`${BASE_URL}/cards/charge/pin`, {
@@ -570,23 +663,56 @@ export const chargeUserPinAction = (userToken, reference, pin) => {
             )
             .then(res => {
                 dispatch(chargeUserPinSuccessAction(res.data));
+                resolve(res);
             })
             .catch(err => {
-                dispatch(chargeUserPinFailedAction(err.response.data));
+                dispatch(chargeUserFailedAction(err.response.data));
+                reject(error);
             });
-    };
-};
+
+    });
 
 
-export const chargeUserOtpAction = (userToken, reference, otp) => {
-    return dispatch => {
+// export const chargeUserOtpAction = (userToken, reference, otp) => {
+//     return dispatch => {
+//         dispatch(chargeUserOtpStartedAction());
+
+//         let config = {
+//             headers: {
+//                 'Authorization': 'Bearer ' + userToken
+//             }
+//         }
+
+//         axios
+//             .post(`${BASE_URL}/cards/charge/otp`, {
+//                 reference,
+//                 otp,
+
+//             },
+//                 config
+//             )
+//             .then(res => {
+//                 dispatch(chargeUserOtpSuccessAction(res.data));
+//             })
+//             .catch(err => {
+//                 dispatch(chargeUserOtpFailedAction(err.response.data));
+//             });
+//     };
+// };
+
+
+
+export const chargeUserOtpAction = (userToken, reference, otp) => (dispatch) =>
+    new Promise(function (resolve, reject) {
         dispatch(chargeUserOtpStartedAction());
+
 
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
+
 
         axios
             .post(`${BASE_URL}/cards/charge/otp`, {
@@ -598,12 +724,14 @@ export const chargeUserOtpAction = (userToken, reference, otp) => {
             )
             .then(res => {
                 dispatch(chargeUserOtpSuccessAction(res.data));
+                resolve(res)
             })
             .catch(err => {
                 dispatch(chargeUserOtpFailedAction(err.response.data));
+                reject(error);
             });
-    };
-};
+
+    });
 
 
 

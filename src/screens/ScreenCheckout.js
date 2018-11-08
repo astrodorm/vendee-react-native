@@ -72,14 +72,14 @@ class ScreenCheckout extends Component {
         //this.setState({chargeResponse : nextProps.chargeResponse})
 
         //CHECK FOR SUCCESS 200
-        nextProps.chargeResponse.status === 200 ? this.prepareCart(nextProps.orderCount) : null;
+        // nextProps.chargeResponse.status === 200 ? this.prepareCart(nextProps.orderCount) : null;
 
         //CHECK FOR WHEN PIN IS REQUIRED
-        nextProps.chargeResponse.status === 201 ? this.showPinModal() : null;
+        // nextProps.chargeResponse.status === 201 ? this.showPinModal() : null;
 
 
         //CHECK FOR WHEN OTP IS REQUIRED
-        nextProps.chargeResponse.status === 202 ? this.showOtpModal() : null;
+        // nextProps.chargeResponse.status === 202 ? this.showOtpModal() : null;
 
 
     }
@@ -142,7 +142,7 @@ class ScreenCheckout extends Component {
             chargeResponse: [],
             otp: "",
             lengthOfOrder: 0,
-            cartIndex : 0
+            cartIndex: 0
 
         }
     }
@@ -298,35 +298,38 @@ class ScreenCheckout extends Component {
         }
     }
 
-    prepareCart = (orderCount) => {
+
+    //prepareCart = (orderCount) => {
+    prepareCart = () => {
 
         let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
-        let totalLengthOfOrder = 3
-        //let orderList = totalLengthOfOrder - 1;
-       // this.setState({ cartIndex: this.state.cartIndex + 1 })
-        this.setState({ lengthOfOrder: totalLengthOfOrder })
+        // let totalLengthOfOrder = listArray.length;
 
-
-        console.log("orderCount");
-        console.log(orderCount);
-
-
-        console.log("lengthOfOrder");
-        console.log(this.state.lengthOfOrder);
-
-
-        let productID = listArray[0].id;
-        let quantity = listArray[0].quantity;
-        //this.addToCart(userToken, productID, quantity)
+        // let cartIndex = this.state.cartIndex;
 
 
 
+        // console.log("orderCount");
+        // console.log(orderCount);
 
 
-        orderCount  === 0 ? this.addToCart(userToken, productID, quantity) : null;
-        orderCount  < totalLengthOfOrder ? this.addToCart(userToken, productID, quantity) : console.log("DONE ADDING")
+        // console.log("cartIndex");
+        // console.log(this.state.cartIndex);
 
+
+        // let productID = listArray[cartIndex].id;
+        // let quantity = listArray[cartIndex].quantity;
+
+        for (let index = 0; index < listArray.length; index++) {
+            // const element = array[index];
+            this.addToCart(userToken, listArray[index].id, listArray[index].quantity)
+        }
+
+        // listArray.forEach(function (item) {
+
+        //     this.addToCart(userToken, item.id, item.quantity)
+        // })
 
 
     }
@@ -336,19 +339,20 @@ class ScreenCheckout extends Component {
 
         console.log("addToCart")
 
-
-       // this.props.dispatch(addToCartAndCreateOrderAction(userToken, productID, quantity))
+        // this.setState({ cartIndex: this.state.cartIndex + 1 });
+        // this.props.dispatch(addToCartAndCreateOrderAction(userToken, productID, quantity))
 
         this.props.dispatch(promisedAddToCartAction(userToken, productID, quantity)).then(res => {
             // showToast('Todo item was successfully updated');
+
             this.createOrder(userToken)
-          });
-          
+        });
+
 
     }
 
     createOrder = (userToken) => {
-        console.log("createdOrder")
+        console.log("createdOrder");
         this.props.dispatch(createOrderAction(userToken))
     }
 
@@ -691,7 +695,23 @@ class ScreenCheckout extends Component {
         let expiry_year = this.state.expiryYear;
         let userToken = this.state.userToken;
 
-        this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year))
+        // this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year))
+
+        this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year)).then(res => {
+            // showToast('Todo item was successfully updated');
+            //    console.log("Promised response")
+            //    console.log("res.data.status");
+            //    console.log(res.data.status);
+            //    console.log("res")
+            //    console.log(res)
+
+            res.data.status === 200 ? this.prepareCart() : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 201 ? this.showPinModal() : null;
+            //this.createOrder(userToken)
+        });
+
+
 
     }
 
@@ -701,12 +721,30 @@ class ScreenCheckout extends Component {
         let pin = this.state.cardPin;
         let userToken = this.state.userToken;
 
-        console.log("reference");
-        console.log(reference);
-        console.log("pin");
-        console.log(pin);
+        // console.log("reference");
+        // console.log(reference);
+        // console.log("pin");
+        // console.log(pin);
 
-        this.props.dispatch(chargeUserPinAction(userToken, reference, pin))
+        //  this.props.dispatch(chargeUserPinAction(userToken, reference, pin))
+
+
+        this.props.dispatch(chargeUserPinAction(userToken, reference, pin)).then(res => {
+            // showToast('Todo item was successfully updated');
+            //    console.log("Promised response")
+            //    console.log("res.data.status");
+            //    console.log(res.data.status);
+            //    console.log("res")
+            //    console.log(res)
+
+            res.data.status === 200 ? this.prepareCart() : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 202 ? this.showOtpModal() : null;
+            //this.createOrder(userToken)
+        });
+
+
+
 
         this.closePinDialog()
 
@@ -722,7 +760,24 @@ class ScreenCheckout extends Component {
         console.log("otp");
         console.log(otp);
 
-        this.props.dispatch(chargeUserOtpAction(userToken, reference, otp));
+        // this.props.dispatch(chargeUserOtpAction(userToken, reference, otp));
+
+
+        this.props.dispatch(chargeUserOtpAction(userToken, reference, otp)).then(res => {
+            // showToast('Todo item was successfully updated');
+            //    console.log("Promised response")
+            //    console.log("res.data.status");
+            //    console.log(res.data.status);
+            //    console.log("res")
+            //    console.log(res)
+
+            res.data.status === 200 ? this.prepareCart() : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            //  res.data.status === 202 ? this.showOtpModal() : null;
+            //this.createOrder(userToken)
+        });
+
+
 
         this.closeOtpDialog();
 
