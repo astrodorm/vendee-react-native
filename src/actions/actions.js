@@ -30,6 +30,14 @@ export const LIST_GRAND_TOTAL = 'LIST_GRAND_TOTAL';
 export const TOGGLE_ADD_MODAL_ADDRESS_MANAGER = 'TOGGLE_ADD_MODAL_ADDRESS_MANAGER';
 export const TOGGLE_ADD_MODAL_TELEPHONE_MANAGER = 'TOGGLE_ADD_MODAL_TELEPHONE_MANAGER';
 export const TOGGLE_ADD_MODAL_CARD_MANAGER = 'TOGGLE_ADD_MODAL_CARD_MANAGER';
+export const TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER = 'TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER';
+export const CHARGE_USER_STARTED = 'CHARGE_USER_STARTED';
+export const CHARGE_USER_SUCCESS = 'CHARGE_USER_SUCCESS';
+export const CHARGE_USER_FAILED = 'CHARGE_USER_FAILED';
+export const UPDATE_USER_STARTED = 'UPDATE_USER_STARTED';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED'
+
 
 
 
@@ -136,6 +144,21 @@ export const fetchStartedAction = (query) => (
     }
 );
 
+export const chargeUserStartedAction = () => (
+    {
+        type: CHARGE_USER_STARTED,
+
+    }
+);
+
+
+export const updateUserStartedAction = () => (
+    {
+        type: UPDATE_USER_STARTED,
+
+    }
+);
+
 export const updateTotalAction = (total) => (
     {
         type: LIST_TOTAL,
@@ -185,6 +208,14 @@ export const toggleAddModalCardManager = (visibility) => (
     }
 );
 
+
+// export const toggleUpdateModalPasswordManager = (visibility) => (
+//     {
+//         type: TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER,
+//         visibility
+//     }
+// );
+
 export const createUserSuccessAction = (data) => (
     {
         type: CREATE_USER_SUCCESS,
@@ -198,9 +229,10 @@ export const createUserSuccessAction = (data) => (
 export const loginSuccessAction = (data) => (
     {
         type: LOGIN_USER_SUCCESS,
-        payload: {
-            ...data
-        }
+        // payload: {
+        //     ...data
+        // }
+        data
     }
 );
 
@@ -208,6 +240,26 @@ export const loginSuccessAction = (data) => (
 export const fetchSuccessAction = (data) => (
     {
         type: FETCH_PRODUCT_SUCCESS,
+        // payload: {
+        //    // ...data,
+        //     ...data.data
+        // }
+        data
+    }
+);
+
+
+export const chargeUserSuccessAction = (data) => (
+    {
+        type: CHARGE_USER_SUCCESS,
+
+        data
+    }
+);
+
+export const updateUserSuccessAction = (data) => (
+    {
+        type: UPDATE_USER_SUCCESS,
         // payload: {
         //    // ...data,
         //     ...data.data
@@ -253,6 +305,25 @@ export const fetchFailedAction = (error) => (
 );
 
 
+export const chargeUserFailedAction = (error) => (
+    {
+        type: CHARGE_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+export const updateUserFailedAction = (error) => (
+    {
+        type: UPDATE_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+
 export const createUserAction = (firstname, lastname, phoneNumber, email, oauth) => {
     return dispatch => {
         dispatch(createUserStartedAction());
@@ -285,7 +356,7 @@ export const loginAction = (email, oauth) => {
                 oauth
             })
             .then(res => {
-                dispatch(loginSuccessAction(res.data));
+                dispatch(loginSuccessAction(res.data.data));
             })
             .catch(err => {
                 dispatch(loginFailedAction(err.response.data));
@@ -314,11 +385,56 @@ export const fetchProductAction = (query) => {
 };
 
 
-// export const fetchProductAction = (text) => (
-//     {
-//         type: FETCH_PRODUCT,
-//         text
-//     }
-// );
+
+export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => {
+    return dispatch => {
+        dispatch(chargeUserStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/cards/charge`, {
+                amount,
+                number,
+                cvv,
+                expiry_month,
+                expiry_year
+            },
+                config
+            )
+            .then(res => {
+                dispatch(chargeUserSuccessAction(res.data.data));
+            })
+            .catch(err => {
+                dispatch(chargeUserFailedAction(err.response.data));
+            });
+    };
+};
+
+
+export const updateUserAction = (address, password) => {
+    return dispatch => {
+        dispatch(updateUserStartedAction());
+
+        axios
+            .put(`${BASE_URL}/customer/edit`, {
+                address,
+                password
+            })
+            .then(res => {
+                dispatch(updateUserSuccessAction(res.data));
+            })
+            .catch(err => {
+                dispatch(updateUserFailedAction(err.response.data));
+            });
+    };
+};
+
+
+
 
 

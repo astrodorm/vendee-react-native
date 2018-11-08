@@ -32,7 +32,7 @@ class CardManager extends Component {
                     <View style={styles.CardContainer}>
                         {/* <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} /> */}
                         <Icon style={styles.cardIcon} name="creditcard" size={20} color="#d9d9d9" />
-                        <Text style={styles.cardNumber}>{this.props.last4digits}</Text>
+                        <Text style={styles.cardNumber}>***{this.props.last4digits}</Text>
                         <Text style={styles.cardOwner}>YOUR CARD</Text>
                     </View>
                     {/* <View style={styles.CardContainer}>

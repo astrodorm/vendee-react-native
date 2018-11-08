@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput } from 'react-native';
+import { Text, View, Image, TextInput, AsyncStorage } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import InlineError from '../components/InlineError';
@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { loginAction } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
+
+const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 
 class ScreenProfile extends Component {
 
@@ -24,9 +26,31 @@ class ScreenProfile extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        console.log("this.props.isLoginUserSuccess");
-        console.log(nextProps.isLoginUserSuccess);
-        nextProps.isLoginUserSuccess === true ? this.navigateToMainApp() : null;
+      //  console.log("this.props.isLoginUserSuccess");
+       // console.log(nextProps.isLoginUserSuccess);
+        let userToken = nextProps.user.token;
+        console.log("nextProps.user");
+        console.log(nextProps.user);
+        console.log(nextProps.user.token);
+        nextProps.isLoginUserSuccess === true ? this.storeUserToken(userToken) : null;
+    }
+
+    storeUserToken = (token) => {
+
+        //SAVE USER TOKEN
+        this.storeData(USER_TOKEN_STORAGE_KEY, token);
+
+        //NAVIGATE TO MAIN APP
+        this.navigateToMainApp()
+    }
+
+
+    storeData = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, value);
+        } catch (error) {
+            // Error saving data
+        }
     }
 
     navigateToMainApp = () => {
@@ -68,7 +92,7 @@ class ScreenProfile extends Component {
     }
 
     loginUser = () => {
-        console.log("logging in user > ", this.state.email);
+       // console.log("logging in user > ", this.state.email);
 
 
         let email = this.state.email;

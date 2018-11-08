@@ -9,6 +9,8 @@ import InlineError from '../components/InlineError';
 import * as Progress from 'react-native-progress';
 
 
+const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+
 class ScreenIntro extends Component {
 
     componentWillMount() {
@@ -19,7 +21,27 @@ class ScreenIntro extends Component {
 
         console.log("this.props.isCreateUserSuccess");
         console.log(nextProps.isCreateUserSuccess);
-        nextProps.isCreateUserSuccess === true ? this.animateToSuccessView() : null;
+        let userToken = nextProps.user.token;
+        nextProps.isCreateUserSuccess === true ? this.storeUserToken(userToken) : null;
+    }
+
+
+    storeUserToken = (token) => {
+
+        //SAVE USER TOKEN
+        this.storeData(USER_TOKEN_STORAGE_KEY, token);
+
+        //NAVIGATE TO MAIN APP
+        this.animateToSuccessView()
+    }
+
+
+    storeData = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, value);
+        } catch (error) {
+            // Error saving data
+        }
     }
 
     constructor(props) {

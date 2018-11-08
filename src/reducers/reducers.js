@@ -24,7 +24,14 @@ import {
     LIST_GRAND_TOTAL,
     TOGGLE_ADD_MODAL_ADDRESS_MANAGER,
     TOGGLE_ADD_MODAL_TELEPHONE_MANAGER,
-    TOGGLE_ADD_MODAL_CARD_MANAGER
+    TOGGLE_ADD_MODAL_CARD_MANAGER,
+    TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER,
+    CHARGE_USER_STARTED,
+    CHARGE_USER_FAILED,
+    CHARGE_USER_SUCCESS,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_STARTED,
+    UPDATE_USER_FAILED
 } from '../actions/actions';
 
 const initialState = {
@@ -50,13 +57,22 @@ const initialState = {
     isSigningInUser: false,
     responseStatus: 0,
     responseMessage: "",
+    updateUserResponseStatus: 0,
+    updateUserResponseMessage: "",
     isFirstSearch: true,
     listTotal: "",
     convenienceFee: "",
     grandTotal: "",
     isVisibleAddAddressManager: false,
     isVisibleAddTelephoneManager: false,
-    isVisibleAddCardManager : false
+    isVisibleAddCardManager: false,
+    isVisibleAddPasswordManager: false,
+    isChargingUser: false,
+    isChargingUserError: false,
+    chargeResponse: [],
+    isUpdatingUser: false,
+    isUpdatingUserError: false,
+    isUpdatingUserSuccess: false,
 }
 
 
@@ -94,7 +110,6 @@ function products(state = initialState, action) {
             return Object.assign({}, state, {
                 isLoadingSearchBar: false,
                 newproducts: [...action.data],
-
             });
         case FETCH_PRODUCT_FAILED:
             return Object.assign({}, state, {
@@ -120,6 +135,26 @@ function users(state = initialState, action) {
                 isSigningInUser: true,
                 isLoginUserError: false
             });
+        case CHARGE_USER_STARTED:
+            return Object.assign({}, state, {
+                isChargingUser: true,
+                isChargingUserError: false,
+            });
+        case UPDATE_USER_STARTED:
+            return Object.assign({}, state, {
+                isUpdatingUser: true,
+                isUpdatingUserError: false
+            });
+        case CHARGE_USER_SUCCESS:
+            return Object.assign({}, state, {
+                isChargingUser: false,
+                chargeResponse: action.data,
+            });
+        case CHARGE_USER_FAILED:
+            return Object.assign({}, state, {
+                isChargingUser: false,
+                chargeResponse: action.payload,
+            });
         case TOGGLE_ADD_MODAL_ADDRESS_MANAGER:
             return Object.assign({}, state, {
                 isVisibleAddAddressManager: action.visibility
@@ -132,6 +167,10 @@ function users(state = initialState, action) {
             return Object.assign({}, state, {
                 isVisibleAddCardManager: action.visibility
             });
+        case TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER:
+            return Object.assign({}, state, {
+                isVisibleAddPasswordManager: action.visibility
+            });
         case CREATE_USER_SUCCESS:
             return Object.assign({}, state, {
                 isCreatingUser: false,
@@ -140,14 +179,21 @@ function users(state = initialState, action) {
                 isCreateUserSuccess: true,
                 user: [...state.user, action.payload]
             });
-
+        case UPDATE_USER_SUCCESS:
+            return Object.assign({}, state, {
+                isUpdatingUser: true,
+                error: null,
+                isUpdatingUserError: false,
+                isUpdatingUserSuccess: true,
+                user: [...state.user, action.payload]
+            });
         case LOGIN_USER_SUCCESS:
             return Object.assign({}, state, {
                 isSigningInUser: false,
                 error: null,
                 isLoginUserError: false,
                 isLoginUserSuccess: true,
-                user: [...state.user, action.payload]
+                user: action.data
             });
         case CREATE_USER_FAILED:
             return Object.assign({}, state, {
@@ -156,6 +202,14 @@ function users(state = initialState, action) {
                 isCreateUserSuccess: false,
                 responseStatus: action.payload.error.status,
                 responseMessage: action.payload.error.message
+            });
+        case UPDATE_USER_FAILED:
+            return Object.assign({}, state, {
+                isUpdatingUser: false,
+                isUpdatingUserError: true,
+                isUpdatingUserSuccess: false,
+                updateUserResponseStatus: action.payload,
+                updateUserResponseMessage: action.payload
             });
         case LOGIN_USER_FAILED:
             return Object.assign({}, state, {
