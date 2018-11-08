@@ -27,7 +27,8 @@ import {
     addToCartAction,
     addToCartAndCreateOrderAction,
     createOrderAction,
-    newAddToCartAction
+    newAddToCartAction,
+    promisedAddToCartAction
 } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
@@ -299,7 +300,7 @@ class ScreenCheckout extends Component {
 
     prepareCart = (orderCount) => {
 
-        let listArray = [this.props.newlists];
+        let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
         let totalLengthOfOrder = 3
         //let orderList = totalLengthOfOrder - 1;
@@ -321,6 +322,8 @@ class ScreenCheckout extends Component {
 
 
 
+
+
         orderCount  === 0 ? this.addToCart(userToken, productID, quantity) : null;
         orderCount  < totalLengthOfOrder ? this.addToCart(userToken, productID, quantity) : console.log("DONE ADDING")
 
@@ -334,16 +337,19 @@ class ScreenCheckout extends Component {
         console.log("addToCart")
 
 
-        this.props.dispatch(newAddToCartAction(userToken, productID, quantity))
+       // this.props.dispatch(addToCartAndCreateOrderAction(userToken, productID, quantity))
 
-
-
-
+        this.props.dispatch(promisedAddToCartAction(userToken, productID, quantity)).then(res => {
+            // showToast('Todo item was successfully updated');
+            this.createOrder(userToken)
+          });
+          
 
     }
 
-    createOrder = () => {
+    createOrder = (userToken) => {
         console.log("createdOrder")
+        this.props.dispatch(createOrderAction(userToken))
     }
 
     goBack = () => {

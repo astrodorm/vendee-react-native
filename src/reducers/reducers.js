@@ -348,14 +348,14 @@ function lists(state = initialState, action) {
                 isAddingToCart: false,
                 isAddToCartError: true,
                 isAddToCartSuccess: false,
-                addToCartResponse: action.data,
+                addToCartResponse: action.error,
             });
         case CREATE_ORDER_FAILED:
             return Object.assign({}, state, {
                 isCreatingOrder: false,
                 isCreateOrderError: true,
                 isCreateOrderSuccess: true,
-                createOrderResponse: action.data,
+                createOrderResponse: action.error,
             });
         case LIST_CONVENIENCE_FEE:
             return Object.assign({}, state, {
