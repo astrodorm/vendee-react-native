@@ -52,7 +52,10 @@ export const NEW_ADD_TO_CART_FAILED = 'NEW_ADD_TO_CART_FAILED';
 export const CREATE_ORDER_STARTED = 'CREATE_ORDER_STARTED';
 export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
-export const SHOW_MODAL_PIN = 'SHOW_MODAL_PIN'
+export const SHOW_MODAL_PIN = 'SHOW_MODAL_PIN';
+export const FETCH_LIST_STARTED = 'FETCH_LIST_STARTED';
+export const FETCH_LIST_SUCCESS = 'FETCH_LIST_SUCCESS';
+export const FETCH_LIST_FAILED = 'FETCH_LIST_FAILED';
 
 
 
@@ -163,6 +166,14 @@ export const fetchStartedAction = (query) => (
 export const createOrderStartedAction = () => (
     {
         type: CREATE_ORDER_STARTED
+
+    }
+);
+
+
+export const fetchListStartedAction = () => (
+    {
+        type: FETCH_LIST_STARTED
 
     }
 );
@@ -300,6 +311,15 @@ export const createOrderSuccessAction = (data) => (
 );
 
 
+export const fetchListSuccessAction = (data) => (
+    {
+        type: FETCH_LIST_SUCCESS,
+
+        data
+    }
+);
+
+
 export const chargeUserSuccessAction = (data) => (
     {
         type: CHARGE_USER_SUCCESS,
@@ -392,6 +412,16 @@ export const fetchFailedAction = (error) => (
 export const createOrderFailedAction = (error) => (
     {
         type: CREATE_ORDER_FAILED,
+        // payload: {
+        error
+        // }
+    }
+);
+
+
+export const fetchListFailedAction = (error) => (
+    {
+        type: FETCH_LIST_FAILED,
         // payload: {
         error
         // }
@@ -574,7 +604,6 @@ export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, e
                 dispatch(chargeUserFailedAction(err.response.data));
                 reject(error);
             });
-
     });
 
 
@@ -851,6 +880,73 @@ export const createOrderAction = (userToken) => {
 
     };
 };
+
+
+
+// export const fetchListAction = (userToken) => {
+//     return dispatch => {
+
+//         new Promise(function (resolve, reject) {
+//             dispatch(fetchListStartedAction());
+
+//             // console.log("createOrderAction > userToken")
+//             // console.log(userToken)
+
+//             let config = {
+//                 headers: {
+//                     'Authorization': 'Bearer ' + userToken
+//                 }
+//             }
+
+
+//             axios.get(`${BASE_URL}/orders/customer/all`,
+//                 config
+//             )
+//                 .then(res => {
+//                     dispatch(fetchListSuccessAction(res));
+//                     resolve(res);
+//                 })
+//                 .catch(err => {
+//                     dispatch(fetchListFailedAction(err));
+//                     reject(err)
+//                 });
+//         })
+//     };
+// };
+
+
+export const fetchListAction = (userToken) => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(fetchListStartedAction());
+
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+
+        axios
+        axios.get(`${BASE_URL}/orders/customer/all`,
+            config
+        )
+            .then(res => {
+                dispatch(fetchListSuccessAction(res));
+                resolve(res);
+            })
+            .catch(err => {
+                dispatch(fetchListFailedAction(err));
+                reject(err)
+            });
+
+    });
+
+
+
+
+
+
 
 
 

@@ -47,7 +47,10 @@ import {
     CREATE_ORDER_STARTED,
     CREATE_ORDER_FAILED,
     CREATE_ORDER_SUCCESS,
-    SHOW_MODAL_PIN
+    SHOW_MODAL_PIN,
+    FETCH_LIST_STARTED,
+    FETCH_LIST_SUCCESS,
+    FETCH_LIST_FAILED
 } from '../actions/actions';
 
 const initialState = {
@@ -99,7 +102,11 @@ const initialState = {
     isCreateOrderError: false,
     createOrderResponse: [],
     showModalpin: false,
-    orderCount : 0
+    orderCount: 0,
+    isFetchingList: false,
+    isFetchListError: false,
+    isFetchListSuccess: false,
+    fetchListResponse: []
 }
 
 
@@ -321,17 +328,22 @@ function lists(state = initialState, action) {
             return Object.assign({}, state, {
                 isAddingToCart: true,
                 isAddToCartError: false,
-                orderCount : state.orderCount + 1
+                orderCount: state.orderCount + 1
             });
         case CREATE_ORDER_STARTED:
             return Object.assign({}, state, {
                 isCreatingOrder: true,
                 isCreateOrderError: false
             });
+        case FETCH_LIST_STARTED:
+            return Object.assign({}, state, {
+                isFetchingList: true,
+                isFetchListError: false
+            });
         case SHOW_MODAL_PIN:
             return Object.assign({}, state, {
                 showModalpin: action.visibility,
-               // isCreateOrderError: false
+                // isCreateOrderError: false
             });
         case NEW_ADD_TO_CART_SUCCESS:
             return Object.assign({}, state, {
@@ -342,6 +354,11 @@ function lists(state = initialState, action) {
             return Object.assign({}, state, {
                 isCreatingOrder: false,
                 createOrderResponse: action.data,
+            });
+        case FETCH_LIST_SUCCESS:
+            return Object.assign({}, state, {
+                isFetchingList: false,
+                fetchListResponse: action.data,
             });
         case NEW_ADD_TO_CART_FAILED:
             return Object.assign({}, state, {
@@ -356,6 +373,13 @@ function lists(state = initialState, action) {
                 isCreateOrderError: true,
                 isCreateOrderSuccess: true,
                 createOrderResponse: action.error,
+            });
+        case FETCH_LIST_FAILED:
+            return Object.assign({}, state, {
+                isFetchingList: false,
+                isFetchListError: true,
+                isFetchListSuccess: true,
+                fetchListResponse: action.error,
             });
         case LIST_CONVENIENCE_FEE:
             return Object.assign({}, state, {

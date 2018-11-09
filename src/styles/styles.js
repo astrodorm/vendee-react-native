@@ -473,18 +473,26 @@ const styles = StyleSheet.create({
     },
 
     CardShoppingProductDetails: {
-        marginLeft: 16
+        // marginLeft: 16,
+        flex: 3,
+        marginLeft: 16,
+        minWidth: 180
     },
 
     ProductTitle: {
         fontSize: 16,
-        fontFamily: Fonts.MPLUSRegular
+        fontFamily: Fonts.MPLUSRegular,
+        color: "#424242",
+        marginBottom: 4,
+        // minWidth:220,
+        // height:"auto"
     },
 
-    ProductPrice: {
-        fontSize: 11,
+    productSubtitle: {
+        fontSize: 10,
         fontFamily: Fonts.MPLUSRegular,
-        letterSpacing: 1
+        letterSpacing: 1,
+        color: "#424242"
     },
 
     ProductQuantity: {
@@ -711,8 +719,8 @@ const styles = StyleSheet.create({
         // padding: 24,
         borderRadius: 8,
         justifyContent: "center",
-        alignItems:"center",
-        textAlign:"center",
+        alignItems: "center",
+        textAlign: "center",
 
     },
 
@@ -831,9 +839,9 @@ const styles = StyleSheet.create({
 
     AppCardHeader: {
         fontFamily: Fonts.MPLUSMedium,
-        fontSize: 32,
+        fontSize: 28,
         color: navyBlueTheme1,
-        marginBottom: 32
+        marginBottom: 28
     },
 
     ShoppingListHeader: {
@@ -881,18 +889,17 @@ const styles = StyleSheet.create({
     },
 
     CardShoppingListHeader: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 16,
-        alignItems: "center"
+        paddingTop: 0,
+        paddingBottom: 8,
+        paddingLeft: 16,
+        paddingRight: 0
     },
 
     CardShoppingListContainer: {
-        width: fullWidth * 0.9,
-        marginTop: 24,
-        marginBottom: 24,
-        // marginLeft: 48,
-        // marginRight: 48
+        width: fullWidth * 0.95,
+        marginTop: 20,
+        marginBottom: 20,
+        flexDirection: "column"
     },
 
     CardShoppingListTitle: {
@@ -904,7 +911,8 @@ const styles = StyleSheet.create({
     CardShoppingListTime: {
         color: GrayDarkTheme,
         fontSize: 12,
-        fontFamily: Fonts.MPLUSRegular
+        fontFamily: Fonts.MPLUSRegular,
+        letterSpacing: 1
     },
 
     CardShoppingListStatus: {
@@ -916,19 +924,30 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
         paddingLeft: 8,
         paddingRight: 8,
-        color: navyBlueTheme1
+        color: navyBlueTheme1,
+        letterSpacing: 1,
+        // minWidth:100,
+    },
+
+    cardShoppingListStatusContainer: {
+        flex: 1,
+        alignItems: "flex-end",
+        justifyContent: "flex-start",
+        minWidth: 100
     },
 
     CardShoppingListProductContainer: {
         backgroundColor: "#fff",
         padding: 16,
         borderColor: "#efefef",
-        borderRadius: 10,
-        borderWidth: 1
+        borderRadius: 6,
+        borderWidth: 1,
+        flexDirection: "row"
     },
 
     CardShoppingProductImage: {
-        marginRight: 32
+        //marginRight: 32,
+        flex: 1
     },
     // AppCardContent: {
     //     height:fullHeight
@@ -1079,6 +1098,10 @@ const styles = StyleSheet.create({
 
     errorMessage: {
         fontSize: 18
+    },
+
+    shoppingListMainContainer: {
+        marginTop: 32
     }
 
 

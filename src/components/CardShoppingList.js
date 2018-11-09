@@ -1,27 +1,41 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image } from 'react-native';
 import { styles } from '../styles/styles';
-import ShoppingListProduct from '../components/ShoppingListProduct'
 
-const CardShoppingList = (props) => {
 
-    return (
-        <View style={styles.CardShoppingListContainer}>
-            <View style={styles.CardShoppingListHeader}>
-                <View>
-                    <Text style={styles.CardShoppingListTitle}>Just Now</Text>
-                    <Text style={styles.CardShoppingListTime}>3 mins ago</Text>
+
+class CardShoppingList extends Component {
+
+    constructor(props) {
+        super(props)
+    }
+
+    formatPrice = (amount) => {
+        var formattedAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(amount)
+        return formattedAmount;
+    }
+
+    render() {
+        return (
+            <View style={styles.CardShoppingListContainer}>
+                <View style={styles.CardShoppingListHeader}>
+                    <Text style={styles.CardShoppingListTime}>{this.props.relativeTime}</Text>
                 </View>
-                <View>
-                    <Text style={styles.CardShoppingListStatus}>PROCESSING</Text>
+                <View style={styles.CardShoppingListProductContainer}>
+                    <Image style={styles.CardShoppingProductImage} source={{ uri: this.props.thumbnail }} style={{ width: 50, height: 50 }} />
+                    <View style={styles.CardShoppingProductDetails}>
+                        <Text style={styles.ProductTitle}>{this.props.title}</Text>
+                        <Text style={styles.productSubtitle}>PRICE : {this.formatPrice(this.props.price)} </Text>
+                        <Text style={styles.productSubtitle}>QUANTITY : {this.props.quantity} </Text>
+                    </View>
+                    <View style={styles.cardShoppingListStatusContainer}>
+                        <Text style={styles.CardShoppingListStatus}>{this.props.orderStatus}</Text>
+                    </View>
                 </View>
             </View>
-            <View style={styles.CardShoppingListProductContainer}>
-                <ShoppingListProduct thumbnail="http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg" title="Nasco Cornflakes 150g" price={2345} quantity={5} />
-                <ShoppingListProduct thumbnail="http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg" title="Nasco Cornflakes 70g" price={2345} quantity={5} />
-            </View>
-        </View>
-    )
+        )
+    }
+
 }
 
 export default CardShoppingList;
