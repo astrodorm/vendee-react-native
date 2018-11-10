@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput, AsyncStorage } from 'react-native';
+import { Text, View, Image, TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import InlineError from '../components/InlineError';
@@ -26,8 +26,8 @@ class ScreenProfile extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-      //  console.log("this.props.isLoginUserSuccess");
-       // console.log(nextProps.isLoginUserSuccess);
+        //  console.log("this.props.isLoginUserSuccess");
+        // console.log(nextProps.isLoginUserSuccess);
         let userToken = nextProps.user.token;
         console.log("nextProps.user");
         console.log(nextProps.user);
@@ -92,7 +92,7 @@ class ScreenProfile extends Component {
     }
 
     loginUser = () => {
-       // console.log("logging in user > ", this.state.email);
+        // console.log("logging in user > ", this.state.email);
 
 
         let email = this.state.email;
@@ -107,35 +107,37 @@ class ScreenProfile extends Component {
 
     render() {
         return (
-            <View style={styles.AppContainer}>
-                <View style={styles.AppMain}>
-                    <View style={styles.LoginScreen}>
-                        <View>
-                            <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
-                            <Text style={styles.introHeader}>Sign In</Text>
-                        </View>
-                        <View>
-                            <TextInput style={styles.loginInput} placeholder="Email" placeholderTextColor={"#fff"} onChangeText={this.handleEmail}></TextInput>
-                            {this.state.showEmailError &&
-                                <InlineError message="* Invalid Email Address" />
-                            }
-                        </View>
-                        <View>
-                            <TextInput style={styles.loginInput} placeholder="Password" placeholderTextColor={"#fff"} onChangeText={this.handlePassword}></TextInput>
-                            {this.state.showPasswordError &&
-                                <InlineError message="* Invalid Password" />
-                            }
-                        </View>
-                        {
-                            this.props.isSigningInUser &&
-                            <View style={styles.inlinePreloader}>
-                                <Progress.CircleSnail color={['#f44950']} duration={400} size={24} />
+            <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
+                <View style={styles.AppContainer}>
+                    <View style={styles.AppMain}>
+                        <View style={styles.LoginScreen}>
+                            <View>
+                                <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
+                                <Text style={styles.introHeader}>Sign In</Text>
                             </View>
-                        }
-                        <ButtonPrimaryAccent title="SIGN IN" icon="login" isActive={true} onSelected={this.validateParams} />
+                            <View>
+                                <TextInput style={styles.loginInput} placeholder="Email" placeholderTextColor={"#fff"} onChangeText={this.handleEmail}keyboardType="email-address"></TextInput>
+                                {this.state.showEmailError &&
+                                    <InlineError message="* Invalid Email Address" />
+                                }
+                            </View>
+                            <View>
+                                <TextInput style={styles.loginInput} placeholder="Password" placeholderTextColor={"#fff"} onChangeText={this.handlePassword} secureTextEntry={true}></TextInput>
+                                {this.state.showPasswordError &&
+                                    <InlineError message="* Invalid Password" />
+                                }
+                            </View>
+                            {
+                                this.props.isSigningInUser &&
+                                <View style={styles.inlinePreloader}>
+                                    <Progress.CircleSnail color={['#f44950']} duration={400} size={24} />
+                                </View>
+                            }
+                            <ButtonPrimaryAccent title="SIGN IN" icon="login" isActive={true} onSelected={this.validateParams} />
+                        </View>
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }

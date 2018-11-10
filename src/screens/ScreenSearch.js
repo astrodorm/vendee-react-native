@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Button } from 'react-native';
+import { Text, View, Image, Button, KeyboardAvoidingView } from 'react-native';
 import { styles } from '../styles/styles';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
@@ -105,52 +105,57 @@ class ScreenSearch extends Component {
     render() {
 
         return (
-            <View style={styles.AppContainer}>
-                <View style={styles.AppMain}>
 
-                    {/* SEARCH BAR VIEW */}
+                <View style={styles.AppContainer}>
+                    <View style={styles.AppMain}>
 
-                    {
-                        this.state.showSearchBarView &&
-                        <View>
-                            <View style={styles.SearchFirstView}>
-                                <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
+                        {/* SEARCH BAR VIEW */}
+
+                        {
+                            this.state.showSearchBarView &&
+                            <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
+
+                            <View>
+                                <View style={styles.SearchFirstView}>
+                                    <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
+                                </View>
+                                <View style={styles.SearchSecondView}>
+                                    <SearchBar />
+                                    {/* <Button title="Create User (todo) Vons-1" onPress={this.fakeSignUpUser} /> */}
+                                </View>
                             </View>
-                            <View style={styles.SearchSecondView}>
-                                <SearchBar />
-                                {/* <Button title="Create User (todo) Vons-1" onPress={this.fakeSignUpUser} /> */}
+                            </KeyboardAvoidingView>
+                        }
+
+                        {/* SEARCH RESULT VIEW */}
+
+                        {
+                            this.state.showSearchResultView &&
+                            <View>
+                                <SearchResult />
                             </View>
-                        </View>
-                    }
-
-                    {/* SEARCH RESULT VIEW */}
-
-                    {
-                        this.state.showSearchResultView &&
-                        <View>
-                            <SearchResult />
-                        </View>
-                    }
-                </View>
-                <Modal
-                    style={[styles.modalDeliveryMethod]}
-                    position={"center"}
-                    ref={"RefModalDeliveryMethod"}
-                    backdrop={true}
-                    swipeToClose={false}
-                    backdropColor={"#0D284A"}
-                    backdropOpacity={0.5}
-                    backdropPressToClose={false}
-                >
-                    <View>
-                        <Text style={styles.modalDeliveryMethodHeader}>
-                            How would you like your "{this.props.searchText}" delivered ?
-                        </Text>
-                        <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery} onSelected={this.selectDelivery} />
-                        <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup} onSelected={this.selectPickup} />
+                        }
                     </View>
-                </Modal>
-            </View>
+                    <Modal
+                        style={[styles.modalDeliveryMethod]}
+                        position={"center"}
+                        ref={"RefModalDeliveryMethod"}
+                        backdrop={true}
+                        swipeToClose={false}
+                        backdropColor={"#0D284A"}
+                        backdropOpacity={0.5}
+                        backdropPressToClose={false}
+                    >
+                        <View>
+                            <Text style={styles.modalDeliveryMethodHeader}>
+                                How would you like your "{this.props.searchText}" delivered ?
+                        </Text>
+                            <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery} onSelected={this.selectDelivery} />
+                            <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup} onSelected={this.selectPickup} />
+                        </View>
+                    </Modal>
+                </View>
+            // </KeyboardAvoidingView>
         )
     }
 }

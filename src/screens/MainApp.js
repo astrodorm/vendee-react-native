@@ -12,7 +12,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: '',
             tabBarIcon: ({ tintColor }) => (
-                <Icon name="search1" size={22} color={tintColor} />
+                <Icon name="home" size={22} color={tintColor} />
             )
         }
     },

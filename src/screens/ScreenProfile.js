@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView,AsyncStorage } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
@@ -8,6 +8,16 @@ import AddressManager from '../components/AddressManager';
 import TelephoneManager from '../components/TelephoneManager';
 import CardManager from '../components/CardManager';
 import NamesManager from '../components/NamesManager';
+import { connect } from 'react-redux';
+
+
+const ADDRESS_STORAGE_KEY = "ADDRESS";
+const OAUTH = "OAUTH";
+const PHONE_STORAGE_KEY = "PHONE";
+const CARD_NUMBER_STORAGE_KEY = "CARD_NUMBER";
+const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+
+
 
 
 class ScreenProfile extends Component {
@@ -24,7 +34,7 @@ class ScreenProfile extends Component {
             isVisiblePassword: true,
             isVisibleCard: true,
             isVisibleCoupon: true,
-            isVisibleName : true
+            isVisibleName: true
         }
     }
 
@@ -53,13 +63,45 @@ class ScreenProfile extends Component {
         }
     }
 
-    placeOrder = () => {
-        this.props.navigation.push('CheckoutMessage');
-    }
+    // placeOrder = () => {
+    //     this.props.navigation.push('CheckoutMessage');
+    // }
 
     goBack = () => {
         this.props.navigation.goBack()
     }
+
+    logoutUser = () => {
+
+        this.removeStorage(ADDRESS_STORAGE_KEY).then(
+            this.removeStorage(OAUTH)
+        ).then(
+            this.removeStorage(PHONE_STORAGE_KEY)
+        ).then(
+            this.removeStorage(CARD_NUMBER_STORAGE_KEY)
+        ).then(
+            this.removeStorage(USER_TOKEN_STORAGE_KEY)
+        ).then(
+            this.navigateToLandingScreen()
+        )
+
+    }
+
+    navigateToLandingScreen = () => {
+        this.props.navigation.navigate('Intro');
+    }
+
+    removeStorage = async (key) => {
+        try {
+            await AsyncStorage.removeItem(key);
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    }
+
+
+
 
 
     render() {
@@ -70,30 +112,39 @@ class ScreenProfile extends Component {
                         <View style={styles.AppCardContainer}>
                             <View style={styles.AppCard}>
                                 <Text style={styles.AppCardHeader}>User Profile</Text>
-                                <View>
+                                <View style={styles.headingDivider}></View>
+                                <Text>Hello, </Text>
+                                <Text style={styles.username}>{this.props.user.customer.firstname} {this.props.user.customer.lastname}</Text>
+
+                                <Text>email : {this.props.user.customer.email}</Text>
+                                <Text>phone : {this.props.user.customer.phoneNumber}</Text>
+                                <View style={styles.headingDivider}></View>
+
+
+                                {/* <View>
                                     <AccordionHeader title="Names" subtitle="Michael Oshogbunu" onSelected={() => { this.toggleView("name") }} />
                                     <Collapsible collapsed={this.state.isVisibleName}>
                                         <NamesManager />
                                     </Collapsible>
-                                </View>
-                                <View>
+                                </View> */}
+                                {/* <View>
                                     <AccordionHeader title="Phone Number" subtitle="0706 818 1804" onSelected={() => { this.toggleView("phonenumber") }} />
                                     <Collapsible collapsed={this.state.isVisiblePhoneNumber}>
                                         <TelephoneManager />
                                     </Collapsible>
-                                </View>
-                                <View>
+                                </View> */}
+                                {/* <View>
                                     <AccordionHeader title="Address" subtitle="20 Chidi Okpala Close, Fidiso Estate" onSelected={() => { this.toggleView("password") }} />
                                     <Collapsible collapsed={this.state.isVisibleAddress}>
                                         <AddressManager/>
                                     </Collapsible>
-                                </View>
-                                <View>
+                                </View> */}
+                                {/* <View>
                                     <AccordionHeader title="Select Card" subtitle="**** 4678" onSelected={() => { this.toggleView("card") }} />
                                     <Collapsible collapsed={this.state.isVisibleCard}>
                                         <CardManager />
                                     </Collapsible>
-                                </View>
+                                </View> */}
                                 <View>
                                     <ButtonPrimaryAccent title="LOGOUT" icon="logout" isActive={false} onSelected={this.logoutUser} />
                                 </View>
@@ -106,4 +157,16 @@ class ScreenProfile extends Component {
     }
 }
 
-export default ScreenProfile;
+//export default ScreenProfile;
+
+const mapStateToProps = state => ({
+
+    //  responseMessage: state.users.responseMessage,
+    user: state.users.user,
+    // isLoginUserError: state.users.isLoginUserError,
+    // isLoginUserSuccess: state.users.isLoginUserSuccess,
+    // isSigningInUser: state.users.isSigningInUser
+
+})
+
+export default connect(mapStateToProps)(ScreenProfile);

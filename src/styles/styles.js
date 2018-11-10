@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
     introContent: {
         position: 'absolute',
-        paddingTop: 72,
+        paddingTop: 32,
         paddingBottom: 48,
         paddingLeft: 48,
         paddingRight: 48,
@@ -841,7 +841,11 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.MPLUSMedium,
         fontSize: 28,
         color: navyBlueTheme1,
-        marginBottom: 28
+        // marginBottom: 28
+    },
+
+    headingDivider: {
+        marginBottom: 24
     },
 
     ShoppingListHeader: {
@@ -1102,9 +1106,25 @@ const styles = StyleSheet.create({
 
     shoppingListMainContainer: {
         marginTop: 32
+    },
+
+    AppCardHeaderContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: fullWidth * 0.9
+    },
+
+    username: {
+        textTransform: "capitalize",
+        fontFamily: Fonts.MPLUSMedium,
+        marginBottom: 8,
+        // fontSize:16
+    },
+
+    scrollview: {
+         height: 300
     }
-
-
 
 });
 

@@ -264,7 +264,7 @@ class ScreenIntro extends Component {
                                                 </View>
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
-                                                    <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput}></TextInput>
+                                                    <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput} keyboardType="number-pad"></TextInput>
                                                 </View>
                                                 {this.state.showTelephoneError &&
                                                     <InlineError message="* Invalid Phone Number" />
@@ -283,7 +283,7 @@ class ScreenIntro extends Component {
                                                 </View>
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Enter email address here</Text>
-                                                    <TextInput onChangeText={this.handleEmail} style={styles.introCardInput}></TextInput>
+                                                    <TextInput onChangeText={this.handleEmail} style={styles.introCardInput} keyboardType="email-address"></TextInput>
                                                 </View>
                                                 {this.state.showEmailError &&
                                                     <InlineError message="* Invalid Email Address" />

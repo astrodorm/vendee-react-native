@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, TouchableOpacity, Button } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Button, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
@@ -488,12 +488,15 @@ class SearchResult extends Component {
                             </View>
                         </View>
                         <View style={styles.AppSearchResultDisplayContainer}>
-                            <FlatList
-                                data={this.props.newproducts}
-                                extraData={this.props}
-                                keyExtractor={item => item._id}
-                                renderItem={this._renderProductItem}
-                            />
+                            <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
+
+                                <FlatList
+                                    data={this.props.newproducts}
+                                    extraData={this.props}
+                                    keyExtractor={item => item._id}
+                                    renderItem={this._renderProductItem}
+                                />
+                            </ScrollView>
                         </View>
                     </View>
 
@@ -530,19 +533,21 @@ class SearchResult extends Component {
                         <View style={styles.shoppingListOptions}>
                             <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList} />
                             {/* <TouchableOpacity onPress={() => this.setShoppingListValue()}> */}
-                                <CheckoutButton />
+                            <CheckoutButton />
                             {/* </TouchableOpacity> */}
                             {/* <Button title="CHECKOUT" onPress={() => this.setShoppingListValue()} /> */}
                         </View>
 
                         {/* SELECTED PRODUCT ITEM LIST */}
                         <View>
-                            <FlatList
-                                data={this.props.newlists}
-                                extraData={this.props}
-                                keyExtractor={item => item.id}
-                                renderItem={this._renderShoppingListItem}
-                            />
+                            <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
+                                <FlatList
+                                    data={this.props.newlists}
+                                    extraData={this.props}
+                                    keyExtractor={item => item.id}
+                                    renderItem={this._renderShoppingListItem}
+                                />
+                            </ScrollView>
                         </View>
                     </View>
                     <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnShoppingListQuantityPicker}>

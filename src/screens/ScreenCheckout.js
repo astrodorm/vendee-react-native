@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button, TextInput, AsyncStorage } from 'react-native';
+import { Text, View, ScrollView, Button, TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -798,6 +798,7 @@ class ScreenCheckout extends Component {
 
     render() {
         return (
+
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
                     <ScrollView>
@@ -888,7 +889,7 @@ class ScreenCheckout extends Component {
                         this.props.isVisibleAddTelephoneManager &&
                         <View>
                             <View>
-                                <TextInput style={styles.textInput} placeholder="Enter Phone Number" onChangeText={this.handlePhone} />
+                                <TextInput style={styles.textInput} placeholder="Enter Phone Number" onChangeText={this.handlePhone} keyboardType="number-pad" />
                             </View>
                             <View style={styles.buttonGroup}>
                                 <ButtonPrimaryAccent title="UPDATE PHONE" isActive={true} onSelected={this.updatePhoneNumber} />
@@ -900,10 +901,10 @@ class ScreenCheckout extends Component {
                         this.props.isVisibleAddCardManager &&
                         <View>
                             <View>
-                                <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={this.handleCardNumber} />
-                                <TextInput style={styles.textInput} placeholder="Exp. Month" onChangeText={this.handleMonth} />
-                                <TextInput style={styles.textInput} placeholder="Exp. Year" onChangeText={this.handleYear} />
-                                <TextInput style={styles.textInput} placeholder="CVV Code" onChangeText={this.handleCVC} />
+                                <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={this.handleCardNumber} keyboardType="number-pad" />
+                                <TextInput style={styles.textInput} placeholder="Exp. Month" onChangeText={this.handleMonth} keyboardType="number-pad" />
+                                <TextInput style={styles.textInput} placeholder="Exp. Year" onChangeText={this.handleYear} keyboardType="number-pad" />
+                                <TextInput style={styles.textInput} placeholder="CVV Code" onChangeText={this.handleCVC} keyboardType="number-pad" />
                             </View>
                             <View style={styles.buttonGroup}>
                                 <ButtonPrimaryAccent title="ADD CARD" isActive={true} onSelected={this.updateCard} />
@@ -985,6 +986,7 @@ class ScreenCheckout extends Component {
                     </View>
                 </Modal>
             </View>
+
         );
     }
 }

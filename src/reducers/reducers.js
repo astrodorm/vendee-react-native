@@ -106,7 +106,8 @@ const initialState = {
     isFetchingList: false,
     isFetchListError: false,
     isFetchListSuccess: false,
-    fetchListResponse: []
+    fetchListResponse: [],
+    shoppingList : []
 }
 
 
@@ -359,6 +360,7 @@ function lists(state = initialState, action) {
             return Object.assign({}, state, {
                 isFetchingList: false,
                 fetchListResponse: action.data,
+                shoppingList : [...action.data.data.data]
             });
         case NEW_ADD_TO_CART_FAILED:
             return Object.assign({}, state, {

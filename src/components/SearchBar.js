@@ -57,7 +57,7 @@ class SearchBar extends Component {
                 <TouchableOpacity onPress={this.searchProduct}>
 
                     {!this.props.isLoadingSearchBar &&
-                        <Icon style={styles.AppSearchBarIcon} name="right" size={24} color="#f44950" />
+                        <Icon style={styles.AppSearchBarIcon} name="search1" size={24} color="#f44950" />
                     }
 
                     {this.props.isLoadingSearchBar &&
