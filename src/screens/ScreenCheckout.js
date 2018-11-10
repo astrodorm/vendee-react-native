@@ -321,6 +321,7 @@ class ScreenCheckout extends Component {
 
         // let productID = listArray[cartIndex].id;
         // let quantity = listArray[cartIndex].quantity;
+        this.showPreloader();
 
         for (let index = 0; index < listArray.length; index++) {
             // const element = array[index];
@@ -354,6 +355,8 @@ class ScreenCheckout extends Component {
 
     createOrder = (userToken) => {
         console.log("createdOrder");
+
+        //this.showPreloader()
         this.props.dispatch(createOrderAction(userToken)).then(res => {
             this.setState({ orderCount: this.state.orderCount + 1 });
             this.checkOrderCount();
@@ -378,6 +381,7 @@ class ScreenCheckout extends Component {
     gotoSuccessPage = () => {
         console.log("GOING TO SUCCESS PAGE");
         //  CheckoutMessage
+        this.hidePreloader()
         this.props.navigation.navigate("CheckoutMessage");
     }
 
@@ -720,6 +724,8 @@ class ScreenCheckout extends Component {
         let expiry_year = this.state.expiryYear;
         let userToken = this.state.userToken;
 
+        this.showPreloader()
+
         // this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year))
 
         this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year)).then(res => {
@@ -733,7 +739,9 @@ class ScreenCheckout extends Component {
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 201 ? this.showPinModal() : null;
-            //this.createOrder(userToken)
+            //this.createOrder(userToken);
+
+            this.hidePreloader();
         });
 
 
@@ -750,7 +758,7 @@ class ScreenCheckout extends Component {
         // console.log(reference);
         // console.log("pin");
         // console.log(pin);
-
+        this.showPreloader();
         //  this.props.dispatch(chargeUserPinAction(userToken, reference, pin))
 
 
@@ -766,6 +774,7 @@ class ScreenCheckout extends Component {
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 202 ? this.showOtpModal() : null;
             //this.createOrder(userToken)
+            this.hidePreloader()
         });
 
 
@@ -786,7 +795,7 @@ class ScreenCheckout extends Component {
         console.log(otp);
 
         // this.props.dispatch(chargeUserOtpAction(userToken, reference, otp));
-
+        this.showPreloader()
 
         this.props.dispatch(chargeUserOtpAction(userToken, reference, otp)).then(res => {
             // showToast('Todo item was successfully updated');
@@ -799,7 +808,9 @@ class ScreenCheckout extends Component {
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             //  res.data.status === 202 ? this.showOtpModal() : null;
-            //this.createOrder(userToken)
+            //this.createOrder(userToken);
+
+            this.hidePreloader()
         });
 
 
