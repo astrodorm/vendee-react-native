@@ -854,12 +854,38 @@ export const promisedAddToCartAction = (userToken, productID, quantity) => (disp
     });
 
 
-export const createOrderAction = (userToken) => {
-    return dispatch => {
+// export const createOrderAction = (userToken) => {
+//     return dispatch => {
+//         dispatch(createOrderStartedAction());
+
+//         console.log("createOrderAction > userToken")
+//         console.log(userToken)
+
+//         let config = {
+//             headers: {
+//                 'Authorization': 'Bearer ' + userToken
+//             }
+//         }
+
+
+//         axios.get(`${BASE_URL}/orders/create`,
+//             config
+//         )
+//             .then(res => {
+//                 dispatch(createOrderSuccessAction(res));
+//             })
+//             .catch(err => {
+//                 dispatch(createOrderFailedAction(err));
+//             });
+
+//     };
+// };
+
+
+export const createOrderAction = (userToken) => (dispatch) =>
+    new Promise(function (resolve, reject) {
         dispatch(createOrderStartedAction());
 
-        console.log("createOrderAction > userToken")
-        console.log(userToken)
 
         let config = {
             headers: {
@@ -868,18 +894,20 @@ export const createOrderAction = (userToken) => {
         }
 
 
+        axios
         axios.get(`${BASE_URL}/orders/create`,
             config
         )
             .then(res => {
                 dispatch(createOrderSuccessAction(res));
+                resolve(res);
             })
             .catch(err => {
                 dispatch(createOrderFailedAction(err));
+                reject(err)
             });
 
-    };
-};
+    });
 
 
 

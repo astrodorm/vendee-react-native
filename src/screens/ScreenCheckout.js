@@ -142,7 +142,8 @@ class ScreenCheckout extends Component {
             chargeResponse: [],
             otp: "",
             lengthOfOrder: 0,
-            cartIndex: 0
+            cartIndex: 0,
+            orderCount: 1
 
         }
     }
@@ -339,7 +340,7 @@ class ScreenCheckout extends Component {
 
         console.log("addToCart")
 
-        // this.setState({ cartIndex: this.state.cartIndex + 1 });
+        // this.setState({ orderCount: this.state.orderCount + 1 });
         // this.props.dispatch(addToCartAndCreateOrderAction(userToken, productID, quantity))
 
         this.props.dispatch(promisedAddToCartAction(userToken, productID, quantity)).then(res => {
@@ -353,7 +354,31 @@ class ScreenCheckout extends Component {
 
     createOrder = (userToken) => {
         console.log("createdOrder");
-        this.props.dispatch(createOrderAction(userToken))
+        this.props.dispatch(createOrderAction(userToken)).then(res => {
+            this.setState({ orderCount: this.state.orderCount + 1 });
+            this.checkOrderCount();
+
+        }).catch(err => console.log(err));
+
+    }
+
+    checkOrderCount = () => {
+        let listArray = [...this.props.newlists];
+        let lengthOfOrder = listArray.length;
+        let orderCount = this.state.orderCount;
+
+        console.log("lengthOfOrder");
+        console.log(lengthOfOrder);
+        console.log("orderCount");
+        console.log(orderCount);
+
+        lengthOfOrder === orderCount ? this.gotoSuccessPage() : null;
+    }
+
+    gotoSuccessPage = () => {
+        console.log("GOING TO SUCCESS PAGE");
+        //  CheckoutMessage
+        this.props.navigation.navigate("CheckoutMessage");
     }
 
     goBack = () => {
