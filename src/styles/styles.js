@@ -1125,6 +1125,14 @@ const styles = StyleSheet.create({
 
     scrollview: {
         height: 350
+    },
+
+    screensplash: {
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: navyBlueTheme1,
+        height: fullHeight,
+        width: fullWidth
     }
 
 });

@@ -248,7 +248,7 @@ function users(state = initialState, action) {
                 error: null,
                 isCreateUserError: false,
                 isCreateUserSuccess: true,
-                user: [...state.user, action.payload]
+                user: action.data
             });
         case UPDATE_USER_SUCCESS:
             return Object.assign({}, state, {

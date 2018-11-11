@@ -98,7 +98,7 @@ class ScreenProfile extends Component {
     }
 
     navigateToLandingScreen = () => {
-        this.props.navigation.navigate('Intro');
+        this.props.navigation.navigate('Splash');
     }
 
     removeStorage = async (key) => {

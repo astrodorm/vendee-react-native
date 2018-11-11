@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity, BackHandler } from 'react-native';
+import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity, BackHandler, AsyncStorage } from 'react-native';
 import { styles } from '../styles/styles';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -10,22 +10,54 @@ import * as Progress from 'react-native-progress';
 
 
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+const EMAIL_STORAGE_KEY = "EMAIL";
+//const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+
+
 
 class ScreenIntro extends Component {
 
     componentWillMount() {
         this.animatedValue = new Animated.Value(0);
+        //this.retrieveAndSetUserTokenBoolean(USER_TOKEN_STORAGE_KEY);
+
     }
 
     componentWillUnmount() {
-     //   BackHandler.removeEventListener('hardwareBackPress', true);
-      }
+        //   BackHandler.removeEventListener('hardwareBackPress', true);
+    }
 
 
-      componentDidMount(){
-       // BackHandler.addEventListener('hardwareBackPress', true);
+    componentDidMount() {
+        // BackHandler.addEventListener('hardwareBackPress', true);
+        console.log("this.state.isTokenAvailable");
+        console.log(this.state.isTokenAvailable);
 
-      }
+        // this.retrieveAndSetUserTokenBoolean(USER_TOKEN_STORAGE_KEY);
+
+        // this.state.isTokenAvailable === true ? this.props.navigation.navigate("MainAppScreen") : null;
+    }
+
+
+    retrieveAndSetUserTokenBoolean = async (storageKey) => {
+
+        try {
+            const value = await AsyncStorage.getItem(storageKey);
+            if (value !== null) {
+
+                this.setState({ isTokenAvailable: true })
+
+                this.props.navigation.navigate("MainAppScreen");
+
+
+
+            }
+        } catch (error) {
+            // Error retrieving data
+            console.log(error)
+        }
+
+    }
 
     componentWillReceiveProps(nextProps) {
 
@@ -73,7 +105,8 @@ class ScreenIntro extends Component {
             showTelephoneError: false,
             showEmailError: false,
             showSignUpError: false,
-            isEditable : true
+            isEditable: true,
+            isTokenAvailable: false
 
         }
     }
@@ -195,11 +228,22 @@ class ScreenIntro extends Component {
         let lastname = "GENERIC";
         let email = this.state.email
         let oauth = "GENERIC";
-        let phoneNumber = this.state.telephone
+        let phoneNumber = this.state.telephone;
+
+        this.storeData(EMAIL_STORAGE_KEY, email);
+
 
         this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email, oauth))
 
         console.log("firstname, lastname, phoneNumber, email, oauth", firstname, lastname, phoneNumber, email, oauth)
+    }
+
+    storeData = async (key, value) => {
+        try {
+            await AsyncStorage.setItem(key, value);
+        } catch (error) {
+            // Error saving data
+        }
     }
 
 

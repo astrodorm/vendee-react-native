@@ -8,6 +8,7 @@ import rootReducer from './src/reducers/reducers';
 import ScreenCheckout from './src/screens/ScreenCheckout';
 import ScreenCheckoutMessage from './src/screens/ScreenCheckoutMessage';
 import ScreenLogin from './src/screens/ScreenLogin';
+import ScreenSplash from './src/screens/ScreenSplash';
 import thunk from 'redux-thunk';
 import { BackHandler } from 'react-native';
 
@@ -25,12 +26,22 @@ const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 
 console.log(store.getState())
 
+
+//const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+
+
+
 export default class App extends Component {
 
-
+    componentWillMount() {
+        //this.retrieveAndSetUserTokenBoolean(USER_TOKEN_STORAGE_KEY);
+    }
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+
+       // this.props.navigation.navigate("MainAppScreen");
+
     }
 
     componentWillUnmount() {
@@ -38,18 +49,36 @@ export default class App extends Component {
     }
 
     handleBackPress = () => {
-       // this.goBack(); // works best when the goBack is async
+        // this.goBack(); // works best when the goBack is async
         return true;
     }
-
-
 
 
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            isTokenAvailable: false
+        }
     }
+
+
+    retrieveAndSetUserTokenBoolean = async (storageKey) => {
+
+        try {
+            const value = await AsyncStorage.getItem(storageKey);
+            if (value !== null) {
+
+                this.setState({ isTokenAvailable: true })
+
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+
+    }
+
+
 
     render() {
         return (
@@ -62,12 +91,19 @@ export default class App extends Component {
 
 
 const AppStackNavigator = createStackNavigator({
+
+    Splash: {
+        screen: ScreenSplash
+    },
     Intro: {
         screen: ScreenIntro
     },
     MainAppScreen: {
         screen: MainApp
     },
+    // Splash: {
+    //     screen: ScreenSplash
+    // },
     Checkout: {
         screen: ScreenCheckout
     },
