@@ -56,6 +56,7 @@ export const SHOW_MODAL_PIN = 'SHOW_MODAL_PIN';
 export const FETCH_LIST_STARTED = 'FETCH_LIST_STARTED';
 export const FETCH_LIST_SUCCESS = 'FETCH_LIST_SUCCESS';
 export const FETCH_LIST_FAILED = 'FETCH_LIST_FAILED';
+export const FIRST_FETCH_PRODUCT_STARTED = 'FIRST_FETCH_PRODUCT_STARTED';
 
 
 
@@ -131,11 +132,12 @@ export const endfetchProductAction = () => (
     }
 );
 
-export const selectDeliveryMethod = (isDelivery, isPickup) => (
+export const selectDeliveryMethod = (isDelivery, isPickup, fee) => (
     {
         type: DELIVERY_METHOD,
         isDelivery,
-        isPickup
+        isPickup,
+        fee
     }
 );
 
@@ -162,6 +164,14 @@ export const fetchStartedAction = (query) => (
     }
 );
 
+
+export const isFirstFetchStartedAction = (isFirst) => (
+    {
+        type: FIRST_FETCH_PRODUCT_STARTED,
+        isFirst
+
+    }
+);
 
 export const createOrderStartedAction = () => (
     {

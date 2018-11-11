@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView,AsyncStorage } from 'react-native';
+import { Text, View, ScrollView, AsyncStorage, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
@@ -21,6 +21,16 @@ const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 
 
 class ScreenProfile extends Component {
+
+    componentDidMount() {
+      //  BackHandler.addEventListener('hardwareBackPress', true);
+
+    }
+
+
+    componentWillUnmount() {
+     //   BackHandler.removeEventListener('hardwareBackPress', true);
+    }
 
     constructor(props) {
         super(props)

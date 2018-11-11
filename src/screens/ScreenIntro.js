@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -16,6 +16,16 @@ class ScreenIntro extends Component {
     componentWillMount() {
         this.animatedValue = new Animated.Value(0);
     }
+
+    componentWillUnmount() {
+     //   BackHandler.removeEventListener('hardwareBackPress', true);
+      }
+
+
+      componentDidMount(){
+       // BackHandler.addEventListener('hardwareBackPress', true);
+
+      }
 
     componentWillReceiveProps(nextProps) {
 
@@ -62,7 +72,8 @@ class ScreenIntro extends Component {
             email: null,
             showTelephoneError: false,
             showEmailError: false,
-            showSignUpError: false
+            showSignUpError: false,
+            isEditable : true
 
         }
     }
@@ -283,7 +294,7 @@ class ScreenIntro extends Component {
                                                 </View>
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Enter email address here</Text>
-                                                    <TextInput onChangeText={this.handleEmail} style={styles.introCardInput} keyboardType="email-address"></TextInput>
+                                                    <TextInput onChangeText={this.handleEmail} style={styles.introCardInput} keyboardType="email-address" editable={this.state.isEditable}></TextInput>
                                                 </View>
                                                 {this.state.showEmailError &&
                                                     <InlineError message="* Invalid Email Address" />

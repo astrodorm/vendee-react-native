@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
+import { Text, View, Image, TextInput, AsyncStorage, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import InlineError from '../components/InlineError';
@@ -33,6 +33,15 @@ class ScreenProfile extends Component {
         console.log(nextProps.user);
         console.log(nextProps.user.token);
         nextProps.isLoginUserSuccess === true ? this.storeUserToken(userToken) : null;
+    }
+
+    componentDidMount() {
+       // BackHandler.addEventListener('hardwareBackPress', true);
+    }
+
+
+    componentWillUnmount() {
+      //  BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
     storeUserToken = (token) => {
@@ -116,7 +125,7 @@ class ScreenProfile extends Component {
                                 <Text style={styles.introHeader}>Sign In</Text>
                             </View>
                             <View>
-                                <TextInput style={styles.loginInput} placeholder="Email" placeholderTextColor={"#fff"} onChangeText={this.handleEmail}keyboardType="email-address"></TextInput>
+                                <TextInput style={styles.loginInput} placeholder="Email" placeholderTextColor={"#fff"} onChangeText={this.handleEmail} keyboardType="email-address"></TextInput>
                                 {this.state.showEmailError &&
                                     <InlineError message="* Invalid Email Address" />
                                 }

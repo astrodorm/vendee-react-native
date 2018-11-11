@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Button, KeyboardAvoidingView } from 'react-native';
+import { Text, View, Image, Button, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 import SearchBar from '../components/SearchBar';
 import SearchResult from '../components/SearchResult';
 import { connect } from 'react-redux';
-import { fetchProductAction, endfetchProductAction, selectDeliveryMethod, createUser } from '../actions/actions';
+import { fetchProductAction, endfetchProductAction, selectDeliveryMethod, createUser, isFirstFetchStartedAction } from '../actions/actions';
 import Modal from 'react-native-modalbox';
 import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
 
@@ -13,12 +13,23 @@ import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
 class ScreenSearch extends Component {
 
 
-    componentWillReceiveProps(nextProps) {
+    componentWillUpdate(nextProps) {
 
         console.log("nextProps.isFirstSearch");
         console.log(nextProps.isFirstSearch);
 
-        this.props.isFirstSearch === true ? this.openDialogDeliveryMethod() : null;
+        nextProps.isFirstSearch === true ? this.openDialogDeliveryMethod() : null;
+    }
+
+    componentDidMount() {
+        // this.props.dispatch(isFirstFetchStartedAction(true));
+        this.setState({ showDeliveryModal: true });
+      //  BackHandler.addEventListener('hardwareBackPress', true);
+
+    }
+
+    componentWillUnmount() {
+     //   BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
     constructor(props) {
@@ -27,6 +38,7 @@ class ScreenSearch extends Component {
         this.state = {
             showSearchResultView: false,
             showSearchBarView: true,
+            showDeliveryModal: true
         }
     }
 
@@ -71,13 +83,13 @@ class ScreenSearch extends Component {
     }
 
     selectDelivery = () => {
-        this.props.dispatch(selectDeliveryMethod(true, false));
+        this.props.dispatch(selectDeliveryMethod(true, false, 500));
         this.showSearchResult();
 
     }
 
     selectPickup = () => {
-        this.props.dispatch(selectDeliveryMethod(false, true));
+        this.props.dispatch(selectDeliveryMethod(false, true, 0));
         this.showSearchResult();
     }
 
@@ -106,55 +118,55 @@ class ScreenSearch extends Component {
 
         return (
 
-                <View style={styles.AppContainer}>
-                    <View style={styles.AppMain}>
+            <View style={styles.AppContainer}>
+                <View style={styles.AppMain}>
 
-                        {/* SEARCH BAR VIEW */}
+                    {/* SEARCH BAR VIEW */}
 
-                        {
-                            this.state.showSearchBarView &&
-                            <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
+                    {
+                        this.state.showSearchBarView &&
+                        <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
 
                             <View>
                                 <View style={styles.SearchFirstView}>
                                     <Image style={styles.AppImage} source={require('../../assets/images/vendee-logo-grey.png')} />
                                 </View>
                                 <View style={styles.SearchSecondView}>
-                                    <SearchBar />
+                                    <SearchBar showDeliveryModal={true} />
                                     {/* <Button title="Create User (todo) Vons-1" onPress={this.fakeSignUpUser} /> */}
                                 </View>
                             </View>
-                            </KeyboardAvoidingView>
-                        }
+                        </KeyboardAvoidingView>
+                    }
 
-                        {/* SEARCH RESULT VIEW */}
+                    {/* SEARCH RESULT VIEW */}
 
-                        {
-                            this.state.showSearchResultView &&
-                            <View>
-                                <SearchResult />
-                            </View>
-                        }
-                    </View>
-                    <Modal
-                        style={[styles.modalDeliveryMethod]}
-                        position={"center"}
-                        ref={"RefModalDeliveryMethod"}
-                        backdrop={true}
-                        swipeToClose={false}
-                        backdropColor={"#0D284A"}
-                        backdropOpacity={0.5}
-                        backdropPressToClose={false}
-                    >
+                    {
+                        this.state.showSearchResultView &&
                         <View>
-                            <Text style={styles.modalDeliveryMethodHeader}>
-                                How would you like your "{this.props.searchText}" delivered ?
-                        </Text>
-                            <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery} onSelected={this.selectDelivery} />
-                            <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup} onSelected={this.selectPickup} />
+                            <SearchResult />
                         </View>
-                    </Modal>
+                    }
                 </View>
+                <Modal
+                    style={[styles.modalDeliveryMethod]}
+                    position={"center"}
+                    ref={"RefModalDeliveryMethod"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={false}
+                >
+                    <View>
+                        <Text style={styles.modalDeliveryMethodHeader}>
+                            How would you like your "{this.props.searchText}" delivered ?
+                        </Text>
+                        <ButtonSecondaryAccent title="Deliver it to me" icon="car" isActive={this.props.isDelivery} onSelected={this.selectDelivery} />
+                        <ButtonSecondaryAccent title="I will pick it up" icon="isv" isActive={this.props.isPickup} onSelected={this.selectPickup} />
+                    </View>
+                </Modal>
+            </View>
             // </KeyboardAvoidingView>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button, AsyncStorage, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, Button, AsyncStorage, FlatList, TouchableOpacity, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 import CardShoppingList from '../components/CardShoppingList';
 import { connect } from 'react-redux';
@@ -25,8 +25,13 @@ class ScreenShoppingList extends Component {
         //RETRIEVE AND SET PASSWORD
         this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY);
 
+      //  BackHandler.addEventListener('hardwareBackPress', true);
+
+    }
 
 
+    componentWillUnmount() {
+      //  BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
 

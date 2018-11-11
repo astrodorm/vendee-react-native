@@ -50,7 +50,8 @@ import {
     SHOW_MODAL_PIN,
     FETCH_LIST_STARTED,
     FETCH_LIST_SUCCESS,
-    FETCH_LIST_FAILED
+    FETCH_LIST_FAILED,
+    FIRST_FETCH_PRODUCT_STARTED
 } from '../actions/actions';
 
 const initialState = {
@@ -78,7 +79,7 @@ const initialState = {
     responseMessage: "",
     updateUserResponseStatus: 0,
     updateUserResponseMessage: "",
-    isFirstSearch: true,
+    isFirstSearch: false,
     listTotal: "",
     convenienceFee: "",
     grandTotal: "",
@@ -107,7 +108,8 @@ const initialState = {
     isFetchListError: false,
     isFetchListSuccess: false,
     fetchListResponse: [],
-    shoppingList : []
+    shoppingList: [],
+    deliveryFee: 0
 }
 
 
@@ -139,7 +141,11 @@ function products(state = initialState, action) {
             return Object.assign({}, state, {
                 searchText: action.query,
                 isLoadingSearchBar: true,
-                isFirstSearch: false
+                //  isFirstSearch: false
+            });
+        case FIRST_FETCH_PRODUCT_STARTED:
+            return Object.assign({}, state, {
+                isFirstSearch: action.isFirst
             });
         case FETCH_PRODUCT_SUCCESS:
             return Object.assign({}, state, {
@@ -295,7 +301,8 @@ function delivery(state = initialState, action) {
         case DELIVERY_METHOD:
             return Object.assign({}, state, {
                 isDelivery: action.isDelivery,
-                isPickup: action.isPickup
+                isPickup: action.isPickup,
+                deliveryFee: action.fee
             });
         default:
             return state;
@@ -360,7 +367,7 @@ function lists(state = initialState, action) {
             return Object.assign({}, state, {
                 isFetchingList: false,
                 fetchListResponse: action.data,
-                shoppingList : [...action.data.data.data]
+                shoppingList: [...action.data.data.data]
             });
         case NEW_ADD_TO_CART_FAILED:
             return Object.assign({}, state, {

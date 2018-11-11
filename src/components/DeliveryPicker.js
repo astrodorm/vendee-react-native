@@ -12,11 +12,11 @@ class DeliveryPicker extends Component {
     }
 
     selectDelivery = () => {
-        this.props.dispatch(selectDeliveryMethod(true, false));
+        this.props.dispatch(selectDeliveryMethod(true, false, 500));
     }
 
     selectPickup = () => {
-        this.props.dispatch(selectDeliveryMethod(false, true));
+        this.props.dispatch(selectDeliveryMethod(false, true, 0));
     }
 
     render() {

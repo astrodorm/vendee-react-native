@@ -4,7 +4,7 @@ import { styles } from '../styles/styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import * as Progress from 'react-native-progress';
 import { connect } from 'react-redux';
-import { fetchProductAction } from '../actions/actions';
+import { fetchProductAction, isFirstFetchStartedAction } from '../actions/actions';
 
 
 
@@ -15,7 +15,7 @@ class SearchBar extends Component {
 
     //     console.log("this.props.responseMessage");
     //     console.log(nextProps.responseMessage);
-        
+
     //    // nextProps.isCreateUserSuccess === true ? this.animateToSuccessView() : null;
     // }
 
@@ -36,14 +36,25 @@ class SearchBar extends Component {
     searchProduct = () => {
         this.toggleIcon();
 
+        this.shouldShowDeliveryModal();
+
         let query = this.state.searchText;
-        this.props.dispatch(fetchProductAction(query));
+        if (query !== "") {
+            this.props.dispatch(fetchProductAction(query));
+
+        }
+
+    }
+
+
+    shouldShowDeliveryModal = () => {
+        this.props.showDeliveryModal === true ? this.props.dispatch(isFirstFetchStartedAction(true)) : this.props.dispatch(isFirstFetchStartedAction(false));
 
     }
 
     handleSearchInput = (text) => {
         this.setState({ searchText: text });
-        console.log(text);
+        //console.log(text);
     }
 
     toggleIcon = () => {

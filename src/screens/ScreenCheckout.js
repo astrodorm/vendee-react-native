@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button, TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
+import { Text, View, ScrollView, Button, TextInput, AsyncStorage, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -28,7 +28,8 @@ import {
     addToCartAndCreateOrderAction,
     createOrderAction,
     newAddToCartAction,
-    promisedAddToCartAction
+    promisedAddToCartAction,
+    isFirstFetchStartedAction
 } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
@@ -89,6 +90,9 @@ class ScreenCheckout extends Component {
 
     componentDidMount() {
 
+      //  BackHandler.addEventListener('hardwareBackPress', true);
+
+
         //RETRIEVE STORED ADDRESS AND SET STATE
         this.retrieveAndSetAddressData(ADDRESS_STORAGE_KEY);
 
@@ -109,6 +113,10 @@ class ScreenCheckout extends Component {
         // console.log("componentDidMount")
         // console.log(storedAddress);
         // console.dir(storedAddress)
+    }
+
+    componentWillUnmount() {
+     //   BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
 
@@ -176,7 +184,7 @@ class ScreenCheckout extends Component {
     getGrandTotal = () => {
 
         let convenienceFee = 0;
-        let deliveryFee = 500;
+        let deliveryFee = this.props.deliveryFee;
         let listArray = [...this.props.newlists];
         //let productArray = [...this.props.products];
 
@@ -205,7 +213,7 @@ class ScreenCheckout extends Component {
     getUnformattedGrandTotalKobo = () => {
 
         let convenienceFee = 0;
-        let deliveryFee = 500;
+        let deliveryFee = this.props.deliveryFee;
         let listArray = [...this.props.newlists];
         //let productArray = [...this.props.products];
 
@@ -358,7 +366,7 @@ class ScreenCheckout extends Component {
 
         //this.showPreloader()
         this.props.dispatch(createOrderAction(userToken)).then(res => {
-            this.setState({ orderCount: this.state.orderCount + 1 });
+            //   this.setState({ orderCount: this.state.orderCount + 1 });
             this.checkOrderCount();
 
         }).catch(err => console.log(err));
@@ -376,12 +384,16 @@ class ScreenCheckout extends Component {
         console.log(orderCount);
 
         lengthOfOrder === orderCount ? this.gotoSuccessPage() : null;
+
+        this.setState({ orderCount: this.state.orderCount + 1 });
+
     }
 
     gotoSuccessPage = () => {
         console.log("GOING TO SUCCESS PAGE");
         //  CheckoutMessage
-        this.hidePreloader()
+        this.props.dispatch(isFirstFetchStartedAction(false));
+        this.hidePreloader();
         this.props.navigation.navigate("CheckoutMessage");
     }
 
@@ -875,7 +887,7 @@ class ScreenCheckout extends Component {
                                 </View> */}
                                 <View>
                                     <Text style={styles.AppCardSubtitle}>SHOPPING LIST DETAILS</Text>
-                                    <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee="500.00" grandTotal={this.getGrandTotal()} />
+                                    <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
                                     <ButtonPrimaryAccent title="PLACE ORDER" icon="arrowright" isActive={true} onSelected={this.validateInput} />
                                 </View>
                             </View>
@@ -1041,7 +1053,8 @@ const mapStateToProps = state => ({
     chargeResponse: state.users.chargeResponse,
     addToCartResponse: state.lists.addToCartResponse,
     showModalPin: state.lists.showModalPin,
-    orderCount: state.lists.orderCount
+    orderCount: state.lists.orderCount,
+    deliveryFee: state.delivery.deliveryFee
 
 })
 

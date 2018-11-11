@@ -9,6 +9,8 @@ import ScreenCheckout from './src/screens/ScreenCheckout';
 import ScreenCheckoutMessage from './src/screens/ScreenCheckoutMessage';
 import ScreenLogin from './src/screens/ScreenLogin';
 import thunk from 'redux-thunk';
+import { BackHandler } from 'react-native';
+
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
@@ -24,6 +26,30 @@ const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 console.log(store.getState())
 
 export default class App extends Component {
+
+
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+    }
+
+    handleBackPress = () => {
+       // this.goBack(); // works best when the goBack is async
+        return true;
+    }
+
+
+
+
+    constructor(props) {
+        super(props);
+
+        this.state = {}
+    }
 
     render() {
         return (

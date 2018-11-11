@@ -384,7 +384,7 @@ class SearchResult extends Component {
     getGrandTotal = () => {
 
         let convenienceFee = 0;
-        let deliveryFee = 500;
+        let deliveryFee = this.props.deliveryFee;
         let listArray = [...this.props.newlists];
         //let productArray = [...this.props.products];
 
@@ -476,18 +476,19 @@ class SearchResult extends Component {
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
                     <View style={styles.AppSearchResultMain}>
-                        <SearchBar />
+                        <SearchBar showDeliveryModal={false} />
                         <DeliveryPicker isDelivery={this.props.isDelivery} isPickup={this.props.isPickup} />
                         {/* <CounterComponent /> */}
-                        <View style={styles.AppSearchResultHeader}>
-                            <View>
+                        {/* <View style={styles.AppSearchResultHeader}> */}
+                            {/* <View>
                                 <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
-                            </View>
-                            <View>
+                            </View> */}
+                            {/* <View>
                                 <FilterPicker />
-                            </View>
-                        </View>
+                            </View> */}
+                        {/* </View> */}
                         <View style={styles.AppSearchResultDisplayContainer}>
+                            <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
                             <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
 
                                 <FlatList
@@ -527,7 +528,7 @@ class SearchResult extends Component {
                         <View style={styles.shoppingListDetails}>
                             <Text style={styles.shoppingListLabel}>Shopping List</Text>
                         </View>
-                        <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee="500" grandTotal={this.getGrandTotal()} />
+                        <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
 
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
@@ -573,7 +574,8 @@ const mapStateToProps = state => ({
     isPickup: state.delivery.isPickup,
     listTotal: state.lists.listTotal,
     convenienceFee: state.lists.convenienceFee,
-    grandTotal: state.lists.grandTotal
+    grandTotal: state.lists.grandTotal,
+    deliveryFee: state.delivery.deliveryFee
 })
 
 export default connect(mapStateToProps)(SearchResult);

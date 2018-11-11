@@ -310,7 +310,8 @@ const styles = StyleSheet.create({
     AppCardTitle: {
         fontSize: 12,
         fontFamily: Fonts.MPLUSMedium,
-        color: navyBlueTheme2
+        color: navyBlueTheme2,
+        padding: 16
     },
 
     AppSearchResultHeader: {
@@ -501,7 +502,7 @@ const styles = StyleSheet.create({
     },
 
     AppSearchResultMain: {
-        paddingTop: 24
+        paddingTop: 18
     },
 
 
@@ -1123,7 +1124,7 @@ const styles = StyleSheet.create({
     },
 
     scrollview: {
-         height: 300
+        height: 350
     }
 
 });

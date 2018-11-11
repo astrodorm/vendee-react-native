@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
 
 
 class ScreenCheckout extends Component {
+
+
+    componentDidMount() {
+      //  BackHandler.addEventListener('hardwareBackPress', true);
+
+    }
+
+    componentWillUnmount() {
+       // BackHandler.removeEventListener('hardwareBackPress', true);
+    }
 
     constructor(props) {
         super(props)
