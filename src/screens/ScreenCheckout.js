@@ -90,7 +90,7 @@ class ScreenCheckout extends Component {
 
     componentDidMount() {
 
-      //  BackHandler.addEventListener('hardwareBackPress', true);
+        //  BackHandler.addEventListener('hardwareBackPress', true);
 
 
         //RETRIEVE STORED ADDRESS AND SET STATE
@@ -116,7 +116,7 @@ class ScreenCheckout extends Component {
     }
 
     componentWillUnmount() {
-     //   BackHandler.removeEventListener('hardwareBackPress', true);
+        //   BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
 
@@ -714,16 +714,23 @@ class ScreenCheckout extends Component {
         console.log("updateUserProfile")
 
         let address = this.state.address;
-        let password = this.state.password;
+        let oauth = this.state.password;
+        let userToken = this.state.userToken;
+
 
         //UNCOMMENT TO SHOW PRELOADER
-        //this.showPreloader()
+        this.showPreloader()
 
-        //UNCOMMENT TO DISPATCH ACTION TO UPDATE USER
-        //this.props.dispatch(updateUserAction(address, password))
+       // UNCOMMENT TO DISPATCH ACTION TO UPDATE USER
+        this.props.dispatch(updateUserAction(userToken, address, oauth)).then(res => {
+
+            //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
+            this.chargeUser();
+
+        });
 
         //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
-        this.chargeUser()
+        this.chargeUser();
 
     }
 
@@ -736,7 +743,7 @@ class ScreenCheckout extends Component {
         let expiry_year = this.state.expiryYear;
         let userToken = this.state.userToken;
 
-        this.showPreloader()
+       // this.showPreloader()
 
         // this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year))
 

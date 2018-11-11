@@ -151,6 +151,8 @@ export const createUserStartedAction = () => (
     }
 );
 
+
+
 export const loginStartedAction = () => (
     {
         type: LOGIN_USER_STARTED
@@ -484,9 +486,10 @@ export const newAddToCartFailedAction = (error) => (
 export const updateUserFailedAction = (error) => (
     {
         type: UPDATE_USER_FAILED,
-        payload: {
-            error
-        }
+        // payload: {
+        //     error
+        // }
+        error
     }
 );
 
@@ -904,7 +907,7 @@ export const createOrderAction = (userToken) => (dispatch) =>
         }
 
 
-        axios
+        // axios
         axios.get(`${BASE_URL}/orders/create`,
             config
         )
@@ -1004,23 +1007,53 @@ export const addToCartAndCreateOrderAction = (userToken, productID, quantity) =>
 
 
 
-export const updateUserAction = (address, password) => {
-    return dispatch => {
+// export const updateUserAction = (address, password) => {
+//     return dispatch => {
+//         dispatch(updateUserStartedAction());
+
+//         axios
+//             .put(`${BASE_URL}/customer/edit`, {
+//                 address,
+//                 password
+//             })
+//             .then(res => {
+//                 dispatch(updateUserSuccessAction(res.data));
+//             })
+//             .catch(err => {
+//                 dispatch(updateUserFailedAction(err.response.data));
+//             });
+//     };
+// };
+
+
+export const updateUserAction = (userToken, address, oauth) => (dispatch) =>
+    new Promise(function (resolve, reject) {
         dispatch(updateUserStartedAction());
 
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+
         axios
-            .put(`${BASE_URL}/customer/edit`, {
+            .put(`${BASE_URL}/customers/edit`, {
                 address,
-                password
-            })
+                oauth
+            },
+                config
+            )
             .then(res => {
-                dispatch(updateUserSuccessAction(res.data));
+                dispatch(updateUserSuccessAction(res));
+                resolve(res)
             })
             .catch(err => {
-                dispatch(updateUserFailedAction(err.response.data));
+                dispatch(updateUserFailedAction(err));
+                reject(err);
             });
-    };
-};
+    });
 
 
 

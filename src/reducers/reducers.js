@@ -256,7 +256,7 @@ function users(state = initialState, action) {
                 error: null,
                 isUpdatingUserError: false,
                 isUpdatingUserSuccess: true,
-                user: [...state.user, action.payload]
+               // user: action.data
             });
         case LOGIN_USER_SUCCESS:
             return Object.assign({}, state, {
