@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image, BackHandler } from 'react-native';
 import { styles } from '../styles/styles';
+import { isFirstFetchStartedAction } from '../actions/actions';
+import { connect } from 'react-redux';
 
 
 class ScreenCheckout extends Component {
 
 
     componentDidMount() {
-      //  BackHandler.addEventListener('hardwareBackPress', true);
+        //  BackHandler.addEventListener('hardwareBackPress', true);
 
     }
 
     componentWillUnmount() {
-       // BackHandler.removeEventListener('hardwareBackPress', true);
+        // BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
     constructor(props) {
@@ -21,6 +23,7 @@ class ScreenCheckout extends Component {
     }
 
     gotoShoppingList = () => {
+        this.props.dispatch(isFirstFetchStartedAction(false))
         this.props.navigation.push('MainAppScreen');
     }
 
@@ -51,4 +54,13 @@ class ScreenCheckout extends Component {
     }
 }
 
-export default ScreenCheckout;
+//export default ScreenCheckout;
+
+const mapStateToProps = state => ({
+
+    // isLoadingSearchBar: state.products.isLoadingSearchBar,
+    // responseMessage: state.users.responseMessage,
+
+})
+
+export default connect(mapStateToProps)(ScreenCheckout);

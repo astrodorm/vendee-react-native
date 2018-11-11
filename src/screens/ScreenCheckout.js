@@ -392,7 +392,7 @@ class ScreenCheckout extends Component {
     gotoSuccessPage = () => {
         console.log("GOING TO SUCCESS PAGE");
         //  CheckoutMessage
-        this.props.dispatch(isFirstFetchStartedAction(false));
+       // this.props.dispatch(isFirstFetchStartedAction(false));
         this.hidePreloader();
         this.props.navigation.navigate("CheckoutMessage");
     }

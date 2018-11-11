@@ -25,7 +25,7 @@ class SearchBar extends Component {
 
         this.state = {
             searchText: "",
-            // isLoadingSearchBar : false
+            showModalState: this.props.showDeliveryModal,
 
         }
 
@@ -48,7 +48,7 @@ class SearchBar extends Component {
 
 
     shouldShowDeliveryModal = () => {
-        this.props.showDeliveryModal === true ? this.props.dispatch(isFirstFetchStartedAction(true)) : this.props.dispatch(isFirstFetchStartedAction(false));
+        this.state.showModalState === true ? this.props.dispatch(isFirstFetchStartedAction(true)) : this.props.dispatch(isFirstFetchStartedAction(false));
 
     }
 
@@ -88,10 +88,6 @@ const mapStateToProps = state => ({
 
     isLoadingSearchBar: state.products.isLoadingSearchBar,
     responseMessage: state.users.responseMessage,
-
-    // searchText: state.products.searchText,
-    // isDelivery: state.delivery.isDelivery,
-    // isPickup: state.delivery.isPickup
 
 })
 
