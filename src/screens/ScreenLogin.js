@@ -9,6 +9,8 @@ import * as Progress from 'react-native-progress';
 
 
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+const EMAIL_STORAGE_KEY = "EMAIL";
+const PHONE_STORAGE_KEY = "PHONE";
 
 class ScreenProfile extends Component {
 
@@ -29,25 +31,38 @@ class ScreenProfile extends Component {
         //  console.log("this.props.isLoginUserSuccess");
         // console.log(nextProps.isLoginUserSuccess);
         let userToken = nextProps.user.token;
+        // let emailAddress = nextProps.email;
+        // let phoneNumber = nextProps.phoneNumber;
+
         console.log("nextProps.user");
         console.log(nextProps.user);
-        console.log(nextProps.user.token);
-        nextProps.isLoginUserSuccess === true ? this.storeUserToken(userToken) : null;
+        console.log("nextProps.user.customer");
+        // console.log(nextProps.user.customer.email);
+        // console.log(nextProps.user.token);
+        nextProps.isLoginUserSuccess === true ? this.storeUserCredentials(userToken) : null;
     }
 
     componentDidMount() {
-       // BackHandler.addEventListener('hardwareBackPress', true);
+        // BackHandler.addEventListener('hardwareBackPress', true);
     }
 
 
     componentWillUnmount() {
-      //  BackHandler.removeEventListener('hardwareBackPress', true);
+        //  BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
-    storeUserToken = (token) => {
+    storeUserCredentials = (userToken) => {
+
+        let emailAddress = this.state.email;
 
         //SAVE USER TOKEN
-        this.storeData(USER_TOKEN_STORAGE_KEY, token);
+        this.storeData(USER_TOKEN_STORAGE_KEY, userToken);
+
+        //SAVE USER TOKEN
+        this.storeData(EMAIL_STORAGE_KEY, emailAddress);
+
+        //SAVE USER TOKEN
+        // this.storeData(PHONE_STORAGE_KEY, phoneNumber);
 
         //NAVIGATE TO MAIN APP
         this.navigateToMainApp()
@@ -157,6 +172,8 @@ const mapStateToProps = state => ({
 
     responseMessage: state.users.responseMessage,
     user: state.users.user,
+    //  email: state.users.user.customer.email,
+    // phoneNumber: state.users.user.customer.email,
     isLoginUserError: state.users.isLoginUserError,
     isLoginUserSuccess: state.users.isLoginUserSuccess,
     isSigningInUser: state.users.isSigningInUser

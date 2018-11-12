@@ -11,6 +11,10 @@ import * as Progress from 'react-native-progress';
 
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 const EMAIL_STORAGE_KEY = "EMAIL";
+const FIRSTNAME_STORAGE_KEY = "FIRSTNAME";
+const LASTNAME_STORAGE_KEY = "LASTNAME";
+const PHONE_STORAGE_KEY = "PHONE";
+
 //const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 
 
@@ -39,43 +43,56 @@ class ScreenIntro extends Component {
     }
 
 
-    retrieveAndSetUserTokenBoolean = async (storageKey) => {
+    // retrieveAndSetUserTokenBoolean = async (storageKey) => {
 
-        try {
-            const value = await AsyncStorage.getItem(storageKey);
-            if (value !== null) {
+    //     try {
+    //         const value = await AsyncStorage.getItem(storageKey);
+    //         if (value !== null) {
 
-                this.setState({ isTokenAvailable: true })
+    //             this.setState({ isTokenAvailable: true })
 
-                this.props.navigation.navigate("MainAppScreen");
+    //             this.props.navigation.navigate("MainAppScreen");
 
 
 
-            }
-        } catch (error) {
-            // Error retrieving data
-            console.log(error)
-        }
+    //         }
+    //     } catch (error) {
+    //         // Error retrieving data
+    //         console.log(error)
+    //     }
 
-    }
+    // }
 
     componentWillReceiveProps(nextProps) {
 
         console.log("this.props.isCreateUserSuccess");
         console.log(nextProps.isCreateUserSuccess);
         let userToken = nextProps.user.token;
-        nextProps.isCreateUserSuccess === true ? this.storeUserToken(userToken) : null;
+        // let email = nextProps.user.email;
+        // let phoneNumber = nextProps.user.phoneNumber;
+
+        nextProps.isCreateUserSuccess === true ? this.storeUserCredentials(userToken) : null;
     }
 
 
-    storeUserToken = (token) => {
+    storeUserCredentials = (userToken) => {
+
+        let emailAddress = this.state.email;
 
         //SAVE USER TOKEN
-        this.storeData(USER_TOKEN_STORAGE_KEY, token);
+        this.storeData(USER_TOKEN_STORAGE_KEY, userToken);
+
+        //SAVE USER EMAIL
+        this.storeData(EMAIL_STORAGE_KEY, emailAddress);
+
+        //SAVE USER EMAIL
+       // this.storeData(PHONE_STORAGE_KEY, phoneNumber);
 
         //NAVIGATE TO MAIN APP
         this.animateToSuccessView()
     }
+
+
 
 
     storeData = async (key, value) => {

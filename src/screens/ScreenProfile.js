@@ -16,6 +16,7 @@ const OAUTH = "OAUTH";
 const PHONE_STORAGE_KEY = "PHONE";
 const CARD_NUMBER_STORAGE_KEY = "CARD_NUMBER";
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+const EMAIL_STORAGE_KEY = "EMAIL";
 
 
 
@@ -23,13 +24,17 @@ const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 class ScreenProfile extends Component {
 
     componentDidMount() {
-      //  BackHandler.addEventListener('hardwareBackPress', true);
+        //  BackHandler.addEventListener('hardwareBackPress', true);
 
+    }
+
+    componentWillMount() {
+        this.retrieveAndSetEmail(EMAIL_STORAGE_KEY);
     }
 
 
     componentWillUnmount() {
-     //   BackHandler.removeEventListener('hardwareBackPress', true);
+        //   BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
     constructor(props) {
@@ -44,7 +49,23 @@ class ScreenProfile extends Component {
             isVisiblePassword: true,
             isVisibleCard: true,
             isVisibleCoupon: true,
-            isVisibleName: true
+            isVisibleName: true,
+            email: ""
+        }
+    }
+
+    retrieveAndSetEmail = async (storageKey) => {
+
+        try {
+            const value = await AsyncStorage.getItem(storageKey);
+            if (value !== null) {
+
+                this.setState({ email: value });
+                // this.refreshList();
+            }
+        } catch (error) {
+            // Error retrieving data
+            console.log(error)
         }
     }
 
@@ -92,13 +113,15 @@ class ScreenProfile extends Component {
         ).then(
             this.removeStorage(USER_TOKEN_STORAGE_KEY)
         ).then(
+            this.removeStorage(EMAIL_STORAGE_KEY)
+        ).then(
             this.navigateToLandingScreen()
         )
 
     }
 
     navigateToLandingScreen = () => {
-        this.props.navigation.navigate('Splash');
+        this.props.navigation.navigate('Intro');
     }
 
     removeStorage = async (key) => {
@@ -124,10 +147,10 @@ class ScreenProfile extends Component {
                                 <Text style={styles.AppCardHeader}>User Profile</Text>
                                 <View style={styles.headingDivider}></View>
                                 <Text>Hello, </Text>
-                                <Text style={styles.username}>{this.props.user.customer.firstname} {this.props.user.customer.lastname}</Text>
+                                {/* <Text style={styles.username}>{this.props.user.customer.firstname} {this.props.user.customer.lastname}</Text> */}
 
-                                <Text>email : {this.props.user.customer.email}</Text>
-                                <Text>phone : {this.props.user.customer.phoneNumber}</Text>
+                                <Text>{this.state.email}</Text>
+                                {/* <Text>phone : {this.props.user.customer.phoneNumber}</Text> */}
                                 <View style={styles.headingDivider}></View>
 
 

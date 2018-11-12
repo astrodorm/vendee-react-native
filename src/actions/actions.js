@@ -287,9 +287,10 @@ export const toggleAddModalCardManager = (visibility) => (
 export const createUserSuccessAction = (data) => (
     {
         type: CREATE_USER_SUCCESS,
-        payload: {
-            ...data
-        }
+        // payload: {
+        //     ...data
+        // }
+        data
     }
 );
 
@@ -507,7 +508,7 @@ export const createUserAction = (firstname, lastname, phoneNumber, email, oauth)
                 oauth
             })
             .then(res => {
-                dispatch(createUserSuccessAction(res.data));
+                dispatch(createUserSuccessAction(res.data.data));
             })
             .catch(err => {
                 dispatch(createUserFailedAction(err.response.data));
