@@ -25,13 +25,13 @@ class ScreenShoppingList extends Component {
         //RETRIEVE AND SET PASSWORD
         this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY);
 
-      //  BackHandler.addEventListener('hardwareBackPress', true);
+        //  BackHandler.addEventListener('hardwareBackPress', true);
 
     }
 
 
     componentWillUnmount() {
-      //  BackHandler.removeEventListener('hardwareBackPress', true);
+        //  BackHandler.removeEventListener('hardwareBackPress', true);
     }
 
 
@@ -97,11 +97,16 @@ class ScreenShoppingList extends Component {
         this.refs.RefModalPreloader.close()
     }
 
+    getParcelID = (id) => {
+        let parcelID = id.slice(18);
+        return parcelID
+    }
+
 
     _renderShoppingListItem = ({ item }) => (
 
         // <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
-        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} thumbnail={BASE_THUMBNAIL_URL + item.productID[0].thumbnail} title={item.productID[0].productName} price={item.productID[0].price} quantity={item.productID[0].quantity} orderStatus={item.status} />
+        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} thumbnail={BASE_THUMBNAIL_URL + item.productID[0].thumbnail} title={item.productID[0].productName} price={item.productID[0].price} quantity={item.productID[0].quantity} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
 

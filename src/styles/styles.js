@@ -934,6 +934,21 @@ const styles = StyleSheet.create({
         // minWidth:100,
     },
 
+
+    parcelID: {
+        fontFamily: Fonts.MPLUSBold,
+        fontSize: 10,
+        backgroundColor: GrayDarkTheme,
+        borderRadius: 4,
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 8,
+        paddingRight: 8,
+        color: "#fff",
+        letterSpacing: 1,
+        // minWidth:100,
+    },
+
     cardShoppingListStatusContainer: {
         flex: 1,
         alignItems: "flex-end",
