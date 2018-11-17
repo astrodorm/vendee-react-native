@@ -141,9 +141,6 @@ export const selectDeliveryMethod = (isDelivery, isPickup, fee) => (
     }
 );
 
-// export const signUpUser = () =>{
-
-// }
 
 export const createUserStartedAction = () => (
     {
@@ -152,12 +149,12 @@ export const createUserStartedAction = () => (
 );
 
 
-
 export const loginStartedAction = () => (
     {
         type: LOGIN_USER_STARTED
     }
 );
+
 
 export const fetchStartedAction = (query) => (
     {
@@ -174,6 +171,7 @@ export const isFirstFetchStartedAction = (isFirst) => (
 
     }
 );
+
 
 export const createOrderStartedAction = () => (
     {
@@ -215,7 +213,6 @@ export const chargeUserOtpStartedAction = () => (
 export const addToCartStartedAction = () => (
     {
         type: ADD_TO_CART_STARTED,
-        // lengthOfOrder
     }
 );
 
@@ -277,19 +274,9 @@ export const toggleAddModalCardManager = (visibility) => (
 );
 
 
-// export const toggleUpdateModalPasswordManager = (visibility) => (
-//     {
-//         type: TOGGLE_UPDATE_MODAL_PASSWORD_MANAGER,
-//         visibility
-//     }
-// );
-
 export const createUserSuccessAction = (data) => (
     {
         type: CREATE_USER_SUCCESS,
-        // payload: {
-        //     ...data
-        // }
         data
     }
 );
@@ -298,9 +285,6 @@ export const createUserSuccessAction = (data) => (
 export const loginSuccessAction = (data) => (
     {
         type: LOGIN_USER_SUCCESS,
-        // payload: {
-        //     ...data
-        // }
         data
     }
 );
@@ -309,7 +293,6 @@ export const loginSuccessAction = (data) => (
 export const fetchSuccessAction = (data) => (
     {
         type: FETCH_PRODUCT_SUCCESS,
-
         data
     }
 );
@@ -318,7 +301,6 @@ export const fetchSuccessAction = (data) => (
 export const createOrderSuccessAction = (data) => (
     {
         type: CREATE_ORDER_SUCCESS,
-
         data
     }
 );
@@ -327,7 +309,6 @@ export const createOrderSuccessAction = (data) => (
 export const fetchListSuccessAction = (data) => (
     {
         type: FETCH_LIST_SUCCESS,
-
         data
     }
 );
@@ -336,7 +317,6 @@ export const fetchListSuccessAction = (data) => (
 export const chargeUserSuccessAction = (data) => (
     {
         type: CHARGE_USER_SUCCESS,
-
         data
     }
 );
@@ -344,7 +324,6 @@ export const chargeUserSuccessAction = (data) => (
 export const chargeUserPinSuccessAction = (data) => (
     {
         type: CHARGE_USER_PIN_SUCCESS,
-
         data
     }
 );
@@ -353,7 +332,6 @@ export const chargeUserPinSuccessAction = (data) => (
 export const chargeUserOtpSuccessAction = (data) => (
     {
         type: CHARGE_USER_OTP_SUCCESS,
-
         data
     }
 );
@@ -377,21 +355,10 @@ export const showModalPin = (visibility) => (
 export const updateUserSuccessAction = (data) => (
     {
         type: UPDATE_USER_SUCCESS,
-        // payload: {
-        //    // ...data,
-        //     ...data.data
-        // }
         data
     }
 );
 
-
-// export const fetchSuccessAction = (data) => (
-//     {
-//         type: FETCH_PRODUCT_SUCCESS,
-//         data
-//     }
-// );
 
 export const createUserFailedAction = (error) => (
     {
@@ -425,9 +392,7 @@ export const fetchFailedAction = (error) => (
 export const createOrderFailedAction = (error) => (
     {
         type: CREATE_ORDER_FAILED,
-        // payload: {
         error
-        // }
     }
 );
 
@@ -435,9 +400,7 @@ export const createOrderFailedAction = (error) => (
 export const fetchListFailedAction = (error) => (
     {
         type: FETCH_LIST_FAILED,
-        // payload: {
         error
-        // }
     }
 );
 
@@ -476,9 +439,6 @@ export const chargeUserOtpFailedAction = (error) => (
 export const newAddToCartFailedAction = (error) => (
     {
         type: NEW_ADD_TO_CART_FAILED,
-        // payload: {
-        //     error
-        // }
         error
     }
 );
@@ -487,9 +447,6 @@ export const newAddToCartFailedAction = (error) => (
 export const updateUserFailedAction = (error) => (
     {
         type: UPDATE_USER_FAILED,
-        // payload: {
-        //     error
-        // }
         error
     }
 );
@@ -556,49 +513,15 @@ export const fetchProductAction = (query) => {
 };
 
 
-
-// export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => {
-//     return dispatch => {
-//         dispatch(chargeUserStartedAction());
-
-//         let config = {
-//             headers: {
-//                 'Authorization': 'Bearer ' + userToken
-//             }
-//         }
-
-//         axios
-//             .post(`${BASE_URL}/cards/charge`, {
-//                 amount,
-//                 number,
-//                 cvv,
-//                 expiry_month,
-//                 expiry_year
-//             },
-//                 config
-//             )
-//             .then(res => {
-//                 dispatch(chargeUserSuccessAction(res.data));
-//             })
-
-//             .catch(err => {
-//                 dispatch(chargeUserFailedAction(err.response.data));
-//             });
-//     };
-// };
-
-
 export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(chargeUserStartedAction());
-
 
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
-
 
         axios
             .post(`${BASE_URL}/cards/charge`, {
@@ -621,73 +544,9 @@ export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, e
     });
 
 
-/////
-//ORIGINAL
-///
-
-// export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, expiry_year) => {
-//     return dispatch => {
-//         dispatch(chargeUserStartedAction());
-
-//         let config = {
-//             headers: {
-//                 'Authorization': 'Bearer ' + userToken
-//             }
-//         }
-
-//         axios
-//             .post(`${BASE_URL}/cards/charge`, {
-//                 amount,
-//                 number,
-//                 cvv,
-//                 expiry_month,
-//                 expiry_year
-//             },
-//                 config
-//             )
-//             .then(res => {
-//                 dispatch(chargeUserSuccessAction(res.data));
-//             })
-
-//             .catch(err => {
-//                 dispatch(chargeUserFailedAction(err.response.data));
-//             });
-//     };
-// };
-
-
-// export const chargeUserPinAction = (userToken, reference, pin) => {
-//     return dispatch => {
-//         dispatch(chargeUserPinStartedAction());
-
-//         let config = {
-//             headers: {
-//                 'Authorization': 'Bearer ' + userToken
-//             }
-//         }
-
-//         axios
-//             .post(`${BASE_URL}/cards/charge/pin`, {
-//                 reference,
-//                 pin,
-
-//             },
-//                 config
-//             )
-//             .then(res => {
-//                 dispatch(chargeUserPinSuccessAction(res.data));
-//             })
-//             .catch(err => {
-//                 dispatch(chargeUserPinFailedAction(err.response.data));
-//             });
-//     };
-// };
-
-
 export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(chargeUserPinStartedAction());
-
 
         let config = {
             headers: {
@@ -695,12 +554,10 @@ export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
             }
         }
 
-
         axios
             .post(`${BASE_URL}/cards/charge/pin`, {
                 reference,
                 pin,
-
             },
                 config
             )
@@ -716,46 +573,15 @@ export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
     });
 
 
-// export const chargeUserOtpAction = (userToken, reference, otp) => {
-//     return dispatch => {
-//         dispatch(chargeUserOtpStartedAction());
-
-//         let config = {
-//             headers: {
-//                 'Authorization': 'Bearer ' + userToken
-//             }
-//         }
-
-//         axios
-//             .post(`${BASE_URL}/cards/charge/otp`, {
-//                 reference,
-//                 otp,
-
-//             },
-//                 config
-//             )
-//             .then(res => {
-//                 dispatch(chargeUserOtpSuccessAction(res.data));
-//             })
-//             .catch(err => {
-//                 dispatch(chargeUserOtpFailedAction(err.response.data));
-//             });
-//     };
-// };
-
-
-
 export const chargeUserOtpAction = (userToken, reference, otp) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(chargeUserOtpStartedAction());
-
 
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
-
 
         axios
             .post(`${BASE_URL}/cards/charge/otp`, {
@@ -827,7 +653,6 @@ export const addToCartAction = (userToken, productID, quantity) => {
             )
             .then(res => {
                 dispatch(addToCartSuccessAction(res));
-                // dispatch(createOrderAction(userToken));
             })
             .catch(err => {
                 dispatch(addToCartFailedAction(err));
@@ -839,13 +664,11 @@ export const promisedAddToCartAction = (userToken, productID, quantity) => (disp
     new Promise(function (resolve, reject) {
         dispatch(addToCartStartedAction());
 
-
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
-
 
         axios
             .post(`${BASE_URL}/carts/add`, {
@@ -857,7 +680,6 @@ export const promisedAddToCartAction = (userToken, productID, quantity) => (disp
             )
             .then(res => {
                 dispatch(newAddToCartSuccessAction(res));
-                // dispatch(createOrderAction(userToken));
                 resolve(res);
             })
             .catch(err => {
@@ -868,38 +690,10 @@ export const promisedAddToCartAction = (userToken, productID, quantity) => (disp
     });
 
 
-// export const createOrderAction = (userToken) => {
-//     return dispatch => {
-//         dispatch(createOrderStartedAction());
-
-//         console.log("createOrderAction > userToken")
-//         console.log(userToken)
-
-//         let config = {
-//             headers: {
-//                 'Authorization': 'Bearer ' + userToken
-//             }
-//         }
-
-
-//         axios.get(`${BASE_URL}/orders/create`,
-//             config
-//         )
-//             .then(res => {
-//                 dispatch(createOrderSuccessAction(res));
-//             })
-//             .catch(err => {
-//                 dispatch(createOrderFailedAction(err));
-//             });
-
-//     };
-// };
-
 
 export const createOrderAction = (userToken) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(createOrderStartedAction());
-
 
         let config = {
             headers: {
@@ -907,8 +701,6 @@ export const createOrderAction = (userToken) => (dispatch) =>
             }
         }
 
-
-        // axios
         axios.get(`${BASE_URL}/orders/create`,
             config
         )
@@ -924,43 +716,9 @@ export const createOrderAction = (userToken) => (dispatch) =>
     });
 
 
-
-// export const fetchListAction = (userToken) => {
-//     return dispatch => {
-
-//         new Promise(function (resolve, reject) {
-//             dispatch(fetchListStartedAction());
-
-//             // console.log("createOrderAction > userToken")
-//             // console.log(userToken)
-
-//             let config = {
-//                 headers: {
-//                     'Authorization': 'Bearer ' + userToken
-//                 }
-//             }
-
-
-//             axios.get(`${BASE_URL}/orders/customer/all`,
-//                 config
-//             )
-//                 .then(res => {
-//                     dispatch(fetchListSuccessAction(res));
-//                     resolve(res);
-//                 })
-//                 .catch(err => {
-//                     dispatch(fetchListFailedAction(err));
-//                     reject(err)
-//                 });
-//         })
-//     };
-// };
-
-
 export const fetchListAction = (userToken) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(fetchListStartedAction());
-
 
         let config = {
             headers: {
@@ -968,8 +726,6 @@ export const fetchListAction = (userToken) => (dispatch) =>
             }
         }
 
-
-        axios
         axios.get(`${BASE_URL}/orders/customer/all`,
             config
         )
@@ -981,63 +737,30 @@ export const fetchListAction = (userToken) => (dispatch) =>
                 dispatch(fetchListFailedAction(err));
                 reject(err)
             });
-
     });
-
-
-
-
-
-
-
-
 
 
 
 export const addToCartAndCreateOrderAction = (userToken, productID, quantity) => {
     return (dispatch) => {
+
         dispatch(newAddToCartAction(userToken, productID, quantity));
-        //.then((userToken) => {
+
         dispatch(createOrderAction(userToken));
 
-
-        // });
     };
 }
-
-
-
-
-// export const updateUserAction = (address, password) => {
-//     return dispatch => {
-//         dispatch(updateUserStartedAction());
-
-//         axios
-//             .put(`${BASE_URL}/customer/edit`, {
-//                 address,
-//                 password
-//             })
-//             .then(res => {
-//                 dispatch(updateUserSuccessAction(res.data));
-//             })
-//             .catch(err => {
-//                 dispatch(updateUserFailedAction(err.response.data));
-//             });
-//     };
-// };
 
 
 export const updateUserAction = (userToken, address, oauth) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(updateUserStartedAction());
 
-
         let config = {
             headers: {
                 'Authorization': 'Bearer ' + userToken
             }
         }
-
 
         axios
             .put(`${BASE_URL}/customers/edit`, {
@@ -1055,8 +778,3 @@ export const updateUserAction = (userToken, address, oauth) => (dispatch) =>
                 reject(err);
             });
     });
-
-
-
-
-
