@@ -141,7 +141,6 @@ function products(state = initialState, action) {
             return Object.assign({}, state, {
                 searchText: action.query,
                 isLoadingSearchBar: true,
-                //  isFirstSearch: false
             });
         case FIRST_FETCH_PRODUCT_STARTED:
             return Object.assign({}, state, {
@@ -256,7 +255,7 @@ function users(state = initialState, action) {
                 error: null,
                 isUpdatingUserError: false,
                 isUpdatingUserSuccess: true,
-               // user: action.data
+                // user: action.data
             });
         case LOGIN_USER_SUCCESS:
             return Object.assign({}, state, {
@@ -351,7 +350,6 @@ function lists(state = initialState, action) {
         case SHOW_MODAL_PIN:
             return Object.assign({}, state, {
                 showModalpin: action.visibility,
-                // isCreateOrderError: false
             });
         case NEW_ADD_TO_CART_SUCCESS:
             return Object.assign({}, state, {
@@ -398,27 +396,6 @@ function lists(state = initialState, action) {
             return Object.assign({}, state, {
                 grandTotal: action.grandTotal,
             });
-        // case ITEM_ADD:
-        // return Object.assign({}, state, {
-        //     lists: [
-        //         ...state.lists,
-        //         {
-        //             id: action.id,
-        //             thumbnail: action.thumbnail,
-        //             title: action.title,
-        //             // price: action.price,
-        //             quantity: 1,
-        //         }
-        //     ]
-        // });
-        // case ITEM_REMOVE:
-        //     return Object.assign({}, state, {
-        //         lists: [
-        //             ...state.lists.slice(0, action.index),
-        //             ...state.lists.slice(action.index + 1)
-        //         ]
-        //     });
-
         case ITEM_REMOVE:
             return Object.assign({}, state, {
                 newlists: [
@@ -426,17 +403,6 @@ function lists(state = initialState, action) {
                     ...state.newlists.slice(action.index + 1)
                 ]
             });
-        // case LIST_ITEM_INCREMENT:
-        //     return Object.assign({}, state, {
-        //         lists: state.lists.map((list, index) => {
-        //             if (index === action.index) {
-        //                 return Object.assign({}, list, {
-        //                     quantity: action.quantity
-        //                 })
-        //             }
-        //             return list
-        //         })
-        //     });
         case LIST_ITEM_INCREMENT:
             return Object.assign({}, state, {
                 newlists: state.newlists.map((newlist, index) => {
@@ -448,17 +414,6 @@ function lists(state = initialState, action) {
                     return newlist
                 })
             });
-        // case LIST_ITEM_DECREMENT:
-        //     return Object.assign({}, state, {
-        //         lists: state.lists.map((list, index) => {
-        //             if (index === action.index) {
-        //                 return Object.assign({}, list, {
-        //                     quantity: action.quantity
-        //                 })
-        //             }
-        //             return list
-        //         })
-        //     });
         case LIST_ITEM_DECREMENT:
             return Object.assign({}, state, {
                 newlists: state.newlists.map((newlist, index) => {
