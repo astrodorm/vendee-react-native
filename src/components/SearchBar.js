@@ -11,32 +11,20 @@ import { fetchProductAction, isFirstFetchStartedAction } from '../actions/action
 
 class SearchBar extends Component {
 
-    // componentWillReceiveProps(nextProps) {
-
-    //     console.log("this.props.responseMessage");
-    //     console.log(nextProps.responseMessage);
-
-    //    // nextProps.isCreateUserSuccess === true ? this.animateToSuccessView() : null;
-    // }
-
     constructor(props) {
         super(props)
 
 
         this.state = {
             searchText: "",
-            showModalState: this.props.showDeliveryModal,
-
+            showModalState: this.props.showDeliveryModal
         }
-
-
-
     }
 
     searchProduct = () => {
-        this.toggleIcon();
+       // this.toggleIcon();
 
-        this.shouldShowDeliveryModal();
+      //  this.shouldShowDeliveryModal();
 
         let query = this.state.searchText;
         if (query !== "") {
@@ -54,7 +42,6 @@ class SearchBar extends Component {
 
     handleSearchInput = (text) => {
         this.setState({ searchText: text });
-        //console.log(text);
     }
 
     toggleIcon = () => {

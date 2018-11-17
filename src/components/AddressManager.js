@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
 import { styles } from '../styles/styles';
-import ButtonIconPrimaryAccent from '../components/ButtonIconPrimaryAccent';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import { connect } from 'react-redux';
 import { toggleAddModalAddressManager } from '../actions/actions';
@@ -31,14 +30,8 @@ class AddressManager extends Component {
             <View>
                 <View style={styles.ActionInputContainer}>
                     <Text style={styles.AccordionContent}>{this.props.address}</Text>
-                    {/* <ButtonIconPrimaryAccent icon="edit" isActive={false} /> */}
-                    {/* {
-                        this.props.isCheckboxVisible &&
-                        <ButtonIconPrimaryAccent icon="check" isActive={true} />
-                    } */}
                 </View>
                 <ButtonPrimaryAccent title="UPDATE ADDRESS" icon="form" isActive={false} onSelected={this.addAddress} />
-                {/* <Button title="add address" onPress={this.addAddress} /> */}
             </View>
         )
     }

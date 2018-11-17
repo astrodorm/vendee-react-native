@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { styles } from '../styles/styles';
-import ButtonIconPrimaryAccent from '../components/ButtonIconPrimaryAccent';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import { connect } from 'react-redux';
 import { toggleAddModalTelephoneManager } from '../actions/actions';
@@ -31,17 +30,11 @@ class TelephoneManager extends Component {
             <View>
                 <View style={styles.ActionInputContainer}>
                     <Text style={styles.AccordionContent}>{this.props.phoneNumber}</Text>
-                    {/* <ButtonIconPrimaryAccent icon="edit" isActive={false} /> */}
-                    {/* {
-                        this.props.isCheckboxVisible &&
-                        <ButtonIconPrimaryAccent icon="check" isActive={true} />
-                    } */}
                 </View>
                 <ButtonPrimaryAccent title="UPDATE PHONE" icon="form" isActive={false} onSelected={this.addTelephone} />
             </View>
         )
     }
-
 }
 
 

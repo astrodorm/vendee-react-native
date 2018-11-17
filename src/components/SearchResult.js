@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { Text, View, FlatList, ScrollView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
-import FilterPicker from '../components/FilterPicker';
 import ProductItem from '../components/ProductItem';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modalbox';
@@ -26,23 +25,17 @@ class SearchResult extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        // console.log("nextProps.newproducts");
-        // console.log(nextProps.newproducts);
-        // console.log("this.props.newproducts")
-        // console.log(this.props.newproducts)
-        // this.props.isFirstSearch === true ? this.openDialogDeliveryMethod() : null;
     }
 
     constructor(props) {
         super(props);
 
-
         this.state = {
             isVisibleFBtnShoppingList: false,
             isVisibleFBtnQuantityPicker: false,
             activeSections: [],
-            quantities: [0, 0],
-            products: [],
+            // quantities: [0, 0],
+            // products: [],
             selectProductID: 0,
             selectedProductQuantity: 0,
             selectedProductCount: 0,
@@ -51,13 +44,11 @@ class SearchResult extends Component {
     }
 
 
-    componentDidMount() {
-        const prouductsData = this.props.products;
-        this.setState({ products: prouductsData })
+    // componentDidMount() {
+    //     const prouductsData = this.props.products;
+    //     this.setState({ products: prouductsData })
 
-        console.log("this.props.newproducts")
-        console.log(this.props.newproducts)
-    }
+    // }
 
 
     //TRANSITION HANDLERS
@@ -70,8 +61,6 @@ class SearchResult extends Component {
 
         // USE getListByID() TO GET CURRENT QUANTITY OF PRODUCT ITEM SINCE EVERY
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
-        //<ProductItem thumbnail={item.thumbnail} title={item.title} price={item.price} isAdded={this.getIsAddedByID(item.id)} quantity={this.getListByID(item.id).quantity} onSelectItem={() => this.onSelectItem(item.id, item.quantity)} />
-
         <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
     );
 
@@ -86,9 +75,6 @@ class SearchResult extends Component {
     onSelectItem = (id) => {
 
         let quantity = this.getListByID(id).quantity;
-        //let quantity = 5;
-
-
 
         //CHECK IF QUANTITY PICKER IS VISIBLE
         let isVisibleFBtnQuantityPicker = this.state.isVisibleFBtnQuantityPicker;
@@ -117,16 +103,9 @@ class SearchResult extends Component {
 
     getListByID = (id) => {
 
-        // let listArray = [...this.props.lists];
-        // let index = listArray.findIndex(x => x.id === id);
-        // let list = listArray[index];
-
         let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let list = listArray[index];
-
-        // console.log("getListByID");
-        // console.log(list);
 
         //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS UID IS NOT FOUND IN LIST ARRAY
         let initialValue = { quantity: 0 }
@@ -230,20 +209,10 @@ class SearchResult extends Component {
 
     incrementListItem = (id) => {
 
-        // let listArray = [...this.props.lists];
-        // let index = listArray.findIndex(x => x.id === id);
-        // let quantity = listArray[index].quantity + 1;
-
         let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let quantity = listArray[index].quantity + 1;
 
-        // console.log("listArray")
-        // console.log(listArray)
-        // console.log("index")
-        // console.log(index)
-        // console.log("quantity")
-        // console.log(quantity)
 
         //DISPATCH ACTION TO INCREMENT THE VALUE OF THE QUANTITY AN ITEM IN THE LIST ARRAY
         this.props.dispatch(incrementListItemAction(index, quantity))
@@ -260,7 +229,6 @@ class SearchResult extends Component {
 
             this.removeListItem(id);
             this.props.dispatch(itemDecrementAction());
-            // this.decrementListItem(id);
 
         }
 
@@ -336,19 +304,8 @@ class SearchResult extends Component {
     }
 
     getShoppingListItems = () => {
+
         let listArray = [...this.props.newlists];
-        // let productArray = [...this.props.products];
-        // let selectedItems = [];
-
-        // listArray.forEach(function (item) {
-        //     let productIndex = productArray.findIndex(x => x.id === item.id);
-        //     product = productArray[productIndex];
-        //     product.quantity = item.quantity;
-        //     selectedItems.push(product);
-
-        // });
-
-        // return selectedItems
         return listArray;
 
     }
@@ -356,20 +313,16 @@ class SearchResult extends Component {
 
     getTotal = () => {
         let listArray = [...this.props.newlists];
-        //let productArray = [...this.props.products];
         let total = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
+
         })
 
         let formattedTotal = this.formatAmount(total);
-
-        // this.props.dispatch(updateTotalAction(formattedTotal))
-
 
         return formattedTotal;
 
@@ -386,26 +339,20 @@ class SearchResult extends Component {
         let convenienceFee = 0;
         let deliveryFee = this.props.deliveryFee;
         let listArray = [...this.props.newlists];
-        //let productArray = [...this.props.products];
-
         let total = 0;
         let grandTotal = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            // convenienceFee += (5 / 100) * total;
-            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+
         })
 
         convenienceFee = (5 / 100) * total;
         grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
-
-        // this.props.dispatch(updateGrandTotalAction(formattedGrandTotal))
 
         return formattedGrandTotal;
     }
@@ -414,26 +361,18 @@ class SearchResult extends Component {
 
         let convenienceFee = 0;
         let listArray = [...this.props.newlists];
-        // let productArray = [...this.props.products];
-
         let total = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            // convenienceFee += (5 / 100) * total;
 
         })
 
         convenienceFee = (5 / 100) * total;
 
-
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
-
-        // this.props.dispatch(updateConvenienceFeeAction(formattedConvenienceFee))
-
 
         return formattedConvenienceFee;
 
@@ -447,13 +386,9 @@ class SearchResult extends Component {
 
         this.props.navigation.navigate("Checkout");
 
-        console.log("ScreenResult : gotoCheckoutScreen")
-
     }
 
     setShoppingListValue = () => {
-        console.log("setting shopping list values");
-
 
         //DISPATCH TOTAL FEE TO REDUX STORE
         this.props.dispatch(updateTotalAction(this.getTotal()));
@@ -463,8 +398,6 @@ class SearchResult extends Component {
 
         //DISPATCH GRAND TOTAL FEE TO REDUX STORE
         this.props.dispatch(updateGrandTotalAction(this.getGrandTotal()))
-
-
 
     }
 
@@ -478,19 +411,9 @@ class SearchResult extends Component {
                     <View style={styles.AppSearchResultMain}>
                         <SearchBar showDeliveryModal={false} />
                         <DeliveryPicker isDelivery={this.props.isDelivery} isPickup={this.props.isPickup} />
-                        {/* <CounterComponent /> */}
-                        {/* <View style={styles.AppSearchResultHeader}> */}
-                            {/* <View>
-                                <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
-                            </View> */}
-                            {/* <View>
-                                <FilterPicker />
-                            </View> */}
-                        {/* </View> */}
                         <View style={styles.AppSearchResultDisplayContainer}>
                             <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
                             <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
-
                                 <FlatList
                                     data={this.props.newproducts}
                                     extraData={this.props}
@@ -533,10 +456,7 @@ class SearchResult extends Component {
                         {/* SHOPPING LIST OPTIONS */}
                         <View style={styles.shoppingListOptions}>
                             <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList} />
-                            {/* <TouchableOpacity onPress={() => this.setShoppingListValue()}> */}
                             <CheckoutButton />
-                            {/* </TouchableOpacity> */}
-                            {/* <Button title="CHECKOUT" onPress={() => this.setShoppingListValue()} /> */}
                         </View>
 
                         {/* SELECTED PRODUCT ITEM LIST */}

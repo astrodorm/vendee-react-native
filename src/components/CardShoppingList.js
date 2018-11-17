@@ -31,7 +31,6 @@ class CardShoppingList extends Component {
                     </View>
                     <View style={styles.cardShoppingListStatusContainer}>
                         <Text style={styles.CardShoppingListStatus}>{this.props.orderStatus}</Text>
-                        {/* <Text style={styles.parcelID}>{this.props.parcelID}</Text> */}
                     </View>
                 </View>
             </View>

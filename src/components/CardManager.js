@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from './ButtonPrimaryAccent';
 import { connect } from 'react-redux';
@@ -30,16 +30,10 @@ class CardManager extends Component {
             <View>
                 <View style={styles.cards}>
                     <View style={styles.CardContainer}>
-                        {/* <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} /> */}
                         <Icon style={styles.cardIcon} name="creditcard" size={20} color="#d9d9d9" />
                         <Text style={styles.cardNumber}>***{this.props.last4digits}</Text>
                         <Text style={styles.cardOwner}>YOUR CARD</Text>
                     </View>
-                    {/* <View style={styles.CardContainer}>
-                        <Image style={styles.cardIcon} source={require('../../assets/images/mastercard-48.png')} />
-                        <Text style={styles.cardNumber}>... 6643</Text>
-                        <Text style={styles.cardOwner}>TIMMY MICKY</Text>
-                    </View> */}
                 </View>
                 <ButtonPrimaryAccent title="ADD CARD" icon="form" isActive={false} onSelected={this.addCard} />
             </View>
