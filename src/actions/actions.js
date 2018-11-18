@@ -57,6 +57,9 @@ export const FETCH_LIST_STARTED = 'FETCH_LIST_STARTED';
 export const FETCH_LIST_SUCCESS = 'FETCH_LIST_SUCCESS';
 export const FETCH_LIST_FAILED = 'FETCH_LIST_FAILED';
 export const FIRST_FETCH_PRODUCT_STARTED = 'FIRST_FETCH_PRODUCT_STARTED';
+export const FETCH_CATEGORY_LIST_STARTED = 'FETCH_CATEGORY_LIST_STARTED';
+export const FETCH_CATEGORY_LIST_SUCCESS = 'FETCH_CATEGORY_LIST_SUCCESS';
+export const FETCH_CATEGORY_LIST_FAILED = 'FETCH_CATEGORY_LIST_FAILED';
 
 
 
@@ -188,6 +191,14 @@ export const fetchListStartedAction = () => (
     }
 );
 
+
+export const fetchCategoryListStartedAction = () => (
+    {
+        type: FETCH_CATEGORY_LIST_STARTED
+
+    }
+);
+
 export const chargeUserStartedAction = () => (
     {
         type: CHARGE_USER_STARTED,
@@ -314,6 +325,14 @@ export const fetchListSuccessAction = (data) => (
 );
 
 
+export const fetchCategoryListSuccessAction = (data) => (
+    {
+        type: FETCH_CATEGORY_LIST_SUCCESS,
+        data
+    }
+);
+
+
 export const chargeUserSuccessAction = (data) => (
     {
         type: CHARGE_USER_SUCCESS,
@@ -400,6 +419,14 @@ export const createOrderFailedAction = (error) => (
 export const fetchListFailedAction = (error) => (
     {
         type: FETCH_LIST_FAILED,
+        error
+    }
+);
+
+
+export const fetchCategoryListFailedAction = (error) => (
+    {
+        type: FETCH_CATEGORY_LIST_FAILED,
         error
     }
 );
@@ -735,6 +762,29 @@ export const fetchListAction = (userToken) => (dispatch) =>
             })
             .catch(err => {
                 dispatch(fetchListFailedAction(err));
+                reject(err)
+            });
+    });
+
+
+export const fetchCategoryListAction = () => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(fetchCategoryListStartedAction());
+
+        // let config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + userToken
+        //     }
+        // }
+
+        axios.get(`${BASE_URL}/category/`
+        )
+            .then(res => {
+                dispatch(fetchCategoryListSuccessAction(res));
+                resolve(res);
+            })
+            .catch(err => {
+                dispatch(fetchCategoryListFailedAction(err));
                 reject(err)
             });
     });

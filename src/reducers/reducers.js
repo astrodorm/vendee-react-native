@@ -51,7 +51,11 @@ import {
     FETCH_LIST_STARTED,
     FETCH_LIST_SUCCESS,
     FETCH_LIST_FAILED,
-    FIRST_FETCH_PRODUCT_STARTED
+    FIRST_FETCH_PRODUCT_STARTED,
+    FETCH_CATEGORY_LIST_STARTED,
+    FETCH_CATEGORY_LIST_SUCCESS,
+    FETCH_CATEGORY_LIST_FAILED,
+
 } from '../actions/actions';
 
 const initialState = {
@@ -109,7 +113,10 @@ const initialState = {
     isFetchListSuccess: false,
     fetchListResponse: [],
     shoppingList: [],
-    deliveryFee: 0
+    deliveryFee: 0,
+    isfetchingCategoryList: false,
+    newCategories: [],
+    categoryListResponse: []
 }
 
 
@@ -142,6 +149,10 @@ function products(state = initialState, action) {
                 searchText: action.query,
                 isLoadingSearchBar: true,
             });
+        case FETCH_CATEGORY_LIST_STARTED:
+            return Object.assign({}, state, {
+                isfetchingCategoryList: true,
+            });
         case FIRST_FETCH_PRODUCT_STARTED:
             return Object.assign({}, state, {
                 isFirstSearch: action.isFirst
@@ -151,11 +162,22 @@ function products(state = initialState, action) {
                 isLoadingSearchBar: false,
                 newproducts: [...action.data],
             });
+        case FETCH_CATEGORY_LIST_SUCCESS:
+            return Object.assign({}, state, {
+                isfetchingCategoryList: false,
+                newCategories: action.data,
+            });
         case FETCH_PRODUCT_FAILED:
             return Object.assign({}, state, {
                 isLoadingSearchBar: false,
                 responseStatus: action.payload.error.status,
                 responseMessage: action.payload.error.message
+            });
+        case FETCH_CATEGORY_LIST_FAILED:
+            return Object.assign({}, state, {
+                isfetchingCategoryList: false,
+                // categoryListResponseStatus: action.error.status,
+                categoryListResponse: [...action.error]
             });
         default:
             return state;

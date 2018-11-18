@@ -4,6 +4,7 @@ import ScreenSearch from './ScreenSearch';
 import ScreenShoppingList from './ScreenShoppingList';
 import ScreenProfile from './ScreenProfile';
 import Icon from 'react-native-vector-icons/AntDesign';
+import ScreenCategory from './ScreenCategory';
 
 
 export default createBottomTabNavigator({
@@ -13,6 +14,16 @@ export default createBottomTabNavigator({
             tabBarLabel: '',
             tabBarIcon: ({ tintColor }) => (
                 <Icon name="home" size={22} color={tintColor} />
+            )
+        }
+    },
+
+    Category: {
+        screen: ScreenCategory,
+        navigationOptions: {
+            tabBarLabel: '',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="appstore-o" size={22} color={tintColor} />
             )
         }
     },

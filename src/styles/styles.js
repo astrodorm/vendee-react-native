@@ -1142,12 +1142,27 @@ const styles = StyleSheet.create({
         height: 350
     },
 
+    scrollViewfullHeight: {
+        height: 450
+    },
+
     screensplash: {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: navyBlueTheme1,
         height: fullHeight,
         width: fullWidth
+    },
+
+    CategoryItem: {
+        padding: 16,
+        borderBottomColor: GrayDarkThemeBtnBg,
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
+        fontFamily: Fonts.MPLUSRegular,
+        fontSize: 16
     }
 
 });
