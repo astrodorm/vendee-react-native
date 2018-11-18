@@ -829,13 +829,24 @@ const styles = StyleSheet.create({
     AppCard: {
         backgroundColor: "#fff",
         marginTop: 24,
-        // marginBottom:124,
         padding: 24,
         width: fullWidth * 0.9,
         borderColor: "#EFEFEF",
         borderWidth: .5,
         borderRadius: 10,
-        //  height:fullHeight * 1.5
+    },
+
+    CategoryAppCard: {
+        backgroundColor: "#fff",
+        marginTop: 24,
+        width: fullWidth * 0.9,
+        borderColor: "#EFEFEF",
+        borderWidth: .5,
+        borderRadius: 10,
+    },
+
+    cardPadding: {
+        padding: 24
     },
 
     AppCardHeader: {

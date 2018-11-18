@@ -60,6 +60,9 @@ export const FIRST_FETCH_PRODUCT_STARTED = 'FIRST_FETCH_PRODUCT_STARTED';
 export const FETCH_CATEGORY_LIST_STARTED = 'FETCH_CATEGORY_LIST_STARTED';
 export const FETCH_CATEGORY_LIST_SUCCESS = 'FETCH_CATEGORY_LIST_SUCCESS';
 export const FETCH_CATEGORY_LIST_FAILED = 'FETCH_CATEGORY_LIST_FAILED';
+export const FETCH_CATEGORY_PRODUCTS_STARTED = 'FETCH_CATEGORY_PRODUCTS_STARTED';
+export const FETCH_CATEGORY_PRODUCTS_SUCCESS = 'FETCH_CATEGORY_PRODUCTS_SUCCESS';
+export const FETCH_CATEGORY_PRODUCTS_FAILED = 'FETCH_CATEGORY_PRODUCTS_FAILED';
 
 
 
@@ -199,6 +202,13 @@ export const fetchCategoryListStartedAction = () => (
     }
 );
 
+export const fetchCategoryProductsStartedAction = () => (
+    {
+        type: FETCH_CATEGORY_PRODUCTS_STARTED
+
+    }
+);
+
 export const chargeUserStartedAction = () => (
     {
         type: CHARGE_USER_STARTED,
@@ -333,6 +343,14 @@ export const fetchCategoryListSuccessAction = (data) => (
 );
 
 
+export const fetchCategoryProductsSuccessAction = (data) => (
+    {
+        type: FETCH_CATEGORY_PRODUCTS_SUCCESS,
+        data
+    }
+);
+
+
 export const chargeUserSuccessAction = (data) => (
     {
         type: CHARGE_USER_SUCCESS,
@@ -427,6 +445,13 @@ export const fetchListFailedAction = (error) => (
 export const fetchCategoryListFailedAction = (error) => (
     {
         type: FETCH_CATEGORY_LIST_FAILED,
+        error
+    }
+);
+
+export const fetchCategoryProductsFailedAction = (error) => (
+    {
+        type: FETCH_CATEGORY_PRODUCTS_FAILED,
         error
     }
 );
@@ -771,12 +796,6 @@ export const fetchCategoryListAction = () => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(fetchCategoryListStartedAction());
 
-        // let config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + userToken
-        //     }
-        // }
-
         axios.get(`${BASE_URL}/category/`
         )
             .then(res => {
@@ -785,6 +804,22 @@ export const fetchCategoryListAction = () => (dispatch) =>
             })
             .catch(err => {
                 dispatch(fetchCategoryListFailedAction(err));
+                reject(err)
+            });
+    });
+
+    export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(fetchCategoryProductsStartedAction());
+
+        axios.get(`${BASE_URL}/products/category/${categoryID}`
+        )
+            .then(res => {
+                dispatch(fetchCategoryProductsSuccessAction(res.data.data));
+                resolve(res.data);
+            })
+            .catch(err => {
+                dispatch(fetchCategoryProductsFailedAction(err));
                 reject(err)
             });
     });

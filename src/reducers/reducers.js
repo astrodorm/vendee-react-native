@@ -55,6 +55,9 @@ import {
     FETCH_CATEGORY_LIST_STARTED,
     FETCH_CATEGORY_LIST_SUCCESS,
     FETCH_CATEGORY_LIST_FAILED,
+    FETCH_CATEGORY_PRODUCTS_STARTED,
+    FETCH_CATEGORY_PRODUCTS_SUCCESS,
+    FETCH_CATEGORY_PRODUCTS_FAILED,
 
 } from '../actions/actions';
 
@@ -116,7 +119,11 @@ const initialState = {
     deliveryFee: 0,
     isfetchingCategoryList: false,
     newCategories: [],
-    categoryListResponse: []
+    categoryListResponse: [],
+    isfetchingCategoryProducts : false,
+    categoryProductsResponse : [],
+    newCategoryProducts : []
+
 }
 
 
@@ -153,6 +160,10 @@ function products(state = initialState, action) {
             return Object.assign({}, state, {
                 isfetchingCategoryList: true,
             });
+        case FETCH_CATEGORY_PRODUCTS_STARTED:
+            return Object.assign({}, state, {
+                isfetchingCategoryProducts: true,
+            });
         case FIRST_FETCH_PRODUCT_STARTED:
             return Object.assign({}, state, {
                 isFirstSearch: action.isFirst
@@ -167,6 +178,11 @@ function products(state = initialState, action) {
                 isfetchingCategoryList: false,
                 newCategories: [...action.data],
             });
+        case FETCH_CATEGORY_PRODUCTS_SUCCESS:
+            return Object.assign({}, state, {
+                isfetchingCategoryProducts: false,
+                newCategoryProducts: [...action.data],
+            });
         case FETCH_PRODUCT_FAILED:
             return Object.assign({}, state, {
                 isLoadingSearchBar: false,
@@ -176,8 +192,12 @@ function products(state = initialState, action) {
         case FETCH_CATEGORY_LIST_FAILED:
             return Object.assign({}, state, {
                 isfetchingCategoryList: false,
-                // categoryListResponseStatus: action.error.status,
                 categoryListResponse: [...action.error]
+            });
+        case FETCH_CATEGORY_PRODUCTS_FAILED:
+            return Object.assign({}, state, {
+                isfetchingCategoryProducts: false,
+                categoryProductsResponse: [...action.error]
             });
         default:
             return state;
