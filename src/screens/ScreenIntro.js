@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Image, Animated, TextInput, TouchableOpacity, BackHandler, AsyncStorage } from 'react-native';
+import { Text, View, Image, Animated, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import { styles } from '../styles/styles';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -15,61 +15,18 @@ const FIRSTNAME_STORAGE_KEY = "FIRSTNAME";
 const LASTNAME_STORAGE_KEY = "LASTNAME";
 const PHONE_STORAGE_KEY = "PHONE";
 
-//const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
-
-
 
 class ScreenIntro extends Component {
 
     componentWillMount() {
         this.animatedValue = new Animated.Value(0);
-        //this.retrieveAndSetUserTokenBoolean(USER_TOKEN_STORAGE_KEY);
 
     }
 
-    componentWillUnmount() {
-        //   BackHandler.removeEventListener('hardwareBackPress', true);
-    }
-
-
-    componentDidMount() {
-        // BackHandler.addEventListener('hardwareBackPress', true);
-        console.log("this.state.isTokenAvailable");
-        console.log(this.state.isTokenAvailable);
-
-        // this.retrieveAndSetUserTokenBoolean(USER_TOKEN_STORAGE_KEY);
-
-        // this.state.isTokenAvailable === true ? this.props.navigation.navigate("MainAppScreen") : null;
-    }
-
-
-    // retrieveAndSetUserTokenBoolean = async (storageKey) => {
-
-    //     try {
-    //         const value = await AsyncStorage.getItem(storageKey);
-    //         if (value !== null) {
-
-    //             this.setState({ isTokenAvailable: true })
-
-    //             this.props.navigation.navigate("MainAppScreen");
-
-
-
-    //         }
-    //     } catch (error) {
-    //         // Error retrieving data
-    //         console.log(error)
-    //     }
-
-    // }
 
     componentWillReceiveProps(nextProps) {
 
-        console.log("this.props.isCreateUserSuccess");
-        console.log(nextProps.isCreateUserSuccess);
         let userToken = nextProps.user.token;
-        // let email = nextProps.user.email;
-        // let phoneNumber = nextProps.user.phoneNumber;
 
         nextProps.isCreateUserSuccess === true ? this.storeUserCredentials(userToken) : null;
     }
@@ -84,9 +41,6 @@ class ScreenIntro extends Component {
 
         //SAVE USER EMAIL
         this.storeData(EMAIL_STORAGE_KEY, emailAddress);
-
-        //SAVE USER EMAIL
-       // this.storeData(PHONE_STORAGE_KEY, phoneNumber);
 
         //NAVIGATE TO MAIN APP
         this.animateToSuccessView()
@@ -129,10 +83,6 @@ class ScreenIntro extends Component {
     }
 
 
-    sayhi = () => {
-        console.log('sayhi')
-    }
-
     gotoSignScreen = () => {
         this.props.navigation.push("Login")
     }
@@ -158,7 +108,6 @@ class ScreenIntro extends Component {
             this.setState({ introStage: 2, showIntroPhoneNumber: false, showIntroEmail: true });
 
             let introStage = this.state.introStage;
-            // console.log("animateToEmailView > introStage : " + introStage);
 
             Animated.timing(this.animatedValue, { toValue: 255, duration: 800 }).start()
         });
@@ -172,7 +121,6 @@ class ScreenIntro extends Component {
             this.setState({ introStage: 3, showIntroEmail: false, showIntroSuccess: true });
 
             let introStage = this.state.introStage;
-            // console.log("animateToEmailView > introStage : " + introStage);
 
             Animated.timing(this.animatedValue, { toValue: 255, duration: 800 }).start()
 
@@ -192,11 +140,9 @@ class ScreenIntro extends Component {
 
         switch (introStage) {
             case 1:
-                // this.animateToEmailView();
                 this.validateTelephone();
                 break;
             case 2:
-                // this.animateToSuccessView();
                 this.validateEmail()
                 break;
             case 3:
@@ -229,14 +175,13 @@ class ScreenIntro extends Component {
 
 
     validateEmail = () => {
-        //const isEmail = (email = null) => {
 
         let email = this.state.email;
         const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         let isValidEmail = regex.test(email);
         isValidEmail === true ? this.SignUpUser() : this.setState({ showEmailError: true })
-        // }
+
     }
 
 
@@ -252,7 +197,6 @@ class ScreenIntro extends Component {
 
         this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email, oauth))
 
-        console.log("firstname, lastname, phoneNumber, email, oauth", firstname, lastname, phoneNumber, email, oauth)
     }
 
     storeData = async (key, value) => {
@@ -264,17 +208,7 @@ class ScreenIntro extends Component {
     }
 
 
-    // showErrorModal = (message) => {
-    //     //SET ERROR MESSAGE
-    //     this.setState({ error: message });
-
-    //     //SHOW MODAL FOR ERROR MESSAGES
-    //     this.refs.RefIntroModal.open();
-
-    // }
-
     render() {
-
 
         // VARIABLE TO INTERPOLATE COLOR
         const interpolateColor = this.animatedValue.interpolate({
@@ -288,7 +222,6 @@ class ScreenIntro extends Component {
         }
 
         return (
-            // <SafeAreaView>
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
                     <View>
@@ -297,7 +230,6 @@ class ScreenIntro extends Component {
                     </View>
                     <View style={styles.introContent}>
 
-                        {/* SHOW CONTENTS ON LOAD */}
                         {
                             this.state.showIntroHeader &&
                             <Animatable.View ref={this.handleRefHeaderContents}>
@@ -318,7 +250,6 @@ class ScreenIntro extends Component {
                             </Animatable.View>
                         }
 
-                        {/* SHOW ONBOARDIND CARDS ON animateToPhoneNumberView PRESSED */}
                         {
                             this.state.showIntroCards &&
                             <Animatable.View >
@@ -348,7 +279,6 @@ class ScreenIntro extends Component {
                                         {this.state.showIntroEmail &&
                                             <Animatable.View ref={this.handleRefIntroEmail}>
                                                 <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
-                                                {/* <Icon name="arrow-left" size={30} style={styles.icon} onPress={this.animateBackToPhoneNumberView} /> */}
                                                 <View>
                                                     <Text style={styles.introCardHeader}>Also,</Text>
                                                     <Text style={styles.introCardHeader}>your email too.</Text>
@@ -395,7 +325,6 @@ class ScreenIntro extends Component {
                         }
                     </View>
                 </View>
-                {/* <View> */}
                 <Modal
                     style={[styles.modal]}
                     position={"center"}
@@ -407,18 +336,13 @@ class ScreenIntro extends Component {
                 >
                     <View>
                         <Text style={styles.modalHeader}> Oops !! </Text>
-                        {/* <Text>{this.state.error}</Text> */}
                     </View>
                 </Modal>
-                {/* </View> */}
             </View>
-            // </SafeAreaView>
         )
     }
 
 }
-
-//export default ScreenIntro;
 
 
 const mapStateToProps = state => ({

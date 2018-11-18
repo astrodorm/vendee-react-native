@@ -8,15 +8,6 @@ import { connect } from 'react-redux';
 class ScreenCheckout extends Component {
 
 
-    componentDidMount() {
-        //  BackHandler.addEventListener('hardwareBackPress', true);
-
-    }
-
-    componentWillUnmount() {
-        // BackHandler.removeEventListener('hardwareBackPress', true);
-    }
-
     constructor(props) {
         super(props)
 
@@ -54,12 +45,9 @@ class ScreenCheckout extends Component {
     }
 }
 
-//export default ScreenCheckout;
 
 const mapStateToProps = state => ({
 
-    // isLoadingSearchBar: state.products.isLoadingSearchBar,
-    // responseMessage: state.users.responseMessage,
 
 })
 

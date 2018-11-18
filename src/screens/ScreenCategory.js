@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, BackHandler } from 'react-native';
+import { Text, View } from 'react-native';
 
 class ScreenCategory extends Component {
 

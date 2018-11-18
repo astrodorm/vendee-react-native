@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button, TextInput, AsyncStorage, KeyboardAvoidingView, BackHandler } from 'react-native';
+import { Text, View, ScrollView, TextInput, AsyncStorage } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -10,7 +10,6 @@ import AddressManager from '../components/AddressManager';
 import TelephoneManager from '../components/TelephoneManager';
 import PasswordManger from '../components/PasswordManager';
 import CardManager from '../components/CardManager';
-import CouponManger from '../components/CouponManger';
 import { connect } from 'react-redux';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
@@ -24,12 +23,8 @@ import {
     chargeUserAction,
     chargeUserPinAction,
     chargeUserOtpAction,
-    addToCartAction,
-    addToCartAndCreateOrderAction,
     createOrderAction,
-    newAddToCartAction,
     promisedAddToCartAction,
-    isFirstFetchStartedAction
 } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
@@ -48,40 +43,11 @@ class ScreenCheckout extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        // console.log("nextProps.newproducts");
-        // console.log(nextProps.newproducts);
-        // console.log("this.props.newproducts")
-        // console.log(this.props.newproducts)
-        // console.log(nextProps.isVisibleAddAddressManager)
         nextProps.isVisibleAddAddressManager === true ? this.openAddDialog() : null;
-        // console.log(nextProps.isVisibleAddTelephoneManager)
         nextProps.isVisibleAddTelephoneManager === true ? this.openAddDialog() : null;
-        // console.log(nextProps.isVisibleAddCardManager)
         nextProps.isVisibleAddCardManager === true ? this.openAddDialog() : null;
-
         nextProps.isVisibleAddPasswordManager === true ? this.openAddDialog() : null;
-
         nextProps.isUpdatingUser === true ? this.showPreloader() : this.hidePreloader();
-
-        // CHECK IF TO SHOW MODAL PIN
-        // nextProps.showModalPin === true ? this.showPinModal() : console.log("Not showing pin")
-
-        //    console.log("nextProps.showModalPin");
-        //    console.log(nextProps.showModalPin);
-
-        //SAVE CHARGE RESPONSE TO STATE
-        //this.setState({chargeResponse : nextProps.chargeResponse})
-
-        //CHECK FOR SUCCESS 200
-        // nextProps.chargeResponse.status === 200 ? this.prepareCart(nextProps.orderCount) : null;
-
-        //CHECK FOR WHEN PIN IS REQUIRED
-        // nextProps.chargeResponse.status === 201 ? this.showPinModal() : null;
-
-
-        //CHECK FOR WHEN OTP IS REQUIRED
-        // nextProps.chargeResponse.status === 202 ? this.showOtpModal() : null;
-
 
     }
 
@@ -90,12 +56,8 @@ class ScreenCheckout extends Component {
 
     componentDidMount() {
 
-        //  BackHandler.addEventListener('hardwareBackPress', true);
-
-
         //RETRIEVE STORED ADDRESS AND SET STATE
         this.retrieveAndSetAddressData(ADDRESS_STORAGE_KEY);
-
 
         //RETRIEVE STORED PHONE NUMBER AND SET STATE
         this.retrieveAndSetPhoneData(PHONE_STORAGE_KEY);
@@ -109,16 +71,7 @@ class ScreenCheckout extends Component {
         //RETRIEVE AND SET PASSWORD
         this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY)
 
-
-        // console.log("componentDidMount")
-        // console.log(storedAddress);
-        // console.dir(storedAddress)
     }
-
-    componentWillUnmount() {
-        //   BackHandler.removeEventListener('hardwareBackPress', true);
-    }
-
 
 
     constructor(props) {
@@ -160,20 +113,15 @@ class ScreenCheckout extends Component {
 
     getTotal = () => {
         let listArray = [...this.props.newlists];
-        //let productArray = [...this.props.products];
         let total = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
         })
 
         let formattedTotal = this.formatAmount(total);
-
-        // this.props.dispatch(updateTotalAction(formattedTotal))
-
 
         return formattedTotal;
 
@@ -186,26 +134,20 @@ class ScreenCheckout extends Component {
         let convenienceFee = 0;
         let deliveryFee = this.props.deliveryFee;
         let listArray = [...this.props.newlists];
-        //let productArray = [...this.props.products];
-
         let total = 0;
         let grandTotal = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            // convenienceFee += (5 / 100) * total;
-            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+
         })
 
         convenienceFee = (5 / 100) * total;
         grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
-
-        // this.props.dispatch(updateGrandTotalAction(formattedGrandTotal))
 
         return formattedGrandTotal;
     }
@@ -215,18 +157,14 @@ class ScreenCheckout extends Component {
         let convenienceFee = 0;
         let deliveryFee = this.props.deliveryFee;
         let listArray = [...this.props.newlists];
-        //let productArray = [...this.props.products];
-
         let total = 0;
         let grandTotal = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            // convenienceFee += (5 / 100) * total;
-            // grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+
         })
 
         convenienceFee = (5 / 100) * total;
@@ -234,10 +172,7 @@ class ScreenCheckout extends Component {
 
         let unformattedGrandTotalKobo = this.convertToKobo(grandTotal);
 
-        // this.props.dispatch(updateGrandTotalAction(formattedGrandTotal))
-
         return unformattedGrandTotalKobo;
-
 
     }
 
@@ -251,26 +186,18 @@ class ScreenCheckout extends Component {
 
         let convenienceFee = 0;
         let listArray = [...this.props.newlists];
-        // let productArray = [...this.props.products];
-
         let total = 0;
 
         listArray.forEach(function (item) {
-            // let productIndex = productArray.findIndex(x => x.id === item.id);
-            // product = productArray[productIndex];
+
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-            // convenienceFee += (5 / 100) * total;
 
         })
 
         convenienceFee = (5 / 100) * total;
 
-
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
-
-        // this.props.dispatch(updateConvenienceFeeAction(formattedConvenienceFee))
-
 
         return formattedConvenienceFee;
 
@@ -308,52 +235,25 @@ class ScreenCheckout extends Component {
     }
 
 
-    //prepareCart = (orderCount) => {
     prepareCart = () => {
 
         let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
-        // let totalLengthOfOrder = listArray.length;
-
-        // let cartIndex = this.state.cartIndex;
-
-
-
-        // console.log("orderCount");
-        // console.log(orderCount);
-
-
-        // console.log("cartIndex");
-        // console.log(this.state.cartIndex);
-
-
-        // let productID = listArray[cartIndex].id;
-        // let quantity = listArray[cartIndex].quantity;
         this.showPreloader();
 
         for (let index = 0; index < listArray.length; index++) {
-            // const element = array[index];
+
             this.addToCart(userToken, listArray[index].id, listArray[index].quantity)
         }
-
-        // listArray.forEach(function (item) {
-
-        //     this.addToCart(userToken, item.id, item.quantity)
-        // })
-
 
     }
 
 
     addToCart = (userToken, productID, quantity) => {
 
-        console.log("addToCart")
-
-        // this.setState({ orderCount: this.state.orderCount + 1 });
-        // this.props.dispatch(addToCartAndCreateOrderAction(userToken, productID, quantity))
+        // console.log("addToCart")
 
         this.props.dispatch(promisedAddToCartAction(userToken, productID, quantity)).then(res => {
-            // showToast('Todo item was successfully updated');
 
             this.createOrder(userToken)
         });
@@ -362,11 +262,10 @@ class ScreenCheckout extends Component {
     }
 
     createOrder = (userToken) => {
-        console.log("createdOrder");
+        // console.log("createdOrder");
 
-        //this.showPreloader()
         this.props.dispatch(createOrderAction(userToken)).then(res => {
-            //   this.setState({ orderCount: this.state.orderCount + 1 });
+
             this.checkOrderCount();
 
         }).catch(err => console.log(err));
@@ -378,10 +277,10 @@ class ScreenCheckout extends Component {
         let lengthOfOrder = listArray.length;
         let orderCount = this.state.orderCount;
 
-        console.log("lengthOfOrder");
-        console.log(lengthOfOrder);
-        console.log("orderCount");
-        console.log(orderCount);
+        // console.log("lengthOfOrder");
+        // console.log(lengthOfOrder);
+        // console.log("orderCount");
+        // console.log(orderCount);
 
         lengthOfOrder === orderCount ? this.gotoSuccessPage() : null;
 
@@ -390,9 +289,7 @@ class ScreenCheckout extends Component {
     }
 
     gotoSuccessPage = () => {
-        console.log("GOING TO SUCCESS PAGE");
-        //  CheckoutMessage
-       // this.props.dispatch(isFirstFetchStartedAction(false));
+
         this.hidePreloader();
         this.props.navigation.navigate("CheckoutMessage");
     }
@@ -420,7 +317,7 @@ class ScreenCheckout extends Component {
 
 
     setManagersVisibility = () => {
-        console.log("setManagerVisibility")
+
         this.props.dispatch(toggleAddModalAddressManager(false));
         this.props.dispatch(toggleAddModalTelephoneManager(false));
         this.props.dispatch(toggleAddModalCardManager(false));
@@ -593,9 +490,7 @@ class ScreenCheckout extends Component {
 
     updateAddress = () => {
 
-        //SAVE NEW CARD DETAILS TO THE STATE
-        // this.setState({ cardCVV })
-
+        //SAVE ADDRESS  DETAILS TO THE STATE
         let address = this.state.address;
         this.storeData(ADDRESS_STORAGE_KEY, address);
         console.log("updateAddress");
@@ -609,9 +504,7 @@ class ScreenCheckout extends Component {
 
     updatePassword = () => {
 
-        //SAVE NEW CARD DETAILS TO THE STATE
-        // this.setState({ cardCVV })
-
+        //SAVE PASSWORD DETAILS TO THE STATE
         let password = this.state.password;
         this.storeData(OAUTH, password);
         console.log("updatePassword");
@@ -650,8 +543,6 @@ class ScreenCheckout extends Component {
         this.closeAddDialog()
     }
 
-    //TODO
-    //SAVE TOKEN WHEN ORDER IS SUCCESSFUL
 
     validateInput = () => {
         let address = this.state.address;
@@ -676,14 +567,6 @@ class ScreenCheckout extends Component {
 
         address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
 
-
-        // console.log(address);
-        // console.log(phoneNumber);
-        // console.log(cardNumber);
-        // console.log(total);
-        // console.log(cvv);
-        // console.log(expiryMonth);
-        // console.log(expiryYear);
     }
 
     showErrorDialog = (message) => {
@@ -711,7 +594,6 @@ class ScreenCheckout extends Component {
 
 
     updateUserProfile = () => {
-        console.log("updateUserProfile")
 
         let address = this.state.address;
         let oauth = this.state.password;
@@ -721,7 +603,7 @@ class ScreenCheckout extends Component {
         //UNCOMMENT TO SHOW PRELOADER
         this.showPreloader()
 
-       // UNCOMMENT TO DISPATCH ACTION TO UPDATE USER
+        // UNCOMMENT TO DISPATCH ACTION TO UPDATE USER
         this.props.dispatch(updateUserAction(userToken, address, oauth)).then(res => {
 
             //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
@@ -743,22 +625,12 @@ class ScreenCheckout extends Component {
         let expiry_year = this.state.expiryYear;
         let userToken = this.state.userToken;
 
-       // this.showPreloader()
-
-        // this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year))
 
         this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year)).then(res => {
-            // showToast('Todo item was successfully updated');
-            //    console.log("Promised response")
-            //    console.log("res.data.status");
-            //    console.log(res.data.status);
-            //    console.log("res")
-            //    console.log(res)
 
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 201 ? this.showPinModal() : null;
-            //this.createOrder(userToken);
 
             this.hidePreloader();
         });
@@ -773,31 +645,16 @@ class ScreenCheckout extends Component {
         let pin = this.state.cardPin;
         let userToken = this.state.userToken;
 
-        // console.log("reference");
-        // console.log(reference);
-        // console.log("pin");
-        // console.log(pin);
         this.showPreloader();
-        //  this.props.dispatch(chargeUserPinAction(userToken, reference, pin))
-
 
         this.props.dispatch(chargeUserPinAction(userToken, reference, pin)).then(res => {
-            // showToast('Todo item was successfully updated');
-            //    console.log("Promised response")
-            //    console.log("res.data.status");
-            //    console.log(res.data.status);
-            //    console.log("res")
-            //    console.log(res)
 
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 202 ? this.showOtpModal() : null;
-            //this.createOrder(userToken)
+
             this.hidePreloader()
         });
-
-
-
 
         this.closePinDialog()
 
@@ -808,31 +665,15 @@ class ScreenCheckout extends Component {
         let otp = this.state.otp;
         let userToken = this.state.userToken;
 
-        console.log("reference");
-        console.log(reference);
-        console.log("otp");
-        console.log(otp);
-
-        // this.props.dispatch(chargeUserOtpAction(userToken, reference, otp));
         this.showPreloader()
 
         this.props.dispatch(chargeUserOtpAction(userToken, reference, otp)).then(res => {
-            // showToast('Todo item was successfully updated');
-            //    console.log("Promised response")
-            //    console.log("res.data.status");
-            //    console.log(res.data.status);
-            //    console.log("res")
-            //    console.log(res)
 
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
-            //  res.data.status === 202 ? this.showOtpModal() : null;
-            //this.createOrder(userToken);
 
             this.hidePreloader()
         });
-
-
 
         this.closeOtpDialog();
 
@@ -866,7 +707,6 @@ class ScreenCheckout extends Component {
                                     <Collapsible collapsed={this.state.isVisibleAddress}>
                                         <AddressManager address={this.state.address} />
                                     </Collapsible>
-                                    {/* <Button title="open dialog" onPress={() => this.openAddDialog()} /> */}
                                 </View>
                                 <View>
                                     <AccordionHeader title="Phone Number" subtitle={this.state.phoneNumber} onSelected={() => { this.toggleView("phonenumber") }} />
@@ -886,12 +726,6 @@ class ScreenCheckout extends Component {
                                         <CardManager last4digits={this.state.last4digits} />
                                     </Collapsible>
                                 </View>
-                                {/* <View>
-                                    <AccordionHeader title="Use Coupon" subtitle="MYFIRSTORDER applied" onSelected={() => { this.toggleView("coupon") }} />
-                                    <Collapsible collapsed={this.state.isVisibleCoupon}>
-                                        <CouponManger isCheckboxVisible={true} />
-                                    </Collapsible>
-                                </View> */}
                                 <View>
                                     <Text style={styles.AppCardSubtitle}>SHOPPING LIST DETAILS</Text>
                                     <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
@@ -931,7 +765,6 @@ class ScreenCheckout extends Component {
                         <View style={styles.modalCheckoutContent}>
                             <View>
                                 <TextInput style={styles.textInput} placeholder="Enter New Password" onChangeText={this.handlePassword} />
-                                {/* <Text>To make delivery quicker, be as descriptive as possible</Text> */}
                             </View>
 
                             <View style={styles.buttonGroup}>
@@ -977,7 +810,6 @@ class ScreenCheckout extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={true}
-                // onClosed={this.setManagersVisibility}
                 >
                     <Text style={styles.errorHeader}>0ops!. Something Went Wrong</Text>
                     <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
@@ -991,7 +823,6 @@ class ScreenCheckout extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={false}
-                // onClosed={this.setManagersVisibility}
                 >
                     <Progress.CircleSnail color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
 
@@ -1005,7 +836,6 @@ class ScreenCheckout extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={false}
-                // onClosed={this.setManagersVisibility}
                 >
                     <View>
                         <View>
@@ -1027,7 +857,6 @@ class ScreenCheckout extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={false}
-                // onClosed={this.setManagersVisibility}
                 >
                     <View>
                         <View>
@@ -1046,7 +875,6 @@ class ScreenCheckout extends Component {
     }
 }
 
-//export default ScreenCheckout;
 
 
 const mapStateToProps = state => ({

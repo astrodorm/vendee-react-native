@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Button, AsyncStorage, FlatList, TouchableOpacity, BackHandler } from 'react-native';
+import { Text, View, ScrollView, AsyncStorage, FlatList, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import CardShoppingList from '../components/CardShoppingList';
 import { connect } from 'react-redux';
@@ -25,15 +25,7 @@ class ScreenShoppingList extends Component {
         //RETRIEVE AND SET PASSWORD
         this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY);
 
-        //  BackHandler.addEventListener('hardwareBackPress', true);
-
     }
-
-
-    componentWillUnmount() {
-        //  BackHandler.removeEventListener('hardwareBackPress', true);
-    }
-
 
 
     constructor(props) {
@@ -62,30 +54,20 @@ class ScreenShoppingList extends Component {
         }
     }
 
-    getTodaysDate = () => {
-        return moment("2018-11-08T21:24:06.011Z").calendar();
+    getTodaysDate = (date) => {
+        return moment(date).calendar();
     }
 
-
-
-    placeOrder = () => {
-        console.log("placeOrder")
-    }
 
     refreshList = () => {
-
-        //this.showPreloader();
 
         let userToken = this.state.userToken;
 
         this.props.dispatch(fetchListAction(userToken)).then(res => {
-            console.log(res);
 
             this.setState({ isLoadingText: false })
         });
 
-        console.log("this.props.shoppingList");
-        console.log(this.props.shoppingList);
     }
 
 
@@ -105,7 +87,6 @@ class ScreenShoppingList extends Component {
 
     _renderShoppingListItem = ({ item }) => (
 
-        // <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
         <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} thumbnail={BASE_THUMBNAIL_URL + item.productID[0].thumbnail} title={item.productID[0].productName} price={item.productID[0].price} quantity={item.productID[0].quantity} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
@@ -118,7 +99,6 @@ class ScreenShoppingList extends Component {
 
                 <View style={styles.AppMain}>
                     <View style={styles.shoppingListMainContainer}>
-                        {/* <Button title='How you dey ?' onPress={this.refreshList}></Button> */}
                         <View style={styles.AppCardHeaderContainer}>
                             <Text style={styles.AppCardHeader}>Shopping List</Text>
                             <TouchableOpacity onPress={this.refreshList}>
@@ -150,7 +130,6 @@ class ScreenShoppingList extends Component {
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={false}
-                // onClosed={this.setManagersVisibility}
                 >
                     <Progress.CircleSnail color={['#f44950', '#FFB76F', '#00316E']} duration={400} size={32} />
 
