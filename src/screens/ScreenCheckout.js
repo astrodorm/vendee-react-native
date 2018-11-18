@@ -240,22 +240,42 @@ class ScreenCheckout extends Component {
         let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
         this.showPreloader();
+        let cartObj = {}
+        let cartArray = []
 
         for (let index = 0; index < listArray.length; index++) {
 
-            this.addToCart(userToken, listArray[index].id, listArray[index].quantity)
+            // this.addToCart(userToken, listArray[index].id, listArray[index].quantity);
+
+            cartArray.push({
+                productID: listArray[index].id,
+                quantity: listArray[index].quantity,
+
+            });
+
         }
+
+        this.addToCart(userToken, cartArray);
+
+        // this.props.dispatch(promisedAddToCartAction(userToken, cartArray)).then(res => {
+        //     console.log(res)
+        //     this.createOrder(userToken)
+        // }).catch(err => {
+        //     console.log(err)
+        // });
+
 
     }
 
 
-    addToCart = (userToken, productID, quantity) => {
+    addToCart = (userToken, cartArray) => {
 
-        // console.log("addToCart")
 
-        this.props.dispatch(promisedAddToCartAction(userToken, productID, quantity)).then(res => {
-
+        this.props.dispatch(promisedAddToCartAction(userToken, cartArray)).then(res => {
+            console.log(res)
             this.createOrder(userToken)
+        }).catch(err => {
+            console.log(err)
         });
 
 
@@ -266,7 +286,8 @@ class ScreenCheckout extends Component {
 
         this.props.dispatch(createOrderAction(userToken)).then(res => {
 
-            this.checkOrderCount();
+           // this.checkOrderCount();
+           this.gotoSuccessPage()
 
         }).catch(err => console.log(err));
 

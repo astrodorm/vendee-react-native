@@ -712,7 +712,7 @@ export const addToCartAction = (userToken, productID, quantity) => {
     };
 };
 
-export const promisedAddToCartAction = (userToken, productID, quantity) => (dispatch) =>
+export const promisedAddToCartAction = (userToken, cartArray) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(addToCartStartedAction());
 
@@ -723,11 +723,11 @@ export const promisedAddToCartAction = (userToken, productID, quantity) => (disp
         }
 
         axios
-            .post(`${BASE_URL}/carts/add`, {
-                productID,
-                quantity,
+            .post(`${BASE_URL}/carts/add`,{
 
-            },
+                cart : cartArray
+            }
+            ,
                 config
             )
             .then(res => {
@@ -736,7 +736,7 @@ export const promisedAddToCartAction = (userToken, productID, quantity) => (disp
             })
             .catch(err => {
                 dispatch(newAddToCartFailedAction(err));
-                reject(error);
+                reject(err);
             });
 
     });
@@ -808,7 +808,7 @@ export const fetchCategoryListAction = () => (dispatch) =>
             });
     });
 
-    export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
+export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(fetchCategoryProductsStartedAction());
 
