@@ -165,7 +165,7 @@ function products(state = initialState, action) {
         case FETCH_CATEGORY_LIST_SUCCESS:
             return Object.assign({}, state, {
                 isfetchingCategoryList: false,
-                newCategories: action.data,
+                newCategories: [...action.data],
             });
         case FETCH_PRODUCT_FAILED:
             return Object.assign({}, state, {

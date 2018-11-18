@@ -780,8 +780,8 @@ export const fetchCategoryListAction = () => (dispatch) =>
         axios.get(`${BASE_URL}/category/`
         )
             .then(res => {
-                dispatch(fetchCategoryListSuccessAction(res));
-                resolve(res);
+                dispatch(fetchCategoryListSuccessAction(res.data.data));
+                resolve(res.data);
             })
             .catch(err => {
                 dispatch(fetchCategoryListFailedAction(err));

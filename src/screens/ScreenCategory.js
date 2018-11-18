@@ -13,11 +13,11 @@ class ScreenCategory extends Component {
 
     componentDidMount() {
 
-        // this.props.dispatch(fetchCategoryListAction()).then(res => {
+        this.props.dispatch(fetchCategoryListAction()).then(res => {
 
-        //     console.log(res);
+            console.log(res);
 
-        // });
+        });
     }
 
     constructor(props) {
@@ -29,31 +29,13 @@ class ScreenCategory extends Component {
             showCategoryListView: true,
             selectedCategoryItemID: 0,
             selectedCategoryName: "",
-            categories: [
-                { id: "1", categoryName: "Fruits" },
-                { id: "2", categoryName: "Biscuits" },
-                { id: "3", categoryName: "Gadgets" },
-                { id: "4", categoryName: "Snacks" },
-                { id: "5", categoryName: "Fruits" },
-                { id: "6", categoryName: "Biscuits" },
-                { id: "7", categoryName: "Gadgets" },
-                { id: "8", categoryName: "Snacks" },
-                { id: "9", categoryName: "Fruits" },
-                { id: "10", categoryName: "Biscuits" },
-                { id: "11", categoryName: "Gadgets" },
-                { id: "12", categoryName: "Snacks" },
-                { id: "13", categoryName: "Fruits" },
-                { id: "14", categoryName: "Biscuits" },
-                { id: "15", categoryName: "Gadgets" },
-                { id: "16", categoryName: "Snacks" }
-            ]
 
         }
     }
 
     _renderCategoriesListItem = ({ item }) => (
 
-        <TouchableOpacity onPress={() => this.setStateSelectedCategoryItem(item.id, item.categoryName)}>
+        <TouchableOpacity onPress={() => this.setStateSelectedCategoryItem(item._id, item.categoryName)}>
             <Text style={styles.CategoryItem}>{item.categoryName}</Text>
         </TouchableOpacity>
     );
@@ -95,9 +77,9 @@ class ScreenCategory extends Component {
                                     <View style={styles.headingDivider}></View>
                                     <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
                                         <FlatList
-                                            data={this.state.categories}
+                                            data={this.props.categories}
                                             extraData={this.state}
-                                            keyExtractor={item => item.id}
+                                            keyExtractor={item => item._id}
                                             renderItem={this._renderCategoriesListItem}
                                         />
                                     </ScrollView>
@@ -115,7 +97,6 @@ class ScreenCategory extends Component {
                                     <View style={styles.headingDivider}></View>
                                     <Text>{this.state.selectedCategoryItemID}</Text>
                                 </View>
-                                // <View></View>
                             }
                         </View>
                     </View>
@@ -125,7 +106,6 @@ class ScreenCategory extends Component {
     }
 }
 
-//export default ScreenCategory;
 
 const mapStateToProps = state => ({
 
