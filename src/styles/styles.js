@@ -911,6 +911,11 @@ const styles = StyleSheet.create({
         paddingRight: 0
     },
 
+    CardShoppingListInfo: {
+        justifyContent: "space-between",
+        flexDirection: "row"
+    },
+
     CardShoppingListContainer: {
         width: fullWidth * 0.95,
         marginTop: 20,
@@ -942,7 +947,8 @@ const styles = StyleSheet.create({
         paddingRight: 8,
         color: navyBlueTheme1,
         letterSpacing: 1,
-        // minWidth:100,
+        maxWidth: 100,
+        textAlign: "center"
     },
 
 
@@ -973,7 +979,14 @@ const styles = StyleSheet.create({
         borderColor: "#efefef",
         borderRadius: 6,
         borderWidth: 1,
-        flexDirection: "row"
+        flexDirection: "column"
+    },
+
+    CardShoppingListProductItemContainer: {
+        flexDirection: "row",
+        paddingTop: 24,
+        paddingBottom : 24
+
     },
 
     CardShoppingProductImage: {

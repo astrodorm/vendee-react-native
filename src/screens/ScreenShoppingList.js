@@ -85,9 +85,10 @@ class ScreenShoppingList extends Component {
     }
 
 
-    _renderShoppingListItem = ({ item }) => (
+    _renderShoppingList = ({ item }) => (
 
-        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} thumbnail={BASE_THUMBNAIL_URL + item.productID[0].thumbnail} title={item.productID[0].productName} price={item.productID[0].price} quantity={item.productID[0].quantity} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
+        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID}  orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
+        // <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} thumbnail={BASE_THUMBNAIL_URL + item.productID[0].thumbnail} title={item.productID[0].productName} price={item.productID[0].price} quantity={item.productID[0].quantity} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
 
@@ -115,7 +116,7 @@ class ScreenShoppingList extends Component {
                                     data={this.props.shoppingList}
                                     extraData={this.props}
                                     keyExtractor={item => item._id}
-                                    renderItem={this._renderShoppingListItem}
+                                    renderItem={this._renderShoppingList}
                                 />
                             </ScrollView>
                         </View>
