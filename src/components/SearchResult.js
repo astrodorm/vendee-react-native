@@ -39,7 +39,8 @@ class SearchResult extends Component {
             selectProductID: 0,
             selectedProductQuantity: 0,
             selectedProductCount: 0,
-            isVisibleFBtnShoppingListQuantityPicker: false
+            isVisibleFBtnShoppingListQuantityPicker: false,
+            isVisibleShoppingListDrawer: false
         }
     }
 
@@ -55,6 +56,7 @@ class SearchResult extends Component {
     handleRefFBtnShoppingList = RefFBtnShoppingList => this.RefFBtnShoppingList = RefFBtnShoppingList;
     handleRefFBtnQuantityPicker = RefFBtnQuantityPicker => this.RefFBtnQuantityPicker = RefFBtnQuantityPicker;
     handleRefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker => this.RefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker;
+    handleRefShoppingListDrawer = RefShoppingListDrawer => this.RefShoppingListDrawer = RefShoppingListDrawer;
 
 
     _renderProductItem = ({ item }) => (
@@ -172,11 +174,16 @@ class SearchResult extends Component {
 
     showFbtnShoppingListButton = () => {
 
-        //CHANGE STATE TO true TO REFLECT VISIBILTY
-        this.setState({ isVisibleFBtnShoppingList: true });
+        this.setState({
 
-        //ANIMATE BUTTON
-        this.RefFBtnShoppingList.fadeInUp(400);
+            //CHANGE STATE TO true TO REFLECT VISIBILTY
+            isVisibleFBtnShoppingList: true
+
+        }, () => {
+
+            //ANIMATE BUTTON
+            this.RefFBtnShoppingList.fadeInUp(400);
+        })
 
     }
 
@@ -401,6 +408,27 @@ class SearchResult extends Component {
 
     }
 
+    hideShoppingListDrawer = () => {
+        this.RefShoppingListDrawer.fadeOutDown(200).then(endState => {
+            this.setState({ isVisibleShoppingListDrawer: false });
+        });
+
+    }
+
+    showShoppingListDrawer = () => {
+
+        this.setState({
+
+            //CHANGE STATE TO true TO REFLECT VISIBILTY
+            isVisibleShoppingListDrawer: true
+
+        }, () => {
+
+            //ANIMATE BUTTON
+            this.RefShoppingListDrawer.fadeInUp(400);
+        })
+    }
+
 
 
 
@@ -423,58 +451,61 @@ class SearchResult extends Component {
                             </ScrollView>
                         </View>
                     </View>
+                    {
+                        this.state.isVisibleFBtnShoppingList &&
+                        
+                        <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
+                            <ShoppingListFloatingBtn count={this.getShoppingListLength()} onPress={() => this.showShoppingListDrawer()} />
+                        </Animatable.View>
+                    }
 
-                    <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
-                        <ShoppingListFloatingBtn count={this.getShoppingListLength()} onPress={() => this.refs.RefModalShoppingList.open()} />
-                    </Animatable.View>
 
                     <Animatable.View style={styles.FBtnQuantityPickerContainer} ref={this.handleRefFBtnQuantityPicker}>
                         <ProductOptions onDecrement={this.decrementQuantity} quantity={this.props.selectProductQuantity} onIncrement={this.incrementQuantity} onDone={this.doneWithProductOptions} />
                     </Animatable.View>
 
+
+                    {/* SHOPPING LIST MODAL */}
+                    {
+                        this.state.isVisibleShoppingListDrawer &&
+
+                        <Animatable.View style={styles.shoppingListDrawerContainer} ref={this.handleRefShoppingListDrawer}>
+                            <View style={styles.shoppingListDrawer}>
+
+                                <View style={styles.ShoppingListModalContainer}>
+                                    <View style={styles.shoppingListDetails}>
+                                        <Text style={styles.shoppingListLabel}>Shopping List</Text>
+                                    </View>
+                                    <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
+
+                                    {/* SHOPPING LIST OPTIONS */}
+                                    <View style={styles.shoppingListOptions}>
+                                        <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.hideShoppingListDrawer} />
+                                        <CheckoutButton />
+                                    </View>
+
+                                    {/* SELECTED PRODUCT ITEM LIST */}
+                                    <View>
+                                        <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
+                                            <FlatList
+                                                data={this.props.newlists}
+                                                extraData={this.props}
+                                                keyExtractor={item => item.id}
+                                                renderItem={this._renderShoppingListItem}
+                                            />
+                                        </ScrollView>
+                                    </View>
+                                </View>
+                                <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnShoppingListQuantityPicker}>
+                                    <ShoppingListOptions onDecrement={this.decrementQuantity} quantity={this.props.selectProductQuantity} onIncrement={this.incrementQuantity} onDelete={this.deleteShoppingListItem} />
+                                </Animatable.View>
+                            </View>
+                        </Animatable.View>
+
+                    }
                 </View>
 
-                {/* SHOPPING LIST MODAL */}
-                <Modal
-                    style={[styles.modal, styles.shoppingListModalContainer]}
-                    position={"bottom"}
-                    ref={"RefModalShoppingList"}
-                    backdrop={true}
-                    swipeToClose={false}
-                    backdropColor={"#0D284A"}
-                    backdropOpacity={0.5}
-                    onClosingState={this.hideFbtnShoppingListQuantityPicker}
-                >
-                    <View style={styles.shoppingListHeader}>
-                    </View>
-                    <View style={styles.ShoppingListModalContainer}>
-                        <View style={styles.shoppingListDetails}>
-                            <Text style={styles.shoppingListLabel}>Shopping List</Text>
-                        </View>
-                        <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
 
-                        {/* SHOPPING LIST OPTIONS */}
-                        <View style={styles.shoppingListOptions}>
-                            <ButtonPrimaryAccent title="CLOSE" icon="close" isActive={false} onSelected={this.closeShoppingList} />
-                            <CheckoutButton />
-                        </View>
-
-                        {/* SELECTED PRODUCT ITEM LIST */}
-                        <View>
-                            <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
-                                <FlatList
-                                    data={this.props.newlists}
-                                    extraData={this.props}
-                                    keyExtractor={item => item.id}
-                                    renderItem={this._renderShoppingListItem}
-                                />
-                            </ScrollView>
-                        </View>
-                    </View>
-                    <Animatable.View style={styles.FBtnShoppingListQuantityPickerContainer} ref={this.handleRefFBtnShoppingListQuantityPicker}>
-                        <ShoppingListOptions onDecrement={this.decrementQuantity} quantity={this.props.selectProductQuantity} onIncrement={this.incrementQuantity} onDelete={this.deleteShoppingListItem} />
-                    </Animatable.View>
-                </Modal>
             </View>
 
         )
