@@ -394,7 +394,24 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         opacity: 0,
+    },
 
+
+    shoppingListDrawerContainer: {
+        position: "absolute",
+        elevation: 5,
+        height: fullHeight * 0.9,
+        width: fullWidth,
+        bottom: 80,
+        zIndex: 1000,
+
+    },
+
+    shoppingListDrawer: {
+        backgroundColor: "#fff",
+        width: fullWidth,
+        padding: 24,
+        // justifyContent : "c"
     },
 
     FBtnQuantityPickerContainer: {
@@ -412,16 +429,13 @@ const styles = StyleSheet.create({
 
     FBtnShoppingListQuantityPickerContainer: {
         position: "absolute",
-        elevation: 5,
-        height: 80,
-        width: fullWidth * 0.7,
+        width: fullWidth,
         bottom: 80,
         zIndex: 1000,
         alignItems: "center",
-        justifyContent: "center",
         opacity: 0,
-
     },
+
 
     QuantityBtn: {
         backgroundColor: lightRedTheme,
@@ -985,7 +999,7 @@ const styles = StyleSheet.create({
     CardShoppingListProductItemContainer: {
         flexDirection: "row",
         paddingTop: 24,
-        paddingBottom : 24
+        paddingBottom: 24
 
     },
 
