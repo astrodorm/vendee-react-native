@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, ScrollView, FlatList } from "react-native";
-import CategoryProductItems from '../components/CategoryProductItems';
-import CategoryList from "../components/CategoryList";
 import { styles } from '../styles/styles';
 import { connect } from 'react-redux';
-import { fetchCategoryListAction, fetchCategoryProductsAction, itemSelectAction, itemIncrementAction, addItemAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction, updateTotalAction, updateConvenienceFeeAction, updateGrandTotalAction } from '../actions/actions';
+import { fetchCategoryListAction, fetchCategoryProductsAction, itemSelectAction, itemIncrementAction, addItemAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction } from '../actions/actions';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ProductItem from '../components/ProductItem';
 import * as Animatable from 'react-native-animatable';
-import Modal from 'react-native-modalbox';
 import ShippingListDetails from '../components/shoppingListDetails';
 import ProductOptions from '../components/ProductOptions';
 import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn';
@@ -29,8 +26,6 @@ class ScreenCategory extends Component {
     componentDidMount() {
 
         this.props.dispatch(fetchCategoryListAction()).then(res => {
-
-            // console.log(res);
 
         });
     }
@@ -62,7 +57,6 @@ class ScreenCategory extends Component {
     handleRefFBtnShoppingList = RefFBtnShoppingList => this.RefFBtnShoppingList = RefFBtnShoppingList;
     handleRefFBtnQuantityPicker = RefFBtnQuantityPicker => this.RefFBtnQuantityPicker = RefFBtnQuantityPicker;
     handleRefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker => this.RefFBtnShoppingListQuantityPicker = RefFBtnShoppingListQuantityPicker;
-    // handleRefShoppingListDrawer
     handleRefShoppingListDrawer = RefShoppingListDrawer => this.RefShoppingListDrawer = RefShoppingListDrawer;
 
 
@@ -170,8 +164,6 @@ class ScreenCategory extends Component {
     }
 
     showFbtnQuantityPicker = () => {
-        //ANIMATE BUTTON
-        //  this.RefFBtnQuantityPicker.fadeInUp(400).then(endState => this.setState({ isVisibleFBtnQuantityPicker: true }));
 
         this.setState({
 
@@ -276,7 +268,6 @@ class ScreenCategory extends Component {
             this.setState({ isVisibleFBtnQuantityPicker: false });
         });
 
-        // this.showFbtnShoppingListButton()
         this.RefFBtnQuantityPicker.transitionTo({ opacity: 0 })
     }
 
@@ -285,7 +276,6 @@ class ScreenCategory extends Component {
             this.setState({ isVisibleFBtnShoppingList: false });
         });
 
-        // this.showFbtnShoppingListButton()
         this.RefFBtnShoppingList.transitionTo({ opacity: 0 })
     }
 
@@ -347,12 +337,6 @@ class ScreenCategory extends Component {
     }
 
     showFbtnShoppingListButton = () => {
-
-        //CHANGE STATE TO true TO REFLECT VISIBILTY
-        //this.setState({ isVisibleFBtnShoppingList: true });
-
-        //ANIMATE BUTTON
-        // this.RefFBtnShoppingList.fadeInUp(400);
 
         this.setState({
 
@@ -483,10 +467,7 @@ class ScreenCategory extends Component {
                                 this.state.showCategoryListView &&
 
                                 <View style={styles.cardPadding}>
-                                    {/* <CategoryList/> */}
-                                    {/* <TouchableOpacity onPress={() => this.showShoppingListDrawer()}> */}
                                     <Text style={styles.AppCardHeader}>All Categories</Text>
-                                    {/* </TouchableOpacity> */}
                                     <View style={styles.headingDivider}></View>
                                     <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
                                         <FlatList
@@ -506,11 +487,7 @@ class ScreenCategory extends Component {
                                 <View>
 
                                     <View style={styles.cardPadding}>
-                                        {/* <CategoryProductItems categoryItemID={this.state.selectedCategoryItemID} categoryName={this.state.selectedCategoryName}/> */}
-                                        {/* <Animatable.View ref={this.handleRefShoppingListDrawer}> */}
                                         <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.showCategories()} />
-                                        {/* </Animatable.View> */}
-
                                         <Text style={styles.AppCardHeader}>{this.state.selectedCategoryName}</Text>
                                         <View style={styles.headingDivider}></View>
                                     </View>
@@ -587,10 +564,6 @@ class ScreenCategory extends Component {
                     }
 
                 </View>
-
-
-
-
 
             </View>
         )
