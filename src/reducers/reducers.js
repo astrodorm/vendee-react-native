@@ -116,7 +116,7 @@ const initialState = {
     isFetchListSuccess: false,
     fetchListResponse: [],
     shoppingList: [],
-    deliveryFee: 0,
+    deliveryFee: 500,
     isfetchingCategoryList: false,
     newCategories: [],
     categoryListResponse: [],

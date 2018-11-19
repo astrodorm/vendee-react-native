@@ -432,6 +432,8 @@ class SearchResult extends Component {
 
 
 
+
+
     render() {
         return (
             <View style={styles.AppContainer}>
@@ -453,7 +455,7 @@ class SearchResult extends Component {
                     </View>
                     {
                         this.state.isVisibleFBtnShoppingList &&
-                        
+
                         <Animatable.View style={styles.FBtnShoppingListContainer} ref={this.handleRefFBtnShoppingList}>
                             <ShoppingListFloatingBtn count={this.getShoppingListLength()} onPress={() => this.showShoppingListDrawer()} />
                         </Animatable.View>

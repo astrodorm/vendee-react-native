@@ -1181,7 +1181,7 @@ const styles = StyleSheet.create({
     },
 
     scrollViewfullHeight: {
-        height: 450
+        height: 325
     },
 
     screensplash: {
@@ -1201,6 +1201,13 @@ const styles = StyleSheet.create({
         borderRightWidth: 0,
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 16
+    },
+
+    deliveryPickerLabel: {
+        marginTop: 16,
+        // marginBottom: 16,
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 13
     }
 
 });

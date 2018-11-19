@@ -15,6 +15,7 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
+import DeliveryPicker from '../components/DeliveryPicker';
 
 
 
@@ -46,8 +47,6 @@ class ScreenCategory extends Component {
             isVisibleFBtnShoppingListQuantityPicker: false,
             isVisibleFBtnShoppingList: false,
             isVisibleShoppingListDrawer: false
-
-
 
         }
     }
@@ -459,6 +458,9 @@ class ScreenCategory extends Component {
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
                     <View style={styles.AppCardContainer}>
+                        <Text style={styles.deliveryPickerLabel}>How would you like your items delivered ?</Text>
+                        <DeliveryPicker isDelivery={this.props.isDelivery} isPickup={this.props.isPickup} />
+
                         <View style={styles.CategoryAppCard}>
 
                             {/* CATEGORY LIST VIEW */}
@@ -489,8 +491,9 @@ class ScreenCategory extends Component {
                                     <View style={styles.cardPadding}>
                                         <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.showCategories()} />
                                         <Text style={styles.AppCardHeader}>{this.state.selectedCategoryName}</Text>
-                                        <View style={styles.headingDivider}></View>
+                                        {/* <View style={styles.headingDivider}></View> */}
                                     </View>
+                                    {/* <View style={styles.headingDivider}></View> */}
                                     <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
                                         <FlatList
                                             data={this.props.newCategoryProducts}
