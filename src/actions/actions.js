@@ -410,9 +410,8 @@ export const createUserFailedAction = (error) => (
 export const loginFailedAction = (error) => (
     {
         type: LOGIN_USER_FAILED,
-        payload: {
-            error
-        }
+        error
+
     }
 );
 
@@ -526,8 +525,27 @@ export const createUserAction = (firstname, lastname, phoneNumber, email, oauth)
 };
 
 
-export const loginAction = (email, oauth) => {
-    return dispatch => {
+// export const loginAction = (email, oauth) => {
+//     return dispatch => {
+//         dispatch(loginStartedAction());
+
+//         axios
+//             .post(`${BASE_URL}/customers/login`, {
+//                 email,
+//                 oauth
+//             })
+//             .then(res => {
+//                 dispatch(loginSuccessAction(res.data.data));
+//             })
+//             .catch(err => {
+//                 dispatch(loginFailedAction(err.response.data));
+//             });
+//     };
+// };
+
+
+export const loginAction = (email, oauth) => (dispatch) =>
+    new Promise(function (resolve, reject) {
         dispatch(loginStartedAction());
 
         axios
@@ -537,12 +555,14 @@ export const loginAction = (email, oauth) => {
             })
             .then(res => {
                 dispatch(loginSuccessAction(res.data.data));
+                resolve(res);
             })
             .catch(err => {
                 dispatch(loginFailedAction(err.response.data));
+                reject(err);
             });
-    };
-};
+
+    });
 
 
 export const fetchProductAction = (query) => {
@@ -723,11 +743,11 @@ export const promisedAddToCartAction = (userToken, cartArray) => (dispatch) =>
         }
 
         axios
-            .post(`${BASE_URL}/carts/add`,{
+            .post(`${BASE_URL}/carts/add`, {
 
-                cart : cartArray
+                cart: cartArray
             }
-            ,
+                ,
                 config
             )
             .then(res => {

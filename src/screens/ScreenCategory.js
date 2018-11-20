@@ -189,7 +189,7 @@ class ScreenCategory extends Component {
 
         this.props.dispatch(fetchCategoryProductsAction(id)).then(res => {
 
-            console.log(res);
+           // console.log(res);
 
         });
 

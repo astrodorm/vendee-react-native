@@ -21,17 +21,19 @@ class ScreenProfile extends Component {
             showEmailError: false,
             showPasswordError: false,
             email: "",
-            password: ""
+            password: "",
+            isVisibleLoginError: false,
+            loginErrorMessage: false
 
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
 
-        let userToken = nextProps.user.token;
+    //     let userToken = nextProps.user.token;
 
-        nextProps.isLoginUserSuccess === true ? this.storeUserCredentials(userToken) : null;
-    }
+    //     nextProps.isLoginUserSuccess === true ? this.storeUserCredentials(userToken) : null;
+    // }
 
 
     storeUserCredentials = (userToken) => {
@@ -85,6 +87,10 @@ class ScreenProfile extends Component {
     }
 
     validateParams = () => {
+
+        //HIDE ERROR MESSAGE
+        this.hideLoginError()
+
         let email = this.state.email;
 
         //VERIFY PARAMS AND DISPLAY RESPECTIVE ERROR MESSAGE
@@ -99,8 +105,33 @@ class ScreenProfile extends Component {
 
         let email = this.state.email;
         let oauth = this.state.password;
-        this.props.dispatch(loginAction(email, oauth))
+        // this.props.dispatch(loginAction(email, oauth))
+        this.props.dispatch(loginAction(email, oauth)).then(res => {
 
+            console.log(res);
+            let userToken = this.props.user.userToken;
+            console.log("userToken")
+            console.log(userToken)
+            this.storeUserCredentials(userToken)
+
+
+        }).catch(err => {
+            console.log("err");
+            console.log("this.props.loginResponse.message");
+            console.log(this.props.loginResponse.message);
+            // this.setState({ loginErrorMessage: this.props.loginResponse.message, isVisibleLoginError: true })
+            // console.log()
+            this.showLoginError()
+        });
+
+    }
+
+    showLoginError = () => {
+        this.setState({ loginErrorMessage: this.props.loginResponse.message, isVisibleLoginError: true })
+    }
+
+    hideLoginError = () => {
+        this.setState({ isVisibleLoginError: false })
     }
 
 
@@ -133,6 +164,9 @@ class ScreenProfile extends Component {
                                     <Progress.CircleSnail color={['#f44950']} duration={400} size={24} />
                                 </View>
                             }
+                            {this.state.isVisibleLoginError &&
+                                <InlineError message={this.state.loginErrorMessage} />
+                            }
                             <ButtonPrimaryAccent title="SIGN IN" icon="login" isActive={true} onSelected={this.validateParams} />
                         </View>
                     </View>
@@ -149,7 +183,9 @@ const mapStateToProps = state => ({
     user: state.users.user,
     isLoginUserError: state.users.isLoginUserError,
     isLoginUserSuccess: state.users.isLoginUserSuccess,
-    isSigningInUser: state.users.isSigningInUser
+    isSigningInUser: state.users.isSigningInUser,
+    loginResponse: state.users.loginResponse,
+
 
 })
 
