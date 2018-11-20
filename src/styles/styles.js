@@ -1221,7 +1221,14 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 16,
         color: "#9D9D9D",
-        lineHeight :50
+        lineHeight: 50
+    },
+
+    loadingTextIndicator: {
+        width: 300,
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign : "center"
     }
 
 });

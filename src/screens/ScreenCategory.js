@@ -27,7 +27,7 @@ class ScreenCategory extends Component {
     componentDidMount() {
 
         this.props.dispatch(fetchCategoryListAction()).then(res => {
-
+            this.hideCategoryLoadingTextIndicator()
         });
     }
 
@@ -46,7 +46,10 @@ class ScreenCategory extends Component {
             selectedProductCount: 0,
             isVisibleFBtnShoppingListQuantityPicker: false,
             isVisibleFBtnShoppingList: false,
-            isVisibleShoppingListDrawer: false
+            isVisibleShoppingListDrawer: false,
+            isVisibleCategoryLoadingIndicator: true,
+            isVisibleCategoryItemLoadingIndicator: true,
+            newCategoryProducts : []
 
         }
     }
@@ -111,6 +114,18 @@ class ScreenCategory extends Component {
 
         //ANIMATE BUTTON
         this.RefFBtnShoppingListQuantityPicker.pulse(400);
+    }
+
+    hideCategoryLoadingTextIndicator = () => {
+        this.setState({ isVisibleCategoryLoadingIndicator: false })
+    }
+
+    hideCategoryItemLoadingTextIndicator = () => {
+        this.setState({ isVisibleCategoryItemLoadingIndicator: false })
+    }
+
+    showCategoryItemLoadingTextIndicator = () => {
+        this.setState({ isVisibleCategoryItemLoadingIndicator: true })
     }
 
 
@@ -183,13 +198,23 @@ class ScreenCategory extends Component {
         this.setState({ selectedCategoryItemID: id, selectedCategoryName: categoryName });
         this.showCategoryProducts();
         this.fetchProductsByCategories(id);
+        this.showCategoryItemLoadingTextIndicator();
     }
+
+
 
     fetchProductsByCategories = (id) => {
 
+        //CLEAR STORED PREVIOUS DATA
+        this.setState({newCategoryProducts : []});
+
         this.props.dispatch(fetchCategoryProductsAction(id)).then(res => {
 
-           // console.log(res);
+            // console.log(res);
+            this.hideCategoryItemLoadingTextIndicator();
+
+            //SET FRESH RETRIEVED DATA
+            this.setState({ newCategoryProducts : this.props.newCategoryProducts})
 
         });
 
@@ -471,6 +496,10 @@ class ScreenCategory extends Component {
                                 <View style={styles.cardPadding}>
                                     <Text style={styles.AppCardHeader}>All Categories</Text>
                                     <View style={styles.headingDivider}></View>
+                                    {
+                                        this.state.isVisibleCategoryLoadingIndicator &&
+                                        <Text style={styles.loadingTextIndicator}>Loading...</Text>
+                                    }
                                     <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
                                         <FlatList
                                             data={this.props.categories}
@@ -491,12 +520,14 @@ class ScreenCategory extends Component {
                                     <View style={styles.cardPadding}>
                                         <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.showCategories()} />
                                         <Text style={styles.AppCardHeader}>{this.state.selectedCategoryName}</Text>
-                                        {/* <View style={styles.headingDivider}></View> */}
                                     </View>
-                                    {/* <View style={styles.headingDivider}></View> */}
+                                    {
+                                        this.state.isVisibleCategoryItemLoadingIndicator &&
+                                        <Text style={styles.loadingTextIndicator}>Loading...</Text>
+                                    }
                                     <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
                                         <FlatList
-                                            data={this.props.newCategoryProducts}
+                                            data={this.state.newCategoryProducts}
                                             extraData={this.props}
                                             keyExtractor={item => item._id}
                                             renderItem={this._renderProductItem}
