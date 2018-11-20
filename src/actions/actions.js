@@ -732,7 +732,7 @@ export const addToCartAction = (userToken, productID, quantity) => {
     };
 };
 
-export const promisedAddToCartAction = (userToken, cartArray) => (dispatch) =>
+export const promisedAddToCartAction = (userToken, shippingMethod, cartArray) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(addToCartStartedAction());
 
@@ -742,9 +742,13 @@ export const promisedAddToCartAction = (userToken, cartArray) => (dispatch) =>
             }
         }
 
+        //console.log("promisedAddToCartAction-cartObj");
+        //console.dir(cartObj);
+
         axios
             .post(`${BASE_URL}/carts/add`, {
 
+                deliveryMethod: shippingMethod,
                 cart: cartArray
             }
                 ,

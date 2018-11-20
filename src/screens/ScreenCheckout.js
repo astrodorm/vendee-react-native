@@ -242,8 +242,13 @@ class ScreenCheckout extends Component {
         let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
         // this.showPreloader();
-        let cartObj = {}
-        let cartArray = []
+        let cartObj = {};
+        let cartArray = [];
+        let shippingMethod = "";
+
+        this.props.isDelivery === true ? shippingMethod = "DELIVERY" : null;
+        this.props.isPickup === true ? shippingMethod = "PICKUP" : null;
+
 
         for (let index = 0; index < listArray.length; index++) {
 
@@ -257,7 +262,17 @@ class ScreenCheckout extends Component {
 
         }
 
-        this.addToCart(userToken, cartArray);
+
+
+       // cartObj.deliveryMethod = shippingMethod;
+       // cartObj.cart = cartArray;
+
+       // console.log("cartObj");
+       // console.dir(cartObj);
+
+          this.addToCart(userToken, shippingMethod, cartArray);
+
+
 
         // this.props.dispatch(promisedAddToCartAction(userToken, cartArray)).then(res => {
         //     console.log(res)
@@ -271,11 +286,11 @@ class ScreenCheckout extends Component {
     }
 
 
-    addToCart = (userToken, cartArray) => {
+    addToCart = (userToken, shippingMethod, cartArray) => {
         this.showPreloader();
 
 
-        this.props.dispatch(promisedAddToCartAction(userToken, cartArray)).then(res => {
+        this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, cartArray)).then(res => {
             console.log(res)
             this.createOrder(userToken);
 
@@ -672,7 +687,7 @@ class ScreenCheckout extends Component {
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 201 ? this.showPinModal() : null;
 
-            
+
         });
 
 
@@ -959,7 +974,10 @@ const mapStateToProps = state => ({
     addToCartResponse: state.lists.addToCartResponse,
     showModalPin: state.lists.showModalPin,
     orderCount: state.lists.orderCount,
-    deliveryFee: state.delivery.deliveryFee
+    deliveryFee: state.delivery.deliveryFee,
+    isDelivery: state.delivery.isDelivery,
+    isPickup: state.delivery.isPickup,
+
 
 })
 
