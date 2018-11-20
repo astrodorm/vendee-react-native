@@ -241,7 +241,7 @@ class ScreenCheckout extends Component {
 
         let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
-        this.showPreloader();
+        // this.showPreloader();
         let cartObj = {}
         let cartArray = []
 
@@ -267,17 +267,23 @@ class ScreenCheckout extends Component {
         // });
 
 
+
     }
 
 
     addToCart = (userToken, cartArray) => {
+        this.showPreloader();
 
 
         this.props.dispatch(promisedAddToCartAction(userToken, cartArray)).then(res => {
             console.log(res)
-            this.createOrder(userToken)
+            this.createOrder(userToken);
+
         }).catch(err => {
-            console.log(err)
+            console.log(err);
+            this.hidePreloader();
+            this.showErrorDialog("Failed To Add Items. Try Again");
+
         });
 
 
@@ -289,9 +295,18 @@ class ScreenCheckout extends Component {
         this.props.dispatch(createOrderAction(userToken)).then(res => {
 
             // this.checkOrderCount();
-            this.gotoSuccessPage()
+            this.hidePreloader();
+            this.gotoSuccessPage();
 
-        }).catch(err => console.log(err));
+
+        }).catch(err => {
+
+            this.hidePreloader();
+            console.log(err);
+            this.showErrorDialog("Failed To Create Order. Try Again");
+
+
+        });
 
     }
 
@@ -651,11 +666,13 @@ class ScreenCheckout extends Component {
 
         this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year)).then(res => {
 
+            this.hidePreloader();
+
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 201 ? this.showPinModal() : null;
 
-            this.hidePreloader();
+            
         });
 
 
@@ -685,7 +702,7 @@ class ScreenCheckout extends Component {
         let pin = this.state.cardPin;
         let userToken = this.state.userToken;
 
-        this.showPreloader();
+        //this.showPreloader();
 
         this.props.dispatch(chargeUserPinAction(userToken, reference, pin)).then(res => {
 
@@ -705,14 +722,14 @@ class ScreenCheckout extends Component {
         let otp = this.state.otp;
         let userToken = this.state.userToken;
 
-        this.showPreloader()
+        // this.showPreloader()
 
         this.props.dispatch(chargeUserOtpAction(userToken, reference, otp)).then(res => {
 
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
 
-            this.hidePreloader()
+            //this.hidePreloader()
         });
 
         this.closeOtpDialog();
@@ -726,6 +743,10 @@ class ScreenCheckout extends Component {
 
     hidePreloader = () => {
         this.refs.RefModalPreloader.close()
+    }
+
+    closeErrorModal = () => {
+        this.refs.RefModalCheckoutErrorMessage.close()
     }
 
 
@@ -846,13 +867,16 @@ class ScreenCheckout extends Component {
                     position={"center"}
                     ref={"RefModalCheckoutErrorMessage"}
                     backdrop={true}
-                    swipeToClose={false}
+                    swipeToClose={true}
                     backdropColor={"#0D284A"}
                     backdropOpacity={0.5}
                     backdropPressToClose={true}
                 >
                     <Text style={styles.errorHeader}>0ops!. Something Went Wrong</Text>
                     <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+                    <View style={styles.headingDivider}></View>
+                    <ButtonPrimaryAccent title="CLOSE" isActive={false} onSelected={this.closeErrorModal} />
+
                 </Modal>
                 <Modal
                     style={[styles.modalPreloader]}
