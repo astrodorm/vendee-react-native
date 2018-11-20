@@ -1208,6 +1208,20 @@ const styles = StyleSheet.create({
         // marginBottom: 16,
         fontFamily: Fonts.MPLUSMedium,
         fontSize: 13
+    },
+
+    NoDataMessageContainer: {
+        height: 300,
+        width: 350,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+    NoDataMessageText: {
+        fontFamily: Fonts.MPLUSRegular,
+        fontSize: 16,
+        color: "#9D9D9D",
+        lineHeight :50
     }
 
 });

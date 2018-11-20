@@ -17,6 +17,8 @@ import 'intl';
 import 'intl/locale-data/jsonp/en';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
+import Icon from 'react-native-vector-icons/AntDesign';
+
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload"
 
@@ -24,6 +26,8 @@ const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload"
 class SearchResult extends Component {
 
     componentWillReceiveProps(nextProps) {
+
+        nextProps.newproducts.length === 0 ? this.showNoDataMessage() : this.hideNoDataMessage();
 
     }
 
@@ -40,7 +44,8 @@ class SearchResult extends Component {
             selectedProductQuantity: 0,
             selectedProductCount: 0,
             isVisibleFBtnShoppingListQuantityPicker: false,
-            isVisibleShoppingListDrawer: false
+            isVisibleShoppingListDrawer: false,
+            isVisibleNoDataMessage: false
         }
     }
 
@@ -66,6 +71,16 @@ class SearchResult extends Component {
         <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
     );
 
+
+    showNoDataMessage = () => {
+
+        this.setState({ isVisibleNoDataMessage: true })
+    }
+
+    hideNoDataMessage = () => {
+
+        this.setState({ isVisibleNoDataMessage: false })
+    }
 
 
     _renderShoppingListItem = ({ item }) => (
@@ -443,6 +458,16 @@ class SearchResult extends Component {
                         <DeliveryPicker isDelivery={this.props.isDelivery} isPickup={this.props.isPickup} />
                         <View style={styles.AppSearchResultDisplayContainer}>
                             <Text style={styles.AppCardTitle}>SEARCH RESULT</Text>
+
+                            {
+                                this.state.isVisibleNoDataMessage &&
+                                <View style={styles.NoDataMessageContainer}>
+                                    <Text style={styles.NoDataMessageText}>Nothing matched your request</Text>
+                                    <Text style={styles.NoDataMessageText}>Try viewing all  <Icon name="appstore-o" size={22} color={"#0D284A"} />  Categories</Text>
+                                </View>
+
+                            }
+
                             <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
                                 <FlatList
                                     data={this.props.newproducts}
