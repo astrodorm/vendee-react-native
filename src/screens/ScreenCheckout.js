@@ -48,7 +48,7 @@ class ScreenCheckout extends Component {
         nextProps.isVisibleAddTelephoneManager === true ? this.openAddDialog() : null;
         nextProps.isVisibleAddCardManager === true ? this.openAddDialog() : null;
         nextProps.isVisibleAddPasswordManager === true ? this.openAddDialog() : null;
-        nextProps.isUpdatingUser === true ? this.showPreloader() : this.hidePreloader();
+        //  nextProps.isUpdatingUser === true ? this.showPreloader() : this.hidePreloader();
 
     }
 
@@ -264,13 +264,13 @@ class ScreenCheckout extends Component {
 
 
 
-       // cartObj.deliveryMethod = shippingMethod;
-       // cartObj.cart = cartArray;
+        // cartObj.deliveryMethod = shippingMethod;
+        // cartObj.cart = cartArray;
 
-       // console.log("cartObj");
-       // console.dir(cartObj);
+        // console.log("cartObj");
+        // console.dir(cartObj);
 
-          this.addToCart(userToken, shippingMethod, cartArray);
+        this.addToCart(userToken, shippingMethod, cartArray);
 
 
 
@@ -662,6 +662,8 @@ class ScreenCheckout extends Component {
             //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
             this.chargeUser();
 
+            // this.hidePreloader();
+
         });
 
         //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
@@ -688,6 +690,10 @@ class ScreenCheckout extends Component {
             res.data.status === 201 ? this.showPinModal() : null;
 
 
+        }).catch(err => {
+            console.log(err);
+            this.hidePreloader();
+            this.showErrorDialog(this.props.chargeResponse.error.data.message);
         });
 
 
@@ -717,15 +723,19 @@ class ScreenCheckout extends Component {
         let pin = this.state.cardPin;
         let userToken = this.state.userToken;
 
-        //this.showPreloader();
+        this.showPreloader();
 
         this.props.dispatch(chargeUserPinAction(userToken, reference, pin)).then(res => {
-
+            this.hidePreloader();
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
             res.data.status === 202 ? this.showOtpModal() : null;
 
-            this.hidePreloader()
+
+        }).catch(err => {
+            console.log(err);
+            this.hidePreloader();
+            this.showErrorDialog(this.props.chargeResponse.error.data.message);
         });
 
         this.closePinDialog()
@@ -737,7 +747,7 @@ class ScreenCheckout extends Component {
         let otp = this.state.otp;
         let userToken = this.state.userToken;
 
-        // this.showPreloader()
+        this.showPreloader()
 
         this.props.dispatch(chargeUserOtpAction(userToken, reference, otp)).then(res => {
 
@@ -745,6 +755,10 @@ class ScreenCheckout extends Component {
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
 
             //this.hidePreloader()
+        }).catch(err => {
+            console.log(err);
+            this.hidePreloader();
+            this.showErrorDialog(this.props.chargeResponse.error.data.message);
         });
 
         this.closeOtpDialog();

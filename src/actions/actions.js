@@ -611,7 +611,7 @@ export const chargeUserAction = (userToken, amount, number, cvv, expiry_month, e
             })
             .catch(err => {
                 dispatch(chargeUserFailedAction(err.response.data));
-                reject(error);
+                reject(err);
             });
     });
 
@@ -639,7 +639,7 @@ export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
             })
             .catch(err => {
                 dispatch(chargeUserFailedAction(err.response.data));
-                reject(error);
+                reject(err);
             });
 
     });
@@ -669,7 +669,7 @@ export const chargeUserOtpAction = (userToken, reference, otp) => (dispatch) =>
             })
             .catch(err => {
                 dispatch(chargeUserOtpFailedAction(err.response.data));
-                reject(error);
+                reject(err);
             });
 
     });
