@@ -109,7 +109,7 @@ class ScreenProfile extends Component {
         this.props.dispatch(loginAction(email, oauth)).then(res => {
 
             console.log(res);
-            let userToken = this.props.user.userToken;
+            let userToken = res.data.data.token
             console.log("userToken")
             console.log(userToken)
             this.storeUserCredentials(userToken)

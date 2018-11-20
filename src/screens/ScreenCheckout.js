@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Modal from 'react-native-modalbox';
+import InlineError from '../components/InlineError';
 import {
     toggleAddModalAddressManager,
     toggleAddModalTelephoneManager,
@@ -104,7 +105,8 @@ class ScreenCheckout extends Component {
             otp: "",
             lengthOfOrder: 0,
             cartIndex: 0,
-            orderCount: 1
+            orderCount: 1,
+            isVisibleCardPinError: false
 
         }
     }
@@ -286,8 +288,8 @@ class ScreenCheckout extends Component {
 
         this.props.dispatch(createOrderAction(userToken)).then(res => {
 
-           // this.checkOrderCount();
-           this.gotoSuccessPage()
+            // this.checkOrderCount();
+            this.gotoSuccessPage()
 
         }).catch(err => console.log(err));
 
@@ -660,6 +662,23 @@ class ScreenCheckout extends Component {
 
     }
 
+    validateCardPin = () => {
+
+        //HIDE CARD PIN ERROR
+        this.hideCardPinError()
+
+        let pin = this.state.cardPin;
+        pin.length !== 4 ? this.showCardPinError() : this.chargeUserPin();
+    }
+
+    showCardPinError = () => {
+        this.setState({ isVisibleCardPinError: true })
+    }
+
+    hideCardPinError = () => {
+        this.setState({ isVisibleCardPinError: false })
+    }
+
     chargeUserPin = () => {
 
         let reference = this.props.chargeResponse.data.reference
@@ -863,8 +882,14 @@ class ScreenCheckout extends Component {
                             <Text>Enter your card PIN to complete your transaction</Text>
                             <TextInput style={styles.textInput} placeholder="Enter PIN" onChangeText={this.handlePIN} />
                         </View>
+                        {
+                            this.state.isVisibleCardPinError &&
+
+                            <InlineError message="*Invalid length of PIN" />
+
+                        }
                         <View style={styles.buttonGroup}>
-                            <ButtonPrimaryAccent title="PROCEED" isActive={true} onSelected={this.chargeUserPin} />
+                            <ButtonPrimaryAccent title="PROCEED" isActive={true} onSelected={this.validateCardPin} />
                             <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closePinDialog} />
                         </View>
                     </View>
