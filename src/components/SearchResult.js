@@ -5,7 +5,6 @@ import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
 import ProductItem from '../components/ProductItem';
 import * as Animatable from 'react-native-animatable';
-import Modal from 'react-native-modalbox';
 import ShippingListDetails from '../components/shoppingListDetails';
 import { connect } from 'react-redux';
 import ProductOptions from '../components/ProductOptions';
@@ -38,8 +37,6 @@ class SearchResult extends Component {
             isVisibleFBtnShoppingList: false,
             isVisibleFBtnQuantityPicker: false,
             activeSections: [],
-            // quantities: [0, 0],
-            // products: [],
             selectProductID: 0,
             selectedProductQuantity: 0,
             selectedProductCount: 0,
@@ -48,13 +45,6 @@ class SearchResult extends Component {
             isVisibleNoDataMessage: false
         }
     }
-
-
-    // componentDidMount() {
-    //     const prouductsData = this.props.products;
-    //     this.setState({ products: prouductsData })
-
-    // }
 
 
     //TRANSITION HANDLERS
@@ -375,10 +365,9 @@ class SearchResult extends Component {
 
         convenienceFee = Math.round(this.props.newFees[0].convenience * total);
         initialTotal = parseInt(total) + parseInt(convenienceFee);
-       // deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal));
 
-       this.props.isPickup === true ? deliveryFee = 0 : null;
-       this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null ;
+        this.props.isPickup === true ? deliveryFee = 0 : null;
+        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null;
 
         grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
 
@@ -390,14 +379,11 @@ class SearchResult extends Component {
 
     getDeliveryFee = () => {
 
-        //getGrandTotal = () => {
-
         let convenienceFee = 0;
         let deliveryFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
         let initialTotal = 0;
-        // let grandTotal = 0;
 
         listArray.forEach(function (item) {
 
@@ -408,22 +394,15 @@ class SearchResult extends Component {
 
 
         convenienceFee = Math.round(this.props.newFees[0].convenience * total);
-        // console.log(convenienceFee);
         initialTotal = parseInt(total) + parseInt(convenienceFee);
-        // console.log(initialTotal);
-       // deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal));
-        // console.log(deliveryFee);
 
         this.props.isPickup === true ? deliveryFee = 0 : null;
-        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null ;
-
-       // isPickup: state.delivery.isPickup,
-
+        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null;
 
         let formattedDeliveryFee = this.formatAmount(deliveryFee);
 
         return formattedDeliveryFee;
-        // }
+
 
     }
 
