@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image, BackHandler } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { styles } from '../styles/styles';
 import { isFirstFetchStartedAction } from '../actions/actions';
 import { connect } from 'react-redux';
