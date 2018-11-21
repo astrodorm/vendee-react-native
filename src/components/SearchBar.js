@@ -22,9 +22,6 @@ class SearchBar extends Component {
     }
 
     searchProduct = () => {
-       // this.toggleIcon();
-
-      //  this.shouldShowDeliveryModal();
 
         let query = this.state.searchText;
         if (query !== "") {
@@ -44,9 +41,6 @@ class SearchBar extends Component {
         this.setState({ searchText: text });
     }
 
-    toggleIcon = () => {
-        // this.setState({ isLoadingSearchBar: !this.state.isLoadingSearchBar })
-    }
 
     render() {
         return (
@@ -67,8 +61,6 @@ class SearchBar extends Component {
     }
 
 }
-
-//export default SearchBar;
 
 
 const mapStateToProps = state => ({
