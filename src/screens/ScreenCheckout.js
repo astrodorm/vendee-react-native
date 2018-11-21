@@ -48,7 +48,6 @@ class ScreenCheckout extends Component {
         nextProps.isVisibleAddTelephoneManager === true ? this.openAddDialog() : null;
         nextProps.isVisibleAddCardManager === true ? this.openAddDialog() : null;
         nextProps.isVisibleAddPasswordManager === true ? this.openAddDialog() : null;
-        //  nextProps.isUpdatingUser === true ? this.showPreloader() : this.hidePreloader();
 
     }
 
@@ -241,7 +240,6 @@ class ScreenCheckout extends Component {
 
         let listArray = [...this.props.newlists];
         let userToken = this.state.userToken;
-        // this.showPreloader();
         let cartObj = {};
         let cartArray = [];
         let shippingMethod = "";
@@ -252,7 +250,6 @@ class ScreenCheckout extends Component {
 
         for (let index = 0; index < listArray.length; index++) {
 
-            // this.addToCart(userToken, listArray[index].id, listArray[index].quantity);
 
             cartArray.push({
                 productID: listArray[index].id,
@@ -263,24 +260,7 @@ class ScreenCheckout extends Component {
         }
 
 
-
-        // cartObj.deliveryMethod = shippingMethod;
-        // cartObj.cart = cartArray;
-
-        // console.log("cartObj");
-        // console.dir(cartObj);
-
         this.addToCart(userToken, shippingMethod, cartArray);
-
-
-
-        // this.props.dispatch(promisedAddToCartAction(userToken, cartArray)).then(res => {
-        //     console.log(res)
-        //     this.createOrder(userToken)
-        // }).catch(err => {
-        //     console.log(err)
-        // });
-
 
 
     }
@@ -291,11 +271,9 @@ class ScreenCheckout extends Component {
 
 
         this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, cartArray)).then(res => {
-            console.log(res)
             this.createOrder(userToken);
 
         }).catch(err => {
-            console.log(err);
             this.hidePreloader();
             this.showErrorDialog("Failed To Add Items. Try Again");
 
@@ -305,11 +283,9 @@ class ScreenCheckout extends Component {
     }
 
     createOrder = (userToken) => {
-        // console.log("createdOrder");
 
         this.props.dispatch(createOrderAction(userToken)).then(res => {
 
-            // this.checkOrderCount();
             this.hidePreloader();
             this.gotoSuccessPage();
 
@@ -317,7 +293,6 @@ class ScreenCheckout extends Component {
         }).catch(err => {
 
             this.hidePreloader();
-            console.log(err);
             this.showErrorDialog("Failed To Create Order. Try Again");
 
 
@@ -329,11 +304,6 @@ class ScreenCheckout extends Component {
         let listArray = [...this.props.newlists];
         let lengthOfOrder = listArray.length;
         let orderCount = this.state.orderCount;
-
-        // console.log("lengthOfOrder");
-        // console.log(lengthOfOrder);
-        // console.log("orderCount");
-        // console.log(orderCount);
 
         lengthOfOrder === orderCount ? this.gotoSuccessPage() : null;
 
@@ -546,7 +516,6 @@ class ScreenCheckout extends Component {
         //SAVE ADDRESS  DETAILS TO THE STATE
         let address = this.state.address;
         this.storeData(ADDRESS_STORAGE_KEY, address);
-        console.log("updateAddress");
 
         //UPDATE USER DETAILS STATE
         this.retrieveAndSetAddressData(ADDRESS_STORAGE_KEY);
@@ -560,7 +529,6 @@ class ScreenCheckout extends Component {
         //SAVE PASSWORD DETAILS TO THE STATE
         let password = this.state.password;
         this.storeData(OAUTH, password);
-        console.log("updatePassword");
 
         //UPDATE USER DETAILS STATE
         this.retrieveAndSetPasswordData(OAUTH);
@@ -573,7 +541,6 @@ class ScreenCheckout extends Component {
     updatePhoneNumber = () => {
         let phoneNumber = this.state.phoneNumber;
         this.storeData(PHONE_STORAGE_KEY, phoneNumber);
-        console.log("updatePhoneNumber");
 
         //UPDATE USER DETAILS STATE
         this.retrieveAndSetPhoneData(PHONE_STORAGE_KEY);
@@ -587,7 +554,6 @@ class ScreenCheckout extends Component {
         let cardNumber = this.state.cardNumber;
         let trimmedCardNumber = cardNumber.slice(12);
         this.storeData(CARD_NUMBER_STORAGE_KEY, trimmedCardNumber);
-        console.log("updateCard");
 
         //UPDATE USER DETAILS STATE
         this.retrieveAndSetCardNUmberData(CARD_NUMBER_STORAGE_KEY);
@@ -661,8 +627,6 @@ class ScreenCheckout extends Component {
 
             //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
             this.chargeUser();
-
-            // this.hidePreloader();
 
         });
 
@@ -754,7 +718,6 @@ class ScreenCheckout extends Component {
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
 
-            //this.hidePreloader()
         }).catch(err => {
             console.log(err);
             this.hidePreloader();
