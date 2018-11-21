@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: GrayDarkTheme,
         fontFamily: Fonts.MPLUSRegular,
-        // borderStyle: "dashed"
     },
 
     textInput: {
@@ -162,7 +161,6 @@ const styles = StyleSheet.create({
         color: GrayDarkTheme,
         fontFamily: Fonts.MPLUSRegular,
         marginBottom: 8
-        // borderStyle: "dashed"
     },
 
     introCardButton: {
@@ -411,7 +409,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         width: fullWidth,
         padding: 24,
-        // justifyContent : "c"
     },
 
     FBtnQuantityPickerContainer: {
@@ -483,12 +480,10 @@ const styles = StyleSheet.create({
     },
 
     ProductImage: {
-        // marginRight: 16
         flex: 1
     },
 
     CardShoppingProductDetails: {
-        // marginLeft: 16,
         flex: 3,
         marginLeft: 16,
         minWidth: 180
@@ -499,8 +494,6 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.MPLUSRegular,
         color: "#424242",
         marginBottom: 4,
-        // minWidth:220,
-        // height:"auto"
     },
 
     productSubtitle: {
@@ -575,8 +568,6 @@ const styles = StyleSheet.create({
         width: fullWidth,
         backgroundColor: "#fff",
         height: fullHeight,
-        // borderTopRightRadius: 20,
-        // borderTopLeftRadius: 20,
         paddingTop: 0,
         paddingBottom: 24,
         paddingLeft: 24,
@@ -722,7 +713,6 @@ const styles = StyleSheet.create({
         paddingRight: 32,
         borderRadius: 16,
         justifyContent: "center",
-        //alignItems: "center"
     },
 
 
@@ -731,7 +721,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         zIndex: 1000,
         height: 50,
-        // padding: 24,
         borderRadius: 8,
         justifyContent: "center",
         alignItems: "center",
@@ -748,14 +737,12 @@ const styles = StyleSheet.create({
     modal: {
         width: fullWidth * 0.9,
         backgroundColor: "#fff",
-        // zIndex: 1000,
         height: 300,
         paddingTop: 32,
         paddingBottom: 16,
         paddingLeft: 32,
         paddingRight: 32,
         borderRadius: 16,
-        // elevation:100
     },
 
     modalDeliveryMethodHeader: {
@@ -867,7 +854,6 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.MPLUSMedium,
         fontSize: 28,
         color: navyBlueTheme1,
-        // marginBottom: 28
     },
 
     headingDivider: {
@@ -900,7 +886,6 @@ const styles = StyleSheet.create({
     AccordionContent: {
         fontSize: 16,
         fontFamily: Fonts.MPLUSRegular,
-        // width: 200,
         marginRight: 16
     },
 
@@ -977,7 +962,6 @@ const styles = StyleSheet.create({
         paddingRight: 8,
         color: "#fff",
         letterSpacing: 1,
-        // minWidth:100,
     },
 
     cardShoppingListStatusContainer: {
@@ -1004,12 +988,9 @@ const styles = StyleSheet.create({
     },
 
     CardShoppingProductImage: {
-        //marginRight: 32,
         flex: 1
     },
-    // AppCardContent: {
-    //     height:fullHeight
-    // }
+
 
     AppCardContainer: {
         height: fullHeight * 1.5
@@ -1043,11 +1024,8 @@ const styles = StyleSheet.create({
     },
 
     cardIcon: {
-        // marginBottom: 8,
         width: 26,
         marginBottom: 16
-        // height: 26,
-        //resizeMode: "contain"
     },
 
     CardContainer: {
@@ -1089,9 +1067,7 @@ const styles = StyleSheet.create({
 
     AppCheckOutMessage: {
         justifyContent: "center",
-        // alignItems: "center",
         height: fullHeight,
-        // marginTop:64
     },
 
     headerStyle: {
@@ -1173,7 +1149,6 @@ const styles = StyleSheet.create({
         textTransform: "capitalize",
         fontFamily: Fonts.MPLUSMedium,
         marginBottom: 8,
-        // fontSize:16
     },
 
     scrollview: {
@@ -1205,7 +1180,6 @@ const styles = StyleSheet.create({
 
     deliveryPickerLabel: {
         marginTop: 16,
-        // marginBottom: 16,
         fontFamily: Fonts.MPLUSMedium,
         fontSize: 13
     },
