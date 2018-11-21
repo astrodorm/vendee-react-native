@@ -64,7 +64,7 @@ export const FETCH_CATEGORY_PRODUCTS_STARTED = 'FETCH_CATEGORY_PRODUCTS_STARTED'
 export const FETCH_CATEGORY_PRODUCTS_SUCCESS = 'FETCH_CATEGORY_PRODUCTS_SUCCESS';
 export const FETCH_CATEGORY_PRODUCTS_FAILED = 'FETCH_CATEGORY_PRODUCTS_FAILED';
 export const FETCH_FEES_STARTED = 'FETCH_FEES_STARTED';
-export const FETCH_FEES_SUCCESS = 'FETCH_FEES_SUCCESS'; 
+export const FETCH_FEES_SUCCESS = 'FETCH_FEES_SUCCESS';
 export const FETCH_FEES_FAILED = 'FETCH_FEES_FAILED';
 
 
@@ -548,24 +548,6 @@ export const createUserAction = (firstname, lastname, phoneNumber, email, oauth)
 };
 
 
-// export const loginAction = (email, oauth) => {
-//     return dispatch => {
-//         dispatch(loginStartedAction());
-
-//         axios
-//             .post(`${BASE_URL}/customers/login`, {
-//                 email,
-//                 oauth
-//             })
-//             .then(res => {
-//                 dispatch(loginSuccessAction(res.data.data));
-//             })
-//             .catch(err => {
-//                 dispatch(loginFailedAction(err.response.data));
-//             });
-//     };
-// };
-
 
 export const loginAction = (email, oauth) => (dispatch) =>
     new Promise(function (resolve, reject) {
@@ -765,8 +747,7 @@ export const promisedAddToCartAction = (userToken, shippingMethod, cartArray) =>
             }
         }
 
-        //console.log("promisedAddToCartAction-cartObj");
-        //console.dir(cartObj);
+
 
         axios
             .post(`${BASE_URL}/carts/add`, {
@@ -854,6 +835,7 @@ export const fetchCategoryListAction = () => (dispatch) =>
                 reject(err)
             });
     });
+    
 
 export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
     new Promise(function (resolve, reject) {
@@ -872,7 +854,7 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
     });
 
 
-    export const fetchFeesAction = () => (dispatch) =>
+export const fetchFeesAction = () => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(fetchFeesStartedAction());
 
