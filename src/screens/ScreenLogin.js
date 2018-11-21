@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TextInput, AsyncStorage, KeyboardAvoidingView, BackHandler } from 'react-native';
+import { Text, View, Image, TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import { styles } from '../styles/styles';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import InlineError from '../components/InlineError';
@@ -27,13 +27,6 @@ class ScreenProfile extends Component {
 
         }
     }
-
-    // componentWillReceiveProps(nextProps) {
-
-    //     let userToken = nextProps.user.token;
-
-    //     nextProps.isLoginUserSuccess === true ? this.storeUserCredentials(userToken) : null;
-    // }
 
 
     storeUserCredentials = (userToken) => {
@@ -105,22 +98,16 @@ class ScreenProfile extends Component {
 
         let email = this.state.email;
         let oauth = this.state.password;
-        // this.props.dispatch(loginAction(email, oauth))
+
         this.props.dispatch(loginAction(email, oauth)).then(res => {
 
-            console.log(res);
             let userToken = res.data.data.token
-            console.log("userToken")
-            console.log(userToken)
+
             this.storeUserCredentials(userToken)
 
 
         }).catch(err => {
-            console.log("err");
-            console.log("this.props.loginResponse.message");
-            console.log(this.props.loginResponse.message);
-            // this.setState({ loginErrorMessage: this.props.loginResponse.message, isVisibleLoginError: true })
-            // console.log()
+
             this.showLoginError()
         });
 
