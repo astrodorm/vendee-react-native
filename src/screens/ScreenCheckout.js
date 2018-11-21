@@ -133,10 +133,11 @@ class ScreenCheckout extends Component {
     getGrandTotal = () => {
 
         let convenienceFee = 0;
-        let deliveryFee = this.props.deliveryFee;
+        let deliveryFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
         let grandTotal = 0;
+        let initialTotal = 0;
 
         listArray.forEach(function (item) {
 
@@ -145,12 +146,48 @@ class ScreenCheckout extends Component {
 
         })
 
-        convenienceFee = (5 / 100) * total;
+
+        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        initialTotal = parseInt(total) + parseInt(convenienceFee);
+
+        this.props.isPickup === true ? deliveryFee = 0 : null;
+        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null;
+
         grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
 
         return formattedGrandTotal;
+    }
+
+
+    getDeliveryFee = () => {
+
+        let convenienceFee = 0;
+        let deliveryFee = 0;
+        let listArray = [...this.props.newlists];
+        let total = 0;
+        let initialTotal = 0;
+
+        listArray.forEach(function (item) {
+
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+
+        })
+
+
+        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        initialTotal = parseInt(total) + parseInt(convenienceFee);
+
+        this.props.isPickup === true ? deliveryFee = 0 : null;
+        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null;
+
+        let formattedDeliveryFee = this.formatAmount(deliveryFee);
+
+        return formattedDeliveryFee;
+
+
     }
 
     getUnformattedGrandTotalKobo = () => {
@@ -196,7 +233,8 @@ class ScreenCheckout extends Component {
 
         })
 
-        convenienceFee = (5 / 100) * total;
+
+        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
@@ -781,7 +819,7 @@ class ScreenCheckout extends Component {
                                 </View>
                                 <View>
                                     <Text style={styles.AppCardSubtitle}>SHOPPING LIST DETAILS</Text>
-                                    <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
+                                    <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.getDeliveryFee()} grandTotal={this.getGrandTotal()} />
                                     <ButtonPrimaryAccent title="PLACE ORDER" icon="arrowright" isActive={true} onSelected={this.validateInput} />
                                 </View>
                             </View>
@@ -954,6 +992,7 @@ const mapStateToProps = state => ({
     deliveryFee: state.delivery.deliveryFee,
     isDelivery: state.delivery.isDelivery,
     isPickup: state.delivery.isPickup,
+    newFees: state.fees.newFees
 
 
 })
