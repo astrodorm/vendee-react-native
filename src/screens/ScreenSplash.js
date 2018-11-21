@@ -111,7 +111,6 @@ class ScreenCategory extends Component {
     }
 }
 
-//export default ScreenCategory;
 
 const mapStateToProps = state => ({
 
