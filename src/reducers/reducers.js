@@ -335,8 +335,6 @@ function users(state = initialState, action) {
                 isSigningInUser: false,
                 isLoginUserError: true,
                 isLoginUserSuccess: false,
-                //responseStatus: action.payload.error.status,
-                // responseMessage: action.payload.error.message,
                 loginResponse: action.error
             });
         default:
