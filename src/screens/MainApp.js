@@ -5,8 +5,6 @@ import ScreenShoppingList from './ScreenShoppingList';
 import ScreenProfile from './ScreenProfile';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ScreenCategory from './ScreenCategory';
-import NewScreenCategory from './NewScreenCategory';
-
 
 
 export default createBottomTabNavigator({
