@@ -129,7 +129,6 @@ class ScreenProfile extends Component {
         return (
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
-                    {/* <ScrollView> */}
                         <View style={styles.AppCardContainer}>
                             <View style={styles.AppCard}>
                                 <Text style={styles.AppCardHeader}>User Profile</Text>
@@ -142,7 +141,6 @@ class ScreenProfile extends Component {
                                 </View>
                             </View>
                         </View>
-                    {/* </ScrollView> */}
                 </View>
             </View>
         );
