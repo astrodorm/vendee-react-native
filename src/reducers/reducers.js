@@ -58,6 +58,9 @@ import {
     FETCH_CATEGORY_PRODUCTS_STARTED,
     FETCH_CATEGORY_PRODUCTS_SUCCESS,
     FETCH_CATEGORY_PRODUCTS_FAILED,
+    FETCH_FEES_STARTED,
+    FETCH_FEES_SUCCESS,
+    FETCH_FEES_FAILED
 
 } from '../actions/actions';
 
@@ -120,10 +123,13 @@ const initialState = {
     isfetchingCategoryList: false,
     newCategories: [],
     categoryListResponse: [],
-    isfetchingCategoryProducts : false,
-    categoryProductsResponse : [],
-    newCategoryProducts : [],
-    loginResponse : []
+    isfetchingCategoryProducts: false,
+    categoryProductsResponse: [],
+    newCategoryProducts: [],
+    loginResponse: [],
+    isfetchingFees: false,
+    newFees: [],
+    feesResponse: []
 
 }
 
@@ -330,8 +336,8 @@ function users(state = initialState, action) {
                 isLoginUserError: true,
                 isLoginUserSuccess: false,
                 //responseStatus: action.payload.error.status,
-               // responseMessage: action.payload.error.message,
-                loginResponse : action.error
+                // responseMessage: action.payload.error.message,
+                loginResponse: action.error
             });
         default:
             return state;
@@ -346,6 +352,28 @@ function delivery(state = initialState, action) {
                 isDelivery: action.isDelivery,
                 isPickup: action.isPickup,
                 deliveryFee: action.fee
+            });
+        default:
+            return state;
+    }
+}
+
+
+function fees(state = initialState, action) {
+    switch (action.type) {
+        case FETCH_FEES_STARTED:
+            return Object.assign({}, state, {
+                isfetchingFees: true,
+            });
+        case FETCH_FEES_SUCCESS:
+            return Object.assign({}, state, {
+                isfetchingFees: false,
+                newFees: action.data,
+            });
+        case FETCH_FEES_FAILED:
+            return Object.assign({}, state, {
+                isfetchingFees: false,
+                feesResponse: action.error
             });
         default:
             return state;
@@ -480,7 +508,8 @@ const rootReducer = combineReducers({
     products,
     lists,
     delivery,
-    users
+    users,
+    fees
 })
 
 export default rootReducer

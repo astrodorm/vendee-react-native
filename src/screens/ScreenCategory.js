@@ -430,7 +430,8 @@ class ScreenCategory extends Component {
 
         })
 
-        convenienceFee = (5 / 100) * total;
+
+        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
@@ -458,10 +459,11 @@ class ScreenCategory extends Component {
     getGrandTotal = () => {
 
         let convenienceFee = 0;
-        let deliveryFee = this.props.deliveryFee;
+        let deliveryFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
         let grandTotal = 0;
+        let initialTotal = 0;
 
         listArray.forEach(function (item) {
 
@@ -470,13 +472,61 @@ class ScreenCategory extends Component {
 
         })
 
-        convenienceFee = (5 / 100) * total;
+
+        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        initialTotal = parseInt(total) + parseInt(convenienceFee);
+       // deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal));
+
+       this.props.isPickup === true ? deliveryFee = 0 : null;
+       this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null ;
+
         grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
 
         return formattedGrandTotal;
     }
+
+
+    getDeliveryFee = () => {
+
+        //getGrandTotal = () => {
+
+            let convenienceFee = 0;
+            let deliveryFee = 0;
+            let listArray = [...this.props.newlists];
+            let total = 0;
+            let initialTotal = 0;
+            // let grandTotal = 0;
+    
+            listArray.forEach(function (item) {
+    
+                multipliedValue = parseInt(item.price) * parseInt(item.quantity);
+                total += parseInt(multipliedValue);
+    
+            })
+    
+    
+            convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+            // console.log(convenienceFee);
+            initialTotal = parseInt(total) + parseInt(convenienceFee);
+            // console.log(initialTotal);
+           // deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal));
+            // console.log(deliveryFee);
+    
+            this.props.isPickup === true ? deliveryFee = 0 : null;
+            this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null ;
+    
+           // isPickup: state.delivery.isPickup,
+    
+    
+            let formattedDeliveryFee = this.formatAmount(deliveryFee);
+    
+            return formattedDeliveryFee;
+            // }
+
+    }
+
 
     render() {
         return (
@@ -569,7 +619,7 @@ class ScreenCategory extends Component {
                                     <View style={styles.shoppingListDetails}>
                                         <Text style={styles.shoppingListLabel}>Shopping List</Text>
                                     </View>
-                                    <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.props.deliveryFee} grandTotal={this.getGrandTotal()} />
+                                    <ShippingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.getDeliveryFee()} grandTotal={this.getGrandTotal()} />
 
                                     {/* SHOPPING LIST OPTIONS */}
                                     <View style={styles.shoppingListOptions}>
@@ -612,7 +662,10 @@ const mapStateToProps = state => ({
     newlists: state.lists.newlists,
     selectProductID: state.products.selectProductID,
     selectProductQuantity: state.products.selectProductQuantity,
-    deliveryFee: state.delivery.deliveryFee
+    deliveryFee: state.delivery.deliveryFee,
+    newFees: state.fees.newFees,
+    isDelivery: state.delivery.isDelivery,
+    isPickup: state.delivery.isPickup,
 
 
 })

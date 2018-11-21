@@ -63,7 +63,9 @@ export const FETCH_CATEGORY_LIST_FAILED = 'FETCH_CATEGORY_LIST_FAILED';
 export const FETCH_CATEGORY_PRODUCTS_STARTED = 'FETCH_CATEGORY_PRODUCTS_STARTED';
 export const FETCH_CATEGORY_PRODUCTS_SUCCESS = 'FETCH_CATEGORY_PRODUCTS_SUCCESS';
 export const FETCH_CATEGORY_PRODUCTS_FAILED = 'FETCH_CATEGORY_PRODUCTS_FAILED';
-
+export const FETCH_FEES_STARTED = 'FETCH_FEES_STARTED';
+export const FETCH_FEES_SUCCESS = 'FETCH_FEES_SUCCESS'; 
+export const FETCH_FEES_FAILED = 'FETCH_FEES_FAILED';
 
 
 const BASE_URL = "https://api.yourvendee.com/api";
@@ -209,6 +211,13 @@ export const fetchCategoryProductsStartedAction = () => (
     }
 );
 
+export const fetchFeesStartedAction = () => (
+    {
+        type: FETCH_FEES_STARTED
+
+    }
+);
+
 export const chargeUserStartedAction = () => (
     {
         type: CHARGE_USER_STARTED,
@@ -350,6 +359,13 @@ export const fetchCategoryProductsSuccessAction = (data) => (
     }
 );
 
+export const fetchFeesSuccessAction = (data) => (
+    {
+        type: FETCH_FEES_SUCCESS,
+        data
+    }
+);
+
 
 export const chargeUserSuccessAction = (data) => (
     {
@@ -451,6 +467,13 @@ export const fetchCategoryListFailedAction = (error) => (
 export const fetchCategoryProductsFailedAction = (error) => (
     {
         type: FETCH_CATEGORY_PRODUCTS_FAILED,
+        error
+    }
+);
+
+export const fetchFeesFailedAction = (error) => (
+    {
+        type: FETCH_FEES_FAILED,
         error
     }
 );
@@ -844,6 +867,23 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
             })
             .catch(err => {
                 dispatch(fetchCategoryProductsFailedAction(err));
+                reject(err)
+            });
+    });
+
+
+    export const fetchFeesAction = () => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(fetchFeesStartedAction());
+
+        axios.get(`${BASE_URL}/fees`
+        )
+            .then(res => {
+                dispatch(fetchFeesSuccessAction(res.data.data));
+                resolve(res.data);
+            })
+            .catch(err => {
+                dispatch(fetchFeesFailedAction(err.response.data));
                 reject(err)
             });
     });
