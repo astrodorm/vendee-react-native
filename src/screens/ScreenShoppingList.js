@@ -88,7 +88,6 @@ class ScreenShoppingList extends Component {
     _renderShoppingList = ({ item }) => (
 
         <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID}  orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
-        // <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} thumbnail={BASE_THUMBNAIL_URL + item.productID[0].thumbnail} title={item.productID[0].productName} price={item.productID[0].price} quantity={item.productID[0].quantity} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
 
