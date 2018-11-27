@@ -324,6 +324,7 @@ class SearchResult extends Component {
 
 
     getTotal = () => {
+
         let listArray = [...this.props.newlists];
         let total = 0;
 
@@ -331,12 +332,9 @@ class SearchResult extends Component {
 
             multipliedValue = parseInt(item.price) * parseInt(item.quantity);
             total += parseInt(multipliedValue);
-
         })
 
-        let formattedTotal = this.formatAmount(total);
-
-        return formattedTotal;
+        return total;
 
     }
 
@@ -348,76 +346,26 @@ class SearchResult extends Component {
 
     getGrandTotal = () => {
 
-        let convenienceFee = 0;
-        let deliveryFee = 0;
-        let finalDeliveryFee = 0;
-        let listArray = [...this.props.newlists];
-        let total = 0;
+        let convenienceFee = this.getConvenienceFee();
+        let deliveryFee = this.getDeliveryFee();
+        let total = this.getTotal();
         let grandTotal = 0;
-        let initialTotal = 0;
-        let maxDeliveryFee = this.props.newFees[0].maxDelivery;
-        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
-        let minDeliveryFee = this.props.newFees[0].minDelivery;
 
+        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee);
 
-        listArray.forEach(function (item) {
-
-            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
-            total += parseInt(multipliedValue);
-
-        })
-
-
-        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
-
-        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
-
-        initialTotal = parseInt(total) + parseInt(convenienceFee);
-
-        let calculatedDeliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal))
-
-        deliveryFee = calculatedDeliveryFee;
-
-        calculatedDeliveryFee > maxDeliveryFee ? deliveryFee = maxDeliveryFee : null;
-
-        minDeliveryFee > calculatedDeliveryFee ? deliveryFee = minDeliveryFee : null;
-
-        this.props.isPickup === true ? finalDeliveryFee = 0 : null;
-        this.props.isDelivery === true ? finalDeliveryFee = deliveryFee : null;
-
-        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(finalDeliveryFee)
-
-        let formattedGrandTotal = this.formatAmount(grandTotal);
-
-        return formattedGrandTotal;
+        return grandTotal;
     }
 
 
     getDeliveryFee = () => {
 
-        let convenienceFee = 0;
+        let convenienceFee = this.getConvenienceFee();
         let deliveryFee = 0;
         let finalDeliveryFee = 0;
-        let listArray = [...this.props.newlists];
-        let total = 0;
+        let total = this.getTotal();
         let initialTotal = 0;
         let maxDeliveryFee = this.props.newFees[0].maxDelivery;
         let minDeliveryFee = this.props.newFees[0].minDelivery;
-        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
-
-
-
-        listArray.forEach(function (item) {
-
-            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
-            total += parseInt(multipliedValue);
-
-        })
-
-
-        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
-
-        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
 
         initialTotal = parseInt(total) + parseInt(convenienceFee);
 
@@ -430,11 +378,10 @@ class SearchResult extends Component {
         minDeliveryFee > calculatedDeliveryFee ? deliveryFee = minDeliveryFee : null;
 
         this.props.isPickup === true ? finalDeliveryFee = 0 : null;
+
         this.props.isDelivery === true ? finalDeliveryFee = deliveryFee : null;
 
-        let formattedDeliveryFee = this.formatAmount(finalDeliveryFee);
-
-        return formattedDeliveryFee;
+        return finalDeliveryFee;
 
 
     }
@@ -442,24 +389,14 @@ class SearchResult extends Component {
     getConvenienceFee = () => {
 
         let convenienceFee = 0;
-        let listArray = [...this.props.newlists];
-        let total = 0;
-        let maxConvenienceFee = this.props.newFees[0].maxConvenience
-
-        listArray.forEach(function (item) {
-
-            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
-            total += parseInt(multipliedValue);
-
-        })
+        let total = this.getTotal();
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
 
         let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
 
         calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
 
-        let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
-
-        return formattedConvenienceFee;
+        return convenienceFee;
 
     }
 
