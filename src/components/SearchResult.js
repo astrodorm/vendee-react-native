@@ -350,10 +350,15 @@ class SearchResult extends Component {
 
         let convenienceFee = 0;
         let deliveryFee = 0;
+        let finalDeliveryFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
         let grandTotal = 0;
         let initialTotal = 0;
+        let maxDeliveryFee = this.props.newFees[0].maxDelivery;
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
+        let minDeliveryFee = this.props.newFees[0].minDelivery;
+
 
         listArray.forEach(function (item) {
 
@@ -363,13 +368,24 @@ class SearchResult extends Component {
         })
 
 
-        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
+
+        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
+
         initialTotal = parseInt(total) + parseInt(convenienceFee);
 
-        this.props.isPickup === true ? deliveryFee = 0 : null;
-        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null;
+        let calculatedDeliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal))
 
-        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+        deliveryFee = calculatedDeliveryFee;
+
+        calculatedDeliveryFee > maxDeliveryFee ? deliveryFee = maxDeliveryFee : null;
+
+        minDeliveryFee > calculatedDeliveryFee ? deliveryFee = minDeliveryFee : null;
+
+        this.props.isPickup === true ? finalDeliveryFee = 0 : null;
+        this.props.isDelivery === true ? finalDeliveryFee = deliveryFee : null;
+
+        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(finalDeliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
 
@@ -381,9 +397,15 @@ class SearchResult extends Component {
 
         let convenienceFee = 0;
         let deliveryFee = 0;
+        let finalDeliveryFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
         let initialTotal = 0;
+        let maxDeliveryFee = this.props.newFees[0].maxDelivery;
+        let minDeliveryFee = this.props.newFees[0].minDelivery;
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
+
+
 
         listArray.forEach(function (item) {
 
@@ -393,13 +415,24 @@ class SearchResult extends Component {
         })
 
 
-        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
+
+        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
+
         initialTotal = parseInt(total) + parseInt(convenienceFee);
 
-        this.props.isPickup === true ? deliveryFee = 0 : null;
-        this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null;
+        let calculatedDeliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal))
 
-        let formattedDeliveryFee = this.formatAmount(deliveryFee);
+        deliveryFee = calculatedDeliveryFee;
+
+        calculatedDeliveryFee > maxDeliveryFee ? deliveryFee = maxDeliveryFee : null;
+
+        minDeliveryFee > calculatedDeliveryFee ? deliveryFee = minDeliveryFee : null;
+
+        this.props.isPickup === true ? finalDeliveryFee = 0 : null;
+        this.props.isDelivery === true ? finalDeliveryFee = deliveryFee : null;
+
+        let formattedDeliveryFee = this.formatAmount(finalDeliveryFee);
 
         return formattedDeliveryFee;
 
@@ -411,6 +444,7 @@ class SearchResult extends Component {
         let convenienceFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience
 
         listArray.forEach(function (item) {
 
@@ -419,8 +453,9 @@ class SearchResult extends Component {
 
         })
 
+        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
 
-        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
