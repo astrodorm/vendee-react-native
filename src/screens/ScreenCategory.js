@@ -435,8 +435,6 @@ class ScreenCategory extends Component {
 
         calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
 
-        // convenienceFee = Math.round(this.props.newFees[0].convenience * total);
-
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
         return formattedConvenienceFee;
@@ -516,7 +514,6 @@ class ScreenCategory extends Component {
         let total = 0;
         let initialTotal = 0;
         let maxDeliveryFee = this.props.newFees[0].maxDelivery;
-        // let maxDeliveryFee = this.props.newFees[0].maxDelivery;
         let minDeliveryFee = this.props.newFees[0].minDelivery;
         let maxConvenienceFee = this.props.newFees[0].maxConvenience;
 
