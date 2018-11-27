@@ -49,7 +49,7 @@ class ScreenCategory extends Component {
             isVisibleShoppingListDrawer: false,
             isVisibleCategoryLoadingIndicator: true,
             isVisibleCategoryItemLoadingIndicator: true,
-            newCategoryProducts : []
+            newCategoryProducts: []
 
         }
     }
@@ -206,7 +206,7 @@ class ScreenCategory extends Component {
     fetchProductsByCategories = (id) => {
 
         //CLEAR STORED PREVIOUS DATA
-        this.setState({newCategoryProducts : []});
+        this.setState({ newCategoryProducts: [] });
 
         this.props.dispatch(fetchCategoryProductsAction(id)).then(res => {
 
@@ -214,7 +214,7 @@ class ScreenCategory extends Component {
             this.hideCategoryItemLoadingTextIndicator();
 
             //SET FRESH RETRIEVED DATA
-            this.setState({ newCategoryProducts : this.props.newCategoryProducts})
+            this.setState({ newCategoryProducts: this.props.newCategoryProducts })
 
         });
 
@@ -422,6 +422,7 @@ class ScreenCategory extends Component {
         let convenienceFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience
 
         listArray.forEach(function (item) {
 
@@ -430,8 +431,11 @@ class ScreenCategory extends Component {
 
         })
 
+        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
 
-        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
+
+        // convenienceFee = Math.round(this.props.newFees[0].convenience * total);
 
         let formattedConvenienceFee = this.formatAmount(parseInt(convenienceFee));
 
@@ -460,10 +464,15 @@ class ScreenCategory extends Component {
 
         let convenienceFee = 0;
         let deliveryFee = 0;
+        let finalDeliveryFee = 0;
         let listArray = [...this.props.newlists];
         let total = 0;
         let grandTotal = 0;
         let initialTotal = 0;
+        let maxDeliveryFee = this.props.newFees[0].maxDelivery;
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
+        let minDeliveryFee = this.props.newFees[0].minDelivery;
+
 
         listArray.forEach(function (item) {
 
@@ -473,13 +482,24 @@ class ScreenCategory extends Component {
         })
 
 
-        convenienceFee = Math.round(this.props.newFees[0].convenience * total);
+        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
+
+        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
+
         initialTotal = parseInt(total) + parseInt(convenienceFee);
 
-       this.props.isPickup === true ? deliveryFee = 0 : null;
-       this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null ;
+        let calculatedDeliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal))
 
-        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(deliveryFee)
+        deliveryFee = calculatedDeliveryFee;
+
+        calculatedDeliveryFee > maxDeliveryFee ? deliveryFee = maxDeliveryFee : null;
+
+        minDeliveryFee > calculatedDeliveryFee ? deliveryFee = minDeliveryFee : null;
+
+        this.props.isPickup === true ? finalDeliveryFee = 0 : null;
+        this.props.isDelivery === true ? finalDeliveryFee = deliveryFee : null;
+
+        grandTotal = parseInt(total) + parseInt(convenienceFee) + parseInt(finalDeliveryFee)
 
         let formattedGrandTotal = this.formatAmount(grandTotal);
 
@@ -489,29 +509,47 @@ class ScreenCategory extends Component {
 
     getDeliveryFee = () => {
 
-            let convenienceFee = 0;
-            let deliveryFee = 0;
-            let listArray = [...this.props.newlists];
-            let total = 0;
-            let initialTotal = 0;
-    
-            listArray.forEach(function (item) {
-    
-                multipliedValue = parseInt(item.price) * parseInt(item.quantity);
-                total += parseInt(multipliedValue);
-    
-            })
-    
-    
-            convenienceFee = Math.round(this.props.newFees[0].convenience * total);
-            initialTotal = parseInt(total) + parseInt(convenienceFee);
-    
-            this.props.isPickup === true ? deliveryFee = 0 : null;
-            this.props.isDelivery === true ? deliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal)) : null ;
-        
-            let formattedDeliveryFee = this.formatAmount(deliveryFee);
-    
-            return formattedDeliveryFee;
+        let convenienceFee = 0;
+        let deliveryFee = 0;
+        let finalDeliveryFee = 0;
+        let listArray = [...this.props.newlists];
+        let total = 0;
+        let initialTotal = 0;
+        let maxDeliveryFee = this.props.newFees[0].maxDelivery;
+        // let maxDeliveryFee = this.props.newFees[0].maxDelivery;
+        let minDeliveryFee = this.props.newFees[0].minDelivery;
+        let maxConvenienceFee = this.props.newFees[0].maxConvenience;
+
+
+
+        listArray.forEach(function (item) {
+
+            multipliedValue = parseInt(item.price) * parseInt(item.quantity);
+            total += parseInt(multipliedValue);
+
+        })
+
+
+        let calculatedConvenienceFee = Math.round(this.props.newFees[0].convenience * total)
+
+        calculatedConvenienceFee > maxConvenienceFee ? convenienceFee = maxConvenienceFee : convenienceFee = calculatedConvenienceFee;
+
+        initialTotal = parseInt(total) + parseInt(convenienceFee);
+
+        let calculatedDeliveryFee = Math.round(this.props.newFees[0].delivery * parseInt(initialTotal))
+
+        deliveryFee = calculatedDeliveryFee;
+
+        calculatedDeliveryFee > maxDeliveryFee ? deliveryFee = maxDeliveryFee : null;
+
+        minDeliveryFee > calculatedDeliveryFee ? deliveryFee = minDeliveryFee : null;
+
+        this.props.isPickup === true ? finalDeliveryFee = 0 : null;
+        this.props.isDelivery === true ? finalDeliveryFee = deliveryFee : null;
+
+        let formattedDeliveryFee = this.formatAmount(finalDeliveryFee);
+
+        return formattedDeliveryFee;
 
     }
 
