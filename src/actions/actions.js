@@ -737,7 +737,7 @@ export const addToCartAction = (userToken, productID, quantity) => {
     };
 };
 
-export const promisedAddToCartAction = (userToken, shippingMethod, cartArray) => (dispatch) =>
+export const promisedAddToCartAction = (userToken, shippingMethod, convenience, delivery, totalCost, cartArray) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(addToCartStartedAction());
 
@@ -753,6 +753,9 @@ export const promisedAddToCartAction = (userToken, shippingMethod, cartArray) =>
             .post(`${BASE_URL}/carts/add`, {
 
                 deliveryMethod: shippingMethod,
+                convenienceFee: convenience,
+                deliveryFee: delivery,
+                total: totalCost,
                 cart: cartArray
             }
                 ,
@@ -835,7 +838,7 @@ export const fetchCategoryListAction = () => (dispatch) =>
                 reject(err)
             });
     });
-    
+
 
 export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
     new Promise(function (resolve, reject) {

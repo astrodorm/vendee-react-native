@@ -246,17 +246,17 @@ class ScreenCheckout extends Component {
         }
 
 
-        this.addToCart(userToken, shippingMethod, cartArray);
+        this.addToCart(userToken, shippingMethod, this.getConvenienceFee(), this.getDeliveryFee(), this.getTotal(), cartArray);
 
 
     }
 
 
-    addToCart = (userToken, shippingMethod, cartArray) => {
+    addToCart = (userToken, shippingMethod, convenienceFee, deliveryFee, total, cartArray) => {
         this.showPreloader();
 
 
-        this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, cartArray)).then(res => {
+        this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, convenienceFee, deliveryFee, total, cartArray)).then(res => {
             this.createOrder(userToken);
 
         }).catch(err => {
