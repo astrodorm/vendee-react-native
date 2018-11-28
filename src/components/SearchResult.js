@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, ScrollView } from 'react-native';
+import { Text, View, FlatList, ScrollView, AsyncStorage } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import { styles } from '../styles/styles';
 import DeliveryPicker from '../components/DeliveryPicker';
@@ -8,7 +8,19 @@ import * as Animatable from 'react-native-animatable';
 import ShippingListDetails from '../components/shoppingListDetails';
 import { connect } from 'react-redux';
 import ProductOptions from '../components/ProductOptions';
-import { itemIncrementAction, addItemAction, itemSelectAction, incrementListItemAction, itemDecrementAction, decrementListItemAction, removeItemAction, updateTotalAction, updateConvenienceFeeAction, updateGrandTotalAction } from '../actions/actions';
+import {
+    itemIncrementAction,
+    addItemAction,
+    itemSelectAction,
+    incrementListItemAction,
+    itemDecrementAction,
+    decrementListItemAction,
+    removeItemAction,
+    updateTotalAction,
+    updateConvenienceFeeAction,
+    updateGrandTotalAction,
+    createLostRequestAction
+} from '../actions/actions';
 import ShoppingListFloatingBtn from '../components/ShoppingListFloatingBtn';
 import ShoppingListItem from '../components/ShoppingListItem';
 import ShoppingListOptions from '../components/ShoppingListOptions';
@@ -19,15 +31,23 @@ import CheckoutButton from '../components/CheckoutButton';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
-const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload"
+const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload";
+const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+
 
 
 class SearchResult extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        nextProps.newproducts.length === 0 ? this.showNoDataMessage() : this.hideNoDataMessage();
+        nextProps.newproducts.length === 0 ? this.handleNoData() : this.hideNoDataMessage();
 
+    }
+
+
+    componentDidMount() {
+        //RETRIEVE AND SET PASSWORD
+        this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY)
     }
 
     constructor(props) {
@@ -42,7 +62,8 @@ class SearchResult extends Component {
             selectedProductCount: 0,
             isVisibleFBtnShoppingListQuantityPicker: false,
             isVisibleShoppingListDrawer: false,
-            isVisibleNoDataMessage: false
+            isVisibleNoDataMessage: false,
+            userToken: ""
         }
     }
 
@@ -61,10 +82,40 @@ class SearchResult extends Component {
         <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
     );
 
+    retrieveAndUserTokenData = async (storageKey) => {
 
-    showNoDataMessage = () => {
+        try {
+            const value = await AsyncStorage.getItem(storageKey);
+            if (value !== null) {
 
-        this.setState({ isVisibleNoDataMessage: true })
+                this.setState({ userToken: value })
+
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+
+    }
+
+    handleNoData = () => {
+
+        let userToken = this.state.userToken;
+        let searchParam = this.props.searchText;
+        let status = "PENDING"
+
+        this.setState({ isVisibleNoDataMessage: true });
+
+        this.props.dispatch(createLostRequestAction(userToken, searchParam, status)).then(res => {
+            // this.createOrder(userToken);
+
+            console.log("Success creating Lost Request")
+
+        }).catch(err => {
+            // this.hidePreloader();
+            //  this.showErrorDialog("Failed To Add Items. Try Again");
+            console.log("failed to create lost request");
+        });
+
     }
 
     hideNoDataMessage = () => {
@@ -554,7 +605,8 @@ const mapStateToProps = state => ({
     convenienceFee: state.lists.convenienceFee,
     grandTotal: state.lists.grandTotal,
     deliveryFee: state.delivery.deliveryFee,
-    newFees: state.fees.newFees
+    newFees: state.fees.newFees,
+    searchText: state.products.searchText
 })
 
 export default connect(mapStateToProps)(SearchResult);

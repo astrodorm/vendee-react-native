@@ -60,7 +60,10 @@ import {
     FETCH_CATEGORY_PRODUCTS_FAILED,
     FETCH_FEES_STARTED,
     FETCH_FEES_SUCCESS,
-    FETCH_FEES_FAILED
+    FETCH_FEES_FAILED,
+    CREATE_LOST_REQUEST_STARTED,
+    CREATE_LOST_REQUEST_SUCCESS,
+    CREATE_LOST_REQUEST_FAILED
 
 } from '../actions/actions';
 
@@ -129,7 +132,11 @@ const initialState = {
     loginResponse: [],
     isfetchingFees: false,
     newFees: [],
-    feesResponse: []
+    feesResponse: [],
+    isCreatingLostRequest : false,
+    isCreateLostRequestError : false,
+    createLostRequestResponse : [],
+    isCreateLostRequestSuccess : false
 
 }
 
@@ -205,6 +212,23 @@ function products(state = initialState, action) {
             return Object.assign({}, state, {
                 isfetchingCategoryProducts: false,
                 categoryProductsResponse: [...action.error]
+            });
+        case CREATE_LOST_REQUEST_STARTED:
+            return Object.assign({}, state, {
+                isCreatingLostRequest: true,
+                isCreateLostRequestError: false
+            });
+        case CREATE_LOST_REQUEST_SUCCESS:
+            return Object.assign({}, state, {
+                isCreatingLostRequest: false,
+                createLostRequestResponse: action.data,
+            });
+        case CREATE_LOST_REQUEST_FAILED:
+            return Object.assign({}, state, {
+                isCreatingLostRequest: false,
+                isCreateLostRequestError: true,
+                isCreateLostRequestSuccess: false,
+                createLostRequestResponse: action.error,
             });
         default:
             return state;
@@ -448,7 +472,7 @@ function lists(state = initialState, action) {
             return Object.assign({}, state, {
                 isCreatingOrder: false,
                 isCreateOrderError: true,
-                isCreateOrderSuccess: true,
+                isCreateOrderSuccess: false,
                 createOrderResponse: action.error,
             });
         case FETCH_LIST_FAILED:

@@ -66,6 +66,9 @@ export const FETCH_CATEGORY_PRODUCTS_FAILED = 'FETCH_CATEGORY_PRODUCTS_FAILED';
 export const FETCH_FEES_STARTED = 'FETCH_FEES_STARTED';
 export const FETCH_FEES_SUCCESS = 'FETCH_FEES_SUCCESS';
 export const FETCH_FEES_FAILED = 'FETCH_FEES_FAILED';
+export const CREATE_LOST_REQUEST_STARTED = 'CREATE_LOST_REQUEST_STARTED';
+export const CREATE_LOST_REQUEST_SUCCESS = 'CREATE_LOST_REQUEST_SUCCESS';
+export const CREATE_LOST_REQUEST_FAILED = 'CREATE_LOST_REQUEST_FAILED';
 
 
 const BASE_URL = "https://api.yourvendee.com/api";
@@ -246,6 +249,12 @@ export const addToCartStartedAction = () => (
     }
 );
 
+export const createLostRequestStartedAction = () => (
+    {
+        type: CREATE_LOST_REQUEST_STARTED,
+    }
+);
+
 
 export const updateUserStartedAction = () => (
     {
@@ -398,6 +407,14 @@ export const newAddToCartSuccessAction = (data) => (
     }
 );
 
+
+export const createLostRequestSuccessAction = (data) => (
+    {
+        type: CREATE_LOST_REQUEST_SUCCESS,
+        data
+    }
+);
+
 export const showModalPin = (visibility) => (
     {
         type: SHOW_MODAL_PIN,
@@ -513,6 +530,14 @@ export const chargeUserOtpFailedAction = (error) => (
 export const newAddToCartFailedAction = (error) => (
     {
         type: NEW_ADD_TO_CART_FAILED,
+        error
+    }
+);
+
+
+export const createLostRequestFailedAction = (error) => (
+    {
+        type: CREATE_LOST_REQUEST_FAILED,
         error
     }
 );
@@ -707,6 +732,38 @@ export const newAddToCartAction = (userToken, productID, quantity) => {
             });
     };
 };
+
+
+
+export const createLostRequestAction = (userToken, searchedItem, status) => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(createLostRequestStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/notfound`, {
+
+                searchedItem,
+                status
+            }
+                ,
+                config
+            )
+            .then(res => {
+                dispatch(createLostRequestSuccessAction(res));
+                resolve(res);
+            })
+            .catch(err => {
+                dispatch(createLostRequestFailedAction(err));
+                reject(err);
+            });
+
+    });
 
 
 
