@@ -106,13 +106,11 @@ class SearchResult extends Component {
         this.setState({ isVisibleNoDataMessage: true });
 
         this.props.dispatch(createLostRequestAction(userToken, searchParam, status)).then(res => {
-            // this.createOrder(userToken);
 
             console.log("Success creating Lost Request")
 
         }).catch(err => {
-            // this.hidePreloader();
-            //  this.showErrorDialog("Failed To Add Items. Try Again");
+
             console.log("failed to create lost request");
         });
 
