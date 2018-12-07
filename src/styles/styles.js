@@ -431,6 +431,8 @@ const styles = StyleSheet.create({
         zIndex: 1000,
         alignItems: "center",
         opacity: 0,
+        height: 40,
+        elevation: 5
     },
 
 
@@ -1152,11 +1154,15 @@ const styles = StyleSheet.create({
     },
 
     scrollview: {
-        height: 350
+        height: 300
     },
 
+    // shoppingListItemContainer :{
+    //     height: fullHeight
+    // },
+
     scrollViewfullHeight: {
-        height: 325
+        height: 300
     },
 
     screensplash: {
@@ -1202,7 +1208,7 @@ const styles = StyleSheet.create({
         width: 300,
         justifyContent: "center",
         alignItems: "center",
-        textAlign : "center"
+        textAlign: "center"
     }
 
 });

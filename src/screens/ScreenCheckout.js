@@ -259,10 +259,15 @@ class ScreenCheckout extends Component {
         this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, convenienceFee, deliveryFee, total, cartArray)).then(res => {
             this.createOrder(userToken);
 
+            console.log("addtoCart res");
+            console.log(res);
+
         }).catch(err => {
             this.hidePreloader();
             this.showErrorDialog("Failed To Add Items. Try Again");
 
+            console.log("addtoCart err");
+            console.log(err);
         });
 
 
@@ -275,12 +280,17 @@ class ScreenCheckout extends Component {
             this.hidePreloader();
             this.gotoSuccessPage();
 
+            console.log("createOrder res");
+            console.log(res);
+
 
         }).catch(err => {
 
             this.hidePreloader();
             this.showErrorDialog("Failed To Create Order. Try Again");
 
+            console.log("createOrder err");
+            console.log(err);
 
         });
 

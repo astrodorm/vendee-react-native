@@ -588,7 +588,7 @@ class ScreenCategory extends Component {
                                     </View>
 
                                     {/* SELECTED PRODUCT ITEM LIST */}
-                                    <View>
+                                    <View style={styles.shoppingListItemContainer}>
                                         <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
                                             <FlatList
                                                 data={this.props.newlists}
