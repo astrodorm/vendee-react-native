@@ -23,9 +23,9 @@ class SearchBar extends Component {
 
     searchProduct = () => {
 
-        let query = this.state.searchText;
-        if (query !== "") {
-            this.props.dispatch(fetchProductAction(query));
+        let item = this.state.searchText;
+        if (item !== "") {
+            this.props.dispatch(fetchProductAction(item));
 
         }
 

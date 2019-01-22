@@ -80,10 +80,10 @@ class ScreenSearch extends Component {
 
     searchProduct = () => {
 
-        let query = this.state.searchText;
-        if (query !== "") {
+        let item = this.state.searchText;
+        if (item !== "") {
             this.openDialogDeliveryMethod();
-            this.props.dispatch(fetchProductAction(query));
+            this.props.dispatch(fetchProductAction(item));
 
         }
 

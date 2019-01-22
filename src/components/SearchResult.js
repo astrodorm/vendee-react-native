@@ -79,7 +79,9 @@ class SearchResult extends Component {
 
         // USE getListByID() TO GET CURRENT QUANTITY OF PRODUCT ITEM SINCE EVERY
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
-        <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
+        // <ProductItem key={item.} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
+
+        <ProductItem key={item.ITEMCODE} thumbnail="http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg" title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={5} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
     );
 
     retrieveAndUserTokenData = async (storageKey) => {
@@ -95,6 +97,15 @@ class SearchResult extends Component {
             // Error retrieving data
         }
 
+    }
+
+    convertToSentenceCase = (str) =>{
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
     }
 
     handleNoData = () => {
@@ -521,7 +532,7 @@ class SearchResult extends Component {
                                 <FlatList
                                     data={this.props.newproducts}
                                     extraData={this.props}
-                                    keyExtractor={item => item._id}
+                                    keyExtractor={item => item.ITEMCODE}
                                     renderItem={this._renderProductItem}
                                 />
                             </ScrollView>

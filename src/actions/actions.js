@@ -72,6 +72,7 @@ export const CREATE_LOST_REQUEST_FAILED = 'CREATE_LOST_REQUEST_FAILED';
 
 
 const BASE_URL = "https://api.yourvendee.com/api";
+const STAGING_BASE_URL = "https://staging.yourvendee.com/api";
 
 
 //
@@ -595,20 +596,43 @@ export const loginAction = (email, oauth) => (dispatch) =>
     });
 
 
-export const fetchProductAction = (query) => {
+export const fetchProductAction = (item) => {
     return dispatch => {
-        dispatch(fetchStartedAction(query));
+        dispatch(fetchStartedAction(item));
 
-        axios.get(`${BASE_URL}/products/search`, {
-            params: {
-                q: query
-            }
+        // axios.get(`${STAGING_BASE_URL}/products/v2/search`, {
+        //     params: {
+        //         item: query
+        //     }
+        // })
+        //     .then(res => {
+        //        // dispatch(fetchSuccessAction(res.data.data));
+        //         console.log("SEARCH SUCCESS");
+        //         console.log(res)
+        //     })
+        //     .catch(err => {
+        //        // dispatch(fetchFailedAction(err.response.data));
+        //        console.log("SEARCH FAILED");
+        //        console.log(err)
+        //     });
+
+        axios.post(`${BASE_URL}/products/v2/search`, {
+            item
         })
             .then(res => {
-                dispatch(fetchSuccessAction(res.data.data));
+                // dispatch(loginSuccessAction(res.data.data));
+                // resolve(res);
+                dispatch(fetchSuccessAction(res.data));
+                resolve(res);
+                console.log("SEARCH SUCCESS");
+                console.log(res.data)
             })
             .catch(err => {
-                dispatch(fetchFailedAction(err.response.data));
+                // dispatch(loginFailedAction(err.response.data));
+                // reject(err);
+                dispatch(fetchFailedAction(err));
+                console.log("SEARCH FAILED");
+                console.log(err)
             });
 
     };
