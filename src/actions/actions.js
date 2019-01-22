@@ -623,14 +623,15 @@ export const fetchProductAction = (item) => {
                 // dispatch(loginSuccessAction(res.data.data));
                 // resolve(res);
                 dispatch(fetchSuccessAction(res.data));
-                resolve(res);
+               // resolve(res);
                 console.log("SEARCH SUCCESS");
                 console.log(res.data)
             })
             .catch(err => {
                 // dispatch(loginFailedAction(err.response.data));
-                // reject(err);
+             
                 dispatch(fetchFailedAction(err));
+               // reject(err);
                 console.log("SEARCH FAILED");
                 console.log(err)
             });

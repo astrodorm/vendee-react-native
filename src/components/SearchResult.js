@@ -81,7 +81,7 @@ class SearchResult extends Component {
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
         // <ProductItem key={item.} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
 
-        <ProductItem key={item.ITEMCODE} thumbnail="http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg" title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={5} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
+        <ProductItem key={item.ITEMCODE} thumbnail="http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg" title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={this.getListByID(item.ITEMCODE).quantity} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
     );
 
     retrieveAndUserTokenData = async (storageKey) => {
@@ -99,10 +99,10 @@ class SearchResult extends Component {
 
     }
 
-    convertToSentenceCase = (str) =>{
+    convertToSentenceCase = (str) => {
         return str.replace(
             /\w\S*/g,
-            function(txt) {
+            function (txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }
         );
@@ -173,6 +173,9 @@ class SearchResult extends Component {
         let listArray = [...this.props.newlists];
         let index = listArray.findIndex(x => x.id === id);
         let list = listArray[index];
+
+        // console.log("DUPLICATE FOUND")
+        // console.log(list);
 
         //SET INITIAL OBJECT TO HAVE A QUANTITY OF ZERO IF ITS UID IS NOT FOUND IN LIST ARRAY
         let initialValue = { quantity: 0 }
@@ -256,6 +259,9 @@ class SearchResult extends Component {
 
         let id = this.props.selectProductID;
 
+        console.log("id");
+        console.log(id);
+
         // DISPATCH ACTION TO INCREMENT selectProductQuantity VALUE
         this.props.dispatch(itemIncrementAction());
 
@@ -264,15 +270,18 @@ class SearchResult extends Component {
         // DEFAULT QUANTITY AS 1 OR INCREMENT THE selectProductQuantity VALUE
         this.getListByID(id).quantity === 0 ? this.addItem(id) : this.incrementListItem(id)
 
+        console.log("this.getListByID(id).quantity");
+        console.log(this.getListByID(id).quantity);
     }
 
     addItem = (id) => {
 
         let newproductsArray = [...this.props.newproducts];
-        let index = newproductsArray.findIndex(x => x._id === id);
-        let thumbnail = newproductsArray[index].thumbnail;
-        let title = newproductsArray[index].productName;
-        let price = newproductsArray[index].price;
+        let index = newproductsArray.findIndex(x => x.ITEMCODE === id);
+        //let thumbnail = newproductsArray[index].thumbnail;
+        let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
+        let title = newproductsArray[index].DESCRIPTION;
+        let price = newproductsArray[index].SELLINGPRICE;
 
 
         //DISPATCH ACTION TO ADD A NEW ITEM WITH DEFAULT QUANTITY VALUE AS 1
