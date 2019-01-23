@@ -1133,7 +1133,8 @@ const styles = StyleSheet.create({
     },
 
     errorMessage: {
-        fontSize: 18
+        fontSize: 18,
+        lineHeight:30
     },
 
     shoppingListMainContainer: {
@@ -1209,6 +1210,44 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center"
+    },
+
+    TimeSlotContainer : {
+        // backgroundColor : navyBlueTheme1,
+        flexDirection: "row",
+        flexWrap : "wrap",
+        // height:300
+
+    },
+
+    TimeSlot : {
+        // backgroundColor : GrayDarkTheme,
+        width:150,
+        paddingBottom:16,
+        paddingLeft:8,
+        paddingRight:8,
+        paddingTop:16,
+        borderRadius:4,
+        marginLeft:8,
+        marginBottom:8,
+        justifyContent : "center",
+        alignItems : "center"
+    },
+
+    TimeSlotTime:{
+        fontFamily : Fonts.MPLUSMedium,
+        fontSize:12,
+        color: GrayDarkTheme
+    },
+
+    ActiveTimeSlot :{
+        borderWidth: 2,
+        borderColor :brightBlue,
+    },
+
+    InActiveTimeSlot : {
+        borderWidth: .8,
+        borderColor :lightGrayTheme,
     }
 
 });

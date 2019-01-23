@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TextInput, AsyncStorage } from 'react-native';
+import { Text, View, ScrollView, TextInput, AsyncStorage, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -11,6 +11,7 @@ import TelephoneManager from '../components/TelephoneManager';
 import PasswordManger from '../components/PasswordManager';
 import CardManager from '../components/CardManager';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 import Modal from 'react-native-modalbox';
@@ -71,6 +72,9 @@ class ScreenCheckout extends Component {
         //RETRIEVE AND SET PASSWORD
         this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY)
 
+        //SET VISIBLE TIME SLOT GROUP
+        this.setVisibleTimeSlotGroup();
+
     }
 
 
@@ -86,6 +90,7 @@ class ScreenCheckout extends Component {
             isVisiblePassword: true,
             isVisibleCard: true,
             isVisibleCoupon: true,
+            isVisibleTimeSlot: true,
             modalAddButtonTitle: "",
             address: "Enter Address",
             phoneNumber: "Enter Phone Number",
@@ -105,9 +110,93 @@ class ScreenCheckout extends Component {
             lengthOfOrder: 0,
             cartIndex: 0,
             orderCount: 1,
-            isVisibleCardPinError: false
+            isVisibleCardPinError: false,
+            selectedTimeSlot: "No Time slot selected",
+            selectedMaxOrderTime: "1:00 AM",
+            isActiveSlot0: false,
+            isActiveSlot1: false,
+            isActiveSlot2: false,
+            isActiveSlot3: false,
+            isActiveSlot4: false,
+            isActiveSlot5: false,
+            isActiveSlot6: false,
+            isActiveSlot7: false,
+            isActiveSlot8: false,
+            isActiveSlot9: false,
+            isActiveSlot10: false,
+            isActiveSlot11: false,
+            isAvailableTimeSlotGroup1: true,
+            isAvailableTimeSlotGroup2: false
 
         }
+    }
+
+    toggleActiveSlot = (timeSlotID, timeSlotCount) => {
+
+        for (let index = 0; index < timeSlotCount; index++) {
+            timeSlotKey = "isActiveSlot" + index;
+            this.setState({ timeSlotKey: true });
+        }
+
+        var activeTimeSlotKey = "isActiveSlot" + timeSlotID;
+        this.setState({ isActiveSlot1: true });
+
+        console.log("timeSlotID", timeSlotID)
+        console.log("activeTimeSlotKey", activeTimeSlotKey);
+        console.log("this.state.activeTimeSlotKey", this.state.activeTimeSlotKey)
+
+        //console.log(this.setState({ activeTimeSlotKey: true }))
+
+    }
+
+    setVisibleTimeSlotGroup = () => {
+        //return moment(date).calendar();
+        let dayofTheWeek = moment().format('dddd');
+
+        dayofTheWeek === "Sunday" ? this.showTimeSlotGroup2() : this.showTimeSlotGroup1();
+
+    }
+
+    showTimeSlotGroup1 = () => {
+        this.setState({ isAvailableTimeSlotGroup1: true });
+        this.setState({ isAvailableTimeSlotGroup2: false });
+
+    }
+
+    showTimeSlotGroup2 = () => {
+        this.setState({ isAvailableTimeSlotGroup2: true });
+        this.setState({ isAvailableTimeSlotGroup1: false });
+
+    }
+
+    setActiveTimeSlot = (timeslot, maxTimeSlotOrderTime) => {
+        this.setState({ selectedTimeSlot: timeslot });
+        this.setState({ selectedMaxOrderTime: maxTimeSlotOrderTime });
+
+        this.validateSelectedTimeSlot(maxTimeSlotOrderTime)
+
+    }
+
+    validateSelectedTimeSlot = (maxTimeSlotOrderTime) => {
+        let currentDate = moment().format('L');
+        let currentTime = moment().format('LT');
+
+        let currentDateTime = currentDate + " " + currentTime;
+        let selectedDateTime = currentDate + " " + maxTimeSlotOrderTime;
+
+        let isValidTimeSlot = true;
+       // currentDateTime > selectedDateTime ? isValidTimeSlot = false : isValidTimeSlot = true;
+        
+        if (currentDateTime > selectedDateTime) {
+            isValidTimeSlot = false;
+        }
+
+        if (this.state.selectedTimeSlot === "No Time slot selected"){
+            isValidTimeSlot = null;
+        }
+
+
+        return isValidTimeSlot;
     }
 
 
@@ -214,6 +303,9 @@ class ScreenCheckout extends Component {
                 break;
             case "coupon":
                 this.setState({ isVisibleCoupon: !this.state.isVisibleCoupon });
+                break;
+            case "timeslot":
+                this.setState({ isVisibleTimeSlot: !this.state.isVisibleTimeSlot });
                 break;
             default:
                 this.setState({ isVisibleAddress: !this.state.isVisibleAddress });
@@ -569,8 +661,10 @@ class ScreenCheckout extends Component {
         let expiryMonth = this.state.expiryMonth;
         let expiryYear = this.state.expiryYear;
         let password = this.state.password;
+        let currentTime = moment().format('LT');
 
-
+        this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === null ? this.showErrorDialog("No time slot was selected. Select a time slot after " + currentTime) : null;
+        this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === false ? this.showErrorDialog("The " + this.state.selectedTimeSlot + " time slot is unavailable. Select a time slot after " + currentTime) : null;
         address === "" ? this.showErrorDialog("Invalid Address") : null;
         phoneNumber === "" ? this.showErrorDialog("Invalid Phone NUmber") : null;
         cardNumber === "" ? this.showErrorDialog("Invalid Card Number") : null;
@@ -581,7 +675,7 @@ class ScreenCheckout extends Component {
         password === "GENERIC" ? this.showErrorDialog("You are required to update your password") : null;
 
 
-        address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
+        // this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === true && address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
 
     }
 
@@ -772,9 +866,91 @@ class ScreenCheckout extends Component {
                                     </Collapsible>
                                 </View>
                                 <View>
-                                    <AccordionHeader title="Select Card" subtitle={"***" + this.state.last4digits} onSelected={() => { this.toggleView("card") }} />
+                                    <AccordionHeader title="Select a Debit Card" subtitle={"***" + this.state.last4digits} onSelected={() => { this.toggleView("card") }} />
                                     <Collapsible collapsed={this.state.isVisibleCard}>
                                         <CardManager last4digits={this.state.last4digits} />
+                                    </Collapsible>
+                                </View>
+                                <View>
+                                    <AccordionHeader title="Select a Time Slot" subtitle={this.state.selectedTimeSlot} onSelected={() => { this.toggleView("timeslot") }} />
+                                    <Collapsible collapsed={this.state.isVisibleTimeSlot}>
+                                        {
+                                            this.state.isAvailableTimeSlotGroup1 &&
+
+                                            <View style={styles.TimeSlotContainer}>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("9:30AM - 11:00AM", "10:30 AM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>9:30AM - 11:00AM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("11:00AM - 12:30PM", "12:00 PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>11:00AM - 12:30PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("12:30PM - 2:00PM", "1:30 PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>12:30PM - 2:00PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("2:00PM - 3:30PM", "3:00 PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>2:00PM - 3:30PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("3:30PM - 5:00PM", "4:30 PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>3:30PM - 5:00PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("5:00PM - 6:30PM", "6:00 PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>5:00PM - 6:30PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("6:30PM - 8:00PM", "7:30 PM")}>
+                                                    <View style={[styles.TimeSlot, this.state.isActiveSlot6 ? styles.ActiveTimeSlot : styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>6:30PM - 8:00PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("8:00PM - 9:30PM", "9:00 PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>8:00PM - 9:30PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            </View>
+
+                                        }
+
+
+                                        {
+                                            this.state.isAvailableTimeSlotGroup2 &&
+
+                                            <View style={styles.TimeSlotContainer}>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("1:30PM - 3:00PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>1:30PM - 3:00PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("3:00PM - 4:30PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>3:00PM - 4:30PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("4:30PM - 6:00PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>4:30PM - 6:00PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("6:00PM - 7:30PM")}>
+                                                    <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
+                                                        <Text style={styles.TimeSlotTime}>6:00PM - 7:30PM</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                            </View>
+
+                                        }
+
                                     </Collapsible>
                                 </View>
                                 <View>
@@ -862,7 +1038,7 @@ class ScreenCheckout extends Component {
                     backdropOpacity={0.5}
                     backdropPressToClose={true}
                 >
-                    <Text style={styles.errorHeader}>0ops!. Something Went Wrong</Text>
+                    <Text style={styles.errorHeader}>You are almost there but not yet!.</Text>
                     <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                     <View style={styles.headingDivider}></View>
                     <ButtonPrimaryAccent title="CLOSE" isActive={false} onSelected={this.closeErrorModal} />
@@ -929,7 +1105,7 @@ class ScreenCheckout extends Component {
                         </View>
                     </View>
                 </Modal>
-            </View>
+            </View >
 
         );
     }
