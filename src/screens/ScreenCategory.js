@@ -16,7 +16,7 @@ import 'intl/locale-data/jsonp/en';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
 import DeliveryPicker from '../components/DeliveryPicker';
-
+import Modal from 'react-native-modalbox';
 
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload"
@@ -49,7 +49,8 @@ class ScreenCategory extends Component {
             isVisibleShoppingListDrawer: false,
             isVisibleCategoryLoadingIndicator: true,
             isVisibleCategoryItemLoadingIndicator: true,
-            newCategoryProducts: []
+            newCategoryProducts: [],
+            errorMessage: ""
 
         }
     }
@@ -73,12 +74,12 @@ class ScreenCategory extends Component {
 
         // USE getListByID() TO GET CURRENT QUANTITY OF PRODUCT ITEM SINCE EVERY
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
-        <ProductItem key={item._id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
+        <ProductItem key={item.ITEMCODE} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={this.getListByID(item.ITEMCODE).quantity} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
     );
 
     _renderShoppingListItem = ({ item }) => (
 
-        <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.title} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
+        <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={this.convertToSentenceCase(item.title)} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
 
     );
 
@@ -321,10 +322,11 @@ class ScreenCategory extends Component {
     addItem = (id) => {
 
         let newproductsArray = [...this.props.newCategoryProducts];
-        let index = newproductsArray.findIndex(x => x._id === id);
-        let thumbnail = newproductsArray[index].thumbnail;
-        let title = newproductsArray[index].productName;
-        let price = newproductsArray[index].price;
+        let index = newproductsArray.findIndex(x => x.ITEMCODE === id);
+        let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
+       // let thumbnail = newproductsArray[index].thumbnail;
+        let title = newproductsArray[index].DESCRIPTION;
+        let price = newproductsArray[index].SELLINGPRICE;
 
 
         //DISPATCH ACTION TO ADD A NEW ITEM WITH DEFAULT QUANTITY VALUE AS 1
@@ -340,8 +342,42 @@ class ScreenCategory extends Component {
 
 
         //DISPATCH ACTION TO INCREMENT THE VALUE OF THE QUANTITY AN ITEM IN THE LIST ARRAY
-        this.props.dispatch(incrementListItemAction(index, quantity))
+        //this.props.dispatch(incrementListItemAction(index, quantity))
+
+        this.validateMaxOrderQuantity(id) === true ? this.props.dispatch(incrementListItemAction(index, quantity)) : null;
+
     }
+
+
+    validateMaxOrderQuantity = (id) => {
+
+
+        let listArray = [...this.props.newlists];
+        let listIndex = listArray.findIndex(x => x.id === id);
+
+        // GET THE QUANTITY OF ITEMS IN THE SHOPPING LIST
+        let quantity = listArray[listIndex].quantity + 1;
+
+        let newCategoryProductsArray = [...this.props.newCategoryProducts];
+        let categoryProductIndex = newCategoryProductsArray.findIndex(x => x.ITEMCODE === id);
+
+        // GET THE STOCK OF ITEMS IN THE PRODUCTS LIST
+        let stock = newCategoryProductsArray[categoryProductIndex].QUANTITY;
+
+        console.log("stock", stock);
+        console.log("quantity", quantity);
+        let isValidOrderQuantity = true;
+        if (quantity > stock) {
+
+            isValidOrderQuantity = false;
+            this.showErrorDialog("There are only " + stock + " of this item left in stock. Select " + stock + " of it or less.");
+        }
+        // quantity > stock ? showErrorDialog("There are only" + stock + "of this item left in stock. Select " + stock + " of it or less.") : null;
+
+        return isValidOrderQuantity;
+    }
+
+
 
     removeListItem = (id) => {
         let listArray = [...this.props.newlists];
@@ -458,6 +494,15 @@ class ScreenCategory extends Component {
         return grandTotal;
     }
 
+    convertToSentenceCase = (str) => {
+        return str.replace(
+            /\w\S*/g,
+            function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+
 
     getDeliveryFee = () => {
 
@@ -485,6 +530,18 @@ class ScreenCategory extends Component {
 
         return finalDeliveryFee;
 
+    }
+
+    showErrorDialog = (message) => {
+        //SET ERROR MESSAGE
+        this.setState({ errorMessage: message });
+
+        //SHOW ERROR DIALOG
+        this.refs.RefModalError.open()
+    }
+
+    closeErrorModal = () => {
+        this.refs.RefModalError.close()
     }
 
 
@@ -539,7 +596,7 @@ class ScreenCategory extends Component {
                                         <FlatList
                                             data={this.state.newCategoryProducts}
                                             extraData={this.props}
-                                            keyExtractor={item => item._id}
+                                            keyExtractor={item => item.ITEMCODE}
                                             renderItem={this._renderProductItem}
                                         />
                                     </ScrollView>
@@ -608,6 +665,22 @@ class ScreenCategory extends Component {
                     }
 
                 </View>
+                <Modal
+                    style={[styles.modalCheckout]}
+                    position={"center"}
+                    ref={"RefModalError"}
+                    backdrop={true}
+                    swipeToClose={true}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={true}
+                >
+                    <Text style={styles.errorHeader}>You are almost there but not yet!.</Text>
+                    <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+                    <View style={styles.headingDivider}></View>
+                    <ButtonPrimaryAccent title="CLOSE" isActive={false} onSelected={this.closeErrorModal} />
+
+                </Modal>
 
             </View>
         )

@@ -982,7 +982,7 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(fetchCategoryProductsStartedAction());
 
-        axios.get(`${BASE_URL}/products/category/${categoryID}`
+        axios.get(`${BASE_URL}/products/v2/category/${categoryID}`
         )
             .then(res => {
                 dispatch(fetchCategoryProductsSuccessAction(res.data.data));
