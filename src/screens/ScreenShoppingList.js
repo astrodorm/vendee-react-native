@@ -84,10 +84,18 @@ class ScreenShoppingList extends Component {
         return parcelID
     }
 
+    getMerchantNameAddress = (deliveryMethod) =>{
+        let merchantNameAddress = "";
+        deliveryMethod === "PICKUP" ? merchantNameAddress = "At: Mattoris Supermarket - 25 Alh. Mudashiru Eletu Way, Lekki Penninsula II, Lagos" : merchantNameAddress = "By: Vendee";
+        return merchantNameAddress;
+    }
+
+
+
 
     _renderShoppingList = ({ item }) => (
 
-        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID}  orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
+        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} shippingMethod={item.deliveryMethod}  merchantNameAddress={this.getMerchantNameAddress(item.deliveryMethod)}orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
 

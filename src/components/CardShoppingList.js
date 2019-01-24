@@ -16,11 +16,20 @@ class CardShoppingList extends Component {
         return formattedAmount;
     }
 
+    convertToSentenceCase = (str) => {
+        return str.replace(
+            /\w\S*/g,
+            function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+
     _renderShoppingListItem = ({ item }) => (
         <View style={styles.CardShoppingListProductItemContainer}>
             <Image style={styles.CardShoppingProductImage} source={{ uri: BASE_THUMBNAIL_URL + item.thumbnail }} style={{ width: 50, height: 50 }} />
             <View style={styles.CardShoppingProductDetails}>
-                <Text style={styles.ProductTitle}>{item.productName}</Text>
+                <Text style={styles.ProductTitle}>{this.convertToSentenceCase(item.productName)}</Text>
                 <Text style={styles.productSubtitle}>PRICE : {this.formatPrice(item.price)} </Text>
                 <Text style={styles.productSubtitle}>QUANTITY : {item.quantity} </Text>
             </View>
@@ -33,6 +42,8 @@ class CardShoppingList extends Component {
             <View style={styles.CardShoppingListContainer}>
                 <View style={styles.CardShoppingListHeader}>
                     <Text style={styles.CardShoppingListTime}>{this.props.relativeTime}</Text>
+                    <Text style={styles.CardShoppingListTime}>Shipping: {this.props.shippingMethod}</Text>
+                    <Text style={styles.CardShoppingListTime}>{this.props.merchantNameAddress}</Text>
                 </View>
                 <View style={styles.CardShoppingListProductContainer}>
                     <View style={styles.CardShoppingListInfo}>
