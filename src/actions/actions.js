@@ -69,6 +69,9 @@ export const FETCH_FEES_FAILED = 'FETCH_FEES_FAILED';
 export const CREATE_LOST_REQUEST_STARTED = 'CREATE_LOST_REQUEST_STARTED';
 export const CREATE_LOST_REQUEST_SUCCESS = 'CREATE_LOST_REQUEST_SUCCESS';
 export const CREATE_LOST_REQUEST_FAILED = 'CREATE_LOST_REQUEST_FAILED';
+export const CHARGE_USER_PHONENUMBER_STARTED = 'CHARGE_USER_PHONENUMBER_STARTED';
+export const CHARGE_USER_PHONENUMBER_SUCCESS = 'CHARGE_USER_PHONENUMBER_SUCCESS';
+export const CHARGE_USER_PHONENUMBER_FAILED = 'CHARGE_USER_PHONENUMBER_FAILED';
 
 
 const BASE_URL = "https://api.yourvendee.com/api";
@@ -236,6 +239,13 @@ export const chargeUserPinStartedAction = () => (
     }
 );
 
+export const chargeUserPhoneNumberStartedAction = () => (
+    {
+        type: CHARGE_USER_PHONENUMBER_STARTED,
+
+    }
+);
+
 export const chargeUserOtpStartedAction = () => (
     {
         type: CHARGE_USER_OTP_STARTED,
@@ -391,6 +401,13 @@ export const chargeUserPinSuccessAction = (data) => (
     }
 );
 
+export const chargeUserPhoneNumberSuccessAction = (data) => (
+    {
+        type: CHARGE_USER_PHONENUMBER_SUCCESS,
+        data
+    }
+);
+
 
 export const chargeUserOtpSuccessAction = (data) => (
     {
@@ -500,6 +517,15 @@ export const fetchFeesFailedAction = (error) => (
 export const chargeUserFailedAction = (error) => (
     {
         type: CHARGE_USER_FAILED,
+        payload: {
+            error
+        }
+    }
+);
+
+export const chargeUserPhoneNumberFailedAction = (error) => (
+    {
+        type: CHARGE_USER_PHONENUMBER_FAILED,
         payload: {
             error
         }
@@ -693,7 +719,36 @@ export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
                 resolve(res);
             })
             .catch(err => {
-                dispatch(chargeUserFailedAction(err.response.data));
+                dispatch(chargeUserPinFailedAction(err.response.data));
+                reject(err);
+            });
+
+    });
+
+
+    export const chargeUserPhoneNumberAction = (userToken, reference, phone) => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(chargeUserPhoneNumberStartedAction());
+
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + userToken
+            }
+        }
+
+        axios
+            .post(`${BASE_URL}/cards/charge/phone`, {
+                reference,
+                phone,
+            },
+                config
+            )
+            .then(res => {
+                dispatch(chargeUserPhoneNumberSuccessAction(res.data));
+                resolve(res);
+            })
+            .catch(err => {
+                dispatch(chargeUserPhoneNumberFailedAction(err.response.data));
                 reject(err);
             });
 
@@ -819,7 +874,7 @@ export const addToCartAction = (userToken, productID, quantity) => {
     };
 };
 
-export const promisedAddToCartAction = (userToken, shippingMethod, convenience, delivery, totalCost, cartArray) => (dispatch) =>
+export const promisedAddToCartAction = (userToken, shippingMethod, convenience, delivery, timeSlot, totalCost, cartArray) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(addToCartStartedAction());
 
@@ -832,11 +887,12 @@ export const promisedAddToCartAction = (userToken, shippingMethod, convenience, 
 
 
         axios
-            .post(`${BASE_URL}/carts/add`, {
+            .post(`${BASE_URL}/carts/v2/add`, {
 
                 deliveryMethod: shippingMethod,
                 convenienceFee: convenience,
                 deliveryFee: delivery,
+                deliveryTime: timeSlot,
                 total: totalCost,
                 cart: cartArray
             }

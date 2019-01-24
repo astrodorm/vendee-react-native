@@ -59,6 +59,13 @@ const styles = StyleSheet.create({
         marginBottom: 16
     },
 
+    smallText:{
+        color: GrayDarkTheme,
+        fontFamily: Fonts.MPLUSRegular,
+        fontSize: 10,
+        marginTop: 24  
+    },
+
     introBackgroundOverlay: {
         width: fullWidth,
         height: fullHeight,

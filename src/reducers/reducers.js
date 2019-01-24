@@ -63,7 +63,10 @@ import {
     FETCH_FEES_FAILED,
     CREATE_LOST_REQUEST_STARTED,
     CREATE_LOST_REQUEST_SUCCESS,
-    CREATE_LOST_REQUEST_FAILED
+    CREATE_LOST_REQUEST_FAILED,
+    CHARGE_USER_PHONENUMBER_STARTED,
+    CHARGE_USER_PHONENUMBER_SUCCESS,
+    CHARGE_USER_PHONENUMBER_FAILED
 
 } from '../actions/actions';
 
@@ -133,10 +136,12 @@ const initialState = {
     isfetchingFees: false,
     newFees: [],
     feesResponse: [],
-    isCreatingLostRequest : false,
-    isCreateLostRequestError : false,
-    createLostRequestResponse : [],
-    isCreateLostRequestSuccess : false
+    isCreatingLostRequest: false,
+    isCreateLostRequestError: false,
+    createLostRequestResponse: [],
+    isCreateLostRequestSuccess: false,
+    isChargingUserPhoneNumber: false,
+    isChargingUserPhoneNumberError: false,
 
 }
 
@@ -263,6 +268,11 @@ function users(state = initialState, action) {
                 isChargingPinUser: true,
                 isChargingUserPinError: false,
             });
+        case CHARGE_USER_PHONENUMBER_STARTED:
+            return Object.assign({}, state, {
+                isChargingUserPhoneNumber: true,
+                isChargingUserPhoneNumberError: false,
+            });
         case UPDATE_USER_STARTED:
             return Object.assign({}, state, {
                 isUpdatingUser: true,
@@ -278,6 +288,11 @@ function users(state = initialState, action) {
                 isChargingPinUser: false,
                 chargeResponse: action.data,
             });
+        case CHARGE_USER_PHONENUMBER_SUCCESS:
+            return Object.assign({}, state, {
+                isChargingUserPhoneNumber: false,
+                chargeResponse: action.data,
+            });
         case CHARGE_USER_OTP_SUCCESS:
             return Object.assign({}, state, {
                 isChargingPinUser: false,
@@ -291,6 +306,11 @@ function users(state = initialState, action) {
         case CHARGE_USER_PIN_FAILED:
             return Object.assign({}, state, {
                 isChargingPinUser: false,
+                chargeResponse: action.payload,
+            });
+        case CHARGE_USER_PHONENUMBER_FAILED:
+            return Object.assign({}, state, {
+                isChargingUserPhoneNumber: false,
                 chargeResponse: action.payload,
             });
         case CHARGE_USER_OTP_FAILED:

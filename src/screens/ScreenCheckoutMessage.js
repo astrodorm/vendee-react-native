@@ -31,6 +31,7 @@ class ScreenCheckout extends Component {
                             <View style={styles.centerView}>
                                 <Text style={styles.introCardHeader}>Success !!</Text>
                                 <Text style={styles.introCardSubtitle}>We have received your order</Text>
+                                <Text style={styles.introCardSubtitle}>You just purchase an item from Mattoris Supermarket.</Text>
                             </View>
                         </View>
                         <View>

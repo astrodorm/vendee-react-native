@@ -29,6 +29,8 @@ import 'intl/locale-data/jsonp/en';
 import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Modal from 'react-native-modalbox';
+
 
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload";
@@ -63,7 +65,8 @@ class SearchResult extends Component {
             isVisibleFBtnShoppingListQuantityPicker: false,
             isVisibleShoppingListDrawer: false,
             isVisibleNoDataMessage: false,
-            userToken: ""
+            userToken: "",
+            errorMessage: ""
         }
     }
 
@@ -259,19 +262,21 @@ class SearchResult extends Component {
 
         let id = this.props.selectProductID;
 
-        console.log("id");
-        console.log(id);
+        // console.log("id");
+        // console.log(id);
 
         // DISPATCH ACTION TO INCREMENT selectProductQuantity VALUE
         this.props.dispatch(itemIncrementAction());
+
+       // this.validateMaxOrderQuantity(id) === true ? this.props.dispatch(itemIncrementAction()) : null;
 
 
         // GET THE QUANTITY OF THE LIST ITEM, IF ZERO, THEN ADD NEW ITEM WITH
         // DEFAULT QUANTITY AS 1 OR INCREMENT THE selectProductQuantity VALUE
         this.getListByID(id).quantity === 0 ? this.addItem(id) : this.incrementListItem(id)
 
-        console.log("this.getListByID(id).quantity");
-        console.log(this.getListByID(id).quantity);
+        // console.log("this.getListByID(id).quantity");
+        // console.log(this.getListByID(id).quantity);
     }
 
     addItem = (id) => {
@@ -296,7 +301,38 @@ class SearchResult extends Component {
 
 
         //DISPATCH ACTION TO INCREMENT THE VALUE OF THE QUANTITY AN ITEM IN THE LIST ARRAY
-        this.props.dispatch(incrementListItemAction(index, quantity))
+        // this.props.dispatch(incrementListItemAction(index, quantity))
+
+        this.validateMaxOrderQuantity(id) === true ? this.props.dispatch(incrementListItemAction(index, quantity)) : null;
+
+    }
+
+    validateMaxOrderQuantity = (id) => {
+
+
+        let listArray = [...this.props.newlists];
+        let listIndex = listArray.findIndex(x => x.id === id);
+
+        // GET THE QUANTITY OF ITEMS IN THE SHOPPING LIST
+        let quantity = listArray[listIndex].quantity + 1;
+
+        let newproductsArray = [...this.props.newproducts];
+        let productIndex = newproductsArray.findIndex(x => x.ITEMCODE === id);
+
+        // GET THE STOCK OF ITEMS IN THE PRODUCTS LIST
+        let stock = newproductsArray[productIndex].QUANTITY;
+
+        console.log("stock", stock);
+        console.log("quantity", quantity);
+        let isValidOrderQuantity = true;
+        if (quantity > stock) {
+
+            isValidOrderQuantity = false;
+            this.showErrorDialog("There are only " + stock + " of this item left in stock. Select " + stock + " of it or less.");
+        }
+        // quantity > stock ? showErrorDialog("There are only" + stock + "of this item left in stock. Select " + stock + " of it or less.") : null;
+
+        return isValidOrderQuantity;
     }
 
     decrementQuantity = () => {
@@ -513,7 +549,17 @@ class SearchResult extends Component {
         })
     }
 
+    showErrorDialog = (message) => {
+        //SET ERROR MESSAGE
+        this.setState({ errorMessage: message });
 
+        //SHOW ERROR DIALOG
+        this.refs.RefModalError.open()
+    }
+
+    closeErrorModal = () => {
+        this.refs.RefModalError.close()
+    }
 
 
 
@@ -600,7 +646,22 @@ class SearchResult extends Component {
 
                     }
                 </View>
+                <Modal
+                    style={[styles.modalCheckout]}
+                    position={"center"}
+                    ref={"RefModalError"}
+                    backdrop={true}
+                    swipeToClose={true}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={true}
+                >
+                    <Text style={styles.errorHeader}>You are almost there but not yet!.</Text>
+                    <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+                    <View style={styles.headingDivider}></View>
+                    <ButtonPrimaryAccent title="CLOSE" isActive={false} onSelected={this.closeErrorModal} />
 
+                </Modal>
 
             </View>
 

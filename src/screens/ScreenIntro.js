@@ -268,6 +268,8 @@ class ScreenIntro extends Component {
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
                                                     <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput} keyboardType="number-pad"></TextInput>
+                                                    <Text style={styles.smallText}> By continuing with the registration, you agree to the terms and conditions on www.yourvendee.com.</Text>
+
                                                 </View>
                                                 {this.state.showTelephoneError &&
                                                     <InlineError message="* Invalid Phone Number" />

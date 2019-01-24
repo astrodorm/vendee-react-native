@@ -27,6 +27,7 @@ import {
     chargeUserOtpAction,
     createOrderAction,
     promisedAddToCartAction,
+    chargeUserPhoneNumberAction,
 } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
@@ -126,7 +127,8 @@ class ScreenCheckout extends Component {
             isActiveSlot10: false,
             isActiveSlot11: false,
             isAvailableTimeSlotGroup1: true,
-            isAvailableTimeSlotGroup2: false
+            isAvailableTimeSlotGroup2: false,
+            isVisiblePhoneNumberError: false
 
         }
     }
@@ -185,13 +187,13 @@ class ScreenCheckout extends Component {
         let selectedDateTime = currentDate + " " + maxTimeSlotOrderTime;
 
         let isValidTimeSlot = true;
-       // currentDateTime > selectedDateTime ? isValidTimeSlot = false : isValidTimeSlot = true;
-        
+        // currentDateTime > selectedDateTime ? isValidTimeSlot = false : isValidTimeSlot = true;
+
         if (currentDateTime > selectedDateTime) {
             isValidTimeSlot = false;
         }
 
-        if (this.state.selectedTimeSlot === "No Time slot selected"){
+        if (this.state.selectedTimeSlot === "No Time slot selected") {
             isValidTimeSlot = null;
         }
 
@@ -329,26 +331,34 @@ class ScreenCheckout extends Component {
         for (let index = 0; index < listArray.length; index++) {
 
 
+            // cartArray.push({
+            //     productID: listArray[index].id,
+            //     quantity: listArray[index].quantity,
+
+            // });
+
             cartArray.push({
-                productID: listArray[index].id,
+                itemCode: listArray[index].id,
                 quantity: listArray[index].quantity,
+                sellingPrice: listArray[index].price,
+                productName: listArray[index].title,
 
             });
 
         }
 
 
-        this.addToCart(userToken, shippingMethod, this.getConvenienceFee(), this.getDeliveryFee(), this.getTotal(), cartArray);
+        this.addToCart(userToken, shippingMethod, this.getConvenienceFee(), this.getDeliveryFee(), this.state.selectedTimeSlot, this.getTotal(), cartArray);
 
 
     }
 
 
-    addToCart = (userToken, shippingMethod, convenienceFee, deliveryFee, total, cartArray) => {
+    addToCart = (userToken, shippingMethod, convenienceFee, deliveryFee, timeSlot, total, cartArray) => {
         this.showPreloader();
 
 
-        this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, convenienceFee, deliveryFee, total, cartArray)).then(res => {
+        this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, convenienceFee, deliveryFee, timeSlot, total, cartArray)).then(res => {
             this.createOrder(userToken);
 
             console.log("addtoCart res");
@@ -419,6 +429,10 @@ class ScreenCheckout extends Component {
 
     closePinDialog = () => {
         this.refs.RefModalPin.close()
+    }
+
+    closeOtpPhoneNumberDialog = () => {
+        this.refs.RefModalOtpPhoneNumber.close()
     }
 
     closeOtpDialog = () => {
@@ -665,8 +679,8 @@ class ScreenCheckout extends Component {
 
         this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === null ? this.showErrorDialog("No time slot was selected. Select a time slot after " + currentTime) : null;
         this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === false ? this.showErrorDialog("The " + this.state.selectedTimeSlot + " time slot is unavailable. Select a time slot after " + currentTime) : null;
-        address === "" ? this.showErrorDialog("Invalid Address") : null;
-        phoneNumber === "" ? this.showErrorDialog("Invalid Phone NUmber") : null;
+        address === "" || address === "Enter Address" ? this.showErrorDialog("Invalid Address") : null;
+        phoneNumber === "" || phoneNumber === "Enter Phone Number" ? this.showErrorDialog("Invalid Phone Number") : null;
         cardNumber === "" ? this.showErrorDialog("Invalid Card Number") : null;
         total === 0 ? this.showErrorDialog("Invalid Amount") : null;
         cvv === "" ? this.showErrorDialog("Invalid Card CVV Number") : null;
@@ -675,7 +689,7 @@ class ScreenCheckout extends Component {
         password === "GENERIC" ? this.showErrorDialog("You are required to update your password") : null;
 
 
-        // this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === true && address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
+        this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === true && address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
 
     }
 
@@ -700,6 +714,11 @@ class ScreenCheckout extends Component {
 
         //SHOW PIN MODAL
         this.refs.RefModalOtp.open()
+    }
+
+    showOtpPhoneNumber = () => {
+        //SHOW PIN MODAL
+        this.refs.RefModalOtpPhoneNumber.open()
     }
 
 
@@ -765,12 +784,29 @@ class ScreenCheckout extends Component {
         pin.length !== 4 ? this.showCardPinError() : this.chargeUserPin();
     }
 
+    validateOtpPhoneNumber = () => {
+
+        //HIDE OTP PHONE NUMBER ERROR
+        this.hideOtpPhoneNumberError();
+
+        let phoneNumber = this.state.phoneNumber;
+        phoneNumber.length !== 11 ? this.showOtpPhoneNumberError() : this.chargeUserPhoneNumber();
+    }
+
     showCardPinError = () => {
         this.setState({ isVisibleCardPinError: true })
     }
 
     hideCardPinError = () => {
         this.setState({ isVisibleCardPinError: false })
+    }
+
+    showOtpPhoneNumberError = () => {
+        this.setState({ isVisiblePhoneNumberError: true })
+    }
+
+    hideOtpPhoneNumberError = () => {
+        this.setState({ isVisiblePhoneNumberError: false })
     }
 
     chargeUserPin = () => {
@@ -785,6 +821,7 @@ class ScreenCheckout extends Component {
             this.hidePreloader();
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 203 ? this.showOtpPhoneNumber() : null;
             res.data.status === 202 ? this.showOtpModal() : null;
 
 
@@ -797,6 +834,35 @@ class ScreenCheckout extends Component {
         this.closePinDialog()
 
     }
+
+
+    chargeUserPhoneNumber = () => {
+
+        let reference = this.props.chargeResponse.data.reference
+        let phoneNumber = this.state.phoneNumber;
+        let userToken = this.state.userToken;
+
+        this.showPreloader();
+        
+
+        this.props.dispatch(chargeUserPhoneNumberAction(userToken, reference, phoneNumber)).then(res => {
+            this.hidePreloader();
+            res.data.status === 200 ? this.prepareCart() : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+           // res.data.status === 203 ? this.showOtpPhoneNumber() : null;
+            res.data.status === 202 ? this.showOtpModal() : null;
+
+
+        }).catch(err => {
+            console.log(err);
+            this.hidePreloader();
+            this.showErrorDialog(this.props.chargeResponse.error.data.message);
+        });
+
+        this.closeOtpPhoneNumberDialog()
+
+    }
+
 
     chargeUserOtp = () => {
         let reference = this.props.chargeResponse.data.reference
@@ -1081,6 +1147,33 @@ class ScreenCheckout extends Component {
                         <View style={styles.buttonGroup}>
                             <ButtonPrimaryAccent title="PROCEED" isActive={true} onSelected={this.validateCardPin} />
                             <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closePinDialog} />
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    style={[styles.modalCheckout]}
+                    position={"center"}
+                    ref={"RefModalOtpPhoneNumber"}
+                    backdrop={true}
+                    swipeToClose={false}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={false}
+                >
+                    <View>
+                        <View>
+                            <Text>Enter a phone number to receive OTP.</Text>
+                            <TextInput style={styles.textInput} placeholder="Enter Phone Number for OTP" onChangeText={this.handlePhone} />
+                        </View>
+                        {
+                            this.state.isVisiblePhoneNumberError &&
+
+                            <InlineError message="*Invalid length of Phone Number" />
+
+                        }
+                        <View style={styles.buttonGroup}>
+                            <ButtonPrimaryAccent title="PROCEED" isActive={true} onSelected={this.validateOtpPhoneNumber} />
+                            <ButtonPrimaryAccent title="CANCEL" isActive={false} onSelected={this.closeOtpPhoneNumberDialog} />
                         </View>
                     </View>
                 </Modal>
