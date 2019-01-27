@@ -66,7 +66,10 @@ import {
     CREATE_LOST_REQUEST_FAILED,
     CHARGE_USER_PHONENUMBER_STARTED,
     CHARGE_USER_PHONENUMBER_SUCCESS,
-    CHARGE_USER_PHONENUMBER_FAILED
+    CHARGE_USER_PHONENUMBER_FAILED,
+    IS_NEARBY_MERCHANT_STARTED,
+    IS_NEARBY_MERCHANT_SUCCESS,
+    IS_NEARBY_MERCHANT_FAILED
 
 } from '../actions/actions';
 
@@ -135,13 +138,16 @@ const initialState = {
     loginResponse: [],
     isfetchingFees: false,
     newFees: [],
+    newMerchant : [],
     feesResponse: [],
+    merchantResponse : [],
     isCreatingLostRequest: false,
     isCreateLostRequestError: false,
     createLostRequestResponse: [],
     isCreateLostRequestSuccess: false,
     isChargingUserPhoneNumber: false,
     isChargingUserPhoneNumberError: false,
+    isfetchingMerchant : false,
 
 }
 
@@ -423,6 +429,27 @@ function fees(state = initialState, action) {
 }
 
 
+function merchants(state = initialState, action){
+    switch (action.type) {
+        case IS_NEARBY_MERCHANT_STARTED:
+            return Object.assign({}, state, {
+                isfetchingMerchant: true,
+            });
+        case IS_NEARBY_MERCHANT_SUCCESS:
+            return Object.assign({}, state, {
+                isfetchingMerchant: false,
+                newMerchant: action.data,
+            });
+        case IS_NEARBY_MERCHANT_FAILED:
+            return Object.assign({}, state, {
+                isfetchingMerchant: false,
+                merchantResponse: action.error
+            });
+        default:
+            return state;
+    } 
+}
+
 
 
 
@@ -551,7 +578,8 @@ const rootReducer = combineReducers({
     lists,
     delivery,
     users,
-    fees
+    fees,
+    merchants
 })
 
 export default rootReducer

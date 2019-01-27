@@ -72,6 +72,9 @@ export const CREATE_LOST_REQUEST_FAILED = 'CREATE_LOST_REQUEST_FAILED';
 export const CHARGE_USER_PHONENUMBER_STARTED = 'CHARGE_USER_PHONENUMBER_STARTED';
 export const CHARGE_USER_PHONENUMBER_SUCCESS = 'CHARGE_USER_PHONENUMBER_SUCCESS';
 export const CHARGE_USER_PHONENUMBER_FAILED = 'CHARGE_USER_PHONENUMBER_FAILED';
+export const IS_NEARBY_MERCHANT_STARTED = 'IS_NEARBY_MERCHANT_STARTED';
+export const IS_NEARBY_MERCHANT_SUCCESS = 'IS_NEARBY_MERCHANT_SUCCESS';
+export const IS_NEARBY_MERCHANT_FAILED = 'IS_NEARBY_MERCHANT_FAILED';
 
 
 const BASE_URL = "https://api.yourvendee.com/api";
@@ -214,6 +217,13 @@ export const fetchCategoryListStartedAction = () => (
 export const fetchCategoryProductsStartedAction = () => (
     {
         type: FETCH_CATEGORY_PRODUCTS_STARTED
+
+    }
+);
+
+export const isNearbyMerchantStartedAction = () => (
+    {
+        type: IS_NEARBY_MERCHANT_STARTED
 
     }
 );
@@ -379,6 +389,13 @@ export const fetchCategoryProductsSuccessAction = (data) => (
     }
 );
 
+export const isNearbyMerchantSuccessAction = (data) => (
+    {
+        type: IS_NEARBY_MERCHANT_SUCCESS,
+        data
+    }
+);
+
 export const fetchFeesSuccessAction = (data) => (
     {
         type: FETCH_FEES_SUCCESS,
@@ -502,6 +519,13 @@ export const fetchCategoryListFailedAction = (error) => (
 export const fetchCategoryProductsFailedAction = (error) => (
     {
         type: FETCH_CATEGORY_PRODUCTS_FAILED,
+        error
+    }
+);
+
+export const isNearbyMerchantFailedAction = (error) => (
+    {
+        type: IS_NEARBY_MERCHANT_FAILED,
         error
     }
 );
@@ -990,6 +1014,23 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
             })
             .catch(err => {
                 dispatch(fetchCategoryProductsFailedAction(err));
+                reject(err)
+            });
+    });
+
+
+    export const isNearbyMerchantAction = (lng, lat) => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(isNearbyMerchantStartedAction());
+
+        axios.get(`${BASE_URL}/merchants/closeby?lng=${lng}&lat=${lat}`
+        )
+            .then(res => {
+                dispatch(isNearbyMerchantSuccessAction(res.data.data));
+                resolve(res.data);
+            })
+            .catch(err => {
+                dispatch(isNearbyMerchantFailedAction(err));
                 reject(err)
             });
     });
