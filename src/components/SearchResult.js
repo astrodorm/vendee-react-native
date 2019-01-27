@@ -30,6 +30,8 @@ import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modalbox';
+import moment from 'moment';
+
 
 
 
@@ -41,10 +43,33 @@ const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 class SearchResult extends Component {
 
     componentWillReceiveProps(nextProps) {
+        console.log("Receiving SEARCHRESULT Props");
+        console.log("nextProps.newproducts.length", nextProps.newproducts.length);
+        console.log("nextProps.productsError", nextProps.productsError);
 
-        nextProps.newproducts.length === 0 ? this.handleNoData() : this.hideNoDataMessage();
+        // HIDE ERROR MESSAGES
+        this.hideOfflineMerchantMessage();
+        this.hideNoDataMessage();
+
+        // CHECK PRODUCT LIST ERRORS
+        // CHECK IF  NEARBY MERCHANT IS OFFLINE
+        if (nextProps.productsError === "Request failed with status code 400") {
+            this.showMerchantOfflineMerchant();
+        } else {
+
+            // CHECK IF NOTHING MATCHED THE USER'S REQUEST
+            if (nextProps.newproducts.length === 0) {
+                this.handleNoData();
+            }
+
+        }
+
+
+        // nextProps.newproducts.length === 0 ? this.handleNoData() : this.hideNoDataMessage();
+        // nextProps.productsError === "Request failed with status code 400" ? this.showMerchantOfflineMerchant() : this.hideOfflineMerchantMessage();
 
     }
+
 
 
     componentDidMount() {
@@ -66,7 +91,8 @@ class SearchResult extends Component {
             isVisibleShoppingListDrawer: false,
             isVisibleNoDataMessage: false,
             userToken: "",
-            errorMessage: ""
+            errorMessage: "",
+            isVisibleOfflineMerchantMessage: false
         }
     }
 
@@ -127,6 +153,30 @@ class SearchResult extends Component {
 
             console.log("failed to create lost request");
         });
+
+    }
+
+    showMerchantOfflineMerchant = () => {
+
+        // let userToken = this.state.userToken;
+        // let searchParam = this.props.searchText;
+        // let status = "PENDING"
+
+        this.setState({ isVisibleOfflineMerchantMessage: true });
+
+        // this.props.dispatch(createLostRequestAction(userToken, searchParam, status)).then(res => {
+
+        //     console.log("Success creating Lost Request")
+
+        // }).catch(err => {
+
+        //     console.log("failed to create lost request");
+        // });
+
+    }
+
+    hideOfflineMerchantMessage = () => {
+        this.setState({ isVisibleOfflineMerchantMessage: false });
 
     }
 
@@ -268,7 +318,7 @@ class SearchResult extends Component {
         // DISPATCH ACTION TO INCREMENT selectProductQuantity VALUE
         this.props.dispatch(itemIncrementAction());
 
-       // this.validateMaxOrderQuantity(id) === true ? this.props.dispatch(itemIncrementAction()) : null;
+        // this.validateMaxOrderQuantity(id) === true ? this.props.dispatch(itemIncrementAction()) : null;
 
 
         // GET THE QUANTITY OF THE LIST ITEM, IF ZERO, THEN ADD NEW ITEM WITH
@@ -561,6 +611,14 @@ class SearchResult extends Component {
         this.refs.RefModalError.close()
     }
 
+    getOpeningTime = () => {
+        let openingTime = "";
+        let dayofTheWeek = moment().format('dddd');
+        dayofTheWeek === "Sunday" ? openingTime = "1:30 PM" : openingTime = "9:30 AM"
+
+        return openingTime;
+    }
+
 
 
 
@@ -579,6 +637,16 @@ class SearchResult extends Component {
                                 <View style={styles.NoDataMessageContainer}>
                                     <Text style={styles.NoDataMessageText}>Nothing matched your request</Text>
                                     <Text style={styles.NoDataMessageText}>Try viewing all  <Icon name="appstore-o" size={22} color={"#0D284A"} />  Categories</Text>
+                                </View>
+
+                            }
+
+                            {
+                                this.state.isVisibleOfflineMerchantMessage &&
+                                <View style={styles.NoDataMessageContainer}>
+                                    <Text style={styles.NoDataMessageText}><Icon name="disconnect" size={22} color={"#0D284A"} /></Text>
+                                    <Text style={styles.NoDataMessageText}>All merchants are offline.</Text>
+                                    <Text style={styles.NoDataMessageText}>Try again by {this.getOpeningTime()}</Text>
                                 </View>
 
                             }
@@ -672,6 +740,7 @@ class SearchResult extends Component {
 
 const mapStateToProps = state => ({
     products: state.products.products,
+    productsError: state.products.errorProductMessage,
     newproducts: state.products.newproducts,
     lists: state.lists.lists,
     newlists: state.lists.newlists,

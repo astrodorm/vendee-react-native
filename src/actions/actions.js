@@ -673,15 +673,15 @@ export const fetchProductAction = (item) => {
                 // dispatch(loginSuccessAction(res.data.data));
                 // resolve(res);
                 dispatch(fetchSuccessAction(res.data));
-               // resolve(res);
+                // resolve(res);
                 console.log("SEARCH SUCCESS");
                 console.log(res.data)
             })
             .catch(err => {
                 // dispatch(loginFailedAction(err.response.data));
-             
+
                 dispatch(fetchFailedAction(err));
-               // reject(err);
+                // reject(err);
                 console.log("SEARCH FAILED");
                 console.log(err)
             });
@@ -750,7 +750,7 @@ export const chargeUserPinAction = (userToken, reference, pin) => (dispatch) =>
     });
 
 
-    export const chargeUserPhoneNumberAction = (userToken, reference, phone) => (dispatch) =>
+export const chargeUserPhoneNumberAction = (userToken, reference, phone) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(chargeUserPhoneNumberStartedAction());
 
@@ -885,7 +885,6 @@ export const addToCartAction = (userToken, productID, quantity) => {
             .post(`${BASE_URL}/carts/add`, {
                 productID,
                 quantity,
-
             },
                 config
             )
@@ -1019,7 +1018,7 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
     });
 
 
-    export const isNearbyMerchantAction = (lng, lat) => (dispatch) =>
+export const isNearbyMerchantAction = (lng, lat) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(isNearbyMerchantStartedAction());
 

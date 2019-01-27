@@ -148,6 +148,7 @@ const initialState = {
     isChargingUserPhoneNumber: false,
     isChargingUserPhoneNumberError: false,
     isfetchingMerchant : false,
+    errorProductMessage : ""
 
 }
 
@@ -212,7 +213,8 @@ function products(state = initialState, action) {
             return Object.assign({}, state, {
                 isLoadingSearchBar: false,
                 responseStatus: action.payload.error.status,
-                responseMessage: action.payload.error.message
+                responseMessage: action.payload.error.message,
+                errorProductMessage : action.payload.error.message
             });
         case FETCH_CATEGORY_LIST_FAILED:
             return Object.assign({}, state, {
