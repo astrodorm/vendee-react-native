@@ -517,9 +517,16 @@ export const fetchCategoryListFailedAction = (error) => (
 );
 
 export const fetchCategoryProductsFailedAction = (error) => (
+    // {
+    //     type: FETCH_CATEGORY_PRODUCTS_FAILED,
+    //     error
+    // }
+
     {
         type: FETCH_CATEGORY_PRODUCTS_FAILED,
-        error
+        payload: {
+            error
+        }
     }
 );
 
@@ -1012,8 +1019,10 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
                 resolve(res.data);
             })
             .catch(err => {
+                console.log("CATEGORY FAILED");
+                console.log(err)
                 dispatch(fetchCategoryProductsFailedAction(err));
-                reject(err)
+               // reject(err)
             });
     });
 

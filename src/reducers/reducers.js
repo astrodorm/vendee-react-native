@@ -134,21 +134,22 @@ const initialState = {
     categoryListResponse: [],
     isfetchingCategoryProducts: false,
     categoryProductsResponse: [],
+    errorCategoryProductMessage: "",
     newCategoryProducts: [],
     loginResponse: [],
     isfetchingFees: false,
     newFees: [],
-    newMerchant : [],
+    newMerchant: [],
     feesResponse: [],
-    merchantResponse : [],
+    merchantResponse: [],
     isCreatingLostRequest: false,
     isCreateLostRequestError: false,
     createLostRequestResponse: [],
     isCreateLostRequestSuccess: false,
     isChargingUserPhoneNumber: false,
     isChargingUserPhoneNumberError: false,
-    isfetchingMerchant : false,
-    errorProductMessage : ""
+    isfetchingMerchant: false,
+    errorProductMessage: ""
 
 }
 
@@ -214,7 +215,7 @@ function products(state = initialState, action) {
                 isLoadingSearchBar: false,
                 responseStatus: action.payload.error.status,
                 responseMessage: action.payload.error.message,
-                errorProductMessage : action.payload.error.message
+                errorProductMessage: action.payload.error.message
             });
         case FETCH_CATEGORY_LIST_FAILED:
             return Object.assign({}, state, {
@@ -224,7 +225,9 @@ function products(state = initialState, action) {
         case FETCH_CATEGORY_PRODUCTS_FAILED:
             return Object.assign({}, state, {
                 isfetchingCategoryProducts: false,
-                categoryProductsResponse: [...action.error]
+                // categoryProductsResponse: [...action.error],
+                errorCategoryProductMessage: action.payload.error.message
+
             });
         case CREATE_LOST_REQUEST_STARTED:
             return Object.assign({}, state, {
@@ -431,7 +434,7 @@ function fees(state = initialState, action) {
 }
 
 
-function merchants(state = initialState, action){
+function merchants(state = initialState, action) {
     switch (action.type) {
         case IS_NEARBY_MERCHANT_STARTED:
             return Object.assign({}, state, {
@@ -449,7 +452,7 @@ function merchants(state = initialState, action){
             });
         default:
             return state;
-    } 
+    }
 }
 
 

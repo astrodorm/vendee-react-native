@@ -17,7 +17,7 @@ import ButtonPrimaryAccent from '../components/ButtonPrimaryAccent';
 import CheckoutButton from '../components/CheckoutButton';
 import DeliveryPicker from '../components/DeliveryPicker';
 import Modal from 'react-native-modalbox';
-
+import moment from 'moment';
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload"
 
@@ -29,6 +29,24 @@ class ScreenCategory extends Component {
         this.props.dispatch(fetchCategoryListAction()).then(res => {
             this.hideCategoryLoadingTextIndicator()
         });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log("Receiving PRODUCTS CATEGORY Props");
+        //  console.log("nextProps.newproducts.length", nextProps.newproducts.length);
+        console.log("nextProps.productsError", nextProps.errorCategoryProductMessage);
+
+        // HIDE ERROR MESSAGES
+        this.hideOfflineMerchantMessage();
+        this.hideCategoryItemLoadingTextIndicator();
+
+        // this.hideNoDataMessage();
+
+        // CHECK PRODUCT LIST ERRORS
+        // CHECK IF  NEARBY MERCHANT IS OFFLINE
+        if (nextProps.errorCategoryProductMessage === "Request failed with status code 400") {
+            this.showMerchantOfflineMerchant();
+        }
     }
 
     constructor(props) {
@@ -50,7 +68,8 @@ class ScreenCategory extends Component {
             isVisibleCategoryLoadingIndicator: true,
             isVisibleCategoryItemLoadingIndicator: true,
             newCategoryProducts: [],
-            errorMessage: ""
+            errorMessage: "",
+            isVisibleOfflineMerchantMessage: false
 
         }
     }
@@ -324,7 +343,7 @@ class ScreenCategory extends Component {
         let newproductsArray = [...this.props.newCategoryProducts];
         let index = newproductsArray.findIndex(x => x.ITEMCODE === id);
         let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
-       // let thumbnail = newproductsArray[index].thumbnail;
+        // let thumbnail = newproductsArray[index].thumbnail;
         let title = newproductsArray[index].DESCRIPTION;
         let price = newproductsArray[index].SELLINGPRICE;
 
@@ -420,6 +439,9 @@ class ScreenCategory extends Component {
 
     showCategories = () => {
 
+        this.hideCategoryItemLoadingTextIndicator();
+        this.hideOfflineMerchantMessage();
+
         this.state.isVisibleFBtnQuantityPicker === true ? this.hideOnlyFbtnQuantityPicker() : null;
         this.state.isVisibleFBtnShoppingListQuantityPicker === true ? this.hideFbtnShoppingListQuantityPicker() : null;
         this.state.isVisibleFBtnShoppingList === true ? this.hideFbtnShoppingListButton() : null;
@@ -437,7 +459,7 @@ class ScreenCategory extends Component {
     }
 
     getTotal = () => {
-        
+
         let listArray = [...this.props.newlists];
         let total = 0;
 
@@ -544,6 +566,38 @@ class ScreenCategory extends Component {
         this.refs.RefModalError.close()
     }
 
+    showMerchantOfflineMerchant = () => {
+
+        // let userToken = this.state.userToken;
+        // let searchParam = this.props.searchText;
+        // let status = "PENDING"
+
+        this.setState({ isVisibleOfflineMerchantMessage: true });
+
+        // this.props.dispatch(createLostRequestAction(userToken, searchParam, status)).then(res => {
+
+        //     console.log("Success creating Lost Request")
+
+        // }).catch(err => {
+
+        //     console.log("failed to create lost request");
+        // });
+
+    }
+
+    hideOfflineMerchantMessage = () => {
+        this.setState({ isVisibleOfflineMerchantMessage: false });
+
+    }
+
+    getOpeningTime = () => {
+        let openingTime = "";
+        let dayofTheWeek = moment().format('dddd');
+        dayofTheWeek === "Sunday" ? openingTime = "1:30 PM" : openingTime = "9:30 AM"
+
+        return openingTime;
+    }
+
 
     render() {
         return (
@@ -591,6 +645,15 @@ class ScreenCategory extends Component {
                                     {
                                         this.state.isVisibleCategoryItemLoadingIndicator &&
                                         <Text style={styles.loadingTextIndicator}>Loading...</Text>
+                                    }
+                                    {
+                                        this.state.isVisibleOfflineMerchantMessage &&
+                                        <View style={styles.NoDataMessageContainer}>
+                                            <Text style={styles.NoDataMessageText}><Icon name="disconnect" size={22} color={"#0D284A"} /></Text>
+                                            <Text style={styles.NoDataMessageText}>All merchants are offline.</Text>
+                                            <Text style={styles.NoDataMessageText}>Try again by {this.getOpeningTime()}</Text>
+                                        </View>
+
                                     }
                                     <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
                                         <FlatList
@@ -692,6 +755,7 @@ const mapStateToProps = state => ({
 
     categories: state.products.newCategories,
     newCategoryProducts: state.products.newCategoryProducts,
+    errorCategoryProductMessage: state.products.errorCategoryProductMessage,
     newlists: state.lists.newlists,
     selectProductID: state.products.selectProductID,
     selectProductQuantity: state.products.selectProductQuantity,
