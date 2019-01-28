@@ -243,7 +243,8 @@ const styles = StyleSheet.create({
 
     SearchFirstView: {
         flex: 1,
-        alignItems: "center"
+        alignItems: "center",
+        paddingTop: 8
     },
 
     SearchSecondView: {
@@ -364,7 +365,19 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontFamily: Fonts.MPLUSMedium,
         color: "#fff",
+        width: 24,
+        height: 24,
+        overflow: "hidden",
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
         paddingTop: 1,
+        // textShadowOffset: { width: 0, height: 0 },
+        // textShadowRadius: 0,
+        // textShadowColor: "#fff",
+    },
+
+    AddProductTextContainer: {
         borderRadius: 30,
         textAlign: "center",
         justifyContent: "center",
@@ -372,16 +385,25 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         backgroundColor: "#fff",
-        borderWidth: 2,
         borderColor: navyBlueTheme1,
-        textShadowOffset: { width: 0, height: 0 },
-        textShadowRadius: 0,
-        textShadowColor: "#fff",
-
+        borderWidth: 2,
+        overflow: "hidden"
     },
 
     AddProductSelected: {
         backgroundColor: navyBlueTheme1,
+        borderWidth: 2,
+        borderColor: navyBlueTheme1,
+    },
+
+    AddProductSelectedContainer: {
+        backgroundColor: navyBlueTheme1,
+        borderWidth: 2,
+        borderColor: navyBlueTheme1,
+    },
+
+    AddProductUnselectedContainer: {
+        backgroundColor: "#fff",
         borderWidth: 2,
         borderColor: navyBlueTheme1,
     },
@@ -408,10 +430,11 @@ const styles = StyleSheet.create({
     shoppingListDrawerContainer: {
         position: "absolute",
         elevation: 5,
-        height: fullHeight * 0.9,
+        height: fullHeight,
         width: fullWidth,
         bottom: 80,
         zIndex: 1000,
+        paddingTop: 48
 
     },
 
@@ -419,6 +442,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         width: fullWidth,
         padding: 24,
+        height: fullHeight,
     },
 
     FBtnQuantityPickerContainer: {
@@ -487,9 +511,9 @@ const styles = StyleSheet.create({
         flex: 6
     },
 
-    AddProductTextContainer: {
-        flex: 1
-    },
+    // AddProductTextContainer: {
+    //     flex: 1
+    // },
 
     ProductImage: {
         flex: 1
@@ -521,7 +545,7 @@ const styles = StyleSheet.create({
     },
 
     AppSearchResultMain: {
-        paddingTop: 18
+        paddingTop: 48
     },
 
 
@@ -537,6 +561,7 @@ const styles = StyleSheet.create({
         shadowColor: '#6e6e6e',
         shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
 
+
     },
 
     FBtnQuantityPicker: {
@@ -550,6 +575,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 5, height: 5 },
         shadowColor: '#6e6e6e',
         shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
+        height: 60
 
     },
 
@@ -557,15 +583,19 @@ const styles = StyleSheet.create({
 
     FBtnCount: {
         color: navyBlueTheme2,
-        backgroundColor: PeachTheme,
         fontSize: 16,
         fontFamily: Fonts.MPLUSMedium,
-        borderRadius: 32,
-        width: 28,
-        height: 28,
+
+    },
+
+    FBtnCountContainer: {
         justifyContent: "center",
         alignItems: "center",
-        textAlign: "center"
+        textAlign: "center",
+        width: 28,
+        height: 28,
+        borderRadius: 32,
+        backgroundColor: PeachTheme,
     },
 
     FBtnText: {
@@ -594,7 +624,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: navyBlueTheme1,
         marginBottom: 16,
-        marginTop: 16
+        marginTop: 40
     },
 
     AppContainer: {
@@ -1009,7 +1039,7 @@ const styles = StyleSheet.create({
 
     AppCardContainer: {
         height: fullHeight * 1.5,
-        paddingTop: 16 
+        paddingTop: 16
     },
 
     ActionInput: {
@@ -1201,7 +1231,7 @@ const styles = StyleSheet.create({
     },
 
     deliveryPickerLabel: {
-        marginTop: 16,
+        marginTop: 28,
         fontFamily: Fonts.MPLUSMedium,
         fontSize: 13
     },

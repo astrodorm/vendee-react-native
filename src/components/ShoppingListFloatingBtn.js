@@ -10,7 +10,9 @@ const shoppingListFloatingBtn = (props) => {
         <View>
             <TouchableOpacity onPress={() => props.onPress()}>
                 <View style={styles.FBtnShoppingList}>
-                    <Text style={styles.FBtnCount}> {props.count} </Text>
+                    <View style={styles.FBtnCountContainer}>
+                        <Text style={styles.FBtnCount}> {props.count} </Text>
+                    </View>
                     <Text style={styles.FBtnText}>view shopping list</Text>
                     <Icon name="arrowsalt" size={20} color={"#0D284A"} />
                 </View>

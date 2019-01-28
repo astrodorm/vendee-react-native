@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import 'intl';
@@ -23,12 +23,16 @@ class ShoppingListItem extends Component {
                 <View style={styles.ProductDetails}>
                     <Text style={styles.ProductTitle}>{this.props.title}</Text>
                     <Text style={styles.ProductPrice}> {this.formatPrice(this.props.price)} </Text>
-                    
+
                 </View>
                 <TouchableOpacity onPress={() => this.props.onSelectItem()}>
-                    <Text style={[styles.AddProductText, this.props.isAdded ? styles.AddProductSelected : styles.AddProductUnselected]}>
-                        {this.props.quantity}
-                    </Text>
+                    <View style={[styles.AddProductTextContainer, this.props.isAdded ? styles.AddProductSelectedContainer : styles.AddProductUnselectedContainer]}>
+                        {/* <Text style={[styles.AddProductText, this.props.isAdded ? styles.AddProductSelected : styles.AddProductUnselected]}> */}
+                        <Text style={styles.AddProductText}>
+                            {this.props.quantity}
+                        </Text>
+                    </View>
+
                 </TouchableOpacity>
             </View>
         )
