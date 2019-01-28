@@ -16,6 +16,7 @@ let PeachTheme = "#FFDDBB";
 let greenTheme = "#8DCC21";
 let lightGrayTheme = "#D4DDE2";
 let brightBlue = "#1779C7";
+let GrayDarkText = "#282828";
 
 const styles = StyleSheet.create({
     container: {
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
 
     introContent: {
         position: 'absolute',
-        paddingTop: 32,
+        paddingTop: 48,
         paddingBottom: 48,
         paddingLeft: 48,
         paddingRight: 48,
@@ -53,17 +54,17 @@ const styles = StyleSheet.create({
     },
 
     introCardSubtitle: {
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 16,
         marginBottom: 16
     },
 
-    smallText:{
-        color: GrayDarkTheme,
+    smallText: {
+        color: GrayDarkText,
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 10,
-        marginTop: 24  
+        marginTop: 24
     },
 
     introBackgroundOverlay: {
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 6,
         shadowOffset: { width: 10, height: 10, },
         shadowColor: 'black',
-        shadowOpacity: 1,
+        shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
         elevation: 10,
         paddingTop: 48,
         paddingRight: 24,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 6,
         fontSize: 24,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontFamily: Fonts.MPLUSRegular,
     },
 
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 4,
         fontSize: 18,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontFamily: Fonts.MPLUSRegular,
         marginBottom: 8
     },
@@ -208,14 +209,15 @@ const styles = StyleSheet.create({
         height: fullHeight,
         alignItems: "center",
         justifyContent: "space-between",
+        //paddingTop: 24
     },
 
     AppSearchBar: {
         flexDirection: "row",
         borderRadius: 6,
         shadowOffset: { width: 5, height: 5 },
-        shadowColor: GrayDarkTheme,
-        shadowOpacity: 1,
+        shadowColor: "black",
+        shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
         elevation: 5,
         width: fullWidth * 0.9,
         backgroundColor: "#fff",
@@ -236,6 +238,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 18,
         width: 270,
+        color: GrayDarkText
     },
 
     SearchFirstView: {
@@ -250,8 +253,8 @@ const styles = StyleSheet.create({
     AppDeliveryPickerContainer: {
         borderRadius: 6,
         shadowOffset: { width: 5, height: 5 },
-        shadowColor: GrayDarkTheme,
-        shadowOpacity: 1,
+        shadowColor: "black",
+        shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
         elevation: 5,
         width: fullWidth * 0.9,
         backgroundColor: "#fff",
@@ -264,7 +267,7 @@ const styles = StyleSheet.create({
     DeliveryPickerText: {
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 12,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
     },
 
     ActiveDeliveryPicker: {
@@ -392,9 +395,9 @@ const styles = StyleSheet.create({
     FBtnShoppingListContainer: {
         position: "absolute",
         elevation: 5,
-        height: 80,
+        height: 100,
         width: fullWidth * 0.7,
-        bottom: 80,
+        bottom: 100,
         zIndex: 1000,
         alignItems: "center",
         justifyContent: "center",
@@ -421,9 +424,9 @@ const styles = StyleSheet.create({
     FBtnQuantityPickerContainer: {
         position: "absolute",
         elevation: 5,
-        height: 80,
+        height: 100,
         width: fullWidth * 0.7,
-        bottom: 80,
+        bottom: 100,
         zIndex: 1000,
         alignItems: "center",
         justifyContent: "center",
@@ -532,7 +535,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         shadowOffset: { width: 5, height: 5 },
         shadowColor: '#6e6e6e',
-        shadowOpacity: 1,
+        shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
+
     },
 
     FBtnQuantityPicker: {
@@ -545,7 +549,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         shadowOffset: { width: 5, height: 5 },
         shadowColor: '#6e6e6e',
-        shadowOpacity: 1,
+        shadowOpacity: 0.25, // RETURN TO 1 for ANDROID
+
     },
 
 
@@ -593,7 +598,8 @@ const styles = StyleSheet.create({
     },
 
     AppContainer: {
-        width: fullWidth
+        // width: fullWidth,
+        flex: 1,
     },
 
     MenuPrimaryButton: {
@@ -650,14 +656,14 @@ const styles = StyleSheet.create({
 
     shoppingListDetailsLabel: {
         fontFamily: Fonts.MPLUSRegular,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontSize: 12,
         marginRight: 16
     },
 
     shoppingListDetailsPrice: {
         fontFamily: Fonts.MPLUSRegular,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontSize: 12,
         letterSpacing: 1
 
@@ -901,7 +907,7 @@ const styles = StyleSheet.create({
     AccordionHeaderSubtitle: {
         fontSize: 12,
         fontFamily: Fonts.MPLUSRegular,
-        color: GrayDarkTheme
+        color: GrayDarkText
     },
 
     PlaceOrderBtnContainer: {
@@ -938,7 +944,7 @@ const styles = StyleSheet.create({
     },
 
     CardShoppingListTime: {
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontSize: 12,
         fontFamily: Fonts.MPLUSRegular,
         letterSpacing: 1
@@ -963,7 +969,7 @@ const styles = StyleSheet.create({
     parcelID: {
         fontFamily: Fonts.MPLUSBold,
         fontSize: 10,
-        backgroundColor: GrayDarkTheme,
+        backgroundColor: GrayDarkText,
         borderRadius: 4,
         paddingTop: 4,
         paddingBottom: 4,
@@ -1002,7 +1008,8 @@ const styles = StyleSheet.create({
 
 
     AppCardContainer: {
-        height: fullHeight * 1.5
+        height: fullHeight * 1.5,
+        paddingTop: 16 
     },
 
     ActionInput: {
@@ -1011,7 +1018,7 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 6,
         fontSize: 24,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontFamily: Fonts.MPLUSRegular,
         flex: 2
     },
@@ -1049,7 +1056,7 @@ const styles = StyleSheet.create({
 
     cardOwner: {
         fontFamily: Fonts.MPLUSBold,
-        color: GrayDarkTheme,
+        color: GrayDarkText,
         fontSize: 12,
         letterSpacing: 1
     },
@@ -1141,7 +1148,7 @@ const styles = StyleSheet.create({
 
     errorMessage: {
         fontSize: 18,
-        lineHeight:30
+        lineHeight: 30
     },
 
     shoppingListMainContainer: {
@@ -1184,12 +1191,13 @@ const styles = StyleSheet.create({
     CategoryItem: {
         padding: 16,
         borderBottomColor: GrayDarkThemeBtnBg,
-        borderWidth: 1,
+        borderWidth: 0, //RETURN TO 1 FOR ANDROID
         borderTopWidth: 0,
         borderLeftWidth: 0,
         borderRightWidth: 0,
         fontFamily: Fonts.MPLUSRegular,
-        fontSize: 16
+        fontSize: 16,
+        //shadowOffset :0
     },
 
     deliveryPickerLabel: {
@@ -1208,7 +1216,7 @@ const styles = StyleSheet.create({
     NoDataMessageText: {
         fontFamily: Fonts.MPLUSRegular,
         fontSize: 16,
-        color: "#9D9D9D",
+        color: GrayDarkText,
         lineHeight: 50
     },
 
@@ -1219,42 +1227,42 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
 
-    TimeSlotContainer : {
+    TimeSlotContainer: {
         // backgroundColor : navyBlueTheme1,
         flexDirection: "row",
-        flexWrap : "wrap",
+        flexWrap: "wrap",
         // height:300
 
     },
 
-    TimeSlot : {
-        // backgroundColor : GrayDarkTheme,
-        width:150,
-        paddingBottom:16,
-        paddingLeft:8,
-        paddingRight:8,
-        paddingTop:16,
-        borderRadius:4,
-        marginLeft:8,
-        marginBottom:8,
-        justifyContent : "center",
-        alignItems : "center"
+    TimeSlot: {
+        // backgroundColor : GrayDarkText,
+        width: 150,
+        paddingBottom: 16,
+        paddingLeft: 8,
+        paddingRight: 8,
+        paddingTop: 16,
+        borderRadius: 4,
+        marginLeft: 8,
+        marginBottom: 8,
+        justifyContent: "center",
+        alignItems: "center"
     },
 
-    TimeSlotTime:{
-        fontFamily : Fonts.MPLUSMedium,
-        fontSize:12,
-        color: GrayDarkTheme
+    TimeSlotTime: {
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 12,
+        color: GrayDarkText
     },
 
-    ActiveTimeSlot :{
+    ActiveTimeSlot: {
         borderWidth: 2,
-        borderColor :brightBlue,
+        borderColor: brightBlue,
     },
 
-    InActiveTimeSlot : {
+    InActiveTimeSlot: {
         borderWidth: .8,
-        borderColor :lightGrayTheme,
+        borderColor: lightGrayTheme,
     }
 
 });

@@ -110,7 +110,7 @@ class SearchResult extends Component {
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
         // <ProductItem key={item.} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
 
-        <ProductItem key={item.ITEMCODE} thumbnail="http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg" title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={this.getListByID(item.ITEMCODE).quantity} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
+        <ProductItem key={item.ITEMCODE} thumbnail={item.image} title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={this.getListByID(item.ITEMCODE).quantity} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
     );
 
     retrieveAndUserTokenData = async (storageKey) => {
@@ -188,7 +188,7 @@ class SearchResult extends Component {
 
     _renderShoppingListItem = ({ item }) => (
 
-        <ShoppingListItem key={item.id} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={this.convertToSentenceCase(item.title)} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
+        <ShoppingListItem key={item.id} thumbnail={item.thumbnail} title={this.convertToSentenceCase(item.title)} price={item.price} isAdded={true} quantity={item.quantity} onSelectItem={() => this.onSelectShoppingListItem(item.id, item.quantity)} />
 
     );
 
@@ -333,8 +333,8 @@ class SearchResult extends Component {
 
         let newproductsArray = [...this.props.newproducts];
         let index = newproductsArray.findIndex(x => x.ITEMCODE === id);
-        //let thumbnail = newproductsArray[index].thumbnail;
-        let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
+        let thumbnail = newproductsArray[index].image;
+      //  let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
         let title = newproductsArray[index].DESCRIPTION;
         let price = newproductsArray[index].SELLINGPRICE;
 
