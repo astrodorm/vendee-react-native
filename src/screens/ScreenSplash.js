@@ -33,7 +33,8 @@ class ScreenCategory extends Component {
             isVisibleFeesError: false,
             isVisibleMerchantError: false,
             staticNearbyMerchantLng: 3.5088230000000067,
-            staticNearbyMerchantLat: 6.4438698
+            staticNearbyMerchantLat: 6.4438698,
+            isVisibleGeolocationError: false
         }
     }
 
@@ -57,16 +58,17 @@ class ScreenCategory extends Component {
 
     isNearbyMerchant = (lng, lat) => {
         this.hideMerchantError();
+        this.hideGeolocationError();
 
 
         this.props.dispatch(isNearbyMerchantAction(lng, lat)).then(res => {
-           
+
             this.hideMerchantError();
             console.log(res);
             console.log("res.nearby", res.nearby);
             res.nearby === true ? this.fetchFees() : this.showMerchantError();
             //this.retrieveAndSetUserTokenBoolean(USER_TOKEN_STORAGE_KEY);
-           // this.showMerchantError();
+            // this.showMerchantError();
         }).catch(err => {
             console.log(err);
             this.showGeolocationError();
@@ -77,6 +79,8 @@ class ScreenCategory extends Component {
     getCurrentLocation = () => {
 
         console.log("Getting current location");
+        this.hideMerchantError();
+        this.hideGeolocationError();
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -86,7 +90,10 @@ class ScreenCategory extends Component {
 
                 this.isNearbyMerchant(position.coords.longitude, position.coords.latitude);
             },
-            (error) => console.log("error:", error.message),
+            (error) => {
+                console.log("error:", error.message);
+                this.showGeolocationError();
+            },
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
         );
     }
@@ -99,12 +106,20 @@ class ScreenCategory extends Component {
         this.setState({ isVisibleMerchantError: true })
     }
 
+    showGeolocationError = () => {
+        this.setState({ isVisibleGeolocationError: true })
+    }
+
     hideFeesError = () => {
         this.setState({ isVisibleFeesError: false })
     }
 
     hideMerchantError = () => {
         this.setState({ isVisibleMerchantError: false })
+    }
+
+    hideGeolocationError = () => {
+        this.setState({ isVisibleGeolocationError: false })
     }
 
     navigateToMainApp = () => {
@@ -158,9 +173,16 @@ class ScreenCategory extends Component {
 
                 {this.state.isVisibleMerchantError &&
                     <View>
-                        <InlineError message={"There are no nearby merchant. Vendee is currently available in Lekki Phase 2, Lagos. By continuing, you agree that your address for pickup or delivery would be in Lekki Phase 2, Lagos."} />
+                        <InlineError message={"There are no nearby merchants. Vendee is currently available in Lekki Phase 2, Lagos. By continuing, you agree that your address for pickup or delivery would be in Lekki Phase 2, Lagos."} />
                         <View style={styles.headingDivider}></View>
                         <ButtonPrimaryAccent title="CHANGE LOCATION AND CONTINUE" icon="arrowright" isActive={true} onSelected={() => this.isNearbyMerchant(this.state.staticNearbyMerchantLng, this.state.staticNearbyMerchantLat)} />
+                    </View>
+                }
+                {this.state.isVisibleGeolocationError &&
+                    <View>
+                        <InlineError message={"Ensure your geolocation service is turned on, YourVendee is granted Location permission and you are connected to the internet."} />
+                        <View style={styles.headingDivider}></View>
+                        <ButtonPrimaryAccent title="TRY AGAIN" icon="reload1" isActive={true} onSelected={() => this.getCurrentLocation()} />
                     </View>
                 }
             </View>
