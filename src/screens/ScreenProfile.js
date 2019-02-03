@@ -139,6 +139,7 @@ class ScreenProfile extends Component {
                                 <View>
                                     <ButtonPrimaryAccent title="LOGOUT" icon="logout" isActive={false} onSelected={this.logoutUser} />
                                 </View>
+                                <Text>Need help?. Email: hello@yourvendee.com</Text>
                             </View>
                         </View>
                 </View>

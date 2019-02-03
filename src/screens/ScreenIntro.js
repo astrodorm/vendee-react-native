@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Animated, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
+import { Text, View, Image, Animated, TextInput, TouchableOpacity, AsyncStorage, Linking } from 'react-native';
 import { styles } from '../styles/styles';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -268,8 +268,9 @@ class ScreenIntro extends Component {
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
                                                     <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput} keyboardType="number-pad"></TextInput>
-                                                    <Text style={styles.smallText}> By continuing with the registration, you agree to the terms and conditions on www.yourvendee.com.</Text>
-
+                                                    <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://docs.google.com/document/d/1JMjjphorhFhjBKQ5DGjE5p77qJ6BAb675BIQqkznid0/edit?usp=sharing')}}>
+                                                        <Text style={styles.smallText}> By signing up, you agree to our Terms and Privacy Policy</Text>
+                                                    </TouchableOpacity>
                                                 </View>
                                                 {this.state.showTelephoneError &&
                                                     <InlineError message="* Invalid Phone Number" />
