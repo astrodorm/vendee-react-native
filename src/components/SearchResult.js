@@ -145,14 +145,24 @@ class SearchResult extends Component {
 
         this.setState({ isVisibleNoDataMessage: true });
 
-        this.props.dispatch(createLostRequestAction(userToken, searchParam, status)).then(res => {
+        if (userToken !== "null") {
 
-            console.log("Success creating Lost Request")
+            console.log("Identifiable account. Tracking enabled.")
 
-        }).catch(err => {
+            this.props.dispatch(createLostRequestAction(userToken, searchParam, status)).then(res => {
 
-            console.log("failed to create lost request");
-        });
+                console.log("Success creating Lost Request");
+                console.log(res);
+
+            }).catch(err => {
+
+                console.log("failed to create lost request");
+                console.log(err);
+            });
+
+        } else {
+            console.log("Anonymous account. Tracking disabled.")
+        }
 
     }
 
@@ -334,7 +344,7 @@ class SearchResult extends Component {
         let newproductsArray = [...this.props.newproducts];
         let index = newproductsArray.findIndex(x => x.ITEMCODE === id);
         let thumbnail = newproductsArray[index].image;
-      //  let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
+        //  let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
         let title = newproductsArray[index].DESCRIPTION;
         let price = newproductsArray[index].SELLINGPRICE;
 

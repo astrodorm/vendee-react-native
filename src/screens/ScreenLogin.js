@@ -91,7 +91,7 @@ class ScreenProfile extends Component {
         this.validatePassword() < 1 ? this.setState({ showPasswordError: true }) : null;
 
         //VALIDATE ALL PARAMS
-        this.validateEmail(email) === true && this.validatePassword() > 1 ? this.loginUser() : this.setState({});
+        this.validateEmail(email) === true && this.validatePassword() > 1 ? this.loginUser() : null;
     }
 
     loginUser = () => {

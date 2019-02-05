@@ -82,9 +82,21 @@ class ScreenIntro extends Component {
         }
     }
 
+    skipSignUpAndLogin = () => {
+
+        this.storeDemoCredentials();
+    }
+
+    storeDemoCredentials = () => {
+
+        //SAVE USER TOKEN
+        this.storeData(USER_TOKEN_STORAGE_KEY, "null");
+
+        this.gotoMainAppScreen();
+    }
 
     gotoSignScreen = () => {
-        this.props.navigation.push("Login")
+        this.props.navigation.push("Login");
     }
 
     handleRefHeaderContents = RefHeaderContents => this.RefHeaderContents = RefHeaderContents;
@@ -247,6 +259,9 @@ class ScreenIntro extends Component {
                                 <TouchableOpacity onPress={this.gotoSignScreen}>
                                     <Text style={styles.buttonSecondary}> SIGN IN </Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity onPress={this.skipSignUpAndLogin}>
+                                    <Text style={styles.buttonSecondary}> I'LL DO THIS LATER </Text>
+                                </TouchableOpacity>
                             </Animatable.View>
                         }
 
@@ -268,7 +283,7 @@ class ScreenIntro extends Component {
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
                                                     <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput} keyboardType="number-pad"></TextInput>
-                                                    <TouchableOpacity onPress={ ()=>{ Linking.openURL('https://docs.google.com/document/d/1JMjjphorhFhjBKQ5DGjE5p77qJ6BAb675BIQqkznid0/edit?usp=sharing')}}>
+                                                    <TouchableOpacity onPress={() => { Linking.openURL('https://docs.google.com/document/d/1JMjjphorhFhjBKQ5DGjE5p77qJ6BAb675BIQqkznid0/edit?usp=sharing') }}>
                                                         <Text style={styles.smallText}> By signing up, you agree to our Terms and Privacy Policy</Text>
                                                     </TouchableOpacity>
                                                 </View>
