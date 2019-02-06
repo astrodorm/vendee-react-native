@@ -751,7 +751,7 @@ const styles = StyleSheet.create({
         width: fullWidth * 0.9,
         backgroundColor: "#fff",
         zIndex: 1000,
-        height: 400,
+        height: 450,
         paddingTop: 32,
         paddingBottom: 16,
         paddingLeft: 32,
@@ -1293,6 +1293,22 @@ const styles = StyleSheet.create({
     InActiveTimeSlot: {
         borderWidth: .8,
         borderColor: lightGrayTheme,
+    },
+
+    tabbedButtonViewGroup:{
+        flexDirection:"row",
+        justifyContent : "space-between"
+    },
+
+    tabbedButton:{
+        padding:16,
+        marginTop :8
+    },
+
+    tabbedButtonText:{
+        textDecorationLine:"underline",
+        fontFamily: Fonts.MPLUSMedium,
+        color:GrayDarkText
     }
 
 });

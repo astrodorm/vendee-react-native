@@ -13,7 +13,7 @@ class ScreenCheckout extends Component {
 
     }
 
-    gotoShoppingList = () => {
+    gotoHome = () => {
         this.props.dispatch(isFirstFetchStartedAction(false))
         this.props.navigation.push('MainAppScreen');
     }
@@ -30,13 +30,13 @@ class ScreenCheckout extends Component {
                             </View>
                             <View style={styles.centerView}>
                                 <Text style={styles.introCardHeader}>Success !!</Text>
-                                <Text style={styles.introCardSubtitle}>We have received your order</Text>
-                                <Text style={styles.introCardSubtitle}>You just purchase an item from Mattoris Supermarket.</Text>
+                                <Text style={styles.introCardSubtitle}>You just purchased an item from Mattoris Supermarket.</Text>
+                                <Text style={styles.introCardSubtitle}>To view all orders, click on the 'Go Home' button and then on the Shopping List Icon.</Text>
                             </View>
                         </View>
                         <View>
-                            <TouchableOpacity onPress={() => this.gotoShoppingList()}>
-                                <Text style={styles.introCardButton}> VIEW ORDER DETAILS </Text>
+                            <TouchableOpacity onPress={() => this.gotoHome()}>
+                                <Text style={styles.introCardButton}> GO HOME </Text>
                             </TouchableOpacity>
                         </View>
                     </View>

@@ -28,6 +28,8 @@ import {
     createOrderAction,
     promisedAddToCartAction,
     chargeUserPhoneNumberAction,
+    loginAction,
+    createUserAction
 } from '../actions/actions';
 import * as Progress from 'react-native-progress';
 
@@ -37,6 +39,8 @@ const OAUTH = "OAUTH";
 const PHONE_STORAGE_KEY = "PHONE";
 const CARD_NUMBER_STORAGE_KEY = "CARD_NUMBER";
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
+const EMAIL_STORAGE_KEY = "EMAIL";
+
 
 
 
@@ -128,8 +132,15 @@ class ScreenCheckout extends Component {
             isActiveSlot11: false,
             isAvailableTimeSlotGroup1: true,
             isAvailableTimeSlotGroup2: false,
-            isVisiblePhoneNumberError: false
-
+            isVisiblePhoneNumberError: false,
+            email: "",
+            password: "",
+            phoneNumber: "",
+            isLoginView: false,
+            isSignUpView: true,
+            isVisibleAccountMessage: false,
+            isVisibleAccountSetup: true,
+            accountMessage: ""
         }
     }
 
@@ -398,6 +409,110 @@ class ScreenCheckout extends Component {
 
     }
 
+    loginUser = () => {
+        let email = this.state.email;
+        let oauth = this.state.password;
+
+        this.showAccountMessage();
+        this.setState({ accountMessage: "Please Wait.. Logging In..." })
+
+
+        this.props.dispatch(loginAction(email.toLowerCase(), oauth.toLowerCase())).then(res => {
+
+            let userToken = res.data.data.token
+
+            this.storeUserCredentials(userToken);
+
+            this.setState({ accountMessage: "Successfully Logged In. You may now close this pop-up and continue" })
+            this.showAccountMessage();
+
+        }).catch(err => {
+
+            this.showAccountMessage();
+            this.setState({ accountMessage: `${this.props.loginResponse.message}. Close this pop-up and click 'Place Order' to Try Again` });
+            console.log(err);
+
+        });
+
+    }
+
+    signUpUser = () => {
+        let firstname = "GENERIC";
+        let lastname = "GENERIC";
+        let email = this.state.email
+        let oauth = "GENERIC";
+        let phoneNumber = this.state.phoneNumber;
+
+        this.showAccountMessage();
+        this.setState({ accountMessage: "Please Wait.. Creating Account..." })
+
+
+        this.storeData(EMAIL_STORAGE_KEY, email.toLowerCase());
+
+        this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email.toLowerCase(), oauth)).then(res => {
+            // let userToken = res.data.data.token
+
+            this.storeUserCredentials(res.data.data.token);
+
+            this.setState({ accountMessage: "Success!. New Account created. You may now close this pop-up and continue" })
+            this.showAccountMessage();
+
+        }).catch(err => {
+            this.setState({ accountMessage: "Failed to create an account. Close this modal and click 'Place Order' to Try Again" });
+            this.showAccountMessage();
+            console.log(err);
+        });
+
+    }
+
+    //  validateAccountSetup = () => {
+
+    // validateEmail = () => {
+
+    //     let email = this.state.email;
+    //     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    //     let isValidEmail = regex.test(email);
+    //     return isValidEmail
+    // }
+
+    // validateTelephone = () => {
+    //     let telephone = this.state.telephone;
+    //     let telephoneLength = String(telephone).replace('.', '').length;
+
+    //     // console.log(telephoneLength)
+    //     let isPhoneNumber = false;
+    //     telephoneLength < 11 ? isPhoneNumber = true : isPhoneNumber = false;
+
+    //     return isPhoneNumber
+    // }
+
+    showAccountMessage = () => {
+        this.setState({ isVisibleAccountMessage: true });
+        this.setState({ isVisibleAccountSetup: false });
+    }
+
+    hideLoginMessage = () => {
+        this.setState({ isVisibleAccountSetup: true });
+        this.setState({ isVisibleAccountMessage: false });
+    }
+
+    storeUserCredentials = (userToken) => {
+
+        let emailAddress = this.state.email;
+
+        //SAVE USER TOKEN
+        this.storeData(USER_TOKEN_STORAGE_KEY, userToken);
+
+        this.setState({ userToken: userToken });
+
+        //SAVE USER TOKEN
+        this.storeData(EMAIL_STORAGE_KEY, emailAddress.toLowerCase());
+
+        //NAVIGATE TO MAIN APP
+        // this.navigateToMainApp()
+    }
+
     checkOrderCount = () => {
         let listArray = [...this.props.newlists];
         let lengthOfOrder = listArray.length;
@@ -483,6 +598,26 @@ class ScreenCheckout extends Component {
     handleCardNumber = (text) => {
 
         this.setState({ cardNumber: text })
+
+    }
+
+
+    handleEmail = (text) => {
+
+        this.setState({ email: text })
+
+    }
+
+    toggleSignUpView = () => {
+
+        this.setState({ isLoginView: false });
+        this.setState({ isSignUpView: true });
+    }
+
+    toggleLoginView = () => {
+
+        this.setState({ isSignUpView: false });
+        this.setState({ isLoginView: true });
 
     }
 
@@ -666,6 +801,10 @@ class ScreenCheckout extends Component {
 
 
     validateInput = () => {
+
+        // this.retrieveAndUserTokenData(USER_TOKEN_STORAGE_KEY)
+
+
         let address = this.state.address;
         let phoneNumber = this.state.phoneNumber;
         let cardNumber = this.state.cardNumber;
@@ -676,7 +815,10 @@ class ScreenCheckout extends Component {
         let expiryYear = this.state.expiryYear;
         let password = this.state.password;
         let currentTime = moment().format('LT');
+        let userToken = this.state.userToken;
 
+
+        userToken === "null" ? this.showSignUpAndLoginModal() : null;
         this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === null ? this.showErrorDialog("No time slot was selected. Select a time slot after " + currentTime) : null;
         this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === false ? this.showErrorDialog("The " + this.state.selectedTimeSlot + " time slot is unavailable. Select a time slot after " + currentTime) : null;
         address === "" || address === "Enter Address" ? this.showErrorDialog("Invalid Address") : null;
@@ -699,6 +841,19 @@ class ScreenCheckout extends Component {
 
         //SHOW ERROR DIALOG
         this.refs.RefModalCheckoutErrorMessage.open()
+    }
+
+    showSignUpAndLoginModal = () => {
+
+        this.hideLoginMessage();
+
+        //SHOW ERROR DIALOG
+        this.refs.RefModalSignUpLogin.open()
+
+    }
+
+    closeSignUpAndLoginModal = () => {
+        this.refs.RefModalSignUpLogin.close()
     }
 
 
@@ -843,13 +998,13 @@ class ScreenCheckout extends Component {
         let userToken = this.state.userToken;
 
         this.showPreloader();
-        
+
 
         this.props.dispatch(chargeUserPhoneNumberAction(userToken, reference, phoneNumber)).then(res => {
             this.hidePreloader();
             res.data.status === 200 ? this.prepareCart() : null;
             res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
-           // res.data.status === 203 ? this.showOtpPhoneNumber() : null;
+            // res.data.status === 203 ? this.showOtpPhoneNumber() : null;
             res.data.status === 202 ? this.showOtpModal() : null;
 
 
@@ -1111,6 +1266,64 @@ class ScreenCheckout extends Component {
 
                 </Modal>
                 <Modal
+                    style={[styles.modalCheckout]}
+                    position={"center"}
+                    ref={"RefModalSignUpLogin"}
+                    backdrop={true}
+                    swipeToClose={true}
+                    backdropColor={"#0D284A"}
+                    backdropOpacity={0.5}
+                    backdropPressToClose={true}
+                >
+
+
+                    <Text style={styles.errorHeader}>Create an Account or Login</Text>
+
+                    {this.state.isVisibleAccountSetup &&
+
+                        <View>
+                            <View style={styles.tabbedButtonViewGroup}>
+                                <TouchableOpacity style={styles.tabbedButton} onPress={() => this.toggleSignUpView()}>
+                                    <Text style={styles.tabbedButtonText}>CREATE AN ACCOUNT</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.tabbedButton} onPress={() => this.toggleLoginView()}>
+                                    <Text style={styles.tabbedButtonText}>LOGIN</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <TextInput style={styles.textInput} placeholder="Email" onChangeText={this.handleEmail} keyboardType="email-address"></TextInput>
+                            {
+                                this.state.isLoginView &&
+                                <View>
+                                    <TextInput style={styles.textInput} placeholder="Password" onChangeText={this.handlePassword} secureTextEntry={true}></TextInput>
+                                    <ButtonPrimaryAccent title="LOGIN" isActive={true} onSelected={this.loginUser} />
+                                </View>
+
+                            }
+
+                            {
+                                this.state.isSignUpView &&
+                                <View>
+                                    <TextInput style={styles.textInput} placeholder="Phone Number" onChangeText={this.handlePhone} keyboardType="number-pad"></TextInput>
+                                    <ButtonPrimaryAccent title="CREATE ACCOUNT" isActive={true} onSelected={this.signUpUser} />
+                                </View>
+
+                            }
+                        </View>
+
+                    }
+
+
+                    {
+                        this.state.isVisibleAccountMessage &&
+                        <View>
+                            <Text>{this.state.accountMessage}</Text>
+                        </View>
+                    }
+                    <View style={styles.headingDivider}></View>
+                    <ButtonPrimaryAccent title="CLOSE" isActive={false} onSelected={this.closeSignUpAndLoginModal} />
+
+                </Modal>
+                <Modal
                     style={[styles.modalPreloader]}
                     position={"center"}
                     ref={"RefModalPreloader"}
@@ -1221,8 +1434,8 @@ const mapStateToProps = state => ({
     deliveryFee: state.delivery.deliveryFee,
     isDelivery: state.delivery.isDelivery,
     isPickup: state.delivery.isPickup,
-    newFees: state.fees.newFees
-
+    newFees: state.fees.newFees,
+    loginResponse: state.users.loginResponse
 
 })
 

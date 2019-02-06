@@ -26,9 +26,9 @@ class ScreenIntro extends Component {
 
     componentWillReceiveProps(nextProps) {
 
-        let userToken = nextProps.user.token;
+        // let userToken = nextProps.user.token;
 
-        nextProps.isCreateUserSuccess === true ? this.storeUserCredentials(userToken) : null;
+        //  nextProps.isCreateUserSuccess === true ? this.storeUserCredentials(userToken) : null;
     }
 
 
@@ -40,7 +40,7 @@ class ScreenIntro extends Component {
         this.storeData(USER_TOKEN_STORAGE_KEY, userToken);
 
         //SAVE USER EMAIL
-        this.storeData(EMAIL_STORAGE_KEY, emailAddress);
+        this.storeData(EMAIL_STORAGE_KEY, emailAddress.toLowerCase());
 
         //NAVIGATE TO MAIN APP
         this.animateToSuccessView()
@@ -204,10 +204,17 @@ class ScreenIntro extends Component {
         let oauth = "GENERIC";
         let phoneNumber = this.state.telephone;
 
-        this.storeData(EMAIL_STORAGE_KEY, email);
+        this.storeData(EMAIL_STORAGE_KEY, email.toLowerCase());
 
 
-        this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email, oauth))
+        this.props.dispatch(createUserAction(firstname, lastname, phoneNumber, email.toLowerCase(), oauth)).then(res => {
+            console.log(res);
+            // console.log(res.data.data)
+            this.storeUserCredentials(res.data.data.token)
+
+        }).catch(err => {
+            console.log(err);
+        })
 
     }
 

@@ -37,7 +37,7 @@ class ScreenProfile extends Component {
         this.storeData(USER_TOKEN_STORAGE_KEY, userToken);
 
         //SAVE USER TOKEN
-        this.storeData(EMAIL_STORAGE_KEY, emailAddress);
+        this.storeData(EMAIL_STORAGE_KEY, emailAddress.toLowerCase());
 
         //NAVIGATE TO MAIN APP
         this.navigateToMainApp()
@@ -99,7 +99,7 @@ class ScreenProfile extends Component {
         let email = this.state.email;
         let oauth = this.state.password;
 
-        this.props.dispatch(loginAction(email, oauth)).then(res => {
+        this.props.dispatch(loginAction(email.toLowerCase(), oauth.toLowerCase())).then(res => {
 
             let userToken = res.data.data.token
 

@@ -609,26 +609,26 @@ export const updateUserFailedAction = (error) => (
 );
 
 
-export const createUserAction = (firstname, lastname, phoneNumber, email, oauth) => {
-    return dispatch => {
-        dispatch(createUserStartedAction());
+// export const createUserAction = (firstname, lastname, phoneNumber, email, oauth) => {
+//     return dispatch => {
+//         dispatch(createUserStartedAction());
 
-        axios
-            .post(`${BASE_URL}/customers`, {
-                firstname,
-                lastname,
-                phoneNumber,
-                email,
-                oauth
-            })
-            .then(res => {
-                dispatch(createUserSuccessAction(res.data.data));
-            })
-            .catch(err => {
-                dispatch(createUserFailedAction(err.response.data));
-            });
-    };
-};
+//         axios
+//             .post(`${BASE_URL}/customers`, {
+//                 firstname,
+//                 lastname,
+//                 phoneNumber,
+//                 email,
+//                 oauth
+//             })
+//             .then(res => {
+//                 dispatch(createUserSuccessAction(res.data.data));
+//             })
+//             .catch(err => {
+//                 dispatch(createUserFailedAction(err.response.data));
+//             });
+//     };
+// };
 
 
 
@@ -647,6 +647,30 @@ export const loginAction = (email, oauth) => (dispatch) =>
             })
             .catch(err => {
                 dispatch(loginFailedAction(err.response.data));
+                reject(err);
+            });
+
+    });
+
+
+export const createUserAction = (firstname, lastname, phoneNumber, email, oauth) => (dispatch) =>
+    new Promise(function (resolve, reject) {
+        dispatch(createUserStartedAction());
+
+        axios
+            .post(`${BASE_URL}/customers`, {
+                firstname,
+                lastname,
+                phoneNumber,
+                email,
+                oauth
+            })
+            .then(res => {
+                dispatch(createUserSuccessAction(res.data.data));
+                resolve(res);
+            })
+            .catch(err => {
+                dispatch(createUserFailedAction(err.response.data));
                 reject(err);
             });
 
@@ -1022,7 +1046,7 @@ export const fetchCategoryProductsAction = (categoryID) => (dispatch) =>
                 console.log("CATEGORY FAILED");
                 console.log(err)
                 dispatch(fetchCategoryProductsFailedAction(err));
-               // reject(err)
+                // reject(err)
             });
     });
 

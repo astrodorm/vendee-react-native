@@ -35,7 +35,9 @@ class ScreenShoppingList extends Component {
             showCheckoutMessage: true,
             showPlaceOrderComponent: false,
             userToken: "",
-            isLoadingText: true
+            isLoadingText: true,
+            isAccountRequired: false,
+            isVisbleShoppingList: false
         }
     }
 
@@ -61,12 +63,42 @@ class ScreenShoppingList extends Component {
 
     refreshList = () => {
 
+        this.setState({ isAccountRequired: false });
+        this.setState({ isVisbleShoppingList: false })
+
         let userToken = this.state.userToken;
 
-        this.props.dispatch(fetchListAction(userToken)).then(res => {
-
+        if (userToken === "null") {
+            this.showAccountRequiredError();
             this.setState({ isLoadingText: false })
-        });
+
+
+        } else {
+
+            this.props.dispatch(fetchListAction(userToken)).then(res => {
+
+                this.setState({ isLoadingText: false });
+                this.setState({ isVisbleShoppingList: true })
+            }).catch(err => {
+
+                this.setState({ isLoadingText: false });
+                this.setState({ isVisbleShoppingList: false })
+                this.showShoppingListError();
+                console.log(err);
+
+            });
+
+        }
+
+    }
+
+    showAccountRequiredError = () => {
+
+        this.setState({ isAccountRequired: true });
+
+    }
+
+    showShoppingListError = () => {
 
     }
 
@@ -84,18 +116,24 @@ class ScreenShoppingList extends Component {
         return parcelID
     }
 
-    getMerchantNameAddress = (deliveryMethod) =>{
+    getMerchantNameAddress = (deliveryMethod) => {
         let merchantNameAddress = "";
         deliveryMethod === "PICKUP" ? merchantNameAddress = "At: Mattoris Supermarket - 25 Alh. Mudashiru Eletu Way, Lekki Penninsula II, Lagos" : merchantNameAddress = "By: Vendee";
         return merchantNameAddress;
     }
 
+    gotoSignScreen = () => {
+        this.props.navigation.push("Login");
+    }
 
+    gotoIntroScreen = () => {
+        this.props.navigation.push("Intro");
+    }
 
 
     _renderShoppingList = ({ item }) => (
 
-        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} shippingMethod={item.deliveryMethod}  merchantNameAddress={this.getMerchantNameAddress(item.deliveryMethod)}orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
+        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} shippingMethod={item.deliveryMethod} merchantNameAddress={this.getMerchantNameAddress(item.deliveryMethod)} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
 
@@ -118,14 +156,32 @@ class ScreenShoppingList extends Component {
                             {this.state.isLoadingText &&
                                 <Text>Loading ...</Text>
                             }
-                            <ScrollView>
-                                <FlatList
-                                    data={this.props.shoppingList}
-                                    extraData={this.props}
-                                    keyExtractor={item => item._id}
-                                    renderItem={this._renderShoppingList}
-                                />
-                            </ScrollView>
+                            {this.state.isAccountRequired &&
+
+                                <View>
+                                    <Text>You need an account to use this feature</Text>
+                                    <TouchableOpacity style={styles.tabbedButton} onPress={() => this.gotoIntroScreen()}>
+                                        <Text style={styles.tabbedButtonText}>CREATE AN ACCOUNT</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.tabbedButton} onPress={() => this.gotoSignScreen()}>
+                                        <Text style={styles.tabbedButtonText}>LOGIN</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            }
+
+                            {
+                                this.state.isVisbleShoppingList &&
+                                <ScrollView>
+                                    <FlatList
+                                        data={this.props.shoppingList}
+                                        extraData={this.props}
+                                        keyExtractor={item => item._id}
+                                        renderItem={this._renderShoppingList}
+                                    />
+                                </ScrollView>
+                            }
+
                         </View>
                     </View>
                 </View>
