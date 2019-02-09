@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     introCardSubtitle: {
         color: GrayDarkText,
         fontFamily: Fonts.MPLUSRegular,
-        fontSize: 16,
+        fontSize: 14,
         marginBottom: 16
     },
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 
     introSucessImage: {
         marginTop: 40,
-        marginBottom: 40,
+        marginBottom: 20,
         width: 150,
         height: 150,
         resizeMode: "contain"

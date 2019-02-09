@@ -966,7 +966,7 @@ export const promisedAddToCartAction = (userToken, shippingMethod, convenience, 
 
 
 
-export const createOrderAction = (userToken) => (dispatch) =>
+export const createOrderAction = (userToken, payref) => (dispatch) =>
     new Promise(function (resolve, reject) {
         dispatch(createOrderStartedAction());
 
@@ -976,7 +976,7 @@ export const createOrderAction = (userToken) => (dispatch) =>
             }
         }
 
-        axios.get(`${BASE_URL}/orders/create`,
+        axios.get(`${BASE_URL}/orders/create?payref=${payref}`,
             config
         )
             .then(res => {

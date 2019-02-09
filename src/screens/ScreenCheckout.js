@@ -388,7 +388,9 @@ class ScreenCheckout extends Component {
 
     createOrder = (userToken) => {
 
-        this.props.dispatch(createOrderAction(userToken)).then(res => {
+        let reference = this.props.chargeResponse.data.card.reference
+
+        this.props.dispatch(createOrderAction(userToken, reference)).then(res => {
 
             this.hidePreloader();
             this.gotoSuccessPage();
