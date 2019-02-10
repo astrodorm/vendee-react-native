@@ -830,7 +830,7 @@ class ScreenCheckout extends Component {
         cvv === "" ? this.showErrorDialog("Invalid Card CVV Number") : null;
         expiryMonth === "" ? this.showErrorDialog("Invalid Card Expiry Month") : null;
         expiryYear === "" ? this.showErrorDialog("Invalid Card Expiry Year") : null;
-        password === "GENERIC" ? this.showErrorDialog("You are required to update your password") : null;
+        password === "GENERIC" || password  === "" ? this.showErrorDialog("You are required to update your password") : null;
 
 
         this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === true && address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
