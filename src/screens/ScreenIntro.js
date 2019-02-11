@@ -289,7 +289,7 @@ class ScreenIntro extends Component {
                                                 </View>
                                                 <View style={styles.introCardInputField}>
                                                     <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
-                                                    <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput} keyboardType="number-pad"></TextInput>
+                                                    <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput}></TextInput>
                                                     <TouchableOpacity onPress={() => { Linking.openURL('https://docs.google.com/document/d/1JMjjphorhFhjBKQ5DGjE5p77qJ6BAb675BIQqkznid0/edit?usp=sharing') }}>
                                                         <Text style={styles.smallText}> By signing up, you agree to our Terms and Privacy Policy</Text>
                                                     </TouchableOpacity>

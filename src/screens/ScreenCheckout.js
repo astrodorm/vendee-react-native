@@ -1227,7 +1227,7 @@ class ScreenCheckout extends Component {
                         this.props.isVisibleAddTelephoneManager &&
                         <View>
                             <View>
-                                <TextInput style={styles.textInput} placeholder="Enter Phone Number" onChangeText={this.handlePhone} keyboardType="number-pad" />
+                                <TextInput style={styles.textInput} placeholder="Enter Phone Number" onChangeText={this.handlePhone} />
                             </View>
                             <View style={styles.buttonGroup}>
                                 <ButtonPrimaryAccent title="UPDATE PHONE" isActive={true} onSelected={this.updatePhoneNumber} />
@@ -1239,10 +1239,10 @@ class ScreenCheckout extends Component {
                         this.props.isVisibleAddCardManager &&
                         <View>
                             <View>
-                                <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={this.handleCardNumber} keyboardType="number-pad" />
-                                <TextInput style={styles.textInput} placeholder="Exp. Month" onChangeText={this.handleMonth} keyboardType="number-pad" />
-                                <TextInput style={styles.textInput} placeholder="Exp. Year" onChangeText={this.handleYear} keyboardType="number-pad" />
-                                <TextInput style={styles.textInput} placeholder="CVV Code" onChangeText={this.handleCVC} keyboardType="number-pad" />
+                                <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={this.handleCardNumber}/>
+                                <TextInput style={styles.textInput} placeholder="Exp. Month" onChangeText={this.handleMonth} />
+                                <TextInput style={styles.textInput} placeholder="Exp. Year" onChangeText={this.handleYear} />
+                                <TextInput style={styles.textInput} placeholder="CVV Code" onChangeText={this.handleCVC} />
                             </View>
                             <View style={styles.buttonGroup}>
                                 <ButtonPrimaryAccent title="ADD CARD" isActive={true} onSelected={this.updateCard} />
@@ -1305,7 +1305,7 @@ class ScreenCheckout extends Component {
                             {
                                 this.state.isSignUpView &&
                                 <View>
-                                    <TextInput style={styles.textInput} placeholder="Phone Number" onChangeText={this.handlePhone} keyboardType="number-pad"></TextInput>
+                                    <TextInput style={styles.textInput} placeholder="Phone Number" onChangeText={this.handlePhone}></TextInput>
                                     <ButtonPrimaryAccent title="CREATE ACCOUNT" isActive={true} onSelected={this.signUpUser} />
                                 </View>
 
