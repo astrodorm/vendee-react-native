@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: fullHeight,
         alignItems: "center",
+        width : fullWidth
     },
 
     introHeader: {

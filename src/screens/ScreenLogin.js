@@ -125,9 +125,11 @@ class ScreenProfile extends Component {
 
     render() {
         return (
-            <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
-                <View style={styles.AppContainer}>
-                    <View style={styles.AppMain}>
+            <View style={styles.AppContainer}>
+                <View style={styles.AppMain}>
+
+                    <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
+
                         <View style={styles.LoginScreen}>
                             <View>
                                 <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
@@ -156,9 +158,11 @@ class ScreenProfile extends Component {
                             }
                             <ButtonPrimaryAccent title="SIGN IN" icon="login" isActive={true} onSelected={this.validateParams} />
                         </View>
-                    </View>
+
+                    </KeyboardAvoidingView>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
+
         );
     }
 }

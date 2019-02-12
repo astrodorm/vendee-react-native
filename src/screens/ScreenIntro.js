@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Animated, TextInput, TouchableOpacity, AsyncStorage, Linking } from 'react-native';
+import { Text, View, Image, Animated, TextInput, TouchableOpacity, AsyncStorage, Linking, KeyboardAvoidingView } from 'react-native';
 import { styles } from '../styles/styles';
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
@@ -243,114 +243,119 @@ class ScreenIntro extends Component {
         return (
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
-                    <View>
-                        <Animatable.Image ref={this.handleRefBackgroundImage} style={styles.introBackgroundImage} source={require('../../assets/images/bg-main.png')} />
-                        <Animated.View style={[styles.introBackgroundOverlay, animatedStyle]} />
-                    </View>
-                    <View style={styles.introContent}>
+                    <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', }} behavior="padding">
+                        <View>
+                            <View>
+                                <Animatable.Image ref={this.handleRefBackgroundImage} style={styles.introBackgroundImage} source={require('../../assets/images/bg-main.png')} />
+                                <Animated.View style={[styles.introBackgroundOverlay, animatedStyle]} />
+                            </View>
+                            <View style={styles.introContent}>
 
-                        {
-                            this.state.showIntroHeader &&
-                            <Animatable.View ref={this.handleRefHeaderContents}>
-                                <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
-                                <Text style={styles.introHeader}>We brought it closer to you</Text>
-                                <Text style={styles.introSubtitle}>Now Quicker and Cheaper !</Text>
-                            </Animatable.View>
-                        }
-                        {
-                            this.state.showIntroButtons &&
-                            <Animatable.View ref={this.handleRefButtonContents}>
-                                <TouchableOpacity onPress={this.animateToPhoneNumberView}>
-                                    <Text style={styles.buttonPrimary}> SIGN UP</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.gotoSignScreen}>
-                                    <Text style={styles.buttonSecondary}> SIGN IN </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.skipSignUpAndLogin}>
-                                    <Text style={styles.buttonSecondary}> I'LL DO THIS LATER </Text>
-                                </TouchableOpacity>
-                            </Animatable.View>
-                        }
+                                {
+                                    this.state.showIntroHeader &&
+                                    <Animatable.View ref={this.handleRefHeaderContents}>
+                                        <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
+                                        <Text style={styles.introHeader}>We brought it closer to you</Text>
+                                        <Text style={styles.introSubtitle}>Now Quicker and Cheaper !</Text>
+                                    </Animatable.View>
+                                }
+                                {
+                                    this.state.showIntroButtons &&
+                                    <Animatable.View ref={this.handleRefButtonContents}>
+                                        <TouchableOpacity onPress={this.animateToPhoneNumberView}>
+                                            <Text style={styles.buttonPrimary}> SIGN UP</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={this.gotoSignScreen}>
+                                            <Text style={styles.buttonSecondary}> SIGN IN </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={this.skipSignUpAndLogin}>
+                                            <Text style={styles.buttonSecondary}> I'LL DO THIS LATER </Text>
+                                        </TouchableOpacity>
+                                    </Animatable.View>
+                                }
 
-                        {
-                            this.state.showIntroCards &&
-                            <Animatable.View >
-                                <View style={styles.introCards}>
-                                    <View>
+                                {
+                                    this.state.showIntroCards &&
+                                    <Animatable.View >
+                                        <View style={styles.introCards}>
+                                            <View>
 
 
-                                        {/* PHONE-NUMBER INTRO */}
-                                        {this.state.showIntroPhoneNumber &&
-                                            <Animatable.View ref={this.handleRefIntroPhoneNumber}>
-                                                <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
-                                                <View>
-                                                    <Text style={styles.introCardHeader}>Hey,</Text>
-                                                    <Text style={styles.introCardHeader}>you look good.</Text>
-                                                </View>
-                                                <View style={styles.introCardInputField}>
-                                                    <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
-                                                    <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput}></TextInput>
-                                                    <TouchableOpacity onPress={() => { Linking.openURL('https://docs.google.com/document/d/1JMjjphorhFhjBKQ5DGjE5p77qJ6BAb675BIQqkznid0/edit?usp=sharing') }}>
-                                                        <Text style={styles.smallText}> By signing up, you agree to our Terms and Privacy Policy</Text>
-                                                    </TouchableOpacity>
-                                                </View>
-                                                {this.state.showTelephoneError &&
-                                                    <InlineError message="* Invalid Phone Number" />
+                                                {/* PHONE-NUMBER INTRO */}
+                                                {this.state.showIntroPhoneNumber &&
+                                                    <Animatable.View ref={this.handleRefIntroPhoneNumber}>
+                                                        <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
+                                                        <View>
+                                                            <Text style={styles.introCardHeader}>Hey,</Text>
+                                                            <Text style={styles.introCardHeader}>you look good.</Text>
+                                                        </View>
+                                                        <View style={styles.introCardInputField}>
+                                                            <Text style={styles.introCardSubtitle}>Can I have your number ?</Text>
+                                                            <TextInput onChangeText={this.handleTelephone} style={styles.introCardInput}></TextInput>
+                                                            <TouchableOpacity onPress={() => { Linking.openURL('https://docs.google.com/document/d/1JMjjphorhFhjBKQ5DGjE5p77qJ6BAb675BIQqkznid0/edit?usp=sharing') }}>
+                                                                <Text style={styles.smallText}> By signing up, you agree to our Terms and Privacy Policy</Text>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                        {this.state.showTelephoneError &&
+                                                            <InlineError message="* Invalid Phone Number" />
+                                                        }
+                                                    </Animatable.View>}
+
+
+                                                {/* EMAIL INTRO */}
+                                                {this.state.showIntroEmail &&
+                                                    <Animatable.View ref={this.handleRefIntroEmail}>
+                                                        <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
+                                                        <View>
+                                                            <Text style={styles.introCardHeader}>Also,</Text>
+                                                            <Text style={styles.introCardHeader}>your email too.</Text>
+                                                        </View>
+                                                        <View style={styles.introCardInputField}>
+                                                            <Text style={styles.introCardSubtitle}>Enter email address here</Text>
+                                                            <TextInput onChangeText={this.handleEmail} style={styles.introCardInput} keyboardType="email-address" editable={this.state.isEditable}></TextInput>
+                                                        </View>
+                                                        {this.state.showEmailError &&
+                                                            <InlineError message="* Invalid Email Address" />
+                                                        }
+                                                        {
+                                                            this.props.isCreatingUser &&
+                                                            <View style={styles.inlinePreloader}>
+                                                                <Progress.CircleSnail color={['#f44950']} duration={400} size={32} />
+                                                            </View>
+                                                        }
+                                                        {this.props.isCreateUserError &&
+                                                            <InlineError message={this.props.responseMessage} />
+                                                        }
+
+                                                    </Animatable.View>
                                                 }
-                                            </Animatable.View>}
 
-
-                                        {/* EMAIL INTRO */}
-                                        {this.state.showIntroEmail &&
-                                            <Animatable.View ref={this.handleRefIntroEmail}>
-                                                <Image style={styles.introImage} source={require('../../assets/images/vendee-logo48.png')} />
-                                                <View>
-                                                    <Text style={styles.introCardHeader}>Also,</Text>
-                                                    <Text style={styles.introCardHeader}>your email too.</Text>
-                                                </View>
-                                                <View style={styles.introCardInputField}>
-                                                    <Text style={styles.introCardSubtitle}>Enter email address here</Text>
-                                                    <TextInput onChangeText={this.handleEmail} style={styles.introCardInput} keyboardType="email-address" editable={this.state.isEditable}></TextInput>
-                                                </View>
-                                                {this.state.showEmailError &&
-                                                    <InlineError message="* Invalid Email Address" />
+                                                {/* SUCCESS SIGNED UP */}
+                                                {this.state.showIntroSuccess &&
+                                                    <Animatable.View ref={this.handleRefIntroSuccess}>
+                                                        <View style={styles.centerView}>
+                                                            <Image style={styles.introSucessImage} source={require('../../assets/images/icon-good.png')} />
+                                                        </View>
+                                                        <View style={styles.centerView}>
+                                                            <Text style={styles.introCardHeader}>It's all done.</Text>
+                                                        </View>
+                                                    </Animatable.View>
                                                 }
-                                                {
-                                                    this.props.isCreatingUser &&
-                                                    <View style={styles.inlinePreloader}>
-                                                        <Progress.CircleSnail color={['#f44950']} duration={400} size={32} />
-                                                    </View>
-                                                }
-                                                {this.props.isCreateUserError &&
-                                                    <InlineError message={this.props.responseMessage} />
-                                                }
+                                            </View>
+                                        </View>
+                                        <View>
+                                            <TouchableOpacity onPress={this.animateIntroButtons}>
+                                                <Text style={styles.introCardButton}> {this.state.introButtonText}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </Animatable.View>
+                                }
+                            </View>
+                        </View>
+                    </KeyboardAvoidingView>
 
-                                            </Animatable.View>
-                                        }
-
-                                        {/* SUCCESS SIGNED UP */}
-                                        {this.state.showIntroSuccess &&
-                                            <Animatable.View ref={this.handleRefIntroSuccess}>
-                                                <View style={styles.centerView}>
-                                                    <Image style={styles.introSucessImage} source={require('../../assets/images/icon-good.png')} />
-                                                </View>
-                                                <View style={styles.centerView}>
-                                                    <Text style={styles.introCardHeader}>It's all done.</Text>
-                                                </View>
-                                            </Animatable.View>
-                                        }
-                                    </View>
-                                </View>
-                                <View>
-                                    <TouchableOpacity onPress={this.animateIntroButtons}>
-                                        <Text style={styles.introCardButton}> {this.state.introButtonText}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </Animatable.View>
-                        }
-                    </View>
                 </View>
-                <Modal
+                {/* <Modal
                     style={[styles.modal]}
                     position={"center"}
                     ref={"RefIntroModal"}
@@ -362,7 +367,7 @@ class ScreenIntro extends Component {
                     <View>
                         <Text style={styles.modalHeader}> Oops !! </Text>
                     </View>
-                </Modal>
+                </Modal> */}
             </View>
         )
     }
