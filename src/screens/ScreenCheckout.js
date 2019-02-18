@@ -767,7 +767,7 @@ class ScreenCheckout extends Component {
 
         //SAVE PASSWORD DETAILS TO THE STATE
         let password = this.state.password;
-        this.storeData(OAUTH, password);
+        this.storeData(OAUTH, password.toLowerCase());
 
         //UPDATE USER DETAILS STATE
         this.retrieveAndSetPasswordData(OAUTH);
@@ -830,10 +830,10 @@ class ScreenCheckout extends Component {
         cvv === "" ? this.showErrorDialog("Invalid Card CVV Number") : null;
         expiryMonth === "" ? this.showErrorDialog("Invalid Card Expiry Month") : null;
         expiryYear === "" ? this.showErrorDialog("Invalid Card Expiry Year") : null;
-        password === "GENERIC" || password  === "" ? this.showErrorDialog("You are required to update your password") : null;
+        password === "GENERIC" || password === "" ? this.showErrorDialog("You are required to update your password") : null;
 
 
-        this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === true && address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" ? this.updateUserProfile() : null;
+        this.validateSelectedTimeSlot(this.state.selectedMaxOrderTime) === true && address !== "" && phoneNumber !== "" && cardNumber !== "" && total !== 0 && cvv !== "" && expiryMonth !== "" && expiryYear !== "" && password !== "GENERIC" && password !== "" ? this.updateUserProfile() : null;
 
     }
 
@@ -890,7 +890,7 @@ class ScreenCheckout extends Component {
         this.showPreloader()
 
         // UNCOMMENT TO DISPATCH ACTION TO UPDATE USER
-        this.props.dispatch(updateUserAction(userToken, address, oauth)).then(res => {
+        this.props.dispatch(updateUserAction(userToken, address, oauth.toLowerCase())).then(res => {
 
             //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
             this.chargeUser();
@@ -918,8 +918,9 @@ class ScreenCheckout extends Component {
             this.hidePreloader();
 
             res.data.status === 200 ? this.prepareCart() : null;
-            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try again or try another debit car") : null;
             res.data.status === 201 ? this.showPinModal() : null;
+            res.data.status === 204 ? this.showErrorDialog("Payment gateway error. Try again or try another debit card") : null;
 
 
         }).catch(err => {
@@ -977,7 +978,7 @@ class ScreenCheckout extends Component {
         this.props.dispatch(chargeUserPinAction(userToken, reference, pin)).then(res => {
             this.hidePreloader();
             res.data.status === 200 ? this.prepareCart() : null;
-            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try again or try another debit card ") : null;
             res.data.status === 203 ? this.showOtpPhoneNumber() : null;
             res.data.status === 202 ? this.showOtpModal() : null;
 
@@ -1005,7 +1006,7 @@ class ScreenCheckout extends Component {
         this.props.dispatch(chargeUserPhoneNumberAction(userToken, reference, phoneNumber)).then(res => {
             this.hidePreloader();
             res.data.status === 200 ? this.prepareCart() : null;
-            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try again or try another debit card") : null;
             // res.data.status === 203 ? this.showOtpPhoneNumber() : null;
             res.data.status === 202 ? this.showOtpModal() : null;
 
@@ -1031,7 +1032,7 @@ class ScreenCheckout extends Component {
         this.props.dispatch(chargeUserOtpAction(userToken, reference, otp)).then(res => {
 
             res.data.status === 200 ? this.prepareCart() : null;
-            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try Again") : null;
+            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try again or try another debit card") : null;
 
         }).catch(err => {
             console.log(err);
@@ -1181,6 +1182,7 @@ class ScreenCheckout extends Component {
                                     <ShoppingListDetails total={this.getTotal()} convenienceFee={this.getConvenienceFee()} deliveryFee={this.getDeliveryFee()} grandTotal={this.getGrandTotal()} />
                                     <ButtonPrimaryAccent title="PLACE ORDER" icon="arrowright" isActive={true} onSelected={this.validateInput} />
                                 </View>
+                                <Text style={styles.smallText}>Vendee uses industry-standard encryption to protect the confidentiality of your personal information.</Text>
                             </View>
                         </View>
                     </ScrollView>
@@ -1239,7 +1241,7 @@ class ScreenCheckout extends Component {
                         this.props.isVisibleAddCardManager &&
                         <View>
                             <View>
-                                <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={this.handleCardNumber}/>
+                                <TextInput style={styles.textInput} placeholder="Card Number" onChangeText={this.handleCardNumber} />
                                 <TextInput style={styles.textInput} placeholder="Exp. Month" onChangeText={this.handleMonth} />
                                 <TextInput style={styles.textInput} placeholder="Exp. Year" onChangeText={this.handleYear} />
                                 <TextInput style={styles.textInput} placeholder="CVV Code" onChangeText={this.handleCVC} />

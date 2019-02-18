@@ -37,7 +37,7 @@ import moment from 'moment';
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload";
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
-
+const NO_IMAGE_URL = "https://vendee.sfo2.cdn.digitaloceanspaces.com/CATALOGUE/ASSETS/no-image.png";
 
 
 class SearchResult extends Component {
@@ -110,8 +110,22 @@ class SearchResult extends Component {
         //  PRODUCT DOES NOT HAVE QUANTITY IN RESPONSE DATA
         // <ProductItem key={item.} thumbnail={BASE_THUMBNAIL_URL + item.thumbnail} title={item.productName} price={item.price} isAdded={this.getIsAddedByID(item._id)} quantity={this.getListByID(item._id).quantity} onSelectItem={() => this.onSelectItem(item._id)} />
 
-        <ProductItem key={item.ITEMCODE} thumbnail={item.image} title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={this.getListByID(item.ITEMCODE).quantity} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
+        <ProductItem key={item.ITEMCODE} thumbnail={this.getImagePath(item.image)} title={this.convertToSentenceCase(item.DESCRIPTION)} price={item.SELLINGPRICE} isAdded={this.getIsAddedByID(item.ITEMCODE)} quantity={this.getListByID(item.ITEMCODE).quantity} onSelectItem={() => this.onSelectItem(item.ITEMCODE)} />
     );
+
+    getImagePath = (imageURL) => {
+
+        //DEFAULT IMAGE PATH IS TO PLACHEOLDER IMAGE
+        let imagePath = NO_IMAGE_URL;
+
+        if (imageURL !== "" && imageURL !== undefined) {
+
+            imagePath = imageURL;
+
+        }
+
+        return imagePath;
+    }
 
     retrieveAndUserTokenData = async (storageKey) => {
 
@@ -343,7 +357,7 @@ class SearchResult extends Component {
 
         let newproductsArray = [...this.props.newproducts];
         let index = newproductsArray.findIndex(x => x.ITEMCODE === id);
-        let thumbnail = newproductsArray[index].image;
+        let thumbnail = this.getImagePath(newproductsArray[index].image);
         //  let thumbnail = "http://oja.ng/wp-content/uploads/2018/05/nasco-corn-flakes-350g.jpg";
         let title = newproductsArray[index].DESCRIPTION;
         let price = newproductsArray[index].SELLINGPRICE;

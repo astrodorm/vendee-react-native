@@ -3,6 +3,7 @@ import { View, Text, Image, FlatList } from 'react-native';
 import { styles } from '../styles/styles';
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload";
+const NO_IMAGE_URL = "https://vendee.sfo2.cdn.digitaloceanspaces.com/CATALOGUE/ASSETS/no-image.png";
 
 
 class CardShoppingList extends Component {
@@ -23,6 +24,20 @@ class CardShoppingList extends Component {
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }
         );
+    }
+
+    getImagePath = (imageURL) => {
+
+        //DEFAULT IMAGE PATH IS TO PLACHEOLDER IMAGE
+        let imagePath = NO_IMAGE_URL;
+
+        if (imageURL !== "" && imageURL !== undefined) {
+
+            imagePath = imageURL;
+
+        }
+
+        return imagePath;
     }
 
     _renderShoppingListItem = ({ item }) => (
