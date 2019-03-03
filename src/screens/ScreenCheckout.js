@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RNPaystack from 'react-native-paystack';
 import { Text, View, ScrollView, TextInput, AsyncStorage, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import Collapsible from 'react-native-collapsible';
@@ -40,6 +41,7 @@ const PHONE_STORAGE_KEY = "PHONE";
 const CARD_NUMBER_STORAGE_KEY = "CARD_NUMBER";
 const USER_TOKEN_STORAGE_KEY = "USER_TOKEN";
 const EMAIL_STORAGE_KEY = "EMAIL";
+const PAYSTACK_PUBLIC_LIVE_KEY = "pk_live_58d5e909e20bc3edd2d2130d68bc667944c7683c";
 
 
 
@@ -80,10 +82,15 @@ class ScreenCheckout extends Component {
         //SET VISIBLE TIME SLOT GROUP
         this.setVisibleTimeSlotGroup();
 
+        //RETRIEVE AND SET EMAIL
+        this.retrieveAndSetEmail(EMAIL_STORAGE_KEY);
+
     }
 
 
     constructor(props) {
+        RNPaystack.init({ publicKey: PAYSTACK_PUBLIC_LIVE_KEY });
+
         super(props)
 
         this.state = {
@@ -140,7 +147,8 @@ class ScreenCheckout extends Component {
             isSignUpView: true,
             isVisibleAccountMessage: false,
             isVisibleAccountSetup: true,
-            accountMessage: ""
+            accountMessage: "",
+            transactionReference: ""
         }
     }
 
@@ -366,7 +374,7 @@ class ScreenCheckout extends Component {
 
 
     addToCart = (userToken, shippingMethod, convenienceFee, deliveryFee, timeSlot, total, cartArray) => {
-        this.showPreloader();
+        // this.showPreloader();
 
 
         this.props.dispatch(promisedAddToCartAction(userToken, shippingMethod, convenienceFee, deliveryFee, timeSlot, total, cartArray)).then(res => {
@@ -388,8 +396,8 @@ class ScreenCheckout extends Component {
 
     createOrder = (userToken) => {
 
-        let reference = this.props.chargeResponse.data.card.reference
-
+        // let reference = this.props.chargeResponse.data.card.reference
+        let reference = this.state.transactionReference;
         this.props.dispatch(createOrderAction(userToken, reference)).then(res => {
 
             this.hidePreloader();
@@ -750,6 +758,21 @@ class ScreenCheckout extends Component {
 
     }
 
+    retrieveAndSetEmail = async (storageKey) => {
+
+        try {
+            const value = await AsyncStorage.getItem(storageKey);
+            if (value !== null) {
+
+                this.setState({ email: value });
+
+            }
+        } catch (error) {
+            // Error retrieving data
+            console.log(error)
+        }
+    }
+
     updateAddress = () => {
 
         //SAVE ADDRESS  DETAILS TO THE STATE
@@ -893,44 +916,81 @@ class ScreenCheckout extends Component {
         this.props.dispatch(updateUserAction(userToken, address, oauth.toLowerCase())).then(res => {
 
             //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
-            this.chargeUser();
+           // this.chargeUser();
+           this.chargeCardWithPaystack();
 
         });
 
         //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
-        this.chargeUser();
+        // this.chargeUser();
+       // this.chargeCardWithPaystack();
 
     }
 
-    chargeUser = () => {
+    // chargeUser = () => {
 
-        //  let amount = this.getUnformattedGrandTotalKobo();
+    //     //  let amount = this.getUnformattedGrandTotalKobo();
+    //     let amount = this.convertToKobo(this.getGrandTotal())
+    //     let number = this.state.cardNumber;
+    //     let cvv = this.state.cardCVV;
+    //     let expiry_month = this.state.expiryMonth;
+    //     let expiry_year = this.state.expiryYear;
+    //     let userToken = this.state.userToken;
+
+
+    //     this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year)).then(res => {
+
+    //         this.hidePreloader();
+
+    //         res.data.status === 200 ? this.prepareCart() : null;
+    //         res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try again or try another debit car") : null;
+    //         res.data.status === 201 ? this.showPinModal() : null;
+    //         res.data.status === 204 ? this.showErrorDialog("Payment gateway error. Try again or try another debit card") : null;
+
+
+    //     }).catch(err => {
+    //         console.log(err);
+    //         this.hidePreloader();
+    //         this.showErrorDialog(this.props.chargeResponse.error.data.message);
+    //     });
+
+
+
+    // }
+
+    chargeCardWithPaystack = () => {
+
         let amount = this.convertToKobo(this.getGrandTotal())
         let number = this.state.cardNumber;
         let cvv = this.state.cardCVV;
         let expiry_month = this.state.expiryMonth;
         let expiry_year = this.state.expiryYear;
-        let userToken = this.state.userToken;
+        let email = this.state.email;
 
 
-        this.props.dispatch(chargeUserAction(userToken, amount, number, cvv, expiry_month, expiry_year)).then(res => {
+        RNPaystack.chargeCard({
+            cardNumber: number,
+            expiryMonth: expiry_month,
+            expiryYear: expiry_year,
+            cvc: cvv,
+            email: email,
+            amountInKobo: amount,
+            // subAccount: 'ACCT_pz61jjjsslnx1d9',
+        })
+            .then(response => {
+                console.log(response); // card charged successfully, get reference here
 
-            this.hidePreloader();
-
-            res.data.status === 200 ? this.prepareCart() : null;
-            res.data.status === 500 ? this.showErrorDialog("Payment gateway error. Try again or try another debit car") : null;
-            res.data.status === 201 ? this.showPinModal() : null;
-            res.data.status === 204 ? this.showErrorDialog("Payment gateway error. Try again or try another debit card") : null;
-
-
-        }).catch(err => {
-            console.log(err);
-            this.hidePreloader();
-            this.showErrorDialog(this.props.chargeResponse.error.data.message);
-        });
-
-
-
+                this.setState({ transactionReference: response.reference }, () => {
+                    this.prepareCart();
+                })
+            })
+            .catch(error => {
+                console.log(error); // error is a javascript Error object
+                console.log(error.message);
+                console.log(error.code);
+                this.hidePreloader();
+                this.showErrorDialog("Ensure your card details are correct and Try Again." + error.message);
+            })
     }
 
     validateCardPin = () => {

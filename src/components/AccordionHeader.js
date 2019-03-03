@@ -14,7 +14,7 @@ const ButtonDone = (props) => {
                         <Text style={styles.AccordionHeaderSubtitle}>{props.subtitle}</Text>
                     </View>
                     <View>
-                        <Icon name="down" color="#efefef" size={20} />
+                        <Icon name="down" color="#afafaf" size={20} />
                     </View>
                 </View>
             </TouchableOpacity>

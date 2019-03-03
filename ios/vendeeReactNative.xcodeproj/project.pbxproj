@@ -55,6 +55,7 @@
 		60FB637D7E9B4255966A3E97 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD359C8CE91845FAA43FEFFD /* Foundation.ttf */; };
 		6C9612788CE343C6931451AC /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3581C763DF8420395B1133F /* libRNVectorIcons-tvOS.a */; };
 		75247F4D9FFC4228BB8FB569 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2203EFAD4F946B99EA402CD /* Feather.ttf */; };
+		79B4123CF76A45908C2904B5 /* libRNPaystack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B481738DE4544E882609B3E /* libRNPaystack.a */; };
 		7D2F652A8E104ADBBDBA6727 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 277AC42FAE3D4F86A7CA2E9A /* Zocial.ttf */; };
 		7D867453A94A4ABDA9F2DA46 /* MPLUSRounded1c-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 533AF37D4DE348BABF0F5BEE /* MPLUSRounded1c-Black.ttf */; };
 		812636839687478BBDDA7469 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D67ED061B7AF4560825B32FC /* EvilIcons.ttf */; };
@@ -73,6 +74,7 @@
 		EDBAF9C8177C4662B7E0D8E8 /* JosefinSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 215AAEA04DF6459EAB07CA6F /* JosefinSans-Light.ttf */; };
 		FB0B165FDB7C43DA84699AA7 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B9C0A29E9E3468E85F52D4E /* MaterialCommunityIcons.ttf */; };
 		FEC170001954471FB0634BAD /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10839026A853443A8572ADC1 /* AntDesign.ttf */; };
+		FF75767E71279D3578A5EC17 /* libPods-vendeeReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ECE0CE16FE2A0D564DA91BF /* libPods-vendeeReactNative.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +239,13 @@
 			remoteGlobalIDString = 323A12871E5F266B004975B8;
 			remoteInfo = "ART-tvOS";
 		};
+		2E76C3522225F5DC004FA2D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB065B6D8D2B4A07A007C686 /* RNPaystack.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNPaystack;
+		};
 		2E98069121FA5C0700DAA550 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8817D65FF172431891FDA92B /* RNVectorIcons.xcodeproj */;
@@ -390,6 +399,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* vendeeReactNativeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vendeeReactNativeTests.m; sourceTree = "<group>"; };
 		0217D531D39541BDB6D542AB /* JosefinSans-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-Thin.ttf"; path = "../assets/fonts/JosefinSans-Thin.ttf"; sourceTree = "<group>"; };
+		04CE0244258FCD43546F6018 /* libPods-vendeeReactNative-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vendeeReactNative-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04FD05DE345D4A30A681F02B /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		0F829F4985164A8482FA7028 /* MPLUSRounded1c-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MPLUSRounded1c-Medium.ttf"; path = "../assets/fonts/MPLUSRounded1c-Medium.ttf"; sourceTree = "<group>"; };
 		10839026A853443A8572ADC1 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -412,22 +422,26 @@
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D4AB8782A384380AEEAAEF4 /* JosefinSans-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-LightItalic.ttf"; path = "../assets/fonts/JosefinSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		2E40CCFB21FB36DD0098462F /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		3A491B64CC90B627D2E869E2 /* Pods-vendeeReactNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vendeeReactNative.release.xcconfig"; path = "Target Support Files/Pods-vendeeReactNative/Pods-vendeeReactNative.release.xcconfig"; sourceTree = "<group>"; };
 		3EA844708E5C4D9C8BB962F8 /* JosefinSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-SemiBold.ttf"; path = "../assets/fonts/JosefinSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		518FDA3165FC4D79828A0FFF /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		520FD2B2C54E4FD8A69999B1 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		533AF37D4DE348BABF0F5BEE /* MPLUSRounded1c-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MPLUSRounded1c-Black.ttf"; path = "../assets/fonts/MPLUSRounded1c-Black.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		6B481738DE4544E882609B3E /* libRNPaystack.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNPaystack.a; sourceTree = "<group>"; };
 		6B9C0A29E9E3468E85F52D4E /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8817D65FF172431891FDA92B /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		8955E78FA0534676A13AA7D0 /* MPLUSRounded1c-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MPLUSRounded1c-Light.ttf"; path = "../assets/fonts/MPLUSRounded1c-Light.ttf"; sourceTree = "<group>"; };
 		8FD22A0468EA429595784B3C /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-Bold.ttf"; path = "../assets/fonts/JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
+		9ECE0CE16FE2A0D564DA91BF /* libPods-vendeeReactNative.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vendeeReactNative.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF17B03CC13426AB36FED3C /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		A38021371A9544BB94AAE9D6 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-Regular.ttf"; path = "../assets/fonts/JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		AB86B1538EEB43D9A566D8CE /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B162AD2432EF45ED8FABE9E6 /* MPLUSRounded1c-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MPLUSRounded1c-Regular.ttf"; path = "../assets/fonts/MPLUSRounded1c-Regular.ttf"; sourceTree = "<group>"; };
+		BBD806146747F77D0CB655B2 /* Pods-vendeeReactNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vendeeReactNative.debug.xcconfig"; path = "Target Support Files/Pods-vendeeReactNative/Pods-vendeeReactNative.debug.xcconfig"; sourceTree = "<group>"; };
 		C03CABA39E9A4037AE6E1365 /* JosefinSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-SemiBoldItalic.ttf"; path = "../assets/fonts/JosefinSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		C3581C763DF8420395B1133F /* libRNVectorIcons-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNVectorIcons-tvOS.a"; sourceTree = "<group>"; };
 		C515B60ADFFF4000901D6147 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -440,8 +454,10 @@
 		DF96B48BCA694A0C9B7888F3 /* MPLUSRounded1c-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "MPLUSRounded1c-Bold.ttf"; path = "../assets/fonts/MPLUSRounded1c-Bold.ttf"; sourceTree = "<group>"; };
 		E2203EFAD4F946B99EA402CD /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		E81844B1C4B14072B8AC241D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		F09071E8246A6BF74C58D8FF /* libPods-vendeeReactNativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vendeeReactNativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43BAF1B841C476F8DF97B25 /* JosefinSans-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-ThinItalic.ttf"; path = "../assets/fonts/JosefinSans-ThinItalic.ttf"; sourceTree = "<group>"; };
 		F4A0932375DC4B958874E444 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		FB065B6D8D2B4A07A007C686 /* RNPaystack.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNPaystack.xcodeproj; path = "../node_modules/react-native-paystack/ios/RNPaystack.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +487,8 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				09575D9255B54ADAB8BCD1F1 /* libRNVectorIcons.a in Frameworks */,
+				79B4123CF76A45908C2904B5 /* libRNPaystack.a in Frameworks */,
+				FF75767E71279D3578A5EC17 /* libPods-vendeeReactNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +576,15 @@
 				00E356F11AD99517003FC87E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0760F321CEA275C6B9BBFABC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BBD806146747F77D0CB655B2 /* Pods-vendeeReactNative.debug.xcconfig */,
+				3A491B64CC90B627D2E869E2 /* Pods-vendeeReactNative.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		0D0E68E6513840F882DDAF39 /* Resources */ = {
@@ -660,6 +687,9 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				9ECE0CE16FE2A0D564DA91BF /* libPods-vendeeReactNative.a */,
+				04CE0244258FCD43546F6018 /* libPods-vendeeReactNative-tvOSTests.a */,
+				F09071E8246A6BF74C58D8FF /* libPods-vendeeReactNativeTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -673,11 +703,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2E76C3282225F5DC004FA2D0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E76C3532225F5DC004FA2D0 /* libRNPaystack.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2E98066721FA5C0000DAA550 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				520FD2B2C54E4FD8A69999B1 /* libRNVectorIcons.a */,
 				C3581C763DF8420395B1133F /* libRNVectorIcons-tvOS.a */,
+				6B481738DE4544E882609B3E /* libRNPaystack.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -726,6 +765,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				8817D65FF172431891FDA92B /* RNVectorIcons.xcodeproj */,
+				FB065B6D8D2B4A07A007C686 /* RNPaystack.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -749,6 +789,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				0D0E68E6513840F882DDAF39 /* Resources */,
 				2E98066721FA5C0000DAA550 /* Recovered References */,
+				0760F321CEA275C6B9BBFABC /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -800,10 +841,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "vendeeReactNative" */;
 			buildPhases = (
+				A49E6F196DCFDC5F1FB6292C /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				51087FD1B1B2C9945412E7A1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -940,6 +983,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 2E76C3282225F5DC004FA2D0 /* Products */;
+					ProjectRef = FB065B6D8D2B4A07A007C686 /* RNPaystack.xcodeproj */;
 				},
 				{
 					ProductGroup = 2E98068D21FA5C0700DAA550 /* Products */;
@@ -1102,6 +1149,13 @@
 			fileType = archive.ar;
 			path = "libART-tvOS.a";
 			remoteRef = 2E40CD0221FB36DD0098462F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2E76C3532225F5DC004FA2D0 /* libRNPaystack.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNPaystack.a;
+			remoteRef = 2E76C3522225F5DC004FA2D0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2E98069221FA5C0700DAA550 /* libRNVectorIcons.a */ = {
@@ -1341,6 +1395,116 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		51087FD1B1B2C9945412E7A1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-vendeeReactNative/Pods-vendeeReactNative-resources.sh",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_amex.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_amex@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_amex@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_cvc.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_cvc@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_cvc@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_cvc_amex.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_cvc_amex@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_cvc_amex@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_diners.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_diners@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_diners@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_discover.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_discover@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_discover@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_jcb.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_jcb@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_jcb@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_mastercard.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_mastercard@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_mastercard@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_placeholder.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_placeholder@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_placeholder@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_placeholder_template.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_placeholder_template@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_placeholder_template@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_verve.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_verve@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_verve@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_visa.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_visa@2x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images/pstck_card_visa@3x.png",
+				"${PODS_ROOT}/Paystack/Paystack/Resources/Images",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_amex.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_amex@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_amex@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_cvc.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_cvc@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_cvc@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_cvc_amex.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_cvc_amex@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_cvc_amex@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_diners.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_diners@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_diners@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_discover.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_discover@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_discover@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_jcb.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_jcb@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_jcb@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_mastercard.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_mastercard@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_mastercard@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_placeholder.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_placeholder@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_placeholder@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_placeholder_template.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_placeholder_template@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_placeholder_template@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_verve.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_verve@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_verve@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_visa.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_visa@2x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/pstck_card_visa@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Images",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-vendeeReactNative/Pods-vendeeReactNative-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A49E6F196DCFDC5F1FB6292C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-vendeeReactNative-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1417,12 +1581,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = vendeeReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1444,12 +1610,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = vendeeReactNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1465,6 +1633,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BBD806146747F77D0CB655B2 /* Pods-vendeeReactNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1473,6 +1642,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = vendeeReactNative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1489,6 +1659,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A491B64CC90B627D2E869E2 /* Pods-vendeeReactNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1496,6 +1667,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = vendeeReactNative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1525,11 +1697,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = "vendeeReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1560,11 +1734,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = "vendeeReactNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1594,11 +1770,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = "vendeeReactNative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1628,11 +1806,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-paystack/ios",
 				);
 				INFOPLIST_FILE = "vendeeReactNative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);

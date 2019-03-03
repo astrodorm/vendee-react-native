@@ -1268,10 +1268,10 @@ const styles = StyleSheet.create({
 
     TimeSlot: {
         // backgroundColor : GrayDarkText,
-        width: 150,
+        width: 130,
         paddingBottom: 16,
-        paddingLeft: 8,
-        paddingRight: 8,
+        paddingLeft: 4,
+        paddingRight: 4,
         paddingTop: 16,
         borderRadius: 4,
         marginLeft: 8,

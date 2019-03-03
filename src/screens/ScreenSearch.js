@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import RNPaystack from 'react-native-paystack';
 import { Text, View, Image, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from '../styles/styles';
 import SearchResult from '../components/SearchResult';
@@ -8,6 +9,8 @@ import Modal from 'react-native-modalbox';
 import ButtonSecondaryAccent from '../components/ButtonSecondaryAccent';
 import Icon from 'react-native-vector-icons/AntDesign';
 import * as Progress from 'react-native-progress';
+
+//const PAYSTACK_PUBLIC_LIVE_KEY = "pk_live_58d5e909e20bc3edd2d2130d68bc667944c7683c";
 
 
 class ScreenSearch extends Component {
@@ -21,6 +24,8 @@ class ScreenSearch extends Component {
 
 
     constructor(props) {
+     //   RNPaystack.init({ publicKey: PAYSTACK_PUBLIC_LIVE_KEY });
+
         super(props);
 
         this.state = {
@@ -102,6 +107,26 @@ class ScreenSearch extends Component {
 
     }
 
+    // chargeCardWithPaystack = () => {
+    //     RNPaystack.chargeCard({
+    //         cardNumber: '5366131716626643',
+    //         expiryMonth: '01',
+    //         expiryYear: '21',
+    //         cvc: '161',
+    //         email: 'yourvendee@gmail.com',
+    //         amountInKobo: 100,
+    //        // subAccount: 'ACCT_pz61jjjsslnx1d9',
+    //     })
+    //         .then(response => {
+    //             console.log(response); // card charged successfully, get reference here
+    //         })
+    //         .catch(error => {
+    //             console.log(error); // error is a javascript Error object
+    //             console.log(error.message);
+    //             console.log(error.code);
+    //         })
+    // }
+
 
 
     render() {
@@ -135,6 +160,9 @@ class ScreenSearch extends Component {
                                             }
                                         </TouchableOpacity>
                                     </View>
+                                    {/* <TouchableOpacity>
+                                        <Text onPress={() => this.chargeCardWithPaystack()}>Test Pay with paystack</Text>
+                                    </TouchableOpacity> */}
                                 </View>
                             </View>
                         </KeyboardAvoidingView>
