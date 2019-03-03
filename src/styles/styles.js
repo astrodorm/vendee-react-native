@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: fullHeight,
         alignItems: "center",
-        width : fullWidth
+        width: fullWidth
     },
 
     introHeader: {
@@ -1296,20 +1296,30 @@ const styles = StyleSheet.create({
         borderColor: lightGrayTheme,
     },
 
-    tabbedButtonViewGroup:{
-        flexDirection:"row",
-        justifyContent : "space-between"
+    tabbedButtonViewGroup: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
 
-    tabbedButton:{
-        padding:16,
-        marginTop :8
+    tabbedButton: {
+        padding: 16,
+        marginTop: 8
     },
 
-    tabbedButtonText:{
-        textDecorationLine:"underline",
+    tabbedButtonText: {
+        textDecorationLine: "underline",
         fontFamily: Fonts.MPLUSMedium,
-        color:GrayDarkText
+        color: GrayDarkText
+    },
+
+    dropdownContainer: {
+        padding: 6,
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        flexDirection: "row",
+        backgroundColor: "#D5D4D4",
+        borderRadius: 6
     }
 
 });
