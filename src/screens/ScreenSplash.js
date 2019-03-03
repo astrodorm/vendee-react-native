@@ -94,7 +94,7 @@ class ScreenCategory extends Component {
                 console.log("error:", error.message);
                 this.showGeolocationError();
             },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+            //{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
         );
     }
 
