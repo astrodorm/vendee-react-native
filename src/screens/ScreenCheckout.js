@@ -385,7 +385,7 @@ class ScreenCheckout extends Component {
 
         }).catch(err => {
             this.hidePreloader();
-            this.showErrorDialog("Failed To Add Items. Try Again");
+            this.showErrorDialog("Failed to add items to cart. Try Again");
 
             console.log("addtoCart err");
             console.log(err);
@@ -410,7 +410,7 @@ class ScreenCheckout extends Component {
         }).catch(err => {
 
             this.hidePreloader();
-            this.showErrorDialog("Failed To Create Order. Try Again");
+            this.showErrorDialog("Failed to create order. Try Again");
 
             console.log("createOrder err");
             console.log(err);
@@ -916,14 +916,14 @@ class ScreenCheckout extends Component {
         this.props.dispatch(updateUserAction(userToken, address, oauth.toLowerCase())).then(res => {
 
             //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
-           // this.chargeUser();
-           this.chargeCardWithPaystack();
+            // this.chargeUser();
+            this.chargeCardWithPaystack();
 
         });
 
         //SKIP UPDATING USER PROFILE AND CHARGE THE USER FOR NOW
         // this.chargeUser();
-       // this.chargeCardWithPaystack();
+        // this.chargeCardWithPaystack();
 
     }
 
@@ -989,7 +989,7 @@ class ScreenCheckout extends Component {
                 console.log(error.message);
                 console.log(error.code);
                 this.hidePreloader();
-                this.showErrorDialog("Ensure your card details are correct and Try Again." + error.message);
+                this.showErrorDialog("Try Again. " + error.code + " - " + error.message);
             })
     }
 
