@@ -336,6 +336,28 @@ class ScreenCategory extends Component {
             })
         }
     }
+    prevCategoryProductItems = () => {
+
+        let cursor = this.state.cursor;
+        let startAt = 0;
+        let id = this.state.selectedCategoryItemID;
+        let pageIndex = this.state.categoryProductPageIndex;
+
+        if (cursor === 0 || pageIndex === 1) {
+            console.log("First Page");
+        } else {
+            startAt = cursor - PAGE_LIMIT;
+            pageIndex--;
+            this.setState({ categoryProductPageIndex: pageIndex }, () => {
+                this.fetchProductsByCategories(id, startAt);
+            })
+        }
+
+
+
+
+
+    }
 
     fetchProductsByCategories = (id, startAt = 0) => {
 
@@ -793,7 +815,7 @@ class ScreenCategory extends Component {
                                             <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.showCategories()} />
                                             {this.state.isVisiblePaginationControl &&
                                                 <View style={styles.paginationComponent}>
-                                                    <TouchableOpacity style={styles.paginationButton}>
+                                                    <TouchableOpacity style={styles.paginationButton} onPress={() => this.prevCategoryProductItems()}>
                                                         <Text style={styles.paginationButtonText}>Prev</Text>
                                                     </TouchableOpacity>
                                                     <TouchableOpacity style={styles.paginationButton} onPress={() => this.nextCategoryProductItems()}>
