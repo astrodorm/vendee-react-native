@@ -79,6 +79,7 @@ class ScreenShoppingList extends Component {
 
                 this.setState({ isLoadingText: false });
                 this.setState({ isVisbleShoppingList: true })
+                console.log(res);
             }).catch(err => {
 
                 this.setState({ isLoadingText: false });
@@ -133,7 +134,7 @@ class ScreenShoppingList extends Component {
 
     _renderShoppingList = ({ item }) => (
 
-        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} shippingMethod={item.deliveryMethod} merchantNameAddress={this.getMerchantNameAddress(item.deliveryMethod)} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
+        <CardShoppingList relativeTime={this.getTodaysDate(item.createdAt)} productsArray={item.productID} shippingMethod={item.deliveryMethod} deliveryTime={item.deliveryTime} merchantNameAddress={this.getMerchantNameAddress(item.deliveryMethod)} orderStatus={item.status} parcelID={this.getParcelID(item._id)} />
 
     );
 

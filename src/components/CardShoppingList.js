@@ -42,7 +42,7 @@ class CardShoppingList extends Component {
 
     _renderShoppingListItem = ({ item }) => (
         <View style={styles.CardShoppingListProductItemContainer}>
-            <Image style={styles.CardShoppingProductImage} source={{ uri: BASE_THUMBNAIL_URL + item.thumbnail }} style={{ width: 50, height: 50 }} />
+            <Image style={styles.CardShoppingProductImage} source={{ uri: this.getImagePath(item.thumbnail) }} style={{ width: 50, height: 50 }} />
             <View style={styles.CardShoppingProductDetails}>
                 <Text style={styles.ProductTitle}>{this.convertToSentenceCase(item.productName)}</Text>
                 <Text style={styles.productSubtitle}>PRICE : {this.formatPrice(item.price)} </Text>
@@ -57,7 +57,8 @@ class CardShoppingList extends Component {
             <View style={styles.CardShoppingListContainer}>
                 <View style={styles.CardShoppingListHeader}>
                     <Text style={styles.CardShoppingListTime}>{this.props.relativeTime}</Text>
-                    <Text style={styles.CardShoppingListTime}>Shipping: {this.props.shippingMethod}</Text>
+                    <Text style={styles.CardShoppingListTime}>Shipping Method: {this.props.shippingMethod}</Text>
+                    <Text style={styles.CardShoppingListTime}>Time Slot: {this.props.deliveryTime}</Text>
                     <Text style={styles.CardShoppingListTime}>{this.props.merchantNameAddress}</Text>
                 </View>
                 <View style={styles.CardShoppingListProductContainer}>

@@ -1029,7 +1029,8 @@ const styles = StyleSheet.create({
     CardShoppingListProductItemContainer: {
         flexDirection: "row",
         paddingTop: 24,
-        paddingBottom: 24
+        paddingBottom: 24,
+        //height:100
 
     },
 
@@ -1183,7 +1184,8 @@ const styles = StyleSheet.create({
     },
 
     shoppingListMainContainer: {
-        marginTop: 32
+        marginTop: 32,
+       // height:fullHeight
     },
 
     AppCardHeaderContainer: {
