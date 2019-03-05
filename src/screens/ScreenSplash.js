@@ -173,14 +173,14 @@ class ScreenCategory extends Component {
 
                 {this.state.isVisibleMerchantError &&
                     <View>
-                        <InlineError message={"There are no nearby merchants. Vendee is currently available in Lekki Phase 2, Lagos. By continuing, you agree that your address for pickup or delivery would be in Lekki Phase 2, Lagos."} />
+                        <InlineError message={"There are no nearby merchants. Vendee is currently available in Jakande, Lagos. By continuing, you agree that your address for pickup or delivery would be in Jakande, Lagos."} />
                         <View style={styles.headingDivider}></View>
                         <ButtonPrimaryAccent title="CHANGE LOCATION AND CONTINUE" icon="arrowright" isActive={true} onSelected={() => this.isNearbyMerchant(this.state.staticNearbyMerchantLng, this.state.staticNearbyMerchantLat)} />
                     </View>
                 }
                 {this.state.isVisibleGeolocationError &&
                     <View>
-                        <InlineError message={"Ensure your geolocation service is turned on, YourVendee is granted Location permission and you are connected to the internet."} />
+                        <InlineError message={"To use the app, please turn on your Location in the Settings menu of your device. Also, check that YourVendee is allowed to access your location and that you are connected to the internet."} />
                         <View style={styles.headingDivider}></View>
                         <ButtonPrimaryAccent title="TRY AGAIN" icon="reload1" isActive={true} onSelected={() => this.getCurrentLocation()} />
                     </View>

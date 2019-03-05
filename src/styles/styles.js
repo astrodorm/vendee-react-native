@@ -1320,7 +1320,40 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: "#D5D4D4",
         borderRadius: 6
+    },
+
+    paginationTitle: {
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 12,
+        color: GrayDarkText,
+        letterSpacing: 1
+    },
+
+    paginationButtonText: {
+        fontFamily: Fonts.MPLUSMedium,
+        fontSize: 12,
+        color: navyBlueTheme2,
+        textDecorationLine: "underline",
+        letterSpacing: 1
+    },
+
+    paginationComponent: {
+        flexDirection: "row"
+    },
+
+    paginationButton: {
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingLeft: 16,
+        paddingRight: 16
+    },
+
+    categoryMenuBar: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     }
+
+
 
 });
 

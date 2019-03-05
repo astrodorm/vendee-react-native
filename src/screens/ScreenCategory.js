@@ -21,7 +21,7 @@ import moment from 'moment';
 
 const BASE_THUMBNAIL_URL = "https://api.yourvendee.com/upload";
 const NO_IMAGE_URL = "https://vendee.sfo2.cdn.digitaloceanspaces.com/CATALOGUE/ASSETS/no-image.png";
-
+const PAGE_LIMIT = 50;
 
 
 class ScreenCategory extends Component {
@@ -70,8 +70,15 @@ class ScreenCategory extends Component {
             isVisibleCategoryLoadingIndicator: true,
             isVisibleCategoryItemLoadingIndicator: true,
             newCategoryProducts: [],
+            newCategoryProductCount: 0,
             errorMessage: "",
-            isVisibleOfflineMerchantMessage: false
+            isVisibleOfflineMerchantMessage: false,
+            isVisibleCategoryPagination: false,
+            isVisiblePaginationControl: false,
+            //categoryID :"",
+            cursor: 0,
+            categoryProductPageIndex: 1
+
 
         }
     }
@@ -116,6 +123,57 @@ class ScreenCategory extends Component {
         }
 
         return imagePath;
+    }
+
+    getPagination = () => {
+        let size = this.state.newCategoryProductCount;
+        let pages = 0;
+        let limit = PAGE_LIMIT;
+        let pageIndex = this.state.categoryProductPageIndex;
+        //  let cursor = this.state.cursor;
+        let pagination = {}
+
+        pages = Math.round(size / limit);
+        // console.log("pages", pages);
+
+        if (pages === 0) {
+
+            pagination.end = 1
+        } else {
+            pagination.end = pages;
+        }
+
+        // if (cursor === 0) {
+        pagination.start = pageIndex;
+        //  }
+
+        // if (pagination.start === pagination.end) {
+
+        //     console.log("Last Page")
+        //     //REMOVE NEXT PAGINATION CONTROL
+
+        //     // pageIndex = Math.round(size / cursor);
+        //     // console.log("pageIndex", pageIndex);
+        //     // console.log("size", size);
+        //     // console.log("cursor", cursor);
+        // } else {
+        //     pageIndex++
+        //     this.setState({ categoryProductPageIndex: pageIndex }, () => {
+        //         pagination.start = pageIndex
+        //     })
+        // }
+
+
+
+        // if (pagination.start === pagination.end) {
+        //     console.log("Last Page")
+        //     //REMOVE NEXT BUTTON
+        // }
+
+        console.log("pagination", pagination)
+
+        return pagination
+
     }
 
     onSelectShoppingListItem = (id, quantity) => {
@@ -231,28 +289,104 @@ class ScreenCategory extends Component {
 
     setStateSelectedCategoryItem = (id, categoryName) => {
 
+        //MANIPULATE VIEWS
         this.setState({ selectedCategoryItemID: id, selectedCategoryName: categoryName });
         this.showCategoryProducts();
-        this.fetchProductsByCategories(id);
         this.showCategoryItemLoadingTextIndicator();
+        this.hideCategoryPagination();
+        this.resetPageIndex();
+
+        //MAKE SURE TO MANIPULATE VIEW BEFORE FETCHING DATA
+        this.fetchProductsByCategories(id);
+
     }
 
+    hideCategoryPagination = () => {
+        this.setState({ isVisibleCategoryPagination: false })
+    }
 
+    showCategoryPagination = () => {
+        this.setState({ isVisibleCategoryPagination: true })
+    }
 
-    fetchProductsByCategories = (id) => {
+    hidePaginationControl = () => {
+        this.setState({ isVisiblePaginationControl: false })
+    }
+
+    showPaginationControl = () => {
+        this.setState({ isVisiblePaginationControl: true })
+    }
+
+    resetPageIndex = () => {
+        this.setState({ categoryProductPageIndex: 1 })
+    }
+
+    nextCategoryProductItems = () => {
+        let startAt = this.state.cursor + PAGE_LIMIT;
+        let id = this.state.selectedCategoryItemID;
+        let pageIndex = this.state.categoryProductPageIndex;
+
+        if (pageIndex === this.getPagination().end) {
+            console.log("Last Page");
+            //REMOVE NEXT PAGINATION CONTROL
+        } else {
+            pageIndex++
+            this.setState({ categoryProductPageIndex: pageIndex }, () => {
+                this.fetchProductsByCategories(id, startAt);
+            })
+        }
+    }
+
+    fetchProductsByCategories = (id, startAt = 0) => {
+
+        // let startAt = 0;
+        let size = PAGE_LIMIT;
 
         //CLEAR STORED PREVIOUS DATA
         this.setState({ newCategoryProducts: [] });
+        this.setState({ newCategoryProductCount: 0 });
 
-        this.props.dispatch(fetchCategoryProductsAction(id)).then(res => {
+        //SHOW LOADING INDICATOR
+        this.showCategoryItemLoadingTextIndicator();
 
-            // console.log(res);
-            this.hideCategoryItemLoadingTextIndicator();
+        //USE CALLBACK TO ENSURE CURSOR IS SET BEFORE REQUESTING FOR A PAGE. THIS HELPS FOR PAGINATION
+        this.setState({ cursor: startAt }, () => {
 
-            //SET FRESH RETRIEVED DATA
-            this.setState({ newCategoryProducts: this.props.newCategoryProducts })
+            console.log("startAt", startAt);
+            console.log("cursor state", this.state.cursor);
+
+            this.props.dispatch(fetchCategoryProductsAction(id, startAt, size)).then(res => {
+
+                // console.log(res);
+
+                console.log("res", res);
+                this.hideCategoryItemLoadingTextIndicator();
+                this.showCategoryPagination();
+
+                // ALWAYS STORE COUNT FOR PAGINATION BEFORE SHOWING PAGINATION CONTROLS AND DISPLAYING DATA
+                this.setState({ newCategoryProductCount: res.count }, () => {
+
+                    // ONLY SHOW PAGINATION CONTROL IF NUMBER OF PAGE(S) IS GREATER THAN 1
+                    this.getPagination().end > 1 ? this.showPaginationControl() : null;
+
+                    console.log("pagination end", this.getPagination().end);
+
+                    //SET NEW DATA
+                    //this.setState({ newCategoryProducts: this.props.newCategoryProducts })
+                    this.setState({ newCategoryProducts: res.data });
+                });
+
+            });
+
 
         });
+        this.hideCategoryPagination();
+        this.hidePaginationControl();
+
+
+        // console.log("id", id);
+
+
 
     }
 
@@ -655,8 +789,25 @@ class ScreenCategory extends Component {
                                 <View>
 
                                     <View style={styles.cardPadding}>
-                                        <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.showCategories()} />
+                                        <View style={styles.categoryMenuBar}>
+                                            <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.showCategories()} />
+                                            {this.state.isVisiblePaginationControl &&
+                                                <View style={styles.paginationComponent}>
+                                                    <TouchableOpacity style={styles.paginationButton}>
+                                                        <Text style={styles.paginationButtonText}>Prev</Text>
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity style={styles.paginationButton} onPress={() => this.nextCategoryProductItems()}>
+                                                        <Text style={styles.paginationButtonText}>Next</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            }
+                                        </View>
                                         <Text style={styles.AppCardHeader}>{this.state.selectedCategoryName}</Text>
+                                        {
+                                            this.state.isVisibleCategoryPagination &&
+                                            <Text style={styles.paginationTitle}>Showing page {this.getPagination().start} of {this.getPagination().end}</Text>
+
+                                        }
                                     </View>
                                     {
                                         this.state.isVisibleCategoryItemLoadingIndicator &&
