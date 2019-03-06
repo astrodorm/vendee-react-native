@@ -102,8 +102,8 @@ android {
         applicationId "com.vendeereactnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 50
-        versionName "1.50"
+        versionCode 60
+        versionName "1.60"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
