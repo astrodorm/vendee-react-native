@@ -1197,11 +1197,11 @@ class ScreenCheckout extends Component {
                                                         <Text style={styles.TimeSlotTime}>6:30PM - 8:00PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity onPress={() => this.setActiveTimeSlot("8:00PM - 9:30PM", "9:00 PM")}>
+                                                {/* <TouchableOpacity onPress={() => this.setActiveTimeSlot("8:00PM - 9:30PM", "9:00 PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
                                                         <Text style={styles.TimeSlotTime}>8:00PM - 9:30PM</Text>
                                                     </View>
-                                                </TouchableOpacity>
+                                                </TouchableOpacity> */}
                                             </View>
 
                                         }
