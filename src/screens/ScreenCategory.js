@@ -793,7 +793,7 @@ class ScreenCategory extends Component {
                                         this.state.isVisibleCategoryLoadingIndicator &&
                                         <Text style={styles.loadingTextIndicator}>Loading...</Text>
                                     }
-                                    <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
+                                    <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
                                         <FlatList
                                             data={this.props.categories}
                                             extraData={this.props}
@@ -844,7 +844,7 @@ class ScreenCategory extends Component {
                                         </View>
 
                                     }
-                                    <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
+                                    <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
                                         <FlatList
                                             data={this.state.newCategoryProducts}
                                             extraData={this.props}

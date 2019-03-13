@@ -1126,8 +1126,8 @@ class ScreenCheckout extends Component {
 
             <View style={styles.AppContainer}>
                 <View style={styles.AppMain}>
-                    <ScrollView>
-                        <View style={styles.AppCardContainer}>
+                    <ScrollView style={styles.scrollviewCheckout}>
+                        <View style={styles.AppCheckoutCardContainer}>
                             <View style={styles.AppCard}>
                                 <Icon style={styles.navigationButton} name="arrowleft" size={24} color="#0D284A" onPress={() => this.goBack()} />
                                 <Text style={styles.AppCardHeader}>Checkout</Text>
@@ -1150,9 +1150,9 @@ class ScreenCheckout extends Component {
                                     </Collapsible>
                                 </View>
                                 <View>
-                                    <AccordionHeader title="Select a Debit Card" subtitle={"***" + this.state.last4digits} onSelected={() => { this.toggleView("card") }} />
+                                    <AccordionHeader title="Enter a Debit Card" subtitle="" onSelected={() => { this.toggleView("card") }} />
                                     <Collapsible collapsed={this.state.isVisibleCard}>
-                                        <CardManager last4digits={this.state.last4digits} />
+                                        <CardManager last4digits="" />
                                     </Collapsible>
                                 </View>
                                 <View>
@@ -1164,37 +1164,51 @@ class ScreenCheckout extends Component {
                                             <View style={styles.TimeSlotContainer}>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("9:30AM - 11:00AM", "10:30 AM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>9:30AM - 11:00AM</Text>
+                                                        <Text style={styles.TimeSlotTime}>9:30AM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>11:00AM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("11:00AM - 12:30PM", "12:00 PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>11:00AM - 12:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>11:00AM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>12:30PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("12:30PM - 2:00PM", "1:30 PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>12:30PM - 2:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>12:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>2:00PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("2:00PM - 3:30PM", "3:00 PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>2:00PM - 3:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>2:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>3:30PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("3:30PM - 5:00PM", "4:30 PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>3:30PM - 5:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>3:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>5:00PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("5:00PM - 6:30PM", "6:00 PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>5:00PM - 6:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>5:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>6:30PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("6:30PM - 8:00PM", "7:30 PM")}>
                                                     <View style={[styles.TimeSlot, this.state.isActiveSlot6 ? styles.ActiveTimeSlot : styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>6:30PM - 8:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>6:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>8:00PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 {/* <TouchableOpacity onPress={() => this.setActiveTimeSlot("8:00PM - 9:30PM", "9:00 PM")}>
@@ -1213,22 +1227,30 @@ class ScreenCheckout extends Component {
                                             <View style={styles.TimeSlotContainer}>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("1:30PM - 3:00PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>1:30PM - 3:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>1:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>3:00PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("3:00PM - 4:30PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>3:00PM - 4:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>3:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>4:30PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("4:30PM - 6:00PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>4:30PM - 6:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>4:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>6:00PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => this.setActiveTimeSlot("6:00PM - 7:30PM")}>
                                                     <View style={[styles.TimeSlot, styles.InActiveTimeSlot]}>
-                                                        <Text style={styles.TimeSlotTime}>6:00PM - 7:30PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>6:00PM</Text>
+                                                        <Text style={styles.TimeSlotTime}>to</Text>
+                                                        <Text style={styles.TimeSlotTime}>7:30PM</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                             </View>

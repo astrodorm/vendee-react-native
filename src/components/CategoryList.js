@@ -45,7 +45,7 @@ class CategoryList extends Component {
             <View>
                 <Text style={styles.AppCardHeader}>All Categories</Text>
                 <View style={styles.headingDivider}></View>
-                <ScrollView contentContainerStyle={styles.scrollViewfullHeight} scrollEnabled={true}>
+                <ScrollView contentContainerStyle={styles.scrollview} scrollEnabled={true}>
                     <FlatList
                         data={this.state.categories}
                         extraData={this.state}

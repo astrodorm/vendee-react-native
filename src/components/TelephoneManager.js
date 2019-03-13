@@ -31,7 +31,7 @@ class TelephoneManager extends Component {
                 <View style={styles.ActionInputContainer}>
                     <Text style={styles.AccordionContent}>{this.props.phoneNumber}</Text>
                 </View>
-                <ButtonPrimaryAccent title="UPDATE PHONE" icon="form" isActive={false} onSelected={this.addTelephone} />
+                <ButtonPrimaryAccent title="UPDATE PHONE NUMBER" icon="form" isActive={false} onSelected={this.addTelephone} />
             </View>
         )
     }

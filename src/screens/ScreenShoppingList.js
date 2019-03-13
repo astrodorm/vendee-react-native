@@ -175,7 +175,7 @@ class ScreenShoppingList extends Component {
 
                             {
                                 this.state.isVisbleShoppingList &&
-                                <ScrollView>
+                                <ScrollView contentContainerStyle={styles.scrollviewShoppingList}>
                                     <FlatList
                                         data={this.props.shoppingList}
                                         extraData={this.props}

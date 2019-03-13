@@ -1044,6 +1044,16 @@ const styles = StyleSheet.create({
         paddingTop: 16
     },
 
+    AppCheckoutCardContainer: {
+        height: fullHeight * 2,
+        paddingTop: 16,
+       // paddingBottom:32
+    },
+
+    // listPadding: {
+    //     //  marginBottom: 100,
+    // },
+
     ActionInput: {
         padding: 10,
         borderWidth: 1,
@@ -1185,7 +1195,7 @@ const styles = StyleSheet.create({
 
     shoppingListMainContainer: {
         marginTop: 32,
-       // height:fullHeight
+        // height:fullHeight
     },
 
     AppCardHeaderContainer: {
@@ -1202,15 +1212,20 @@ const styles = StyleSheet.create({
     },
 
     scrollview: {
-        height: 300
+        height: fullHeight * 0.5,
+        paddingBottom: 80
+        //flex: 1
     },
 
-    // shoppingListItemContainer :{
-    //     height: fullHeight
-    // },
+    scrollviewCheckout: {
+        height: fullHeight,
+        paddingBottom: 200
+    },
 
-    scrollViewfullHeight: {
-        height: 300
+
+    scrollviewShoppingList: {
+        height: fullHeight,
+        paddingBottom: 200
     },
 
     screensplash: {
@@ -1270,21 +1285,26 @@ const styles = StyleSheet.create({
 
     TimeSlot: {
         // backgroundColor : GrayDarkText,
-        width: 130,
-        paddingBottom: 16,
-        paddingLeft: 4,
-        paddingRight: 4,
-        paddingTop: 16,
+        // width: 120,
+        paddingBottom: 8,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 8,
         borderRadius: 4,
         marginLeft: 8,
         marginBottom: 8,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+
     },
+
+    // checkoutScrollView: {
+    //     minHeight: 2000
+    // },
 
     TimeSlotTime: {
         fontFamily: Fonts.MPLUSMedium,
-        fontSize: 12,
+        fontSize: 10,
         color: GrayDarkText
     },
 

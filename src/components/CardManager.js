@@ -29,13 +29,13 @@ class CardManager extends Component {
         return (
             <View>
                 <View style={styles.cards}>
-                    <View style={styles.CardContainer}>
+                    {/* <View style={styles.CardContainer}>
                         <Icon style={styles.cardIcon} name="creditcard" size={20} color="#d9d9d9" />
                         <Text style={styles.cardNumber}>***{this.props.last4digits}</Text>
                         <Text style={styles.cardOwner}>YOUR CARD</Text>
-                    </View>
+                    </View> */}
                 </View>
-                <ButtonPrimaryAccent title="ADD CARD" icon="form" isActive={false} onSelected={this.addCard} />
+                <ButtonPrimaryAccent title="ENTER DEBIT CARD" icon="form" isActive={false} onSelected={this.addCard} />
             </View>
         )
     }
